@@ -1,47 +1,78 @@
 package org.bcit.comp2522.project;
 
-import processing.core.PVector;
+public class Projectile extends Sprite {
+  protected int speed;
 
-import java.awt.*;
+  protected int size;
+  protected int damage;
 
-public class Projectile extends Sprite{
-
-  private float x, y; // position of the projectile
-  private float speed; // speed of the projectile
-  private float angle; // direction of the projectile in degrees
-
-  public Projectile(float x, float y, int speed, Window window) {
-    super(new PVector(x, y), new PVector(0, 0), 10, speed, Color.RED, window);
-    this.x = x;
-    this.y = y;
+  public Projectile(int health, int damage, int size, int xPosition, int yPosition, int speed) {
+    super(health, damage, size, xPosition, yPosition);
     this.speed = speed;
   }
 
-  public Projectile(PVector playerPos, PVector dir, int speed, int i, Color color, Window window) {
-    super(playerPos, dir, 10, speed, color, window);
+  /**
+   * @param one
+   * @param two
+   */
+  @Override
+  public void collide(Sprite one, Sprite two) {
+    //TODO: Implement this method
   }
 
-  public void update (float mouseX, float mouseY){
-    angle = (float) Math.atan2(mouseY - y, mouseX - x);
-
-    float velX = (float) (speed * Math.cos(angle));
-    float velY = (float) (speed * Math.sin(angle));
-
-    x += velX;
-    y += velY;
+  /**
+   *
+   */
+  @Override
+  public void compareTo() {
+    //TODO: Implement this method
   }
 
+  /**
+   *
+   */
   @Override
   public void draw() {
-    window.pushStyle();
-    window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
-    window.ellipse(this.position.x, this.position.y, size, size);
-    window.popStyle();
+    //TODO: Implement this method
+  }
+
+  /**
+   *
+   */
+  @Override
+  public void move() {
+    //TODO: Implement this method
+  }
+
+  private void disappear() {
+    //TODO: Implement this method
+  }
+
+  public int getSpeed() {
+    return speed;
+  }
+
+  public void setSpeed(int speed) {
+    this.speed = speed;
   }
 
   @Override
-  public int compareTo(Sprite enemy) {
+  public int getSize() {
+    return size;
+  }
 
-    return 0;
+  @Override
+  public void setSize(int size) {
+    this.size = size;
+  }
+
+  @Override
+  public int getDamage() {
+    return damage;
+  }
+
+  @Override
+  public void setDamage(int damage) {
+    this.damage = damage;
   }
 }

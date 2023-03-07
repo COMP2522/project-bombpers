@@ -1,72 +1,51 @@
 package org.bcit.comp2522.project;
 
-import processing.core.PVector;
+public class Enemy extends Sprite{
+  protected String name;
 
-import java.awt.*;
-import java.util.Objects;
+  public Enemy(int health, int damage, int size, int xPosition, int yPosition, String name) {
+    super(health, damage, size, xPosition, yPosition);
+    this.name = name;
+  }
 
+  public String getName() {
+    return name;
+  }
 
-/**
- * Child of a sprite.
- *
- * @author sukh, brett.
- * @version 1.0
- */
-public class Enemy extends Sprite implements Movable, Comparable {
+  public void setName(String name) {
+    this.name = name;
+  }
 
   /**
-   * Child constructor for a Sprite that is an enemy.
+   * @param one
+   * @param two
+   */
+  @Override
+  public void collide(Sprite one, Sprite two) {
+    //TODO: Implement this method
+  }
+
+  /**
    *
-   * @param position  the position
-   * @param direction the direction
-   * @param size      the size
-   * @param speed     the speed
-   * @param color     the color
-   * @param window    the window it's in
    */
-  public Enemy(PVector position, PVector direction, float size, float speed,
-               Color color, Window window) {
-
-    super(position, direction, size, speed, color, window);
-
+  @Override
+  public void compareTo() {
+    //TODO: Implement this method
   }
 
   /**
-   * draws the enemy.
+   *
    */
+  @Override
   public void draw() {
-    window.pushStyle();
-    window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
-    window.ellipse(this.position.x, this.position.y, size, size);
-    window.popStyle();
+    //TODO: Implement this method
   }
 
-  @Override
-  public int compareTo(Sprite enemy) {
-    return 0;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Sprite sprite = (Sprite) o;
-    return Float.compare(sprite.size, size) == 0;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(size);
-  }
-
-
+  /**
+   *
+   */
   @Override
   public void move() {
-    super.update();
+    //TODO: Implement this method
   }
-
 }
