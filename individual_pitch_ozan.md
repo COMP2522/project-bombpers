@@ -1,0 +1,1 @@
+I will be working on the different character types. Characters will be unique and have different stats overall.
