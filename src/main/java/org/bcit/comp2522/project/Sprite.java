@@ -1,13 +1,39 @@
 package org.bcit.comp2522.project;
 
+import processing.core.PVector;
+
+import java.awt.*;
+
 public abstract class Sprite implements Collidable, Movable, Drawable {
   protected int health;
-  protected int damage;
 
-  protected int size;
+  protected int damage;
+  protected PVector position;
+  protected PVector direction;
+  protected Color color;
+
+  protected float size;
   protected int XPosition;
   protected int YPosition;
+  protected float speed;
+  protected Window window;
 
+  public PVector getPosition() {
+    return position.copy();
+  }
+
+  // Wall constructor
+  public Sprite(PVector position, PVector direction, float size, float speed, Color color, Window window) {
+    this.position = position;
+    this.direction = direction;
+    this.size = size;
+    this.speed = speed;
+    this.window = window;
+    this.color = color;
+  }
+  /*
+  Projectile constructor
+   */
   public Sprite(int health, int damage, int size, int xPosition, int yPosition) {
     this.health = health;
     this.damage = damage;
@@ -16,9 +42,55 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
     YPosition = yPosition;
   }
 
+  public Sprite(PVector position, PVector direction, float size, float speed, Color color, Window window,
+                int health, int damage) {
+    this.position = position;
+    this.direction = direction;
+    this.size = size;
+    this.speed = speed;
+    this.window = window;
+    this.color = color;
+    this.health = health;
+    this.damage = damage;
+  }
+
+  public static boolean collided(Sprite a, Sprite b) {
+    float distance = PVector.dist(a.getPosition(), b.getPosition());
+    if (distance <= (a.getSize() + b.getSize())) {
+      return true;
+    }
+    return false;
+  }
+
+  public void bounce() {
+    if (this.position.x <= 0 ||
+            this.position.x >= window.width ||
+            this.position.y <= 0 ||
+            this.position.y >= window.height) {
+      this.direction.rotate(window.HALF_PI);
+    }
+  }
+
   protected void update() {
     move();
     draw();
+    this.bounce();
+    this.position = this.getPosition().add(this.direction.copy().mult(speed));
+  }
+
+  public void draw() {
+    window.pushStyle();
+    window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
+    window.ellipse(this.position.x, this.position.y, size, size);
+    window.popStyle();
+  }
+
+  public PVector getDirection() {
+    return direction.copy();
+  }
+
+  public void setDirection(PVector direction) {
+    this.direction = direction;
   }
 
   public int getHealth() {
@@ -37,7 +109,7 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
     this.damage = damage;
   }
 
-  public int getSize() {
+  public float getSize() {
     return size;
   }
 

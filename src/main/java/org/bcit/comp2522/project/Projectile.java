@@ -57,7 +57,7 @@ public class Projectile extends Sprite {
   }
 
   @Override
-  public int getSize() {
+  public float getSize() {
     return size;
   }
 
