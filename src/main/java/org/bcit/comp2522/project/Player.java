@@ -1,12 +1,18 @@
 package org.bcit.comp2522.project;
 
-public class Player extends Sprite{
+import processing.core.PVector;
+
+import java.awt.*;
+
+public class Player extends Sprite implements Comparable<Enemy>{
   private int level;
   private String name;
 
-  public Player(int health, int damage, int size,  int xPosition,
-                int yPosition, int level, String name) {
-    super(health, damage, size, xPosition, yPosition);
+  public Player(PVector position, PVector direction,
+                float size, float speed, Color color,
+                Window window, int health, int damage,
+                int level, String name) {
+    super(position, direction, size, speed, color, window, health, damage);
     this.level = level;
     this.name = name;
   }
@@ -49,7 +55,8 @@ public class Player extends Sprite{
    */
   @Override
   public void draw() {
-    //TODO: Implement this method
+    window.fill(color.getRGB());
+    window.ellipse(position.x, position.y, size, size);
   }
 
   /**
@@ -68,4 +75,13 @@ public class Player extends Sprite{
     //TODO: Implement this method
   }
 
+  @Override
+  public int compareTo(Sprite enemy) {
+    if (Float.compare(this.size, enemy.getSize()) < 0) {
+      return -1;
+    } else if (Float.compare(this.size, enemy.getSize()) >= 0) {
+      return 1;
+    }
+    return 0;
+  }
 }
