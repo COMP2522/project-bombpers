@@ -4,34 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c27e0f8f-e0a1-4241-bd03-373ff5c88a34" name="Changes" comment="Added individual pitch">
+    <list default="true" id="c27e0f8f-e0a1-4241-bd03-373ff5c88a34" name="Changes" comment="Changed all the classes to add better functionality to keep track of the direction and position. Changed the sprite constructor, meaning all the constructors of Enemy, Player, Wall, Projectile changed. Changed the movement system so instead of rotating, we have a more linear move functionality.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Speedy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Tank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Comparable.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Comparable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Enemy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Enemy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Projectile.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Projectile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Sprite.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Sprite.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Wall.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Wall.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Window.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Window.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/BigSlowEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/BigSlowEnemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Comparable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Comparable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Projectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Projectile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Sprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Sprite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/StandardEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/StandardEnemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Wall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/WeakFastEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/WeakFastEnemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +26,13 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="FindBugs-IDEA-Workspace">
     <toolWindowEditorPreview>false</toolWindowEditorPreview>
@@ -57,20 +48,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/ozany/IdeaProjects/project-bombpers",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ozany/IdeaProjects/project-bombpers&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ozany\IdeaProjects\project-bombpers" />
@@ -117,7 +108,10 @@
       <updated>1678180188851</updated>
       <workItem from="1678180190266" duration="233000" />
       <workItem from="1678207612638" duration="21000" />
-      <workItem from="1678563317472" duration="9443000" />
+      <workItem from="1678563317472" duration="10949000" />
+      <workItem from="1678609378437" duration="190000" />
+      <workItem from="1678611627003" duration="121000" />
+      <workItem from="1678613813738" duration="777000" />
     </task>
     <task id="LOCAL-00001" summary="Added individual pitch">
       <created>1678180411276</created>
@@ -126,14 +120,33 @@
       <option name="project" value="LOCAL" />
       <updated>1678180411276</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Changed all the classes to add better functionality to keep track of the direction and position. Changed the sprite constructor, meaning all the constructors of Enemy, Player, Wall, Projectile changed. Changed the movement system so instead of rotating, we have a more linear move functionality.">
+      <created>1678575987583</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1678575987583</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added individual pitch" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added individual pitch" />
+    <MESSAGE value="Changed all the classes to add better functionality to keep track of the direction and position. Changed the sprite constructor, meaning all the constructors of Enemy, Player, Wall, Projectile changed. Changed the movement system so instead of rotating, we have a more linear move functionality." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed all the classes to add better functionality to keep track of the direction and position. Changed the sprite constructor, meaning all the constructors of Enemy, Player, Wall, Projectile changed. Changed the movement system so instead of rotating, we have a more linear move functionality." />
   </component>
 </project>
