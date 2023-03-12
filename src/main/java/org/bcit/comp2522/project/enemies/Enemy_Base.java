@@ -9,6 +9,9 @@ import java.awt.*;
 public class Enemy_Base extends Sprite {
   protected String name;
 
+  // Makes easier to build constructors for subclasses
+  public Enemy_Base(){}
+
   public Enemy_Base(PVector position, PVector direction,
                     float size, float speed, Color color,
                     Window window, int health, int damage,

@@ -22,6 +22,9 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
     return position.copy();
   }
 
+  // For making constructors down the chain easier
+  public Sprite(){}
+
   // Wall constructor
   public Sprite(PVector position, PVector direction, float size, float speed, Color color, Window window) {
     this.position = position;

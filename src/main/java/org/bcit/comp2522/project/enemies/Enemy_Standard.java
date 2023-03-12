@@ -6,14 +6,25 @@ import processing.core.PVector;
 import java.awt.*;
 
 public class Enemy_Standard extends Enemy_Base {
-  private static final int BASEHEALTH_ENEM = 4;
+  private static final int BASE_HEALTH_ENEM = 4;
+  private static final int BASE_DMG_ENEM = 4;
 
-  public Enemy_Standard(PVector position, PVector direction,
-                        float size, float speed, Color color,
-                        Window window, int health, int damage,
-                        String name) {
-    super(position, direction, size, speed, color, window, health, damage, name);
-    this.name = name;
-    this.health = BASEHEALTH_ENEM + health;
+  // TODO: Default spawn parameters once things are set in place
+  public Enemy_Standard(){
+    this.name = "ModusPonens"; // Placeholder name for now
+    this.health = BASE_HEALTH_ENEM;
+    this.damage = BASE_DMG_ENEM;
+    // TODO: spawn somewhere near player
+    //this.size = size;
+    //this.speed = speed;
+    //this.window = window;
+    //this.color = color;
+  }
+
+  public Enemy_Standard(PVector position, PVector direction) {
+    this.health = BASE_HEALTH_ENEM;
+    this.damage = BASE_DMG_ENEM;
+    this.position = position;
+    this.direction = direction;
   }
 }
