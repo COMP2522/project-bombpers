@@ -1,16 +1,18 @@
-package org.bcit.comp2522.project;
+package org.bcit.comp2522.project.enemies;
 
+import org.bcit.comp2522.project.Sprite;
+import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
 
 import java.awt.*;
 
-public class Enemy extends Sprite{
+public class Enemy_Base extends Sprite {
   protected String name;
 
-  public Enemy(PVector position, PVector direction,
-               float size, float speed, Color color,
-               Window window, int health, int damage,
-               String name) {
+  public Enemy_Base(PVector position, PVector direction,
+                    float size, float speed, Color color,
+                    Window window, int health, int damage,
+                    String name) {
     super(position, direction, size, speed, color, window, health, damage);
     this.name = name;
   }
