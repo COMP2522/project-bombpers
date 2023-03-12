@@ -1,5 +1,6 @@
 package org.bcit.comp2522.project;
 
+import org.bcit.comp2522.project.enemies.Enemy_Base;
 import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 
 public class Window extends PApplet {
   ArrayList<Sprite> sprites;
-  ArrayList<Enemy> enemies;
+  ArrayList<Enemy_Base> enemies;
   Player player;
   Wall wall;
   int numEnemies = 10;
@@ -30,7 +31,7 @@ public class Window extends PApplet {
 
   public void init() {
     //TODO change player constructor to match sprite class
-    enemies = new ArrayList<Enemy>();
+    enemies = new ArrayList<Enemy_Base>();
     sprites = new ArrayList<Sprite>();
     player = new Player(
             new PVector(this.width/2,this.height/2),
@@ -50,7 +51,7 @@ public class Window extends PApplet {
             this);
 
     for (int i = 0; i < numEnemies; i++) {
-      enemies.add(new Enemy(
+      enemies.add(new Enemy_Base(
               new PVector(random(0, this.width), random(0, this.height)),
               new PVector(random(-1, 1), random(-1,1)),
               random(minSize, maxSize),
@@ -96,16 +97,16 @@ public class Window extends PApplet {
         //System.out.println("Monkey");
       }
     }
-    ArrayList<Enemy> toRemove = new ArrayList<Enemy>();
-    for (Enemy enemy : enemies) {
-      if (Enemy.collided(player, enemy)) {
-        toRemove.add(enemy);
+    ArrayList<Enemy_Base> toRemove = new ArrayList<Enemy_Base>();
+    for (Enemy_Base enemyBase : enemies) {
+      if (Enemy_Base.collided(player, enemyBase)) {
+        toRemove.add(enemyBase);
       }
     }
-    for (Enemy enemy : toRemove) {
-      if (player.compareTo(enemy) > 0) {
-        enemies.remove(enemy);
-        sprites.remove(enemy);
+    for (Enemy_Base enemyBase : toRemove) {
+      if (player.compareTo(enemyBase) > 0) {
+        enemies.remove(enemyBase);
+        sprites.remove(enemyBase);
         //player.sizeUp(enemy.size);
       } else {
         init();

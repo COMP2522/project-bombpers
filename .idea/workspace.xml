@@ -5,33 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c27e0f8f-e0a1-4241-bd03-373ff5c88a34" name="Changes" comment="Added individual pitch">
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Enemy_Standard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Enemy_StrongSlow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Comparable.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Comparable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Enemy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Enemy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Projectile.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Projectile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Sprite.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Sprite.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Wall.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Wall.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Window.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/bcit/comp2522/project/Window.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/BigSlowEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/BigSlowEnemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Comparable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Comparable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Projectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Projectile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Sprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Sprite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/StandardEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/StandardEnemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Wall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/WeakFastEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/WeakFastEnemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/StandardEnemy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/WeakFastEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/bcit/comp2522/project/Enemy_WeakFast.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +40,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/ozany/IdeaProjects/project-bombpers",
     "node.js.detected.package.eslint": "true",
@@ -75,6 +55,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ozany\IdeaProjects\project-bombpers" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.bcit.comp2522.project" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Window" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -86,17 +69,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -118,6 +90,8 @@
       <workItem from="1678180190266" duration="233000" />
       <workItem from="1678207612638" duration="21000" />
       <workItem from="1678563317472" duration="9443000" />
+      <workItem from="1678595645297" duration="1031000" />
+      <workItem from="1678596978163" duration="5983000" />
     </task>
     <task id="LOCAL-00001" summary="Added individual pitch">
       <created>1678180411276</created>
