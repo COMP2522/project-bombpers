@@ -6,6 +6,7 @@ import processing.core.PVector;
 import java.awt.*;
 
 public class Enemy_Standard extends Enemy_Base {
+  protected static final String BASE_NAME_ENEM = "Modus Ponens";
   protected static final int BASE_HP_ENEM = 4;
   protected static final int BASE_DMG_ENEM = 2;
   protected static final float BASE_SIZE_ENEM = 1.0f;
@@ -13,7 +14,7 @@ public class Enemy_Standard extends Enemy_Base {
 
   // TODO: Default spawn parameters once things are set in place
   public Enemy_Standard(){
-    this.name = "ModusPonens"; // Placeholder name for now
+    this.name = BASE_NAME_ENEM; // Placeholder name for now
     this.health = BASE_HP_ENEM;
     this.damage = BASE_DMG_ENEM;
     this.size = BASE_SIZE_ENEM;
