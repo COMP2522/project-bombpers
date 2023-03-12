@@ -4,8 +4,9 @@ public class Score extends UI {
   private int highScore;
   private int currentScore;
 
-  public Score(int xPos, int yPos) {
+  public Score(int xPos, int yPos, int score) {
     super(xPos, yPos);
+    currentScore = score;
   }
 
   public int getHighScore() {
@@ -13,6 +14,7 @@ public class Score extends UI {
   }
 
   public void setHighScore(int highScore) {
+
     this.highScore = highScore;
   }
 
@@ -21,6 +23,7 @@ public class Score extends UI {
   }
 
   public void setCurrentScore(int currentScore) {
+
     this.currentScore = currentScore;
   }
 }

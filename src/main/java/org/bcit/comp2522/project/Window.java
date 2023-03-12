@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 
+import javax.swing.plaf.MenuBarUI;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -15,14 +16,15 @@ public class Window extends PApplet {
   int numEnemies = 10;
   int minSize = 15;
   int maxSize = 20;
+  int state = 0;
 
   public void settings() {
     size(500, 500);
   }
 
-  public void mousePressed() {
+/*  public void mousePressed() {
     background(64);
-  }
+  }*/
 
   public void setup() {
     this.init();
@@ -87,28 +89,91 @@ public class Window extends PApplet {
   }
 
   public void draw() {
-    background(0);
-    for (Sprite sprite : sprites) {
-      sprite.update();
-      sprite.draw();
-      if (wall.collided(wall, sprite)) {
-        wall.bounce(sprite);
-        //System.out.println("Monkey");
+    Menu menu = new Menu(50, 145, "Welcome!", this);
+    Menu menu2 = new Menu(30, 120, "Game Over!", this);
+    Menu menu3 = new Menu(80, 120, "Paused!", this);
+    Menu menu4 = new Menu(50, 120, "Pick a Character!", this);
+    //Start Screen
+    if(state == 0) {
+      menu.displayMenu(state,100);
+      if (mousePressed  && (mouseButton == LEFT)
+              && (mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244)) {
+        background(0);
+        //score needs to be 0 so it is reset everytime you restart
+        //Score score = new Score(0)
+        //for the if statement that has the game animations
+        mousePressed = false;
+        state = 4;
+      }
+
+    } else if (state == 4){
+      menu4.displayMenu(state,60);
+      if ( mousePressed  && (mouseButton == LEFT)
+              && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244))
+        || mousePressed  && (mouseButton == LEFT)
+              && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 299 && mouseY <= 344)) ){
+        background(0);
+        state = 1;
+        //To get hovering just do above if statement but don't check for mousePressed
+      }
+
+    } else if(state == 1){ //Game starts
+      if (keyPressed) {
+        if (key == 'p' || key == 'P') {
+          //state to pause
+          state = 3;
+        }
+      }
+      background(0);
+      for (Sprite sprite : sprites) {
+        sprite.update();
+        sprite.draw();
+        if (wall.collided(wall, sprite)) {
+          wall.bounce(sprite);
+          //System.out.println("Monkey");
+        }
+      }
+      ArrayList<Enemy> toRemove = new ArrayList<Enemy>();
+      for (Enemy enemy : enemies) {
+        if (Enemy.collided(player, enemy)) {
+          toRemove.add(enemy);
+        }
+      }
+      for (Enemy enemy : toRemove) {
+        if (player.compareTo(enemy) > 0) {
+          enemies.remove(enemy);
+          sprites.remove(enemy);
+          //player.sizeUp(enemy.size);
+        } else {
+          //state to end
+          state  = 2;
+          init();
+        }
+      }
+    } else if(state == 3) { //Pause screen
+      menu3.displayMenu(state,100);
+      if (mousePressed && (mouseButton == LEFT)
+              && (mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244)) {
+        background(0);
+
+        //score needs to be 0 so it si reset everytime you restart
+        //score = 0;
+        //for the if statement that has the game animations
+        state = 1;
       }
     }
-    ArrayList<Enemy> toRemove = new ArrayList<Enemy>();
-    for (Enemy enemy : enemies) {
-      if (Enemy.collided(player, enemy)) {
-        toRemove.add(enemy);
-      }
-    }
-    for (Enemy enemy : toRemove) {
-      if (player.compareTo(enemy) > 0) {
-        enemies.remove(enemy);
-        sprites.remove(enemy);
-        //player.sizeUp(enemy.size);
-      } else {
-        init();
+     else {
+      //End scenario when game ends goes to end screen
+
+      menu2.displayMenu(state,90);
+      if (mousePressed  && (mouseButton == LEFT)
+              && (mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244)) {
+        background(0);
+
+        //score needs to be 0 so it si reset everytime you restart
+        //score = 0;
+        //for the if statement that has the game animations
+        state = 1;
       }
     }
   }
