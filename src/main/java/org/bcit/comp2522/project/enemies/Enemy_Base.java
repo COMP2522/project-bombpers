@@ -7,22 +7,22 @@ import processing.core.PVector;
 import java.awt.*;
 
 public class Enemy_Base extends Sprite {
-  protected static final String BASE_NAME_ENEM = "Modus Ponens";
-  protected static final int BASE_HP_ENEM = 4;
-  protected static final int BASE_DMG_ENEM = 2;
-  protected static final float BASE_SIZE_ENEM = 10;
-  protected static final float BASE_SPEED_ENEM = 1.2f;
-  protected static final Color BASE_COLOR_ENEM = new Color(255, 0, 0);
+  protected static final String NAME_ENEM_BASE = "Modus Ponens";
+  protected static final int HP_ENEM_BASE = 4;
+  protected static final int DMG_ENEM_BASE = 2;
+  protected static final float SIZE_ENEM_BASE = 10f;
+  protected static final float SPEED_ENEM_BASE = 1.4f;
+  protected static final Color COLOR_ENEM_BASE = new Color(255, 0, 0);
   protected String name;
 
   // Makes easier to build constructors for subclasses
   public Enemy_Base(){
-    this.name = BASE_NAME_ENEM;
-    this.health = BASE_HP_ENEM;
-    this.damage = BASE_DMG_ENEM;
-    this.size = BASE_SIZE_ENEM;
-    this.speed = BASE_SPEED_ENEM;
-    this.color = BASE_COLOR_ENEM;
+    this.name = NAME_ENEM_BASE;
+    this.health = HP_ENEM_BASE;
+    this.damage = DMG_ENEM_BASE;
+    this.size = SIZE_ENEM_BASE;
+    this.speed = SPEED_ENEM_BASE;
+    this.color = COLOR_ENEM_BASE;
     // TODO: spawn somewhere near player
     this.position = new PVector(0, 0);
     this.direction = new PVector(0, 0);
