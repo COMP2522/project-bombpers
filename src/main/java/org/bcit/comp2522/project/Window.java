@@ -129,6 +129,13 @@ int high = 0;
       }
 
       background(0);
+      Projectile bullet = new Projectile(1,1,1,mouseX,mouseY,1,this);
+      bullet.setXPosition(player.getXPosition());
+      bullet.setYPosition(player.getYPosition());
+      bullet.setSize(30);
+      bullet.setDirection(new PVector(0,100));
+      bullet.draw();
+
 
       score.displayScore(state);
       for (Sprite sprite : sprites) {
@@ -140,6 +147,8 @@ int high = 0;
         }
       }
       ArrayList<Enemy> toRemove = new ArrayList<Enemy>();
+
+
       for (Enemy enemy : enemies) {
         if (Enemy.collided(player, enemy)) {
           toRemove.add(enemy);
