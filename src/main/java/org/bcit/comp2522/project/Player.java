@@ -65,7 +65,20 @@ public class Player extends Sprite implements Comparable<Enemy_Base>{
    */
   @Override
   public void move() {
-    //TODO: Implement this method
+    if (window.keyPressed) {
+      if (window.key == 'w' || window.key == 'W') {
+        position.y -= speed;
+      }
+      if (window.key == 'a' || window.key == 'A') {
+        position.x -= speed;
+      }
+      if (window.key == 's' || window.key == 'S') {
+        position.y += speed;
+      }
+      if (window.key == 'd' || window.key == 'D') {
+        position.x += speed;
+      }
+    }
   }
 
   private void aim(){

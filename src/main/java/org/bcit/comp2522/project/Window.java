@@ -15,6 +15,14 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Window extends PApplet {
+
+  /**
+   * Boolean values for movement.
+   */
+  private boolean isLeftPressed = false;
+  private boolean isRightPressed = false;
+  private boolean isUpPressed = false;
+  private boolean isDownPressed = false;
   private final static int ENEM_TYPES = 2;
   private final static int ENEM_MAX = 30;
   private final static int ENEM_STANDARD_MAX = 20;
@@ -80,25 +88,65 @@ public class Window extends PApplet {
     //sprites.add(player);
     sprites.add(wall);
   }
-
   @Override
   public void keyPressed(KeyEvent event) {
     int keyCode = event.getKeyCode();
     switch (keyCode) {
       case LEFT:
-        // handle left
-        player.setDirection(new PVector(-1, 0));
+        isLeftPressed = true;
         break;
       case RIGHT:
-        // handle right
-        player.setDirection(new PVector(1, 0));
+        isRightPressed = true;
         break;
       case UP:
-        player.setDirection(new PVector(0, -1));
+        isUpPressed = true;
         break;
       case DOWN:
-        player.setDirection(new PVector(0, 1));
+        isDownPressed = true;
         break;
+    }
+    updatePlayerDirection();
+  }
+
+  @Override
+  public void keyReleased(KeyEvent event) {
+    int keyCode = event.getKeyCode();
+    switch (keyCode) {
+      case LEFT:
+        isLeftPressed = false;
+        break;
+      case RIGHT:
+        isRightPressed = false;
+        break;
+      case UP:
+        isUpPressed = false;
+        break;
+      case DOWN:
+        isDownPressed = false;
+        break;
+    }
+    updatePlayerDirection();
+  }
+
+  private void updatePlayerDirection() {
+    int xDirection = 0;
+    int yDirection = 0;
+    if (isLeftPressed) {
+      xDirection--;
+    }
+    if (isRightPressed) {
+      xDirection++;
+    }
+    if (isUpPressed) {
+      yDirection--;
+    }
+    if (isDownPressed) {
+      yDirection++;
+    }
+    if (xDirection != 0 || yDirection != 0) {
+      player.setDirection(new PVector(xDirection, yDirection));
+    } else {
+      player.setDirection(new PVector(0, 0));
     }
   }
 
@@ -127,7 +175,7 @@ public class Window extends PApplet {
       menu4.displayMenu(state,60);
       if ( mousePressed  && (mouseButton == LEFT) && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244))){
         player = new Speedy(new PVector(this.width/2,this.height/2),
-                new PVector(0,1),
+                new PVector(0,0),
                 minSize + 1,
                 5f,
                 new Color(0,255,0),
@@ -139,7 +187,7 @@ public class Window extends PApplet {
       }
         if( mousePressed  && (mouseButton == LEFT) && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 299 && mouseY <= 344))){
           player = new Tank(new PVector(this.width/2,this.height/2),
-                  new PVector(0,1),
+                  new PVector(0,0),
                   minSize + 1,
                   0.5f,
                   new Color(0,255,0),
