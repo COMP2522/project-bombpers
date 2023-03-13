@@ -10,7 +10,7 @@ public class Enemy_Standard extends Enemy_Base {
   protected static final int BASE_HP_ENEM = 4;
   protected static final int BASE_DMG_ENEM = 2;
   protected static final float BASE_SIZE_ENEM = 1.0f;
-  protected static final float BASE_SPEED_ENEM = 1.0f;
+  protected static final float BASE_SPEED_ENEM = 1.2f;
 
   // TODO: Default spawn parameters once things are set in place
   public Enemy_Standard(){

@@ -14,7 +14,8 @@ public class Window extends PApplet {
   ArrayList<Enemy_Base> enemies;
   Player player;
   Wall wall;
-  int numEnemies = 10;
+  int numEnemies = 0;
+  int maxEnemies = 10;
   int minSize = 15;
   int maxSize = 20;
   int state = 0;
@@ -39,7 +40,7 @@ public class Window extends PApplet {
             new PVector(this.width/2,this.height/2),
             new PVector(0,1),
             minSize + 1,
-            2,
+            1.5f,
             new Color(0,255,0),
             this, 5, 2, 1,
             "player");
@@ -48,7 +49,7 @@ public class Window extends PApplet {
             new PVector(200,100),
             new PVector(0,0),
             minSize + 50,
-            2,
+            1.2f,
             new Color(60,150,197),
             this);
 
@@ -145,9 +146,30 @@ public class Window extends PApplet {
           enemies.remove(enemyBase);
           sprites.remove(enemyBase);
           //player.sizeUp(enemy.size);
+          numEnemies--;
         } else {
           init();
         }
+      }
+      // Spawns new enemies mid-game
+      while (enemies.size() < maxEnemies) {
+        // Randomize position and orientation of enemy
+        PVector position = new PVector(random(0, width), random(0, height));
+        PVector direction = new PVector(random(-1, 1), random(-1, 1));
+
+        // Add enemy to current list
+        Enemy_Base newEnemy = new Enemy_Base(position,
+            direction,
+            5,
+            1.2f,
+            new Color(255, 0, 0),
+            this,
+            4,
+            2,
+            "Hanji");
+
+        enemies.add(newEnemy);
+        sprites.add(newEnemy);
       }
     } else if(state == 3) { //Pause screen
       menu3.displayMenu(state,100);
@@ -160,8 +182,7 @@ public class Window extends PApplet {
         //for the if statement that has the game animations
         state = 1;
       }
-    }
-     else {
+    } else {
       //End scenario when game ends goes to end screen
 
       menu2.displayMenu(state,90);
@@ -182,5 +203,4 @@ public class Window extends PApplet {
     Window eatBubbles = new Window();
     PApplet.runSketch(appletArgs, eatBubbles);
   }
-
 }
