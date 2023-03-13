@@ -39,9 +39,9 @@ public class Menu extends UI {
         modifyMessage(titleSize);
         //button
         button();
-        w.text("Player1", 140, 240);
+        w.text("Speedy", 140, 240);
         button2();
-        w.text("Player2", 140, 340);
+        w.text("Tank", 140, 340);
     }
 
   }

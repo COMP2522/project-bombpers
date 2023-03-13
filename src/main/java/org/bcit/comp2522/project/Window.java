@@ -70,7 +70,7 @@ public class Window extends PApplet {
       ));
     }
     sprites.addAll(enemies);
-    sprites.add(player);
+    //sprites.add(player);
     sprites.add(wall);
   }
 
@@ -117,10 +117,27 @@ int high = 0;
 
     } else if (state == 4){ //Pick a character
       menu4.displayMenu(state,60);
-      if ( mousePressed  && (mouseButton == LEFT)
-              && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244))
-        || mousePressed  && (mouseButton == LEFT)
-              && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 299 && mouseY <= 344)) ){
+      if ( mousePressed  && (mouseButton == LEFT) && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244))){
+        player = new Speedy(new PVector(this.width/2,this.height/2),
+                new PVector(0,1),
+                minSize + 1,
+                5f,
+                new Color(0,255,0),
+                this, 5, 2, 1,
+                "speedy");
+        sprites.add(player);
+        background(0);
+        state = 1;
+      }
+        if( mousePressed  && (mouseButton == LEFT) && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 299 && mouseY <= 344))){
+          player = new Tank(new PVector(this.width/2,this.height/2),
+                  new PVector(0,1),
+                  minSize + 1,
+                  0.5f,
+                  new Color(0,255,0),
+                  this, 50, 2, 1,
+                  "Tank");
+          sprites.add(player);
         background(0);
         state = 1;
         //To get hovering just do above if statement but don't check for mousePressed
@@ -134,12 +151,12 @@ int high = 0;
         }
       }
 
-      Projectile bullet = new Projectile(1,1,1,mouseX,mouseY,1,this);
-      bullet.setXPosition(player.getXPosition());
-      bullet.setYPosition(player.getYPosition());
-      bullet.setSize(30);
-      bullet.setDirection(new PVector(0,100));
-      bullet.draw();
+//      Projectile bullet = new Projectile(1,1,1,mouseX,mouseY,1,this);
+//      bullet.setXPosition(player.getXPosition());
+//      bullet.setYPosition(player.getYPosition());
+//      bullet.setSize(30);
+//      bullet.setDirection(new PVector(0,100));
+//      bullet.draw();
 
 
       score.displayScore(state);
