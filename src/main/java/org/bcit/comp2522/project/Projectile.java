@@ -1,14 +1,17 @@
 package org.bcit.comp2522.project;
 
+import java.awt.*;
+
 public class Projectile extends Sprite {
   protected int speed;
 
   protected int size;
   protected int damage;
-
-  public Projectile(int health, int damage, int size, int xPosition, int yPosition, int speed) {
+  protected Window w;
+  public Projectile(int health, int damage, int size, int xPosition, int yPosition, int speed, Window window) {
     super(health, damage, size, xPosition, yPosition);
     this.speed = speed;
+    w = window;
   }
 
   /**
@@ -33,7 +36,9 @@ public class Projectile extends Sprite {
    */
   @Override
   public void draw() {
-    //TODO: Implement this method
+    w.noStroke();  // disable stroke
+    w.fill(color.getRGB());  // set fill color
+    w.ellipse(position.x, position.y, size, size);
   }
 
   /**
