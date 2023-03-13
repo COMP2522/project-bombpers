@@ -16,17 +16,15 @@ public class Enemy_Standard extends Enemy_Base {
     this.window = window;
   }
 
-    public Enemy_Standard(
-      String name,
-      int health,
-      int damage,
-      float size,
-      float speed,
-      Color color,
-      PVector position,
-      PVector direction,
-      Window window
-      ) {
+    public Enemy_Standard(String name,
+                          int health,
+                          int damage,
+                          float size,
+                          float speed,
+                          Color color,
+                          PVector position,
+                          PVector direction,
+                          Window window) {
     this.name = name;
     this.health = health;
     this.damage = damage;

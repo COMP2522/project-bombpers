@@ -2,6 +2,7 @@ package org.bcit.comp2522.project;
 
 import org.bcit.comp2522.project.enemies.Enemy_Base;
 import org.bcit.comp2522.project.enemies.Enemy_Fast;
+import org.bcit.comp2522.project.enemies.Enemy_Slow;
 import org.bcit.comp2522.project.enemies.Enemy_Standard;
 
 import java.util.Random;
@@ -16,12 +17,14 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Window extends PApplet {
-  private final static int ENEM_TYPES = 2;
-  private final static int ENEM_MAX = 30;
-  private final static int ENEM_STANDARD_MAX = 20;
-  private final static int ENEM_FAST_MAX = 10;
+  private static final int ENEM_TYPES = 3;
+  private static final int ENEM_MAX = 30;
+  private static final int ENEM_STANDARD_MAX = 20;
+  private static final int ENEM_FAST_MAX = 10;
+  private static final int ENEM_SLOW_MAX = 5;
   private static int curr_enem_standard = 0;
   private static int curr_enem_fast = 0;
+  private static int curr_enem_slow = 0;
   ArrayList<Sprite> sprites;
   ArrayList<Enemy_Base> enemies;
   Player player;
@@ -49,7 +52,6 @@ public class Window extends PApplet {
   }
 
   public void init() {
-    //TODO change player constructor to match sprite class
     enemies = new ArrayList<Enemy_Base>();
     sprites = new ArrayList<Sprite>();
     wall = new Wall(
@@ -169,10 +171,10 @@ public class Window extends PApplet {
         if (player.compareTo(enemyBase) > 0) {
           if (enemyBase instanceof Enemy_Standard) {
             curr_enem_standard--;
-            System.out.println("Normal Dead");
           } if (enemyBase instanceof Enemy_Fast) {
-            System.out.println("Fast dead");
             curr_enem_fast--;
+          } if (enemyBase instanceof Enemy_Slow) {
+            curr_enem_slow--;
           }
           enemies.remove(enemyBase);
           sprites.remove(enemyBase);
@@ -196,14 +198,14 @@ public class Window extends PApplet {
         int spawnType = rngsus.nextInt(ENEM_TYPES);
         while (
             (spawnType == 0 && curr_enem_standard >= ENEM_STANDARD_MAX) ||
-            (spawnType == 1 && curr_enem_fast >= ENEM_FAST_MAX)
+            (spawnType == 1 && curr_enem_fast >= ENEM_FAST_MAX) ||
+            (spawnType == 2 && curr_enem_slow >= ENEM_SLOW_MAX)
         ) {
           //System.out.println("Reroll");
           spawnType = rngsus.nextInt(ENEM_TYPES);
         }
         //System.out.println("Spawn Type = " + spawnType);
         if (spawnType == 0) {
-          //System.out.println("Standard Enem = " + curr_enem_standard);
           Enemy_Standard newEnemy = new Enemy_Standard(
               position,
               direction,
@@ -213,12 +215,20 @@ public class Window extends PApplet {
           enemies.add(newEnemy);
           sprites.add(newEnemy);
         } else if (spawnType == 1) {
-          //System.out.println("Fast Enem = " + curr_enem_fast);
           Enemy_Fast newEnemy = new Enemy_Fast(
               position,
               direction,
               this);
           curr_enem_fast++;
+          // Add enemy to current list
+          enemies.add(newEnemy);
+          sprites.add(newEnemy);
+        } else if (spawnType == 2) {
+          Enemy_Slow newEnemy = new Enemy_Slow(
+              position,
+              direction,
+              this);
+          curr_enem_slow++;
           // Add enemy to current list
           enemies.add(newEnemy);
           sprites.add(newEnemy);
