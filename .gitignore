@@ -3,6 +3,4 @@ build.gradle/
 .gradle/
 .idea/
 gradle/
-gradlew
-gradlew.bat
-settings.gradle
+

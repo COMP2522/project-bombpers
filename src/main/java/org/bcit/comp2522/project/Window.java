@@ -1,5 +1,6 @@
 package org.bcit.comp2522.project;
 
+import org.bcit.comp2522.project.enemies.Enemy_Base;
 import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
@@ -10,10 +11,11 @@ import java.util.ArrayList;
 
 public class Window extends PApplet {
   ArrayList<Sprite> sprites;
-  ArrayList<Enemy> enemies;
+  ArrayList<Enemy_Base> enemies;
   Player player;
   Wall wall;
-  int numEnemies = 10;
+  int numEnemies = 0;
+  int maxEnemies = 10;
   int minSize = 15;
   int maxSize = 20;
   int state = 0;
@@ -32,13 +34,13 @@ public class Window extends PApplet {
 
   public void init() {
     //TODO change player constructor to match sprite class
-    enemies = new ArrayList<Enemy>();
+    enemies = new ArrayList<Enemy_Base>();
     sprites = new ArrayList<Sprite>();
     player = new Player(
             new PVector(this.width/2,this.height/2),
             new PVector(0,1),
-            minSize + 2,
-            2,
+            minSize + 1,
+            1.5f,
             new Color(0,255,0),
             this, 5, 2, 1,
             "player");
@@ -47,12 +49,12 @@ public class Window extends PApplet {
             new PVector(200,100),
             new PVector(0,0),
             minSize + 50,
-            2,
+            1.2f,
             new Color(60,150,197),
             this);
 
     for (int i = 0; i < numEnemies; i++) {
-      enemies.add(new Enemy(
+      enemies.add(new Enemy_Base(
               new PVector(random(0, this.width), random(0, this.height)),
               new PVector(random(-1, 1), random(-1,1)),
               random(minSize, maxSize),
@@ -120,7 +122,7 @@ int high = 0;
         //To get hovering just do above if statement but don't check for mousePressed
       }
 
-    } else if(state == 1){ //Game starts
+    } else if(state == 1) { //Game starts
       if (keyPressed) {
         if (key == 'p' || key == 'P') {
           //state to pause
@@ -146,19 +148,21 @@ int high = 0;
           //System.out.println("Monkey");
         }
       }
-      ArrayList<Enemy> toRemove = new ArrayList<Enemy>();
 
 
-      for (Enemy enemy : enemies) {
-        if (Enemy.collided(player, enemy)) {
-          toRemove.add(enemy);
+      ArrayList<Enemy_Base> toRemove = new ArrayList<Enemy_Base>();
+      for (Enemy_Base enemyBase : enemies) {
+        if (Enemy_Base.collided(player, enemyBase)) {
+          toRemove.add(enemyBase);
+
         }
       }
-      for (Enemy enemy : toRemove) {
-        if (player.compareTo(enemy) > 0) {
-          enemies.remove(enemy);
-          sprites.remove(enemy);
+      for (Enemy_Base enemyBase : toRemove) {
+        if (player.compareTo(enemyBase) > 0) {
+          enemies.remove(enemyBase);
+          sprites.remove(enemyBase);
           //player.sizeUp(enemy.size);
+
           score.setCurrentScore(myScore++);
 
           score.displayScore(state);
@@ -167,12 +171,33 @@ int high = 0;
           if(myScore >= high) {
             high = score.getHighScore();
           }
+
+          numEnemies--;
+
         } else {
-          //state to end
-          state  = 2;
           init();
 
         }
+      }
+      // Spawns new enemies mid-game
+      while (enemies.size() < maxEnemies) {
+        // Randomize position and orientation of enemy
+        PVector position = new PVector(random(0, width), random(0, height));
+        PVector direction = new PVector(random(-1, 1), random(-1, 1));
+
+        // Add enemy to current list
+        Enemy_Base newEnemy = new Enemy_Base(position,
+            direction,
+            5,
+            1.2f,
+            new Color(255, 0, 0),
+            this,
+            4,
+            2,
+            "Hanji");
+
+        enemies.add(newEnemy);
+        sprites.add(newEnemy);
       }
     } else if(state == 3) { //Pause screen
       if(myScore >= score.getHighScore()) {
@@ -190,8 +215,7 @@ int high = 0;
         //for the if statement that has the game animations
         state = 1;
       }
-    }
-     else {
+    } else {
       //End scenario when game ends goes to end screen
       if(myScore >= score.getHighScore()) {
         score.setHighScore(high);
@@ -215,5 +239,4 @@ int high = 0;
     Window eatBubbles = new Window();
     PApplet.runSketch(appletArgs, eatBubbles);
   }
-
 }
