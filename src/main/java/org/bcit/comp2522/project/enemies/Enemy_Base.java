@@ -12,25 +12,25 @@ public class Enemy_Base extends Sprite {
   // Makes easier to build constructors for subclasses
   public Enemy_Base(){}
 
-  public Enemy_Base(PVector position,
-                    PVector direction,
-                    float size,
-                    float speed,
-                    Color color,
-                    Window window,
-                    int health,
-                    int damage,
-                    String name) {
-    super(position,
-          direction,
-          size,
-          speed,
-          color,
-          window,
-          health,
-          damage);
-    this.name = name;
-  }
+//  public Enemy_Base(PVector position,
+//                    PVector direction,
+//                    float size,
+//                    float speed,
+//                    Color color,
+//                    Window window,
+//                    int health,
+//                    int damage,
+//                    String name) {
+//    super(position,
+//          direction,
+//          size,
+//          speed,
+//          color,
+//          window,
+//          health,
+//          damage);
+//    this.name = name;
+//  }
 
   public String getName() {
     return name;

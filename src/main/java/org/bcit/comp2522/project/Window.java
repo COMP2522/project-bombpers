@@ -1,6 +1,7 @@
 package org.bcit.comp2522.project;
 
 import org.bcit.comp2522.project.enemies.Enemy_Base;
+import org.bcit.comp2522.project.enemies.Enemy_Standard;
 import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
@@ -59,17 +60,14 @@ public class Window extends PApplet {
             new Color(60,150,197),
             this);
 
-    for (int i = 0; i < numEnemies; i++) {
-      enemies.add(new Enemy_Base(
-              new PVector(random(0, this.width), random(0, this.height)),
-              new PVector(random(-1, 1), random(-1,1)),
-              random(minSize, maxSize),
-              random(0,2),
-              new Color(255, 0, 0),
-              this,
-              5, 2, "enemy"
-      ));
-    }
+//    for (int i = 0; i < numEnemies; i++) {
+//      enemies.add(new Enemy_Standard(
+//              30,
+//              new PVector(random(0, this.width), random(0, this.height)),
+//              new PVector(random(-1, 1), random(-1,1)),
+//              this
+//      ));
+//    }
     sprites.addAll(enemies);
     sprites.add(player);
     sprites.add(wall);
@@ -135,13 +133,12 @@ int high = 0;
         }
       }
 
-      Projectile bullet = new Projectile(1,1,1,mouseX,mouseY,1,this);
-      bullet.setXPosition(player.getXPosition());
-      bullet.setYPosition(player.getYPosition());
-      bullet.setSize(30);
-      bullet.setDirection(new PVector(0,100));
-      bullet.draw();
-
+//      Projectile bullet = new Projectile(1,1,1,mouseX,mouseY,1,this);
+//      bullet.setXPosition(player.getXPosition());
+//      bullet.setYPosition(player.getYPosition());
+//      bullet.setSize(30);
+//      bullet.setDirection(new PVector(0,100));
+//      bullet.draw();
 
       score.displayScore(state);
 
@@ -193,15 +190,10 @@ int high = 0;
         PVector direction = new PVector(random(-1, 1), random(-1, 1));
 
         // Add enemy to current list
-        Enemy_Base newEnemy = new Enemy_Base(position,
+        Enemy_Standard newEnemy = new Enemy_Standard(
+            position,
             direction,
-            5,
-            1.2f,
-            new Color(255, 0, 0),
-            this,
-            4,
-            2,
-            "Hanji");
+            this);
 
         enemies.add(newEnemy);
         sprites.add(newEnemy);
