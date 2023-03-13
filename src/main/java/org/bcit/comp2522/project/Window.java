@@ -65,7 +65,7 @@ public class Window extends PApplet {
       ));
     }
     sprites.addAll(enemies);
-    sprites.add(player);
+    //sprites.add(player);
     sprites.add(wall);
   }
 
@@ -110,10 +110,27 @@ public class Window extends PApplet {
 
     } else if (state == 4){
       menu4.displayMenu(state,60);
-      if ( mousePressed  && (mouseButton == LEFT)
-              && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244))
-        || mousePressed  && (mouseButton == LEFT)
-              && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 299 && mouseY <= 344)) ){
+      if ( mousePressed  && (mouseButton == LEFT) && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244))){
+        player = new Speedy(new PVector(this.width/2,this.height/2),
+                new PVector(0,1),
+                minSize + 1,
+                5f,
+                new Color(0,255,0),
+                this, 5, 2, 1,
+                "speedy");
+        sprites.add(player);
+        background(0);
+        state = 1;
+      }
+        if( mousePressed  && (mouseButton == LEFT) && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 299 && mouseY <= 344))){
+          player = new Tank(new PVector(this.width/2,this.height/2),
+                  new PVector(0,1),
+                  minSize + 1,
+                  0.5f,
+                  new Color(0,255,0),
+                  this, 50, 2, 1,
+                  "Tank");
+          sprites.add(player);
         background(0);
         state = 1;
         //To get hovering just do above if statement but don't check for mousePressed
