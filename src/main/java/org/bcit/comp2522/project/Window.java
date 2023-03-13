@@ -10,6 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Window extends PApplet {
+  final static int ENEM_STANDARD_MAX = 20;
   ArrayList<Sprite> sprites;
   ArrayList<Enemy_Base> enemies;
   Player player;
@@ -19,6 +20,8 @@ public class Window extends PApplet {
   int minSize = 15;
   int maxSize = 20;
   int state = 0;
+
+
 
   public void settings() {
     size(500, 500);
