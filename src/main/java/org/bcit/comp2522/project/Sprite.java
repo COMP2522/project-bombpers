@@ -6,12 +6,10 @@ import java.awt.*;
 
 public abstract class Sprite implements Collidable, Movable, Drawable {
   protected int health;
-
   protected int damage;
   protected PVector position;
   protected PVector direction;
   protected Color color;
-
   protected float size;
   protected int XPosition;
   protected int YPosition;
