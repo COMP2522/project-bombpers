@@ -22,6 +22,8 @@ public class Window extends PApplet {
 
   public void settings() {
     size(500, 500);
+    // This will make the game fullscreen however, it will make the game lag
+//    fullScreen();
   }
 
 /*  public void mousePressed() {
