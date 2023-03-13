@@ -21,8 +21,6 @@ public class Window extends PApplet {
   int maxSize = 20;
   int state = 0;
 
-
-
   public void settings() {
     size(500, 500);
   }
