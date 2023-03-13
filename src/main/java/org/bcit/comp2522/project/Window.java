@@ -33,9 +33,9 @@ public class Window extends PApplet {
   Random rngsus = new Random();
 
   public void settings() {
-    size(500, 500);
+//    size(500, 500);
     // This will make the game fullscreen however, it will make the game lag
-//    fullScreen();
+    fullScreen();
   }
 
 /*  public void mousePressed() {
@@ -52,15 +52,6 @@ public class Window extends PApplet {
     //TODO change player constructor to match sprite class
     enemies = new ArrayList<Enemy_Base>();
     sprites = new ArrayList<Sprite>();
-//    player = new Player(
-//        new PVector(this.width / 2, this.height / 2),
-//        new PVector(0, 1),
-//        minSize + 1,
-//        1.5f,
-//        new Color(0, 255, 0),
-//        this, 5, 2, 1,
-//        "player");
-
     wall = new Wall(
         new PVector(200, 100),
         new PVector(0, 0),
@@ -68,17 +59,6 @@ public class Window extends PApplet {
         1.2f,
         new Color(60, 150, 197),
         this);
-
-//    for (int i = 0; i < numEnemies; i++) {
-//      enemies.add(new Enemy_Standard(
-//              30,
-//              new PVector(random(0, this.width), random(0, this.height)),
-//              new PVector(random(-1, 1), random(-1,1)),
-//              this
-//      ));
-//    }
-    //sprites.addAll(enemies);
-    //sprites.add(player);
     sprites.add(wall);
   }
 
