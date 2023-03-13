@@ -6,12 +6,10 @@ import java.awt.*;
 
 public abstract class Sprite implements Collidable, Movable, Drawable {
   protected int health;
-
   protected int damage;
   protected PVector position;
   protected PVector direction;
   protected Color color;
-
   protected float size;
   protected int XPosition;
   protected int YPosition;
@@ -59,7 +57,7 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
 
   public static boolean collided(Sprite a, Sprite b) {
     float distance = PVector.dist(a.getPosition(), b.getPosition());
-    if (distance <= (a.getSize() + b.getSize())) {
+    if (distance <= (a.getSize() + b.getSize()) / 1.9) {
       return true;
     }
     return false;
