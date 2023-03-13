@@ -1,10 +1,11 @@
 package org.bcit.comp2522.project;
 
+import org.bcit.comp2522.project.enemies.Enemy_Base;
 import processing.core.PVector;
 
 import java.awt.*;
 
-public class Player extends Sprite implements Comparable<Enemy>{
+public class Player extends Sprite implements Comparable<Enemy_Base>{
   private int level;
   private String name;
 
