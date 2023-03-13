@@ -21,7 +21,6 @@ public class Menu extends UI {
         w.text("Start", 160, 245);
     } else if (state == 2) {
         //resets background so screen "updates"
-
         //title
         modifyMessage(titleSize);
         //button

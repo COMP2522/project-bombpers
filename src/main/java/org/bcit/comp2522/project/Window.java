@@ -37,7 +37,7 @@ public class Window extends PApplet {
     player = new Player(
             new PVector(this.width/2,this.height/2),
             new PVector(0,1),
-            minSize + 1,
+            minSize + 2,
             2,
             new Color(0,255,0),
             this, 5, 2, 1,
@@ -87,26 +87,29 @@ public class Window extends PApplet {
         break;
     }
   }
-
+  int myScore = 0;
+int high = 0;
   public void draw() {
     Menu menu = new Menu(50, 145, "Welcome!", this);
     Menu menu2 = new Menu(30, 120, "Game Over!", this);
     Menu menu3 = new Menu(80, 120, "Paused!", this);
     Menu menu4 = new Menu(50, 120, "Pick a Character!", this);
+
+    Score score = new Score(180,30,myScore,  this);
+
     //Start Screen
     if(state == 0) {
       menu.displayMenu(state,100);
       if (mousePressed  && (mouseButton == LEFT)
               && (mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244)) {
         background(0);
-        //score needs to be 0 so it is reset everytime you restart
-        //Score score = new Score(0)
         //for the if statement that has the game animations
         mousePressed = false;
         state = 4;
+        score.setHighScore(0);
       }
 
-    } else if (state == 4){
+    } else if (state == 4){ //Pick a character
       menu4.displayMenu(state,60);
       if ( mousePressed  && (mouseButton == LEFT)
               && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244))
@@ -124,7 +127,10 @@ public class Window extends PApplet {
           state = 3;
         }
       }
+
       background(0);
+
+      score.displayScore(state);
       for (Sprite sprite : sprites) {
         sprite.update();
         sprite.draw();
@@ -144,14 +150,28 @@ public class Window extends PApplet {
           enemies.remove(enemy);
           sprites.remove(enemy);
           //player.sizeUp(enemy.size);
+          score.setCurrentScore(myScore++);
+
+          score.displayScore(state);
+
+          score.setHighScore(myScore);
+          if(myScore >= high) {
+            high = score.getHighScore();
+          }
         } else {
           //state to end
           state  = 2;
           init();
+
         }
       }
     } else if(state == 3) { //Pause screen
+      if(myScore >= score.getHighScore()) {
+        score.setHighScore(high);
+      }
       menu3.displayMenu(state,100);
+      score.displayScore(state);
+
       if (mousePressed && (mouseButton == LEFT)
               && (mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244)) {
         background(0);
@@ -164,14 +184,17 @@ public class Window extends PApplet {
     }
      else {
       //End scenario when game ends goes to end screen
-
+      if(myScore >= score.getHighScore()) {
+        score.setHighScore(high);
+      }
       menu2.displayMenu(state,90);
+      score.displayScore(state);
+
       if (mousePressed  && (mouseButton == LEFT)
               && (mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244)) {
         background(0);
-
-        //score needs to be 0 so it si reset everytime you restart
-        //score = 0;
+      // reset score to 0
+        myScore = 0;
         //for the if statement that has the game animations
         state = 1;
       }
