@@ -14,6 +14,7 @@ public class Window extends PApplet {
   ArrayList<Enemy_Base> enemies;
   Player player;
   Wall wall;
+  private Background background;
   int numEnemies = 0;
   int maxEnemies = 10;
   int minSize = 15;
@@ -22,6 +23,8 @@ public class Window extends PApplet {
 
   public void settings() {
     size(500, 500);
+    // This will make the game fullscreen however, it will make the game lag
+//    fullScreen();
   }
 
 /*  public void mousePressed() {
@@ -30,6 +33,8 @@ public class Window extends PApplet {
 
   public void setup() {
     this.init();
+    // Create the background object
+    background = new Background(this);
   }
 
   public void init() {
@@ -95,6 +100,7 @@ public class Window extends PApplet {
     Menu menu2 = new Menu(30, 120, "Game Over!", this);
     Menu menu3 = new Menu(80, 120, "Paused!", this);
     Menu menu4 = new Menu(50, 120, "Pick a Character!", this);
+    background.draw();
     //Start Screen
     if(state == 0) {
       menu.displayMenu(state,100);
@@ -126,7 +132,8 @@ public class Window extends PApplet {
           state = 3;
         }
       }
-      background(0);
+      // this was over writing and making the whole backyard black
+//      background(0);
       for (Sprite sprite : sprites) {
         sprite.update();
         sprite.draw();
