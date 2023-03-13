@@ -51,14 +51,14 @@ public class Window extends PApplet {
     //TODO change player constructor to match sprite class
     enemies = new ArrayList<Enemy_Base>();
     sprites = new ArrayList<Sprite>();
-    player = new Player(
-        new PVector(this.width / 2, this.height / 2),
-        new PVector(0, 1),
-        minSize + 1,
-        1.5f,
-        new Color(0, 255, 0),
-        this, 5, 2, 1,
-        "player");
+//    player = new Player(
+//        new PVector(this.width / 2, this.height / 2),
+//        new PVector(0, 1),
+//        minSize + 1,
+//        1.5f,
+//        new Color(0, 255, 0),
+//        this, 5, 2, 1,
+//        "player");
 
     wall = new Wall(
         new PVector(200, 100),
@@ -77,7 +77,7 @@ public class Window extends PApplet {
 //      ));
 //    }
     //sprites.addAll(enemies);
-    sprites.add(player);
+    //sprites.add(player);
     sprites.add(wall);
   }
 
