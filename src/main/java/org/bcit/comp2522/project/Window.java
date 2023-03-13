@@ -25,15 +25,17 @@ public class Window extends PApplet {
   private static int curr_enem_standard = 0;
   private static int curr_enem_fast = 0;
   private static int curr_enem_slow = 0;
+  private static int myScore = 0;
+  private static int high = 0;
   ArrayList<Sprite> sprites;
   ArrayList<Enemy_Base> enemies;
   Player player;
   Wall wall;
   private Background background;
-  int minSize = 15;
-  int maxSize = 20;
-  int state = 0;
-  Random rngsus = new Random();
+  private int minSize = 15;
+  private int maxSize = 20;
+  private int state = 0;
+  private Random rngsus = new Random();
 
   public void settings() {
     size(500, 500);
@@ -85,8 +87,7 @@ public class Window extends PApplet {
     }
   }
 
-  int myScore = 0;
-  int high = 0;
+
 
   public void draw() {
     Menu menu = new Menu(50, 145, "Welcome!", this);
@@ -122,7 +123,7 @@ public class Window extends PApplet {
         background(0);
         state = 1;
       }
-        if( mousePressed  && (mouseButton == LEFT) && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 299 && mouseY <= 344))){
+      if( mousePressed  && (mouseButton == LEFT) && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 299 && mouseY <= 344))){
           player = new Tank(new PVector(this.width/2,this.height/2),
                   new PVector(0,1),
                   50,
@@ -171,15 +172,20 @@ public class Window extends PApplet {
         if (player.compareTo(enemyBase) > 0) {
           if (enemyBase instanceof Enemy_Standard) {
             curr_enem_standard--;
+            // All enemy types are instances of Enemy_Standard
+            // So all subtypes will have +1 score from base type
+            score.setCurrentScore(++myScore);
           } if (enemyBase instanceof Enemy_Fast) {
             curr_enem_fast--;
+            score.setCurrentScore(++myScore);
           } if (enemyBase instanceof Enemy_Slow) {
             curr_enem_slow--;
+            myScore += 2;
+            score.setCurrentScore(myScore);
           }
           enemies.remove(enemyBase);
           sprites.remove(enemyBase);
           //player.sizeUp(enemy.size);
-          score.setCurrentScore(myScore++);
           score.displayScore(state);
           score.setHighScore(myScore);
           if (myScore >= high) {
@@ -195,16 +201,15 @@ public class Window extends PApplet {
         PVector position = new PVector(random(0, width), random(0, height));
         PVector direction = new PVector(random(-1, 1), random(-1, 1));
 
+        // Determine which enemy type to spawn
         int spawnType = rngsus.nextInt(ENEM_TYPES);
         while (
             (spawnType == 0 && curr_enem_standard >= ENEM_STANDARD_MAX) ||
             (spawnType == 1 && curr_enem_fast >= ENEM_FAST_MAX) ||
             (spawnType == 2 && curr_enem_slow >= ENEM_SLOW_MAX)
         ) {
-          //System.out.println("Reroll");
           spawnType = rngsus.nextInt(ENEM_TYPES);
         }
-        //System.out.println("Spawn Type = " + spawnType);
         if (spawnType == 0) {
           Enemy_Standard newEnemy = new Enemy_Standard(
               position,
