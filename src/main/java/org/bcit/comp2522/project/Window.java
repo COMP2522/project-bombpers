@@ -7,6 +7,7 @@ import org.bcit.comp2522.project.enemies.Enemy_Standard;
 import java.util.Random;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 
@@ -125,14 +126,16 @@ public class Window extends PApplet {
       }
     } else if (state == 4){ //Pick a character
       menu4.displayMenu(state,60);
+      PImage characterSprite = loadImage("../img/idle_01.png");
       if ( mousePressed  && (mouseButton == LEFT) && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244))){
         player = new Speedy(new PVector(this.width/2,this.height/2),
                 new PVector(0,1),
-                minSize + 1,
-                5f,
+                50,
+                2.5f,
                 new Color(0,255,0),
                 this, 5, 2, 1,
-                "speedy");
+                "speedy",
+                characterSprite);
         sprites.add(player);
         background(0);
         state = 1;
@@ -140,11 +143,12 @@ public class Window extends PApplet {
         if( mousePressed  && (mouseButton == LEFT) && ((mouseX >= 120 && mouseX < 312) && (mouseY >= 299 && mouseY <= 344))){
           player = new Tank(new PVector(this.width/2,this.height/2),
                   new PVector(0,1),
-                  minSize + 1,
+                  50,
                   0.5f,
                   new Color(0,255,0),
                   this, 50, 2, 1,
-                  "Tank");
+                  "Tank",
+                  characterSprite);
           sprites.add(player);
         background(0);
         state = 1;
