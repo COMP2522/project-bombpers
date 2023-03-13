@@ -33,9 +33,9 @@ public class Window extends PApplet {
   Random rngsus = new Random();
 
   public void settings() {
-//    size(500, 500);
+    size(500, 500);
     // This will make the game fullscreen however, it will make the game lag
-    fullScreen();
+//    fullScreen();
   }
 
 /*  public void mousePressed() {
