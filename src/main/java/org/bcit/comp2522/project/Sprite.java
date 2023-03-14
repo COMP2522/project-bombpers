@@ -117,6 +117,7 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   public void setSize(int size) {
     this.size = size;
   }
+  public void setPosition(PVector cord) {this.position = cord;}
 
   public int getXPosition() {
     return XPosition;
