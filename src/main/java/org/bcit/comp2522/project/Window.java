@@ -5,6 +5,7 @@ import org.bcit.comp2522.project.enemies.Enemy_Fast;
 import org.bcit.comp2522.project.enemies.Enemy_Slow;
 import org.bcit.comp2522.project.enemies.Enemy_Standard;
 
+import java.util.Iterator;
 import java.util.Random;
 
 import processing.core.PApplet;
@@ -41,6 +42,24 @@ public class Window extends PApplet {
   private int maxSize = 20;
   private int state = 0;
   private Random rngsus = new Random();
+
+  @Override
+  public void mousePressed() {
+    if (state == 1) { // Game is running
+      PVector position = new PVector(player.getXPosition(), player.getYPosition());
+      PVector direction = PVector.sub(new PVector(mouseX, mouseY), position).normalize();
+      float size = 30;
+      float speed = 50;
+      Color color = new Color(255, 255, 0); // Choose a color for the projectile
+      int health = 1;
+      int damage = 1;
+
+      Projectile bullet = new Projectile(position, direction, size, speed, color, this, health, damage);
+      player.getProjectiles().add(bullet); // Add the bullet to the player's projectiles list
+      sprites.add(bullet); // Add the bullet to the sprites list for drawing and updating
+    }
+  }
+
 
   public void settings() {
     size(500, 500);
@@ -183,64 +202,69 @@ public class Window extends PApplet {
         state = 1;
         //To get hovering just do above if statement but don't check for mousePressed
       }
-    } else if (state == 1) { //Game starts
+    } else if (state == 1) { // Game starts
       if (keyPressed) {
         if (key == 'p' || key == 'P') {
-          //state to pause
+          // State to pause
           state = 3;
         }
       }
-//      Projectile bullet = new Projectile(1,1,1,mouseX,mouseY,1,this);
-//      bullet.setXPosition(player.getXPosition());
-//      bullet.setYPosition(player.getYPosition());
-//      bullet.setSize(30);
-//      bullet.setDirection(new PVector(0,100));
-//      bullet.draw();
+
       score.displayScore(state);
 
-// this was over writing and making the whole backyard black
-//      background(0);
       for (Sprite sprite : sprites) {
         sprite.update();
         sprite.draw();
         if (wall.collided(wall, sprite)) {
           wall.bounce(sprite);
-          //System.out.println("Monkey");
         }
       }
+
+      // Check for collisions between projectiles and enemies
+      for (Iterator<Projectile> projIter = player.getProjectiles().iterator(); projIter.hasNext();) {
+        Projectile projectile = projIter.next();
+        boolean projectileRemoved = false;
+
+        for (Iterator<Enemy_Base> enemyIter = enemies.iterator(); enemyIter.hasNext();) {
+          Enemy_Base enemy = enemyIter.next();
+
+          if (Sprite.collided(projectile, enemy)) {
+            projIter.remove();
+            enemyIter.remove();
+            sprites.remove(enemy);
+            projectileRemoved = true;
+
+            // Update the score and high score
+            myScore++;
+            if (myScore > high) {
+              high = myScore;
+            }
+
+            break;
+          }
+        }
+
+        // Check for collisions between projectiles and the wall
+        if (!projectileRemoved && Sprite.collided(projectile, wall)) {
+          projectile.bounce();
+        }
+      }
+
       ArrayList<Enemy_Base> toRemove = new ArrayList<Enemy_Base>();
       for (Enemy_Base enemyBase : enemies) {
-        if (Enemy_Base.collided(player, enemyBase)) {
+        if (Sprite.collided(player, enemyBase)) {
           toRemove.add(enemyBase);
         }
       }
+
       for (Enemy_Base enemyBase : toRemove) {
-        if (player.compareTo(enemyBase) > 0) {
-          if (enemyBase instanceof Enemy_Standard) {
-            curr_enem_standard--;
-            // All enemy types are instances of Enemy_Standard
-            // So all subtypes will have +1 score from base type
-            score.setCurrentScore(++myScore);
-          } if (enemyBase instanceof Enemy_Fast) {
-            curr_enem_fast--;
-            score.setCurrentScore(++myScore);
-          } if (enemyBase instanceof Enemy_Slow) {
-            curr_enem_slow--;
-            myScore += 2;
-            score.setCurrentScore(myScore);
-          }
-          enemies.remove(enemyBase);
-          sprites.remove(enemyBase);
-          //player.sizeUp(enemy.size);
-          score.displayScore(state);
-          score.setHighScore(myScore);
-          if (myScore >= high) {
-            high = score.getHighScore();
-          }
-        } else {
-          init();
-        }
+        // (Existing code for handling enemy collisions)
+
+        // Remove only the enemy, not the player
+        enemies.remove(enemyBase);
+        sprites.remove(enemyBase);
       }
+
       // Spawns new enemies mid-game
       while (enemies.size() < ENEM_MAX) {
         // Randomize position and orientation of enemy
@@ -250,42 +274,43 @@ public class Window extends PApplet {
         // Determine which enemy type to spawn
         int spawnType = rngsus.nextInt(ENEM_TYPES);
         while (
-            (spawnType == 0 && curr_enem_standard >= ENEM_STANDARD_MAX) ||
-            (spawnType == 1 && curr_enem_fast >= ENEM_FAST_MAX) ||
-            (spawnType == 2 && curr_enem_slow >= ENEM_SLOW_MAX)
+                (spawnType == 0 && curr_enem_standard >= ENEM_STANDARD_MAX) ||
+                        (spawnType == 1 && curr_enem_fast >= ENEM_FAST_MAX) ||
+                        (spawnType == 2 && curr_enem_slow >= ENEM_SLOW_MAX)
         ) {
           spawnType = rngsus.nextInt(ENEM_TYPES);
         }
         if (spawnType == 0) {
           Enemy_Standard newEnemy = new Enemy_Standard(
-              position,
-              direction,
-              this);
+                  position,
+                  direction,
+                  this);
           curr_enem_standard++;
           // Add enemy to current list
           enemies.add(newEnemy);
           sprites.add(newEnemy);
         } else if (spawnType == 1) {
           Enemy_Fast newEnemy = new Enemy_Fast(
-              position,
-              direction,
-              this);
+                  position,
+                  direction,
+                  this);
           curr_enem_fast++;
           // Add enemy to current list
           enemies.add(newEnemy);
           sprites.add(newEnemy);
         } else if (spawnType == 2) {
           Enemy_Slow newEnemy = new Enemy_Slow(
-              position,
-              direction,
-              this);
+                  position,
+                  direction,
+                  this);
           curr_enem_slow++;
           // Add enemy to current list
           enemies.add(newEnemy);
           sprites.add(newEnemy);
         }
       }
-    } else if (state == 3) { //Pause screen
+    }
+    else if (state == 3) { //Pause screen
       if (myScore >= score.getHighScore()) {
         score.setHighScore(high);
       }

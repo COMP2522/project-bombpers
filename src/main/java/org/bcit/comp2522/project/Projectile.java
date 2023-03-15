@@ -1,17 +1,17 @@
 package org.bcit.comp2522.project;
 
+import processing.core.PVector;
+
 import java.awt.*;
 
 public class Projectile extends Sprite {
-  protected int speed;
+  protected float speed;
 
-  protected int size;
+  protected float size;
   protected int damage;
   protected Window w;
-  public Projectile(int health, int damage, int size, int xPosition, int yPosition, int speed, Window window) {
-    super(health, damage, size, xPosition, yPosition);
-    this.speed = speed;
-    w = window;
+  public Projectile(PVector position, PVector direction, float size, float speed, Color color, Window window, int health, int damage) {
+    super(position, direction, size, speed, color, window, health, damage);
   }
 
   /**
@@ -20,7 +20,7 @@ public class Projectile extends Sprite {
    */
   @Override
   public void collide(Sprite one, Sprite two) {
-    //TODO: Implement this method
+    //TODO: Implement collision logic
   }
 
   /**
@@ -28,7 +28,7 @@ public class Projectile extends Sprite {
    */
   @Override
   public void compareTo() {
-    //TODO: Implement this method
+    //TODO: Implement comparison logic, if needed
   }
 
   /**
@@ -36,9 +36,11 @@ public class Projectile extends Sprite {
    */
   @Override
   public void draw() {
-//    w.noStroke();  // disable stroke
-//    w.fill(color.getRGB());  // set fill color
-//    w.ellipse(position.x, position.y, size, size);
+    // Draw the projectile
+    window.pushStyle();
+    window.fill(color.getRGB());
+    window.ellipse(position.x, position.y, size, size);
+    window.popStyle();
   }
 
   /**
@@ -46,14 +48,15 @@ public class Projectile extends Sprite {
    */
   @Override
   public void move() {
-    //TODO: Implement this method
+    position.add(direction.copy().mult(speed));
+    bounce();
   }
 
   private void disappear() {
     //TODO: Implement this method
   }
 
-  public int getSpeed() {
+  public float getSpeed() {
     return speed;
   }
 
