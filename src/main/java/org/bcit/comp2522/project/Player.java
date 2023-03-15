@@ -1,12 +1,12 @@
 package org.bcit.comp2522.project;
 
-import org.bcit.comp2522.project.enemies.Enemy_Base;
+import org.bcit.comp2522.project.enemies.Enemy;
 import processing.core.PImage;
 import processing.core.PVector;
 
 import java.awt.*;
 
-public class Player extends Sprite implements Comparable<Enemy_Base>{
+public class Player extends Sprite implements Comparable<Enemy>{
   private int level;
   private String name;
   private PImage characterSprite;

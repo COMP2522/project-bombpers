@@ -1,8 +1,8 @@
 package org.bcit.comp2522.project;
 
+import java.awt.Color;
 import processing.core.PVector;
 
-import java.awt.*;
 
 /**
  * Class represents a wall concept.
@@ -15,14 +15,19 @@ public class Wall extends Sprite {
   /**
    * Makes a wall from the parent sprite.
    *
-   * @param position the position
+   * @param position  the position
    * @param direction the direction
-   * @param size the size
-   * @param speed the speed
-   * @param color the color
-   * @param window the window it's in
+   * @param size      the size
+   * @param speed     the speed
+   * @param color     the color
+   * @param window    the window it's in
    */
-  public Wall(PVector position, PVector direction, float size, float speed, Color color, Window window) {
+  public Wall(PVector position,
+              PVector direction,
+              float size,
+              float speed,
+              Color color,
+              Window window) {
     super(position, direction, size, speed, color, window);
   }
 
@@ -36,15 +41,6 @@ public class Wall extends Sprite {
     window.ellipse(this.position.x, this.position.y, size, size);
     window.popStyle();
   }
-  public int compareTo(Sprite enemy) {
-    return 0;
-  }
-
-  public void bounce(Sprite o) {
-    if (this.collided(this, o)) {
-      o.direction.rotate(window.HALF_PI);
-    }
-  }
 
 
   @Override
@@ -57,8 +53,26 @@ public class Wall extends Sprite {
 
   }
 
+  public int compareTo(Sprite enemy) {
+    return 0;
+  }
+
   @Override
   public void move() {
 
   }
+
+
+
+  /**
+   * Bounces other sprites off of the Wall.
+   *
+   * @param o the object to bounce off of the wall
+   */
+  public void bounce(Sprite o) {
+    if (collided(this, o)) {
+      o.direction.rotate(window.HALF_PI);
+    }
+  }
+
 }
