@@ -5,18 +5,12 @@ import processing.core.PImage;
 import processing.core.PVector;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Player extends Sprite implements Comparable<Enemy_Base>{
   private int level;
   private String name;
   private PImage characterSprite;
   private final float resize = 0.6f;
-  // Add an ArrayList of Projectiles
-  private ArrayList<Projectile> projectiles;
-  private final float projectileSize = 5.0f;
-  private final float projectileSpeed = 3.0f;
-  private final Color projectileColor = new Color(0, 255, 0);
 
   public Player(PVector position, PVector direction,
                 float size, float speed, Color color,
@@ -26,11 +20,6 @@ public class Player extends Sprite implements Comparable<Enemy_Base>{
     this.level = level;
     this.name = name;
     this.characterSprite = characterSprite;
-    this.projectiles = new ArrayList<>();
-  }
-
-  public ArrayList<Projectile> getProjectiles() {
-    return projectiles;
   }
 
   public int getLevel() {
@@ -74,9 +63,6 @@ public class Player extends Sprite implements Comparable<Enemy_Base>{
     window.image(characterSprite, position.x, position.y, size * resize, size * resize);
 //    window.fill(color.getRGB());
 //    window.ellipse(position.x, position.y, size, size);
-    for (Projectile p : projectiles) {
-      p.draw();
-    }
   }
 
   /**
@@ -97,40 +83,15 @@ public class Player extends Sprite implements Comparable<Enemy_Base>{
       if (window.key == 'd' || window.key == 'D') {
         position.x += speed;
       }
-      if (window.mousePressed && window.mouseButton == window.LEFT) {
-        aim();
-        System.out.println("detected");
-      }
-    }
-    for (Projectile p : projectiles) {
-      p.move();
     }
   }
 
   private void aim(){
-    // Determine the direction the player is aiming by getting the mouse position relative to the player position
-    PVector aimDirection = new PVector(window.mouseX - position.x, window.mouseY - position.y);
-    aimDirection.normalize();
-    System.out.println("aimed");
-    shoot(aimDirection);
-    System.out.println("shot");
+    //TODO: Implement this method
   }
 
-  private void shoot(PVector aimDirection) {
-    // Create a new Projectile and add it to the projectiles ArrayList
-    Projectile newProjectile = new Projectile(
-            position.copy(),
-            aimDirection,
-            projectileSize,
-            projectileSpeed,
-            projectileColor,
-            window,
-            1,
-            1
-    );
-    System.out.println("added");
-    projectiles.add(newProjectile);
-    System.out.println("added to arraylist");
+  private void shoot(){
+    //TODO: Implement this method
   }
 
   @Override
