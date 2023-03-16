@@ -2,27 +2,32 @@ package org.bcit.comp2522.project;
 
 import processing.core.PApplet;
 import processing.core.PImage;
-import processing.core.PVector;
 
-import java.util.ArrayList;
 
+/**
+ * Background class - is a child of the Drawable interface. Draws the background on the screen.
+ */
 public class Background implements Drawable {
-  private PApplet p;
-  private PImage backgroundImage;
+  private final PApplet pattern;
+  private final PImage backgroundImage;
 
-  public Background(PApplet p) {
-    this.p = p;
+  /**
+   * Constructor for Background.
+   *
+   * @param pattern the pattern to draw on screen
+   */
+  public Background(PApplet pattern) {
+    this.pattern = pattern;
 
     // Load the dirt texture image
-    backgroundImage = p.loadImage("../img/bg3.png");
+    backgroundImage = pattern.loadImage("../img/bg3.png");
 
   }
 
   @Override
   public void draw() {
-
     // Draw the background image
-    p.image(backgroundImage, 0, 0, p.width, p.height);
+    pattern.image(backgroundImage, 0, 0, pattern.width, pattern.height);
 
   }
 }
