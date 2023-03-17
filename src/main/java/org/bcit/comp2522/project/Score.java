@@ -1,13 +1,25 @@
 package org.bcit.comp2522.project;
 
-public class Score extends UI {
+/**
+ * Score class - is a child of the UI class.
+ */
+public class Score extends UserInterface {
   private int highScore;
   private int currentScore;
-private Window w;
-  public Score(int xPos, int yPos, int score, Window window) {
-    super(xPos, yPos);
+  private final Window window;
+
+  /**
+   * Score constructor.
+   *
+   * @param positionX x position of the score
+   * @param positionY y position of the score
+   * @param score     current score
+   * @param window    window the score is in
+   */
+  public Score(int positionX, int positionY, int score, Window window) {
+    super(positionX, positionY);
     currentScore = score;
-    w = window;
+    this.window = window;
   }
 
   public int getHighScore() {
@@ -22,17 +34,22 @@ private Window w;
   public int getCurrentScore() {
     return currentScore;
   }
-  public void displayScore(int state){
+
+  /**
+   * Displays the score.
+   *
+   * @param state - the state of the game
+   */
+  public void displayScore(int state) {
     if (state == 1) {
-      w.textSize(30);
-      w.fill(255, 255, 0);
-      w.text("Score: " + currentScore, getXPos(), getYPos());
-    }
-    else{
-      w.textSize(60);
-      w.fill(255, 255, 0);
-      w.text("Current Score: " + getCurrentScore(), getXPos()-130, getYPos() + 300);
-      w.text("High Score: " + getHighScore(), getXPos()-100, getYPos() + 400);
+      window.textSize(30);
+      window.fill(255, 255, 0);
+      window.text("Score: " + currentScore, getPositionX(), getPositionY());
+    } else {
+      window.textSize(60);
+      window.fill(255, 255, 0);
+      window.text("Current Score: " + getCurrentScore(), getPositionX() - 130, getPositionY() + 300);
+      window.text("High Score: " + getHighScore(), getPositionX() - 100, getPositionY() + 400);
     }
   }
 

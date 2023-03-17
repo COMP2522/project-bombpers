@@ -1,12 +1,15 @@
 package org.bcit.comp2522.project.enemies;
 
+import java.awt.Color;
 import org.bcit.comp2522.project.Sprite;
-import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
 
-import java.awt.*;
-
-public class Enemy_Base extends Sprite {
+/**
+ * Class representing the base enemy.
+ *
+ * @version 3/15/2023
+ */
+public class Enemy extends Sprite {
   protected static final String NAME_ENEM_BASE = "Modus Ponens";
   protected static final int HP_ENEM_BASE = 4;
   protected static final int DMG_ENEM_BASE = 2;
@@ -16,7 +19,11 @@ public class Enemy_Base extends Sprite {
   protected String name;
 
   // Makes easier to build constructors for subclasses
-  public Enemy_Base(){
+
+  /**
+   * Constructor for EnemyBase.
+   */
+  public Enemy() {
     this.name = NAME_ENEM_BASE;
     this.health = HP_ENEM_BASE;
     this.damage = DMG_ENEM_BASE;
@@ -28,25 +35,25 @@ public class Enemy_Base extends Sprite {
     this.direction = new PVector(0, 0);
   }
 
-//  public Enemy_Base(PVector position,
-//                    PVector direction,
-//                    float size,
-//                    float speed,
-//                    Color color,
-//                    Window window,
-//                    int health,
-//                    int damage,
-//                    String name) {
-//    super(position,
-//          direction,
-//          size,
-//          speed,
-//          color,
-//          window,
-//          health,
-//          damage);
-//    this.name = name;
-//  }
+  //  public Enemy_Base(PVector position,
+  //                    PVector direction,
+  //                    float size,
+  //                    float speed,
+  //                    Color color,
+  //                    Window window,
+  //                    int health,
+  //                    int damage,
+  //                    String name) {
+  //    super(position,
+  //          direction,
+  //          size,
+  //          speed,
+  //          color,
+  //          window,
+  //          health,
+  //          damage);
+  //    this.name = name;
+  //  }
 
   public String getName() {
     return name;
@@ -57,8 +64,10 @@ public class Enemy_Base extends Sprite {
   }
 
   /**
-   * @param one
-   * @param two
+   * Method for two Enemy Sprites colliding.
+   *
+   * @param one the first sprite
+   * @param two the second sprite
    */
   @Override
   public void collide(Sprite one, Sprite two) {
@@ -66,7 +75,7 @@ public class Enemy_Base extends Sprite {
   }
 
   /**
-   *
+   * compareTo method for EnemyBase.
    */
   @Override
   public void compareTo() {
@@ -74,7 +83,7 @@ public class Enemy_Base extends Sprite {
   }
 
   /**
-   *
+   * draws the enemy.
    */
   @Override
   public void draw() {
@@ -85,7 +94,7 @@ public class Enemy_Base extends Sprite {
 
 
   /**
-   *
+   * moves the enemy.
    */
   @Override
   public void move() {
