@@ -1,9 +1,6 @@
 package org.bcit.comp2522.project;
 
-/**
- * UI class - is a parent class for all UI elements.
- */
-public class UserInterface {
+public abstract class UserInterface {
   private int positionX;
   private int positionY;
 
@@ -12,9 +9,7 @@ public class UserInterface {
     this.positionY = positionY;
   }
 
-  private void drawUserInterface() {
-    //TODO: Implement this method
-  }
+  protected abstract void drawUserInterface();
 
   public int getPositionX() {
     return positionX;
