@@ -1,62 +1,83 @@
 package org.bcit.comp2522.project;
 
-import processing.core.PVector;
-
-import java.awt.*;
-
+/**
+ * Projectile class - is a child of the Sprite class.
+ */
 public class Projectile extends Sprite {
-  protected float speed;
 
-  protected float size;
+  protected int speed;
+  protected int size;
   protected int damage;
-  protected Window w;
-  public Projectile(PVector position, PVector direction, float size, float speed, Color color, Window window, int health, int damage) {
-    super(position, direction, size, speed, color, window, health, damage);
+  protected Window window;
+
+  /**
+   * Constructor for the Projectile class.
+   *
+   * @param health    - the health of the projectile
+   * @param damage    - the damage the projectile does
+   * @param size      - the size of the projectile
+   * @param positionX - the x position of the projectile
+   * @param positionY - the y position of the projectile
+   * @param speed     - the speed of the projectile
+   * @param window    - the window of the projectile
+   */
+  public Projectile(int health,
+                    int damage,
+                    int size,
+                    int positionX,
+                    int positionY,
+                    int speed,
+                    Window window) {
+    super(health, damage, size, positionX, positionY);
+    this.speed = speed;
+    this.window = window;
   }
 
   /**
-   * @param one
-   * @param two
+   * Checks if the projectile hits something.
+   *
+   * @param one - the first sprite to collide
+   * @param two - the second sprite to collide
    */
   @Override
   public void collide(Sprite one, Sprite two) {
-    //TODO: Implement collision logic
+    //TODO: Implement this method
   }
 
   /**
-   *
+   * Compares the projectile to the enemy.
    */
   @Override
   public void compareTo() {
-    //TODO: Implement comparison logic, if needed
+    //TODO: Implement this method
   }
 
   /**
-   *
+   * Draws the projectile.
    */
   @Override
   public void draw() {
-    // Draw the projectile
-    window.pushStyle();
-    window.fill(color.getRGB());
-    window.ellipse(position.x, position.y, size, size);
-    window.popStyle();
+  //    w.noStroke();  // disable stroke
+  //    w.fill(color.getRGB());  // set fill color
+  //    w.ellipse(position.x, position.y, size, size);
   }
 
   /**
-   *
+   * Moves the projectile.
    */
   @Override
   public void move() {
-    position.add(direction.copy().mult(speed));
-    bounce();
+    //TODO: Implement this method
   }
 
+  /**
+   * Makes the projectile disappear.
+   */
   private void disappear() {
     //TODO: Implement this method
   }
 
-  public float getSpeed() {
+  public int getSpeed() {
     return speed;
   }
 

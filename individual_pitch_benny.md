@@ -1,1 +1,1 @@
-I will be working on enemyBase types, assisting in director behavior, and balance tuning.
+I will be working on enemy types, assisting in director behavior, and balance tuning.
