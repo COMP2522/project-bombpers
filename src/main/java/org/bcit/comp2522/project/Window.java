@@ -42,7 +42,7 @@ public class Window extends PApplet {
   private int minSize = 15; // should be a local variable in the context it's currently used in.
 
   private int maxSize = 20; /*this isn't used?*/
-  private int state = 0;
+  public enum state{startMenu,pickCharacter,startGame,pause,endGame};
   private Random rngsus = new Random();
 
   /**
@@ -124,7 +124,7 @@ public class Window extends PApplet {
     }
   }
 
-
+  public state gameState = state.startMenu;
 
   /**
    * Draws everything in the window.
@@ -139,18 +139,18 @@ public class Window extends PApplet {
 
     background.draw();
     //Start Screen
-    if (state == 0) {
-      menu.displayMenu(state, 100);
+    if (gameState == state.startMenu) {
+      menu.displayMenu(gameState, 100);
       if (mousePressed && (mouseButton == LEFT)
           && (mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244)) {
         background(0);
         //for the if statement that has the game animations
         mousePressed = false;
-        state = 4;
+        gameState = state.pickCharacter;
         score.setHighScore(0);
       }
-    } else if (state == 4) { //Pick a character
-      menu4.displayMenu(state, 60);
+    } else if (gameState == state.pickCharacter) { //Pick a character
+      menu4.displayMenu( gameState, 60);
       PImage characterSprite = loadImage("../img/idle_01.png");
       if (mousePressed
           && (mouseButton == LEFT)
@@ -168,7 +168,7 @@ public class Window extends PApplet {
             characterSprite);
         sprites.add(player);
         background(0);
-        state = 1;
+        gameState = state.startGame;
       }
       if (mousePressed
           && (mouseButton == LEFT)
@@ -186,14 +186,14 @@ public class Window extends PApplet {
             characterSprite);
         sprites.add(player);
         background(0);
-        state = 1;
+        gameState = state.startGame;
         //To get hovering just do above if statement but don't check for mousePressed
       }
-    } else if (state == 1) { //Game starts
+    } else if (gameState == state.startGame) { //Game starts
       if (keyPressed) {
         if (key == 'p' || key == 'P') {
           //state to pause
-          state = 3;
+          gameState = state.pause;
         }
       }
       //      Projectile bullet = new Projectile(1,1,1,mouseX,mouseY,1,this);
@@ -203,7 +203,7 @@ public class Window extends PApplet {
       //      bullet.setDirection(new PVector(0,100));
       //      bullet.draw();
 
-      score.displayScore(state);
+      score.displayScore(gameState);
 
       // this was overwriting and making the whole backyard black
       //      background(0);
@@ -240,7 +240,7 @@ public class Window extends PApplet {
           sprites.remove(enemy);
           //player.sizeUp(enemy.size);
 
-          score.displayScore(state);
+          score.displayScore(gameState);
           score.setHighScore(myScore);
           if (myScore >= high) {
             high = score.getHighScore();
@@ -292,13 +292,13 @@ public class Window extends PApplet {
         }
       }
 
-    } else if (state == 3) { //Pause screen
+    } else if (gameState == state.pause) { //Pause screen
       if (myScore >= score.getHighScore()) {
         score.setHighScore(high);
       }
-      menu3.displayMenu(state, 100);
+      menu3.displayMenu(gameState, 100);
 
-      score.displayScore(state);
+      score.displayScore(gameState);
 
       if (mousePressed && (mouseButton == LEFT)
           && (mouseX >= 120 && mouseX < 312)
@@ -308,7 +308,7 @@ public class Window extends PApplet {
         //score needs to be 0, so it's reset everytime you restart
         //score = 0;
         //for the if statement that has the game animations
-        state = 1;
+        gameState = state.startGame;
       }
     } else {
       //End scenario when game ends goes to end screen
@@ -316,8 +316,8 @@ public class Window extends PApplet {
       if (myScore >= score.getHighScore()) {
         score.setHighScore(high);
       }
-      menu2.displayMenu(state, 90);
-      score.displayScore(state);
+      menu2.displayMenu(gameState, 90);
+      score.displayScore(gameState);
 
       if (mousePressed && (mouseButton == LEFT)
           && (mouseX >= 120 && mouseX < 312)
@@ -327,7 +327,7 @@ public class Window extends PApplet {
 
         myScore = 0;
         //for the if statement that has the game animations
-        state = 1;
+        gameState = state.startGame;
       }
     }
   }

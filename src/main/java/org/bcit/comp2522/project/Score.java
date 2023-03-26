@@ -1,5 +1,5 @@
 package org.bcit.comp2522.project;
-
+import org.bcit.comp2522.project.Window.state;
 public class Score extends UserInterface {
   private int highScore;
   private int currentScore;
@@ -32,9 +32,9 @@ public class Score extends UserInterface {
     // Implement drawing of the score elements here
   }
 
-  public void displayScore(int state) {
-    switch (state) {
-      case 1:
+  public void displayScore(state gameState) {
+    switch (gameState) {
+      case startGame:
         displayInGameScore();
         break;
       default:

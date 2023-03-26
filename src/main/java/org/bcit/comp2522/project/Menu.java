@@ -1,6 +1,8 @@
 package org.bcit.comp2522.project;
 
+import org.bcit.comp2522.project.Window.state;
 public class Menu extends UserInterface {
+
   private String message;
   private final Window window;
 
@@ -15,22 +17,22 @@ public class Menu extends UserInterface {
     // Implement drawing of the menu elements here
   }
 
-  public void displayMenu(int state, int titleSize) {
+  public void displayMenu(state gameState, int titleSize) {
     window.background(0);
     modifyMessage(titleSize);
     button();
 
-    switch (state) {
-      case 0:
+    switch (gameState) {
+      case startMenu:
         window.text("Start", 160, 245);
         break;
-      case 2:
+      case endGame:
         window.text("Restart", 140, 245);
         break;
-      case 3:
+      case pause:
         window.text("Continue", 120, 245);
         break;
-      case 4:
+      case pickCharacter:
         window.text("Speedy", 140, 240);
         button2();
         window.text("Tank", 140, 340);
