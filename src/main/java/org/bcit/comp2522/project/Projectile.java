@@ -1,5 +1,9 @@
 package org.bcit.comp2522.project;
 
+import processing.core.PVector;
+
+import java.awt.*;
+
 /**
  * Projectile class - is a child of the Sprite class.
  */
@@ -13,24 +17,23 @@ public class Projectile extends Sprite {
   /**
    * Constructor for the Projectile class.
    *
-   * @param health    - the health of the projectile
-   * @param damage    - the damage the projectile does
    * @param size      - the size of the projectile
-   * @param positionX - the x position of the projectile
-   * @param positionY - the y position of the projectile
    * @param speed     - the speed of the projectile
    * @param window    - the window of the projectile
    */
-  public Projectile(int health,
-                    int damage,
-                    int size,
-                    int positionX,
-                    int positionY,
-                    int speed,
-                    Window window) {
-    super(health, damage, size, positionX, positionY);
-    this.speed = speed;
-    this.window = window;
+//  public Projectile(int health,
+//                    int damage,
+//                    int size,
+//                    int positionX,
+//                    int positionY,
+//                    int speed,
+//                    Window window) {
+//    super(health, damage, size, positionX, positionY);
+//    this.speed = speed;
+//    this.window = window;
+//  }
+  public Projectile(PVector position, PVector direction, float size, float speed, Color color, Window window){
+    super(position, direction, size, speed, color, window);
   }
 
   /**
@@ -57,9 +60,11 @@ public class Projectile extends Sprite {
    */
   @Override
   public void draw() {
-  //    w.noStroke();  // disable stroke
-  //    w.fill(color.getRGB());  // set fill color
-  //    w.ellipse(position.x, position.y, size, size);
+
+    //    w.noStroke();  // disable stroke
+    //    w.fill(color.getRGB());  // set fill color
+    //    w.ellipse(position.x, position.y, size, size);
+
   }
 
   /**

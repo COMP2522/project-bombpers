@@ -34,15 +34,12 @@ public class EnemySlow extends EnemyStandard {
    * @param window    window the enemy is in
    */
   public EnemySlow(PVector position, PVector direction, Window window) {
-    this.name = NAME_ENEM_SLOW;
-    this.health = HP_ENEM_SLOW;
-    this.damage = DMG_ENEM_SLOW;
+    super(position, direction, window);
     this.size = SIZE_ENEM_SLOW;
     this.speed = SPEED_ENEM_SLOW;
+    this.name = "tika";
     this.color = COLOR_ENEM_SLOW;
-    this.position = position;
-    this.direction = direction;
-    this.window = window;
+    //super("Big Hanji", 6, 4, position, direction, 20f, 0.9f, new Color(230, 100, 0), window);
   }
 
   //TODO: Delete this? Not being used.
