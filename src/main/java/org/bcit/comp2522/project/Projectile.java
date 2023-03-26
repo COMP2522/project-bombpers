@@ -1,5 +1,9 @@
 package org.bcit.comp2522.project;
 
+import processing.core.PVector;
+
+import java.awt.*;
+
 /**
  * Projectile class - is a child of the Sprite class.
  */
@@ -21,16 +25,19 @@ public class Projectile extends Sprite {
    * @param speed     - the speed of the projectile
    * @param window    - the window of the projectile
    */
-  public Projectile(int health,
-                    int damage,
-                    int size,
-                    int positionX,
-                    int positionY,
-                    int speed,
-                    Window window) {
-    super(health, damage, size, positionX, positionY);
-    this.speed = speed;
-    this.window = window;
+//  public Projectile(int health,
+//                    int damage,
+//                    int size,
+//                    int positionX,
+//                    int positionY,
+//                    int speed,
+//                    Window window) {
+//    super(health, damage, size, positionX, positionY);
+//    this.speed = speed;
+//    this.window = window;
+//  }
+  public Projectile(PVector position, PVector direction, float size, float speed, Color color, Window window){
+    super(position, direction, size, speed, color, window);
   }
 
   /**

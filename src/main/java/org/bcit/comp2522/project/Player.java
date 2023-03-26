@@ -16,7 +16,9 @@ public class Player extends Sprite implements Comparable<Enemy>{
                 float size, float speed, Color color,
                 Window window, int health, int damage,
                 int level, String name, PImage characterSprite) {
-    super(position, direction, size, speed, color, window, health, damage);
+    super(position, direction, size, speed, color, window);
+    this.health = health;
+    this.damage = damage;
     this.level = level;
     this.name = name;
     this.characterSprite = characterSprite;

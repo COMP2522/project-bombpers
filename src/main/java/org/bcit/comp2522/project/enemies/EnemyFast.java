@@ -17,35 +17,12 @@ public class EnemyFast extends EnemyStandard {
   protected static final float SPEED_ENEM_FAST = 1.6f;
   protected static final Color COLOR_ENEM_FAST = new Color(0, 200, 255);
 
-  /**
-   * Constructor for EnemyFast.
-   */
-  public EnemyFast() {
-    this.name = NAME_ENEM_FAST;
-    this.health = HP_ENEM_FAST;
-    this.damage = DMG_ENEM_FAST;
+  public EnemyFast(PVector position, PVector direction,Window window) {
+    //super("Sanic the Hanji", 2, 1, position, direction, 7.5f, 1.6f, new Color(0, 200, 255), window);
+    super(position, direction, window);
     this.size = SIZE_ENEM_FAST;
     this.speed = SPEED_ENEM_FAST;
     this.color = COLOR_ENEM_FAST;
-  }
-
-  /**
-   * Constructor for EnemyFast.
-   *
-   * @param position  position of the enemy
-   * @param direction direction of the enemy
-   * @param window    window the enemy is in
-   */
-  public EnemyFast(PVector position, PVector direction, Window window) {
-    this.name = NAME_ENEM_FAST;
-    this.health = HP_ENEM_FAST;
-    this.damage = DMG_ENEM_FAST;
-    this.size = SIZE_ENEM_FAST;
-    this.speed = SPEED_ENEM_FAST;
-    this.color = COLOR_ENEM_FAST;
-    this.position = position;
-    this.direction = direction;
-    this.window = window;
   }
 
   //TODO: Delete this? Not being used.

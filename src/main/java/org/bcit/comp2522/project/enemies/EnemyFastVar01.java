@@ -1,5 +1,8 @@
 package org.bcit.comp2522.project.enemies;
 
+import org.bcit.comp2522.project.Window;
+import processing.core.PVector;
+
 /**
  * EnemyFastVar01. Class WIP.
  */
@@ -13,12 +16,11 @@ public class EnemyFastVar01 extends EnemyFast {
   /**
    * Constructor for EnemyFastVar01.
    */
-  public EnemyFastVar01() {
-    this.name = NAME_ENEM_FAST_VAR01;
-    this.health = HP_ENEM_FAST_VAR01;
-    this.damage = DMG_ENEM_FAST_VAR01;
-    this.size = SIZE_ENEM_FAST_VAR01;
-    this.speed = SPEED_ENEM_FAST_VAR01;
+  public EnemyFastVar01(PVector position, PVector direction, Window window) {
+    super(position, direction, window);
+    this.name = "Spooky Ghost Hanji";
+    this.size = 0.8f;
+    this.speed = 1.5f;
   }
 
   public void collide() {
