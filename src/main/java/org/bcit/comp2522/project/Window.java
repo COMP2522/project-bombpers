@@ -37,7 +37,7 @@ public class Window extends PApplet {
   ArrayList<Sprite> sprites;
   ArrayList<Enemy> enemies;
   Player player;
-  Wall wall;
+
   private Background background;
   private int minSize = 15; // should be a local variable in the context it's currently used in.
 
@@ -74,15 +74,6 @@ public class Window extends PApplet {
   public void init() {
     enemies = new ArrayList<>();
     sprites = new ArrayList<>();
-    wall = new Wall(
-        new PVector(200, 100),
-        new PVector(0, 0),
-        minSize + 50,
-        1.2f,
-        new Color(60, 150, 197),
-        this);
-
-    sprites.add(wall);
   }
 
   @Override
@@ -134,15 +125,18 @@ public class Window extends PApplet {
   }
 
 
+
   /**
    * Draws everything in the window.
    */
+
   public void draw() {
     Menu menu = new Menu(50, 145, "Welcome!", this);
     Menu menu2 = new Menu(30, 120, "Game Over!", this);
     Menu menu3 = new Menu(80, 120, "Paused!", this);
     Menu menu4 = new Menu(50, 120, "Pick a Character!", this);
     Score score = new Score(180, 30, myScore, this);
+
     background.draw();
     //Start Screen
     if (state == 0) {
@@ -208,6 +202,7 @@ public class Window extends PApplet {
       //      bullet.setSize(30);
       //      bullet.setDirection(new PVector(0,100));
       //      bullet.draw();
+
       score.displayScore(state);
 
       // this was overwriting and making the whole backyard black
@@ -215,15 +210,13 @@ public class Window extends PApplet {
       for (Sprite sprite : sprites) {
         sprite.update();
         sprite.draw();
-        if (Sprite.collided(wall, sprite)) { //This is a static method, Sprite should call it -Brett
-          wall.bounce(sprite);
-          //System.out.println("Monkey");
-        }
       }
+
       ArrayList<Enemy> toRemove = new ArrayList<>();
       for (Enemy enemy : enemies) {
         if (Enemy.collided(player, enemy)) {
           toRemove.add(enemy);
+
         }
       }
       for (Enemy enemy : toRemove) {
@@ -246,13 +239,16 @@ public class Window extends PApplet {
           enemies.remove(enemy);
           sprites.remove(enemy);
           //player.sizeUp(enemy.size);
+
           score.displayScore(state);
           score.setHighScore(myScore);
           if (myScore >= high) {
             high = score.getHighScore();
           }
+
         } else {
           init();
+
         }
       }
       // Spawns new enemies mid-game
@@ -295,11 +291,13 @@ public class Window extends PApplet {
           sprites.add(newEnemy);
         }
       }
+
     } else if (state == 3) { //Pause screen
       if (myScore >= score.getHighScore()) {
         score.setHighScore(high);
       }
       menu3.displayMenu(state, 100);
+
       score.displayScore(state);
 
       if (mousePressed && (mouseButton == LEFT)
@@ -314,6 +312,7 @@ public class Window extends PApplet {
       }
     } else {
       //End scenario when game ends goes to end screen
+
       if (myScore >= score.getHighScore()) {
         score.setHighScore(high);
       }
@@ -325,6 +324,7 @@ public class Window extends PApplet {
           && (mouseY >= 199 && mouseY <= 244)) {
         background(0);
         // reset score to 0
+
         myScore = 0;
         //for the if statement that has the game animations
         state = 1;
