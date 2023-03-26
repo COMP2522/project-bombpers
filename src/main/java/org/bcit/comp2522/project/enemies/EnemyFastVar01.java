@@ -1,5 +1,6 @@
 package org.bcit.comp2522.project.enemies;
 
+import org.bcit.comp2522.project.Player;
 import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
 
@@ -16,12 +17,13 @@ public class EnemyFastVar01 extends EnemyFast {
   /**
    * Constructor for EnemyFastVar01.
    */
-  public EnemyFastVar01(PVector position, PVector direction, Window window) {
-    super(position, direction, window);
-    this.name = "Spooky Ghost Hanji";
-    this.size = 0.8f;
-    this.speed = 1.5f;
+  public EnemyFastVar01(PVector position, PVector direction, Window window, Player player) {
+    super(position, direction, window, player);
+    this.name = NAME_ENEM_FAST_VAR01;
+    this.size = SIZE_ENEM_FAST_VAR01;
+    this.speed = SPEED_ENEM_FAST_VAR01;
   }
+
 
   public void collide() {
     // TODO: Ghost enemy, so ignore walls and always have straight line pathing

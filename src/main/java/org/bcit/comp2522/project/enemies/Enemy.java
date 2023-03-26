@@ -1,6 +1,8 @@
 package org.bcit.comp2522.project.enemies;
 
 import java.awt.Color;
+
+import org.bcit.comp2522.project.Player;
 import org.bcit.comp2522.project.Sprite;
 import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
@@ -12,33 +14,15 @@ import processing.core.PVector;
  */
 public class Enemy extends Sprite {
   protected String name;
+  protected Player player;
 
-  public Enemy(String name, int health, int damage, PVector position, PVector direction, float size, float speed, Color color, Window window) {
+  public Enemy(String name, int health, int damage, PVector position, PVector direction, float size, float speed, Color color, Window window, Player player) {
     super(position, direction, size, speed, color, window);
     this.name = name;
     this.health = health;
     this.damage = damage;
+    this.player = player;
   }
-
-  //  public Enemy_Base(PVector position,
-  //                    PVector direction,
-  //                    float size,
-  //                    float speed,
-  //                    Color color,
-  //                    Window window,
-  //                    int health,
-  //                    int damage,
-  //                    String name) {
-  //    super(position,
-  //          direction,
-  //          size,
-  //          speed,
-  //          color,
-  //          window,
-  //          health,
-  //          damage);
-  //    this.name = name;
-  //  }
 
   public String getName() {
     return name;
@@ -83,6 +67,11 @@ public class Enemy extends Sprite {
    */
   @Override
   public void move() {
-    //TODO: Implement this method
+    PVector directionToPlayer = PVector.sub(player.getPosition(), position);
+    directionToPlayer.normalize();
+    directionToPlayer.mult(speed);
+    direction = directionToPlayer;
+    position.add(direction);
   }
+
 }

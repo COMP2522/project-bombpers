@@ -1,6 +1,8 @@
 package org.bcit.comp2522.project.enemies;
 
 import java.awt.Color;
+
+import org.bcit.comp2522.project.Player;
 import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
 
@@ -16,33 +18,13 @@ public class EnemyFast extends EnemyStandard {
   protected static final float SIZE_ENEM_FAST = 7.5f;
   protected static final float SPEED_ENEM_FAST = 1.6f;
   protected static final Color COLOR_ENEM_FAST = new Color(0, 200, 255);
+  protected Player player;
 
-  public EnemyFast(PVector position, PVector direction,Window window) {
-    //super("Sanic the Hanji", 2, 1, position, direction, 7.5f, 1.6f, new Color(0, 200, 255), window);
-    super(position, direction, window);
+  public EnemyFast(PVector position, PVector direction, Window window, Player player) {
+    super(position, direction, window, player);
     this.size = SIZE_ENEM_FAST;
     this.speed = SPEED_ENEM_FAST;
     this.color = COLOR_ENEM_FAST;
   }
 
-  //TODO: Delete this? Not being used.
-  //  public EnemyFast(String name,
-  //                   int health,
-  //                   int damage,
-  //                   float size,
-  //                   float speed,
-  //                   Color color,
-  //                   PVector position,
-  //                   PVector direction,
-  //                   Window window) {
-  //    this.name = name;
-  //    this.health = health;
-  //    this.damage = damage;
-  //    this.size = size;
-  //    this.speed = speed;
-  //    this.color = color;
-  //    this.position = position;
-  //    this.direction = direction;
-  //    this.window = window;
-  //  }
 }
