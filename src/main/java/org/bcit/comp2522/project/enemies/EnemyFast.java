@@ -26,5 +26,4 @@ public class EnemyFast extends EnemyStandard {
     this.speed = SPEED_ENEM_FAST;
     this.color = COLOR_ENEM_FAST;
   }
-
 }

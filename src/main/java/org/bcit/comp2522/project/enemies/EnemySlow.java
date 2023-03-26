@@ -33,5 +33,4 @@ public class EnemySlow extends EnemyStandard {
     this.name = NAME_ENEM_SLOW;
     this.color = COLOR_ENEM_SLOW;
   }
-
 }

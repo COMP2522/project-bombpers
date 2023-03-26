@@ -73,5 +73,4 @@ public class Enemy extends Sprite {
     direction = directionToPlayer;
     position.add(direction);
   }
-
 }

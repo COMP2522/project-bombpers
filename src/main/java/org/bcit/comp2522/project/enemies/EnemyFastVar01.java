@@ -24,7 +24,6 @@ public class EnemyFastVar01 extends EnemyFast {
     this.speed = SPEED_ENEM_FAST_VAR01;
   }
 
-
   public void collide() {
     // TODO: Ghost enemy, so ignore walls and always have straight line pathing
   }
