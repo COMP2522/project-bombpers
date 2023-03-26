@@ -1,17 +1,13 @@
 package org.bcit.comp2522.project.enemies;
 
+import java.awt.Color;
 import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
 
-
 /**
- * Standard enemy class - is a child of the EnemyBase class.
+ * Standard enemy class - is a child of the Enemy class.
  */
 public class EnemyStandard extends Enemy {
-
-  // TODO: Default spawn parameters once things are set in place
-  public EnemyStandard() {
-  }
 
   /**
    * Constructor for EnemyStandard.
@@ -21,10 +17,9 @@ public class EnemyStandard extends Enemy {
    * @param window    the window the enemy is in
    */
   public EnemyStandard(PVector position, PVector direction, Window window) {
-    this.position = position;
-    this.direction = direction;
-    this.window = window;
+    super("Modus Ponens", 4, 2, position, direction, 10f, 1.4f, new Color(255, 0, 0), window);
   }
+
 //TODO: Delete this?
 //  public EnemyStandard(String name,
 //                       int health,

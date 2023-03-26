@@ -19,88 +19,17 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   protected float speed;
   protected Window window;
 
+  public Sprite(PVector position, PVector direction, float size, float speed, Color color, Window window) {
+    this.position = position;
+    this.direction = direction;
+    this.size = size;
+    this.speed = speed;
+    this.window = window;
+    this.color = color;
+  }
+
   public PVector getPosition() {
     return position.copy();
-  }
-
-  // For making constructors down the chain easier
-  public Sprite() {
-  }
-
-  //TODO: This should be overloaded in the Wall class. Not in Sprite.
-
-  /**
-   * Creates a wall sprite.
-   *
-   * @param position  - the position of the wall
-   * @param direction - the direction of the wall
-   * @param size      - the size of the wall
-   * @param speed     - the speed of the wall
-   * @param color     - the color of the wall
-   * @param window    - the window of the wall
-   */
-  public Sprite(PVector position,
-                PVector direction,
-                float size,
-                float speed,
-                Color color,
-                Window window) {
-    this.position = position;
-    this.direction = direction;
-    this.size = size;
-    this.speed = speed;
-    this.window = window;
-    this.color = color;
-  }
-
-
-  //TODO: This should be overloaded in the Projectile class. Not in Sprite.
-
-  /**
-   * Constructor for Projectile Sprite.
-   *
-   * @param health    - the health of the projectile
-   * @param damage    - the damage the projectile does
-   * @param size      - the size of the projectile
-   * @param positionX - the x position of the projectile
-   * @param positionY - the y position of the projectile
-   */
-  public Sprite(int health, int damage, int size, int positionX, int positionY) {
-    this.health = health;
-    this.damage = damage;
-    this.size = size;
-    this.positionX = positionX;
-    this.positionY = positionY;
-  }
-
-  /**
-   * Constructor for Sprite.
-   *
-   * @param position  - the position of the sprite
-   * @param direction - the direction of the sprite
-   * @param size      - the size of the sprite
-   * @param speed     - the speed of the sprite
-   * @param color     - the color of the sprite
-   * @param window    - the window of the sprite
-   * @param health    - the health of the sprite
-   * @param damage    - the damage the sprite does
-   */
-  public Sprite(PVector position,
-                PVector direction,
-                float size,
-                float speed,
-                Color color,
-                Window window,
-                int health,
-                int damage) {
-    this.position = position;
-    this.direction = direction;
-    this.size = size;
-    this.speed = speed;
-    this.window = window;
-    this.color = color;
-    this.health = health;
-    this.damage = damage;
   }
 
   /**
