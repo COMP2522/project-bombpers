@@ -1,13 +1,14 @@
 package org.bcit.comp2522.project;
 
-public class Score extends UI {
+public class Score extends UserInterface {
   private int highScore;
   private int currentScore;
-private Window w;
-  public Score(int xPos, int yPos, int score, Window window) {
-    super(xPos, yPos);
+  private final Window window;
+
+  public Score(int positionX, int positionY, int score, Window window) {
+    super(positionX, positionY);
     currentScore = score;
-    w = window;
+    this.window = window;
   }
 
   public int getHighScore() {
@@ -15,28 +16,43 @@ private Window w;
   }
 
   public void setHighScore(int highScore) {
-
     this.highScore = highScore;
   }
 
   public int getCurrentScore() {
     return currentScore;
   }
-  public void displayScore(int state){
-    if (state == 1) {
-      w.textSize(30);
-      w.fill(255, 255, 0);
-      w.text("Score: " + currentScore, getXPos(), getYPos());
-    }
-    else{
-      w.textSize(60);
-      w.fill(255, 255, 0);
-      w.text("Current Score: " + getCurrentScore(), getXPos()-130, getYPos() + 300);
-      w.text("High Score: " + getHighScore(), getXPos()-100, getYPos() + 400);
-    }
-  }
 
   public void setCurrentScore(int currentScore) {
     this.currentScore = currentScore;
+  }
+
+  @Override
+  protected void drawUserInterface() {
+    // Implement drawing of the score elements here
+  }
+
+  public void displayScore(int state) {
+    switch (state) {
+      case 1:
+        displayInGameScore();
+        break;
+      default:
+        displayEndGameScore();
+        break;
+    }
+  }
+
+  private void displayInGameScore() {
+    window.textSize(30);
+    window.fill(255, 255, 0);
+    window.text("Score: " + currentScore, getPositionX(), getPositionY());
+  }
+
+  private void displayEndGameScore() {
+    window.textSize(60);
+    window.fill(255, 255, 0);
+    window.text("Current Score: " + getCurrentScore(), getPositionX() - 130, getPositionY() + 300);
+    window.text("High Score: " + getHighScore(), getPositionX() - 100, getPositionY() + 400);
   }
 }

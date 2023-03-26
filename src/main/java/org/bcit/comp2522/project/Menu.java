@@ -1,79 +1,70 @@
 package org.bcit.comp2522.project;
 
-import processing.core.PApplet;
-
-public class Menu extends UI {
+public class Menu extends UserInterface {
   private String message;
-    private Window w;
-  public Menu(int xPos, int yPos, String message, Window wind) {
-    super(xPos, yPos);
+  private final Window window;
+
+  public Menu(int posX, int posY, String message, Window window) {
+    super(posX, posY);
     this.message = message;
-    this.w = wind;
+    this.window = window;
+  }
+
+  @Override
+  protected void drawUserInterface() {
+    // Implement drawing of the menu elements here
   }
 
   public void displayMenu(int state, int titleSize) {
-      w.background(0);
-    if (state == 0) {
-        //welcome message
-        modifyMessage(titleSize);
-        //button
-        button();
-        w.text("Start", 160, 245);
-    } else if (state == 2) {
-        //resets background so screen "updates"
-        //title
-        modifyMessage(titleSize);
-        //button
-        button();
-        w.text("Restart", 140, 245);
-    } else if(state == 3){
-        //resets background so screen "updates"
-        //title
-        modifyMessage(titleSize);
-        //button
-        button();
-        w.text("Continue", 120, 245);
-    } else if(state == 4){
-        //resets background so screen "updates"
-        //title
-        modifyMessage(titleSize);
-        //button
-        button();
-        w.text("Speedy", 140, 240);
-        button2();
-        w.text("Tank", 140, 340);
-    }
+    window.background(0);
+    modifyMessage(titleSize);
+    button();
 
+    switch (state) {
+      case 0:
+        window.text("Start", 160, 245);
+        break;
+      case 2:
+        window.text("Restart", 140, 245);
+        break;
+      case 3:
+        window.text("Continue", 120, 245);
+        break;
+      case 4:
+        window.text("Speedy", 140, 240);
+        button2();
+        window.text("Tank", 140, 340);
+        break;
+    }
   }
 
-    public void modifyMessage(int textSize){
-        setMessage(message);
-        String message = getMessage();
-        w.textSize(textSize);
-        w.fill(0, 408, 612);
-        w.text(getMessage(), getXPos(), getYPos());
+  private void modifyMessage(int textSize) {
+    setMessage(message);
+    String message = getMessage();
+    window.textSize(textSize);
+    window.fill(0, 408, 612);
+    window.text(message, getPositionX(), getPositionY());
+  }
 
-    }
-    public void button(){
-        w.fill(153);
-        w.rect(120, 200, 200, 55);
-        w.textSize(50);
-        w.fill(200, 0, 0);
-    }
-    public void button2(){
-        w.fill(100);
-        //xCord,yCord,width,height
-        w.rect(120, 300, 200, 55);
-        w.textSize(50);
-        w.fill(200, 0, 0);
-    }
+  private void button() {
+    window.fill(153);
+    window.rect(120, 200, 200, 55);
+    window.textSize(50);
+    window.fill(200, 0, 0);
+  }
+
+  private void button2() {
+    window.fill(100);
+    window.rect(120, 300, 200, 55);
+    window.textSize(50);
+    window.fill(200, 0, 0);
+  }
+
   public String getMessage() {
     return message;
   }
 
   public void setMessage(String message) {
-
     this.message = message;
-
   }
 }

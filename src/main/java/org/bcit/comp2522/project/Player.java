@@ -1,12 +1,12 @@
 package org.bcit.comp2522.project;
 
-import org.bcit.comp2522.project.enemies.Enemy_Base;
+import org.bcit.comp2522.project.enemies.Enemy;
 import processing.core.PImage;
 import processing.core.PVector;
 
 import java.awt.*;
 
-public class Player extends Sprite implements Comparable<Enemy_Base>{
+public class Player extends Sprite implements Comparable<Enemy>{
   private int level;
   private String name;
   private PImage characterSprite;
@@ -16,7 +16,9 @@ public class Player extends Sprite implements Comparable<Enemy_Base>{
                 float size, float speed, Color color,
                 Window window, int health, int damage,
                 int level, String name, PImage characterSprite) {
-    super(position, direction, size, speed, color, window, health, damage);
+    super(position, direction, size, speed, color, window);
+    this.health = health;
+    this.damage = damage;
     this.level = level;
     this.name = name;
     this.characterSprite = characterSprite;
@@ -70,7 +72,20 @@ public class Player extends Sprite implements Comparable<Enemy_Base>{
    */
   @Override
   public void move() {
-    //TODO: Implement this method
+    if (window.keyPressed) {
+      if (window.key == 'w' || window.key == 'W') {
+        position.y -= speed;
+      }
+      if (window.key == 'a' || window.key == 'A') {
+        position.x -= speed;
+      }
+      if (window.key == 's' || window.key == 'S') {
+        position.y += speed;
+      }
+      if (window.key == 'd' || window.key == 'D') {
+        position.x += speed;
+      }
+    }
   }
 
   private void aim(){

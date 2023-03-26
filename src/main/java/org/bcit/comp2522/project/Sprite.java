@@ -1,9 +1,12 @@
 package org.bcit.comp2522.project;
 
+import java.awt.Color;
 import processing.core.PVector;
 
-import java.awt.*;
 
+/**
+ * Sprite class - is the parent class of all classes that can move, collide, and be drawn.
+ */
 public abstract class Sprite implements Collidable, Movable, Drawable {
   protected int health;
   protected int damage;
@@ -11,19 +14,11 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   protected PVector direction;
   protected Color color;
   protected float size;
-  protected int XPosition;
-  protected int YPosition;
+  protected int positionX;
+  protected int positionY;
   protected float speed;
   protected Window window;
 
-  public PVector getPosition() {
-    return position.copy();
-  }
-
-  // For making constructors down the chain easier
-  public Sprite(){}
-
-  // Wall constructor
   public Sprite(PVector position, PVector direction, float size, float speed, Color color, Window window) {
     this.position = position;
     this.direction = direction;
@@ -32,42 +27,31 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
     this.window = window;
     this.color = color;
   }
-  /*
-  Projectile constructor
+
+  public PVector getPosition() {
+    return position.copy();
+  }
+
+  /**
+   * Checks to see if two sprites have collided.
+   *
+   * @param a the first sprite
+   * @param b the second sprite
+   * @return true if the sprites have collided, false otherwise
    */
-  public Sprite(int health, int damage, int size, int xPosition, int yPosition) {
-    this.health = health;
-    this.damage = damage;
-    this.size = size;
-    XPosition = xPosition;
-    YPosition = yPosition;
-  }
-
-  public Sprite(PVector position, PVector direction, float size, float speed, Color color, Window window,
-                int health, int damage) {
-    this.position = position;
-    this.direction = direction;
-    this.size = size;
-    this.speed = speed;
-    this.window = window;
-    this.color = color;
-    this.health = health;
-    this.damage = damage;
-  }
-
   public static boolean collided(Sprite a, Sprite b) {
     float distance = PVector.dist(a.getPosition(), b.getPosition());
-    if (distance <= (a.getSize() + b.getSize()) / 1.5) {
-      return true;
-    }
-    return false;
+    return distance <= (a.getSize() + b.getSize()) / 1.9;
   }
 
+  /**
+   * Checks to see if a sprite has collided with a wall.
+   */
   public void bounce() {
-    if (this.position.x <= 0 ||
-            this.position.x >= window.width ||
-            this.position.y <= 0 ||
-            this.position.y >= window.height) {
+    if (this.position.x <= 0
+        || this.position.x >= window.width
+        || this.position.y <= 0
+        || this.position.y >= window.height) {
       this.direction.rotate(window.HALF_PI);
     }
   }
@@ -79,6 +63,9 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
     this.position = this.getPosition().add(this.direction.copy().mult(speed));
   }
 
+  /**
+   * Draws the Sprite.
+   */
   public void draw() {
     window.pushStyle();
     window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
@@ -117,20 +104,21 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   public void setSize(int size) {
     this.size = size;
   }
+  public void setPosition(PVector cord) {this.position = cord;}
 
-  public int getXPosition() {
-    return XPosition;
+  public int getPositionX() {
+    return positionX;
   }
 
-  public void setXPosition(int XPosition) {
-    this.XPosition = XPosition;
+  public void setPositionX(int positionX) {
+    this.positionX = positionX;
   }
 
-  public int getYPosition() {
-    return YPosition;
+  public int getPositionY() {
+    return positionY;
   }
 
-  public void setYPosition(int YPosition) {
-    this.YPosition = YPosition;
+  public void setPositionY(int positionY) {
+    this.positionY = positionY;
   }
 }
