@@ -17,11 +17,7 @@ public class Projectile extends Sprite {
   /**
    * Constructor for the Projectile class.
    *
-   * @param health    - the health of the projectile
-   * @param damage    - the damage the projectile does
    * @param size      - the size of the projectile
-   * @param positionX - the x position of the projectile
-   * @param positionY - the y position of the projectile
    * @param speed     - the speed of the projectile
    * @param window    - the window of the projectile
    */

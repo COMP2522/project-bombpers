@@ -37,7 +37,7 @@ public class Window extends PApplet {
   ArrayList<Sprite> sprites;
   ArrayList<Enemy> enemies;
   Player player;
-  Wall wall;
+
   private Background background;
   private int minSize = 15; // should be a local variable in the context it's currently used in.
 
@@ -74,15 +74,6 @@ public class Window extends PApplet {
   public void init() {
     enemies = new ArrayList<>();
     sprites = new ArrayList<>();
-    wall = new Wall(
-        new PVector(200, 100),
-        new PVector(0, 0),
-        minSize + 50,
-        1.2f,
-        new Color(60, 150, 197),
-        this);
-
-    sprites.add(wall);
   }
 
   @Override
@@ -219,10 +210,6 @@ public class Window extends PApplet {
       for (Sprite sprite : sprites) {
         sprite.update();
         sprite.draw();
-        if (Sprite.collided(wall, sprite)) { //This is a static method, Sprite should call it -Brett
-          wall.bounce(sprite);
-          //System.out.println("Monkey");
-        }
       }
 
       ArrayList<Enemy> toRemove = new ArrayList<>();
