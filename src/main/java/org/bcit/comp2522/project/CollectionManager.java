@@ -21,4 +21,20 @@ public class CollectionManager {
     projectiles = new ArrayList<>();
     enemies = new ArrayList<>();
   }
+
+  public List<Sprite> getSprites() {
+    return sprites;
+  }
+
+  public List<Projectile> getProjectiles() {
+    return projectiles;
+  }
+
+  public List<Enemy> getEnemies() {
+    return enemies;
+  }
+
+  public Sprite getPlayer() {
+    return player;
+  }
 }
