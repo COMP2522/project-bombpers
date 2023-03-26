@@ -2,6 +2,7 @@ package org.bcit.comp2522.project.enemies;
 
 import java.awt.Color;
 import org.bcit.comp2522.project.Sprite;
+import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
 
 /**
@@ -10,29 +11,13 @@ import processing.core.PVector;
  * @version 3/15/2023
  */
 public class Enemy extends Sprite {
-  protected static final String NAME_ENEM_BASE = "Modus Ponens";
-  protected static final int HP_ENEM_BASE = 4;
-  protected static final int DMG_ENEM_BASE = 2;
-  protected static final float SIZE_ENEM_BASE = 10f;
-  protected static final float SPEED_ENEM_BASE = 1.4f;
-  protected static final Color COLOR_ENEM_BASE = new Color(255, 0, 0);
   protected String name;
 
-  // Makes easier to build constructors for subclasses
-
-  /**
-   * Constructor for EnemyBase.
-   */
-  public Enemy() {
-    this.name = NAME_ENEM_BASE;
-    this.health = HP_ENEM_BASE;
-    this.damage = DMG_ENEM_BASE;
-    this.size = SIZE_ENEM_BASE;
-    this.speed = SPEED_ENEM_BASE;
-    this.color = COLOR_ENEM_BASE;
-    // TODO: spawn somewhere near player
-    this.position = new PVector(0, 0);
-    this.direction = new PVector(0, 0);
+  public Enemy(String name, int health, int damage, PVector position, PVector direction, float size, float speed, Color color, Window window) {
+    super(position, direction, size, speed, color, window);
+    this.name = name;
+    this.health = health;
+    this.damage = damage;
   }
 
   //  public Enemy_Base(PVector position,
