@@ -15,7 +15,7 @@ public class EnemySlow extends EnemyStandard {
   protected static final String NAME_ENEM_SLOW = "Big Hanji";
   protected static final int HP_ENEM_SLOW = 6;
   protected static final int DMG_ENEM_SLOW = 4;
-  protected static final float SIZE_ENEM_SLOW = 20f;
+  protected static final float SIZE_ENEM_SLOW = 50f;
   protected static final float SPEED_ENEM_SLOW = 0.9f;
   protected static final Color COLOR_ENEM_SLOW = new Color(230, 100, 0);
 
@@ -32,5 +32,6 @@ public class EnemySlow extends EnemyStandard {
     this.speed = SPEED_ENEM_SLOW;
     this.name = NAME_ENEM_SLOW;
     this.color = COLOR_ENEM_SLOW;
+    this.sprite = window.loadImage("../img/eslow_idle_0.png");
   }
 }

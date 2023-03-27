@@ -19,7 +19,7 @@ public class EnemyStandard extends Enemy {
    * @param window    the window the enemy is in
    */
   public EnemyStandard(PVector position, PVector direction, Window window, Player player) {
-    super("Modus Ponens", 4, 2, position, direction, 10f, 1.4f, new Color(255, 0, 0), window, player);
+    super("Modus Ponens", 4, 2, position, direction, 50f, 1.0f, new Color(255, 0, 0), window, player, "../img/es_idle_0.png");
   }
 
 }
