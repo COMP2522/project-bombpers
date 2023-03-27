@@ -21,4 +21,5 @@ public class EnemyStandard extends Enemy {
   public EnemyStandard(PVector position, PVector direction, Window window, Player player) {
     super("Modus Ponens", 4, 2, position, direction, 50f, 1.0f, new Color(255, 0, 0), window, player, "../img/es_idle_0.png");
   }
+
 }

@@ -12,9 +12,6 @@ import processing.core.PImage;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 
-
-//import javax.swing.plaf.MenuBarUI; *unused import - consider deleting?*
-
 /**
  * Window class - is the main class of the game.
  */
