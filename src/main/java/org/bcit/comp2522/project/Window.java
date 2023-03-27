@@ -126,6 +126,7 @@ public class Window extends PApplet {
 
   public state gameState = state.startMenu;
 
+
   /**
    * Draws everything in the window.
    */
@@ -142,7 +143,7 @@ public class Window extends PApplet {
     if (gameState == state.startMenu) {
       menu.displayMenu(gameState, 100);
       if (mousePressed && (mouseButton == LEFT)
-          && (mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244)) {
+              && (mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244)) {
         background(0);
         //for the if statement that has the game animations
         mousePressed = false;
@@ -153,37 +154,37 @@ public class Window extends PApplet {
       menu4.displayMenu( gameState, 60);
       PImage characterSprite = loadImage("../img/idle_01.png");
       if (mousePressed
-          && (mouseButton == LEFT)
-          && ((mouseX >= 120
-          && mouseX < 312)
-          && (mouseY >= 199
-          && mouseY <= 244))) {
+              && (mouseButton == LEFT)
+              && ((mouseX >= 120
+              && mouseX < 312)
+              && (mouseY >= 199
+              && mouseY <= 244))) {
         player = new Speedy(new PVector((float) this.width / 2, (float) this.height / 2),
-            new PVector(0, 0),
-            50,
-            2.5f,
-            new Color(0, 255, 0),
-            this, 5, 2, 1,
-            "speedy",
-            characterSprite);
+                new PVector(0, 0),
+                50,
+                2.5f,
+                new Color(0, 255, 0),
+                this, 5, 2, 1,
+                "speedy",
+                characterSprite);
         sprites.add(player);
         background(0);
         gameState = state.startGame;
       }
       if (mousePressed
-          && (mouseButton == LEFT)
-          && ((mouseX >= 120
-          && mouseX < 312)
-          && (mouseY >= 299
-          && mouseY <= 344))) {
+              && (mouseButton == LEFT)
+              && ((mouseX >= 120
+              && mouseX < 312)
+              && (mouseY >= 299
+              && mouseY <= 344))) {
         player = new Tank(new PVector((float) this.width / 2, (float) this.height / 2),
-            new PVector(0, 0),
-            50,
-            0.5f,
-            new Color(0, 255, 0),
-            this, 50, 2, 1,
-            "Tank",
-            characterSprite);
+                new PVector(0, 0),
+                50,
+                0.5f,
+                new Color(0, 255, 0),
+                this, 50, 2, 1,
+                "Tank",
+                characterSprite);
         sprites.add(player);
         background(0);
         gameState = state.startGame;
@@ -203,7 +204,9 @@ public class Window extends PApplet {
       //      bullet.setDirection(new PVector(0,100));
       //      bullet.draw();
 
+
       score.displayScore(gameState);
+
 
       // this was overwriting and making the whole backyard black
       //      background(0);
@@ -240,7 +243,9 @@ public class Window extends PApplet {
           sprites.remove(enemy);
           //player.sizeUp(enemy.size);
 
+
           score.displayScore(gameState);
+
           score.setHighScore(myScore);
           if (myScore >= high) {
             high = score.getHighScore();
@@ -262,34 +267,29 @@ public class Window extends PApplet {
         int spawnType = rngsus.nextInt(ENEM_TYPES);
 
         while ((spawnType == 0 && curr_enem_standard >= ENEM_STANDARD_MAX)
-            || (spawnType == 1 && curr_enem_fast >= ENEM_FAST_MAX)
-            || (spawnType == 2 && curr_enem_slow >= ENEM_SLOW_MAX)) {
+                || (spawnType == 1 && curr_enem_fast >= ENEM_FAST_MAX)
+                || (spawnType == 2 && curr_enem_slow >= ENEM_SLOW_MAX)) {
 
           spawnType = rngsus.nextInt(ENEM_TYPES + 1);
 
         }
         if (spawnType == 0) {
-          EnemyStandard newEnemy = new EnemyStandard(position, direction, this);
+          EnemyStandard newEnemy = new EnemyStandard(position, direction, this, player);
           curr_enem_standard++;
-
-          // Add enemy to current list
           enemies.add(newEnemy);
           sprites.add(newEnemy);
         } else if (spawnType == 1) {
-          EnemyFast newEnemy = new EnemyFast(position, direction, this);
+          EnemyFast newEnemy = new EnemyFast(position, direction, this, player);
           curr_enem_fast++;
-
-          // Add enemy to current list
           enemies.add(newEnemy);
           sprites.add(newEnemy);
         } else if (spawnType == 2) {
-          EnemySlow newEnemy = new EnemySlow(position, direction, this);
+          EnemySlow newEnemy = new EnemySlow(position, direction, this, player);
           curr_enem_slow++;
-
-          // Add enemy to current list
           enemies.add(newEnemy);
           sprites.add(newEnemy);
         }
+
       }
 
     } else if (gameState == state.pause) { //Pause screen
@@ -300,9 +300,10 @@ public class Window extends PApplet {
 
       score.displayScore(gameState);
 
+
       if (mousePressed && (mouseButton == LEFT)
-          && (mouseX >= 120 && mouseX < 312)
-          && (mouseY >= 199 && mouseY <= 244)) {
+              && (mouseX >= 120 && mouseX < 312)
+              && (mouseY >= 199 && mouseY <= 244)) {
         background(0);
 
         //score needs to be 0, so it's reset everytime you restart
@@ -320,8 +321,8 @@ public class Window extends PApplet {
       score.displayScore(gameState);
 
       if (mousePressed && (mouseButton == LEFT)
-          && (mouseX >= 120 && mouseX < 312)
-          && (mouseY >= 199 && mouseY <= 244)) {
+              && (mouseX >= 120 && mouseX < 312)
+              && (mouseY >= 199 && mouseY <= 244)) {
         background(0);
         // reset score to 0
 

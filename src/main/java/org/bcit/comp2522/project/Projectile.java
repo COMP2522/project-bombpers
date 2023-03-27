@@ -60,10 +60,9 @@ public class Projectile extends Sprite {
    */
   @Override
   public void draw() {
-
-  //    w.noStroke();  // disable stroke
-  //    w.fill(color.getRGB());  // set fill color
-  //    w.ellipse(position.x, position.y, size, size);
+    //    w.noStroke();  // disable stroke
+    //    w.fill(color.getRGB());  // set fill color
+    //    w.ellipse(position.x, position.y, size, size);
 
   }
 
