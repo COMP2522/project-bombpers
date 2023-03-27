@@ -6,6 +6,7 @@ import org.bcit.comp2522.project.Player;
 import org.bcit.comp2522.project.Sprite;
 import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
+import processing.core.PImage;
 
 /**
  * Class representing the base enemy.
@@ -15,13 +16,16 @@ import processing.core.PVector;
 public class Enemy extends Sprite {
   protected String name;
   protected Player player;
+  protected PImage sprite;
 
-  public Enemy(String name, int health, int damage, PVector position, PVector direction, float size, float speed, Color color, Window window, Player player) {
+
+  public Enemy(String name, int health, int damage, PVector position, PVector direction, float size, float speed, Color color, Window window, Player player, String spritePath) {
     super(position, direction, size, speed, color, window);
     this.name = name;
     this.health = health;
     this.damage = damage;
     this.player = player;
+    this.sprite = window.loadImage(spritePath);
   }
 
   public String getName() {
@@ -56,9 +60,10 @@ public class Enemy extends Sprite {
    */
   @Override
   public void draw() {
-    window.noStroke();  // disable stroke
-    window.fill(color.getRGB());  // set fill color
-    window.ellipse(position.x, position.y, size, size);  // draw a circle at the enemy position
+//    window.noStroke();  // disable stroke
+//    window.fill(color.getRGB());  // set fill color
+//    window.ellipse(position.x, position.y, size, size);  // draw a circle at the enemy position
+    window.image(sprite, position.x, position.y, size, size);
   }
 
 
