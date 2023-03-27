@@ -17,7 +17,7 @@ public class menuHandler {
         System.out.println("creating menu");
         if (this.currentState == gameState.startMenu){
             menu = new Menu(50, 145, "Welcome!", this.window);
-            menu.displayMenu(this.currentState, 100);
+            //menu.displayMenu(this.currentState, 100);
             if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
                     && (this.window.mouseX >= button_left_Bound && this.window.mouseX < button_right_Bound)
                     && (this.window.mouseY >= button_top_Bound && this.window.mouseY <= button_bottom_Bound)) {

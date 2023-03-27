@@ -1,8 +1,11 @@
 package org.bcit.comp2522.project;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
+//import org.bcit.comp2522.project.enemies.Enemy;
+//import org.bcit.comp2522.project.enemies.EnemyFast;
+//import org.bcit.comp2522.project.enemies.EnemySlow;
+//import org.bcit.comp2522.project.enemies.EnemyStandard;
 import org.bcit.comp2522.project.enemies.Enemy;
 import org.bcit.comp2522.project.enemies.EnemyFast;
 import org.bcit.comp2522.project.enemies.EnemySlow;
@@ -31,9 +34,8 @@ public class Window extends PApplet {
   private static int curr_enem_slow = 0;
   private static int myScore = 0;
   private static int high = 0;
-  ArrayList<Sprite> sprites;
-  ArrayList<Enemy> enemies;
-  Player player;
+
+  CollectionManager collectionManager;
 
   private Menu menu, menu2, menu3, menu4;
   private Score score;
@@ -50,13 +52,7 @@ public class Window extends PApplet {
    */
   public void settings() {
     size(500, 500);
-    // This will make the game fullscreen however, it will make the game lag
-    //fullScreen();
   }
-
-  //  public void mousePressed() {
-  //    background(64);
-  //  }
 
   /**
    * Setup of the game.
@@ -79,8 +75,7 @@ public class Window extends PApplet {
    * Initializes the  Sprites of the game.
    */
   public void init() {
-    enemies = new ArrayList<>();
-    sprites = new ArrayList<>();
+    collectionManager = new CollectionManager();
   }
 
   @Override
@@ -125,14 +120,13 @@ public class Window extends PApplet {
       directionY++;
     }
     if (directionX != 0 || directionY != 0) {
-      player.setDirection(new PVector(directionX, directionY));
+      collectionManager.getPlayer().setDirection(new PVector(directionX, directionY));
     } else {
-      player.setDirection(new PVector(0, 0));
+      collectionManager.getPlayer().setDirection(new PVector(0, 0));
     }
   }
 
   public state gameState = state.startMenu;
-
 
   /**
    * Draws everything in the window.
@@ -144,91 +138,58 @@ public class Window extends PApplet {
     if (gameState == state.startMenu) {
       menu.displayMenu(gameState, 100);
       if (mousePressed && (mouseButton == LEFT)
-              && (mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244)) {
+          && (mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244)) {
         background(0);
         //for the if statement that has the game animations
         mousePressed = false;
         gameState = state.pickCharacter;
         score.setHighScore(0);
       }
-    } else if (gameState == state.pickCharacter) { //Pick a character
-      menu4.displayMenu( gameState, 60);
-      PImage characterSprite = loadImage("../img/idle_01.png");
+
+    } else if (gameState == state.pickCharacter ) { //Pick a character
+      menu4.displayMenu(gameState, 60);
       if (mousePressed
-              && (mouseButton == LEFT)
-              && ((mouseX >= 120
-              && mouseX < 312)
-              && (mouseY >= 199
-              && mouseY <= 244))) {
-        player = new Speedy(new PVector((float) this.width / 2, (float) this.height / 2),
-                new PVector(0, 0),
-                50,
-                2.5f,
-                new Color(0, 255, 0),
-                this, 5, 2, 1,
-                "speedy",
-                characterSprite);
-        sprites.add(player);
+          && (mouseButton == LEFT)
+          && ((mouseX >= 120
+          && mouseX < 312)
+          && (mouseY >= 199
+          && mouseY <= 244))) {
+        collectionManager.player = new Player(this);
+        collectionManager.getSprites().add(collectionManager.player);
         background(0);
         gameState = state.startGame;
       }
-      if (mousePressed
-              && (mouseButton == LEFT)
-              && ((mouseX >= 120
-              && mouseX < 312)
-              && (mouseY >= 299
-              && mouseY <= 344))) {
-        player = new Tank(new PVector((float) this.width / 2, (float) this.height / 2),
-                new PVector(0, 0),
-                50,
-                0.5f,
-                new Color(0, 255, 0),
-                this, 50, 2, 1,
-                "Tank",
-                characterSprite);
-        sprites.add(player);
-        background(0);
-        gameState = state.startGame;
-        //To get hovering just do above if statement but don't check for mousePressed
-      }
+
     } else if (gameState == state.startGame) { //Game starts
+
+      /*PImage characterSprite = loadImage("../img/idle_01.png");
+      collectionManager.player = new Player(this);
+      collectionManager.getSprites().add(collectionManager.player);*/
       if (keyPressed) {
         if (key == 'p' || key == 'P') {
           //state to pause
           gameState = state.pause;
         }
       }
-      //      Projectile bullet = new Projectile(1,1,1,mouseX,mouseY,1,this);
-      //      bullet.setXPosition(player.getXPosition());
-      //      bullet.setYPosition(player.getYPosition());
-      //      bullet.setSize(30);
-      //      bullet.setDirection(new PVector(0,100));
-      //      bullet.draw();
-
 
       score.displayScore(gameState);
 
 
-      // this was overwriting and making the whole backyard black
-      //      background(0);
-      for (Sprite sprite : sprites) {
+      for (Sprite sprite : collectionManager.getSprites()) {
         sprite.update();
         sprite.draw();
       }
 
       ArrayList<Enemy> toRemove = new ArrayList<>();
-      for (Enemy enemy : enemies) {
-        if (Enemy.collided(player, enemy)) {
+      for (Enemy enemy : collectionManager.getEnemies()) {
+        if (Enemy.collided(collectionManager.getPlayer(), enemy)) {
           toRemove.add(enemy);
-
         }
       }
       for (Enemy enemy : toRemove) {
-        if (player.compareTo(enemy) > 0) {
+        if (collectionManager.getPlayer().compareTo(enemy) > 0) {
           if (enemy instanceof EnemyStandard) {
             curr_enem_standard--;
-            // All enemy types are instances of Enemy_Standard //TODO: Should be instances of Enemy.
-            // So all subtypes will have +1 score from base type
             score.setCurrentScore(++myScore);
           }
           if (enemy instanceof EnemyFast) {
@@ -240,9 +201,8 @@ public class Window extends PApplet {
             myScore += 2;
             score.setCurrentScore(myScore);
           }
-          enemies.remove(enemy);
-          sprites.remove(enemy);
-          //player.sizeUp(enemy.size);
+          collectionManager.getEnemies().remove(enemy);
+          collectionManager.getSprites().remove(enemy);
 
 
           score.displayScore(gameState);
@@ -257,38 +217,35 @@ public class Window extends PApplet {
 
         }
       }
-      // Spawns new enemies mid-game
-      while (enemies.size() < ENEM_MAX) {
 
-        // Randomize position and orientation of enemy
-        PVector position = new PVector(random(0, width), random(0, height));
-        PVector direction = new PVector(random(-1, 1), random(-1, 1));
+      // Spawns new enemies mid-game
+      while (collectionManager.getEnemies().size() < ENEM_MAX) {
 
         // Determine which enemy type to spawn
-        int spawnType = rngsus.nextInt(ENEM_TYPES);
+        int spawnType = rngsus.nextInt(ENEM_TYPES + 1);
 
         while ((spawnType == 0 && curr_enem_standard >= ENEM_STANDARD_MAX)
-                || (spawnType == 1 && curr_enem_fast >= ENEM_FAST_MAX)
-                || (spawnType == 2 && curr_enem_slow >= ENEM_SLOW_MAX)) {
+            || (spawnType == 1 && curr_enem_fast >= ENEM_FAST_MAX)
+            || (spawnType == 2 && curr_enem_slow >= ENEM_SLOW_MAX)) {
 
           spawnType = rngsus.nextInt(ENEM_TYPES + 1);
 
         }
         if (spawnType == 0) {
-          EnemyStandard newEnemy = new EnemyStandard(position, direction, this, player);
+          Enemy newEnemy = new EnemyStandard(this, collectionManager.getPlayer());
           curr_enem_standard++;
-          enemies.add(newEnemy);
-          sprites.add(newEnemy);
+          collectionManager.getEnemies().add(newEnemy);
+          collectionManager.getSprites().add(newEnemy);
         } else if (spawnType == 1) {
-          EnemyFast newEnemy = new EnemyFast(position, direction, this, player);
+          Enemy newEnemy = new EnemyFast(this, collectionManager.getPlayer());
           curr_enem_fast++;
-          enemies.add(newEnemy);
-          sprites.add(newEnemy);
+          collectionManager.getEnemies().add(newEnemy);
+          collectionManager.getSprites().add(newEnemy);
         } else if (spawnType == 2) {
-          EnemySlow newEnemy = new EnemySlow(position, direction, this, player);
+          Enemy newEnemy = new EnemySlow(this, collectionManager.getPlayer());
           curr_enem_slow++;
-          enemies.add(newEnemy);
-          sprites.add(newEnemy);
+          collectionManager.getEnemies().add(newEnemy);
+          collectionManager.getSprites().add(newEnemy);
         }
 
       }
@@ -303,17 +260,16 @@ public class Window extends PApplet {
 
 
       if (mousePressed && (mouseButton == LEFT)
-              && (mouseX >= 120 && mouseX < 312)
-              && (mouseY >= 199 && mouseY <= 244)) {
+          && (mouseX >= 120 && mouseX < 312)
+          && (mouseY >= 199 && mouseY <= 244)) {
         background(0);
 
-        //score needs to be 0, so it's reset everytime you restart
-        //score = 0;
-        //for the if statement that has the game animations
+
+
         gameState = state.startGame;
+
       }
     } else {
-      //End scenario when game ends goes to end screen
 
       if (myScore >= score.getHighScore()) {
         score.setHighScore(high);
@@ -322,8 +278,8 @@ public class Window extends PApplet {
       score.displayScore(gameState);
 
       if (mousePressed && (mouseButton == LEFT)
-              && (mouseX >= 120 && mouseX < 312)
-              && (mouseY >= 199 && mouseY <= 244)) {
+          && (mouseX >= 120 && mouseX < 312)
+          && (mouseY >= 199 && mouseY <= 244)) {
         background(0);
         // reset score to 0
 
