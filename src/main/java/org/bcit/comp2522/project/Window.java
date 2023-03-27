@@ -12,9 +12,6 @@ import processing.core.PImage;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 
-
-//import javax.swing.plaf.MenuBarUI; *unused import - consider deleting?*
-
 /**
  * Window class - is the main class of the game.
  */
@@ -25,8 +22,8 @@ public class Window extends PApplet {
   private boolean isUpPressed = false;
   private boolean isDownPressed = false;
   private static final int ENEM_TYPES = 3;
-  private static final int ENEM_MAX = 30;
-  private static final int ENEM_STANDARD_MAX = 20;
+  private static final int ENEM_MAX = 10;
+  private static final int ENEM_STANDARD_MAX = 5;
   private static final int ENEM_FAST_MAX = 10;
   private static final int ENEM_SLOW_MAX = 5;
   private static int curr_enem_standard = 0;
@@ -37,6 +34,9 @@ public class Window extends PApplet {
   ArrayList<Sprite> sprites;
   ArrayList<Enemy> enemies;
   Player player;
+
+  private Menu menu, menu2, menu3, menu4;
+  private Score score;
 
   private Background background;
   private int minSize = 15; // should be a local variable in the context it's currently used in.
@@ -66,6 +66,13 @@ public class Window extends PApplet {
 
     // Create the background object
     background = new Background(this);
+
+    // Create the Menu Object
+    menu = new Menu(50, 145, "Welcome!", this);
+    menu2 = new Menu(30, 120, "Game Over!", this);
+    menu3 = new Menu(80, 120, "Paused!", this);
+    menu4 = new Menu(50, 120, "Pick a Character!", this);
+    score = new Score(180, 30, myScore, this);
   }
 
   /**
@@ -132,12 +139,6 @@ public class Window extends PApplet {
    */
 
   public void draw() {
-    Menu menu = new Menu(50, 145, "Welcome!", this);
-    Menu menu2 = new Menu(30, 120, "Game Over!", this);
-    Menu menu3 = new Menu(80, 120, "Paused!", this);
-    Menu menu4 = new Menu(50, 120, "Pick a Character!", this);
-    Score score = new Score(180, 30, myScore, this);
-
     background.draw();
     //Start Screen
     if (gameState == state.startMenu) {
