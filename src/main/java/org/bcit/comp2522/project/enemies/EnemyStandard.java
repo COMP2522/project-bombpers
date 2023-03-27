@@ -30,4 +30,5 @@ public class EnemyStandard extends Enemy {
     this.speed = ENEMY_SPEED;
     this.enemySprite = window.loadImage(ENEMY_SPRITE);
   }
+
 }
