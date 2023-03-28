@@ -1,10 +1,9 @@
-package org.bcit.comp2522.project.enemies;
+package org.bcit.comp2522.project;
 
 import org.bcit.comp2522.project.Sprite;
 import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
 import processing.core.PImage;
-
 
 public abstract class Enemy extends Sprite {
   protected Sprite player;
@@ -42,7 +41,6 @@ public abstract class Enemy extends Sprite {
   public void draw() {
     window.image(enemySprite, position.x, position.y, size, size);
   }
-
 
   /**
    * moves the enemy.

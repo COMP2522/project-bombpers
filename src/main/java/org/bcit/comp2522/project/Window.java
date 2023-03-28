@@ -2,14 +2,6 @@ package org.bcit.comp2522.project;
 
 import java.util.ArrayList;
 import java.util.Random;
-//import org.bcit.comp2522.project.enemies.Enemy;
-//import org.bcit.comp2522.project.enemies.EnemyFast;
-//import org.bcit.comp2522.project.enemies.EnemySlow;
-//import org.bcit.comp2522.project.enemies.EnemyStandard;
-import org.bcit.comp2522.project.enemies.Enemy;
-import org.bcit.comp2522.project.enemies.EnemyFast;
-import org.bcit.comp2522.project.enemies.EnemySlow;
-import org.bcit.comp2522.project.enemies.EnemyStandard;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;

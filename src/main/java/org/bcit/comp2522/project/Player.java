@@ -1,6 +1,6 @@
 package org.bcit.comp2522.project;
 
-//import org.bcit.comp2522.project.enemies.Enemy;
+//import org.bcit.comp2522.project.Enemy;
 import processing.core.PImage;
 import processing.core.PVector;
 
