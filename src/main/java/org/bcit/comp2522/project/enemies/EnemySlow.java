@@ -1,37 +1,31 @@
 package org.bcit.comp2522.project.enemies;
 
-import java.awt.Color;
-
-import org.bcit.comp2522.project.Player;
+import org.bcit.comp2522.project.Sprite;
 import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
 
-//TODO: Per our UML, this should be extending Enemy, not EnemyStandard. Please Fix.
+import java.util.Random;
+
 
 /**
  * Slow enemy class - is a child of the EnemyStandard class.
  */
-public class EnemySlow extends EnemyStandard {
-  protected static final String NAME_ENEM_SLOW = "Big Hanji";
-  protected static final int HP_ENEM_SLOW = 6;
-  protected static final int DMG_ENEM_SLOW = 4;
-  protected static final float SIZE_ENEM_SLOW = 50f;
-  protected static final float SPEED_ENEM_SLOW = 0.9f;
-  protected static final Color COLOR_ENEM_SLOW = new Color(230, 100, 0);
+public class EnemySlow extends Enemy {
+  public static final int ENEMY_HEALTH = 6;
+  public static final int ENEMY_DAMAGE = 4;
+  public static final float ENEMY_SIZE = 50;
+  public static final float ENEMY_SPEED = 0.6f;
+  public static final String ENEMY_SPRITE = "../img/eslow_idle_0.png";
 
-  /**
-   * Constructor for EnemySlow.
-   *
-   * @param position  position of the enemy
-   * @param direction direction of the enemy
-   * @param window    window the enemy is in
-   */
-  public EnemySlow(PVector position, PVector direction, Window window, Player player) {
-    super(position, direction, window, player);
-    this.size = SIZE_ENEM_SLOW;
-    this.speed = SPEED_ENEM_SLOW;
-    this.name = NAME_ENEM_SLOW;
-    this.color = COLOR_ENEM_SLOW;
-    this.sprite = window.loadImage("../img/eslow_idle_0.png");
+  public EnemySlow(Window window, Sprite player) {
+    super(window, player);
+    Random random = new Random();
+    int randomY = random.nextInt(window.height);
+    this.position = new PVector(window.width, randomY);
+    this.health = ENEMY_HEALTH;
+    this.damage = ENEMY_DAMAGE;
+    this.size = ENEMY_SIZE;
+    this.speed = ENEMY_SPEED;
+    this.enemySprite = window.loadImage(ENEMY_SPRITE);
   }
 }
