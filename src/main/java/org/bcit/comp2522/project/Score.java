@@ -79,7 +79,7 @@ public class Score extends UserInterface {
    */
   public void displayScore(GameState state) {
     //Depending on the state of the game, call the appropriate method to display the score
-    if (state == GameState.startGame) {
+    if (state == GameState.STARTGAME) {
         displayInGameScore();
     } else {
         displayMenuGameScore();

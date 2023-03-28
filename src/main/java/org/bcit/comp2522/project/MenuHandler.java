@@ -46,7 +46,7 @@ public class MenuHandler {
     //store the current state
     this.currentState = state;
     //if the current state is startMenu, create the startMenu
-    if (this.currentState == GameState.startMenu) {
+    if (this.currentState == GameState.STARTMENU) {
       startMenu = new Menu(50, 145, "Welcome!", this.window);
       //display the startMenu
       startMenu.displayMenu(this.currentState, 100);
@@ -57,12 +57,12 @@ public class MenuHandler {
               && (this.window.mouseY >= buttonTopBound
               && this.window.mouseY <= buttonBottomBound)) {
         this.window.mousePressed = false;
-        this.currentState = GameState.startGame;
+        this.currentState = GameState.STARTGAME;
         return currentState;
       }
       //return the start menu so that it can be continued to be displayed
-      return GameState.startMenu;
-    } else if (this.currentState == GameState.pause) {
+      return GameState.STARTMENU;
+    } else if (this.currentState == GameState.PAUSE) {
       // If the current state is pause, create the pauseMenu
       pauseMenu = new Menu(80, 120, "Paused!", this.window);
       // display the pauseMenu
@@ -74,23 +74,16 @@ public class MenuHandler {
       if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
                 && (this.window.mouseX >= 120 && this.window.mouseX < 312)
                 && (this.window.mouseY >= 199 && this.window.mouseY <= 244)) {
-        this.currentState = GameState.startGame;
+        this.currentState = GameState.STARTGAME;
         return currentState;
       }
       //return the pause menu so that it can be continued to be displayed
-      return GameState.pause;
+      return GameState.PAUSE;
     } else {
       // If the current state is endGame, create the endMenu
       endMenu = new Menu(30, 120, "Game Over!", this.window);
       endMenu.displayMenu(state, 90);
-      score.displayScore(currentState);
-      if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
-              && (this.window.mouseX >= 120 && this.window.mouseX < 312)
-              && (this.window.mouseY >= 199 && this.window.mouseY <= 244)) {
-        this.currentState = GameState.startGame;
-        return currentState;
-      }
-      return GameState.endGame;
+      return GameState.ENDGAME;
     }
   }
 }

@@ -57,22 +57,21 @@ public class Window extends PApplet {
   /**
    * Sets the score to 0.
    */
+  public PImage enemyStandardSprite;
+  public PImage enemySlowSprite;
+  public PImage enemyFastSprite;
   private static int myScore = 0;
   /**
    * Sets the high score to 0.
    */
   private static int high = 0;
-  /**
-   * Sets the player health to 5.
-   */
-  public int health = 5;
-  /**
-   * Declares a collection manager.
-   */
   CollectionManager collectionManager;
   /**
    * Declares a score variable to store the score.
    */
+  private ConcurrentLinkedQueue<Projectile> projectiles = new ConcurrentLinkedQueue<>();
+
+  private Menu menu, menu2, menu3, menu4;
   private Score score;
 
   /**
@@ -82,7 +81,7 @@ public class Window extends PApplet {
   /**
    * Declares a variable to hold the GameState to transition between states.
    */
-  public GameState  stateOfGame =  GameState.startMenu;
+  public GameState  stateOfGame =  GameState.STARTMENU;
   /**
    * Declares a menu handler to use to handel menus.
    */
@@ -105,6 +104,9 @@ public class Window extends PApplet {
   public void setup() {
     // Initialize the PLayer and collectionManager
     this.init();
+
+    noStroke();
+
     // Create the background object
     background = new Background(this);
     //Create the score object
@@ -116,6 +118,10 @@ public class Window extends PApplet {
    */
   public void init() {
     collectionManager = new CollectionManager();
+    enemyStandardSprite = loadImage(EnemyStandard.ENEMY_SPRITE);
+    enemySlowSprite = loadImage(EnemySlow.ENEMY_SPRITE);
+    enemyFastSprite = loadImage(EnemyFast.ENEMY_SPRITE);
+
     collectionManager.player = new Player(this);
     PImage characterSprite = loadImage("../img/idle_01.png");
     collectionManager.getSprites().add(collectionManager.player);
@@ -192,17 +198,30 @@ public class Window extends PApplet {
       collectionManager.getPlayer().setDirection(new PVector(0, 0));
     }
   }
+  @Override
+  public void mousePressed() {
+    if (stateOfGame == GameState.STARTGAME && mouseButton == LEFT) {
+      System.out.println("shot");
+      PVector mousePosition = new PVector(mouseX, mouseY);
+      PVector playerPosition = collectionManager.getPlayer().getPosition();
+      PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
+
+      Projectile projectile = new Projectile(this, playerPosition, direction);
+      projectiles.add(projectile);
+      collectionManager.getSprites().add(projectile);
+    }
+  }
 
   /**
    * Draws everything in the window.
    */
   public void draw() {
     // If the game is in the start menu, pause menu, or end game menu, create the menu
-    if (stateOfGame == GameState.startMenu || stateOfGame == GameState.pause
-            || stateOfGame == GameState.endGame) {
+    if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
+            || stateOfGame == GameState.ENDGAME) {
 
 
-      if (stateOfGame == GameState.startMenu || stateOfGame == GameState.endGame) {
+      if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.ENDGAME) {
         myScore = 0;
       }
 
@@ -211,7 +230,7 @@ public class Window extends PApplet {
       PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
       collectionManager.getPlayer().setPosition(originalPosition);
 
-    } else if (stateOfGame == GameState.startGame) {
+    } else if (stateOfGame == GameState.STARTGAME) {
       // If the game is in the start game state, create the game
       //Reset the score to 0
       if (myScore == 0) {
@@ -223,7 +242,7 @@ public class Window extends PApplet {
       if (keyPressed) {
         if (key == 'p' || key == 'P') {
           //state to pause
-          stateOfGame = GameState.pause;
+          stateOfGame = GameState.PAUSE;
         }
       }
       // Create the sprites and draw as well as update them
@@ -231,51 +250,59 @@ public class Window extends PApplet {
         sprite.update();
         sprite.draw();
       }
-      //Create an array list to hold the enemies that need to be removed
+
+      projectiles.removeIf(projectile -> {
+        boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width
+                || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
+        if (toRemove) {
+          collectionManager.getSprites().remove(projectile);
+        }
+        return toRemove;
+      });
+
       ArrayList<Enemy> toRemove = new ArrayList<>();
-      // Check if the player has collided with any of the enemies and remove them if they have
-      //Also decrease the health of the player
+      ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
       for (Enemy enemy : collectionManager.getEnemies()) {
-        if (Enemy.collided(collectionManager.getPlayer(), enemy)) {
-          toRemove.add(enemy);
-          health--;
-          if (health == 0) {
-            stateOfGame = GameState.endGame;
-            health = 5;
-          }
-        }
-      }
-      // Remove the enemies that have collided with the player
-      for (Enemy enemy : toRemove) {
-        if (collectionManager.getPlayer().compareTo(enemy) > 0) {
-          //Depending on the type of enemy, decrease the current number of that type of enemy
-          //and increase the score.
-          if (enemy instanceof EnemyStandard) {
-            curr_enem_standard--;
-            score.setCurrentScore(++myScore);
-          }
-          if (enemy instanceof EnemyFast) {
-            curr_enem_fast--;
-            score.setCurrentScore(++myScore);
-          }
-          if (enemy instanceof EnemySlow) {
-            curr_enem_slow--;
-            myScore += 2;
-            score.setCurrentScore(myScore);
-          }
-          // Remove the enemy from the array list to make them "disappear" (not drawn or updated)
-          collectionManager.getEnemies().remove(enemy);
-          collectionManager.getSprites().remove(enemy);
-          //Set the high score to the current score
-          // if the current score is higher than the high score
-          if (myScore >= high) {
+        for (Projectile projectile : projectiles) {
+          projectile.collide(projectile, enemy);
+          if (projectile.isDead() && enemy.isDead()) {
+            toRemove.add(enemy);
+            projectilesToRemove.add(projectile);
+            if (enemy instanceof EnemyStandard) {
+              curr_enem_standard--;
+              score.setCurrentScore(++myScore);
+            }
+            if (enemy instanceof EnemyFast) {
+              curr_enem_fast--;
+              myScore += 2;
+              score.setCurrentScore(myScore);
+            }
+            if (enemy instanceof EnemySlow) {
+              curr_enem_slow--;
+              myScore += 3;
+              score.setCurrentScore(myScore);
+            }
+            score.displayScore(stateOfGame);
             score.setHighScore(myScore);
-            high = score.getHighScore();
+            if (myScore >= high) {
+              high = score.getHighScore();
+            }
           }
+
         }
       }
+      for (Enemy enemy : toRemove) {
+        collectionManager.getEnemies().remove(enemy);
+        collectionManager.getSprites().remove(enemy);
+      }
+      for (Projectile projectile : projectilesToRemove) {
+        projectiles.remove(projectile);
+        collectionManager.getSprites().remove(projectile);
+      }
+
       // Spawns new enemies mid-game
       while (collectionManager.getEnemies().size() < ENEM_MAX) {
+
         // Determine which enemy type to spawn
         int spawnType = rngsus.nextInt(ENEM_TYPES + 1);
 
@@ -307,7 +334,7 @@ public class Window extends PApplet {
 
       }
 
-    } else if (stateOfGame == GameState.pause) {
+    } else if (stateOfGame == GameState.PAUSE) {
       // If the game is in the pause state, show the score and pause menu
       if (myScore >= score.getHighScore()) {
         score.setHighScore(myScore);
