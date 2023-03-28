@@ -31,9 +31,7 @@ public class Menu extends UserInterface {
         window.text("Continue", 120, 245);
         break;
       case 4:
-        window.text("Speedy", 140, 240);
-        button2();
-        window.text("Tank", 140, 340);
+        window.text("Begin!", 140, 240);
         break;
     }
   }
@@ -53,12 +51,6 @@ public class Menu extends UserInterface {
     window.fill(200, 0, 0);
   }
 
-  private void button2() {
-    window.fill(100);
-    window.rect(120, 300, 200, 55);
-    window.textSize(50);
-    window.fill(200, 0, 0);
-  }
 
   public String getMessage() {
     return message;

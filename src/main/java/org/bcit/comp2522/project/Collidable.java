@@ -7,4 +7,6 @@ public interface Collidable {
   void collide(Sprite one, Sprite two);
 
   void compareTo();
+
+  int compareTo(Sprite enemy);
 }

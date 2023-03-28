@@ -1,6 +1,5 @@
 package org.bcit.comp2522.project;
 
-import java.awt.Color;
 import processing.core.PVector;
 
 
@@ -12,20 +11,16 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   protected int damage;
   protected PVector position;
   protected PVector direction;
-  protected Color color;
+
   protected float size;
   protected int positionX;
   protected int positionY;
   protected float speed;
+
   protected Window window;
 
-  public Sprite(PVector position, PVector direction, float size, float speed, Color color, Window window) {
-    this.position = position;
-    this.direction = direction;
-    this.size = size;
-    this.speed = speed;
+  public Sprite(Window window) {
     this.window = window;
-    this.color = color;
   }
 
   public PVector getPosition() {
@@ -63,14 +58,24 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
     this.position = this.getPosition().add(this.direction.copy().mult(speed));
   }
 
+
   /**
    * Draws the Sprite.
    */
   public void draw() {
     window.pushStyle();
-    window.fill(this.color.getRed(), this.color.getGreen(), this.color.getBlue());
     window.ellipse(this.position.x, this.position.y, size, size);
     window.popStyle();
+  }
+
+  @Override
+  public int compareTo(Sprite enemy) {
+    if (Float.compare(this.size, enemy.getSize()) < 0) {
+      return -1;
+    } else if (Float.compare(this.size, enemy.getSize()) >= 0) {
+      return 1;
+    }
+    return 0;
   }
 
   public PVector getDirection() {
@@ -104,7 +109,10 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   public void setSize(int size) {
     this.size = size;
   }
-  public void setPosition(PVector cord) {this.position = cord;}
+
+  public void setPosition(PVector cord) {
+    this.position = cord;
+  }
 
   public int getPositionX() {
     return positionX;
