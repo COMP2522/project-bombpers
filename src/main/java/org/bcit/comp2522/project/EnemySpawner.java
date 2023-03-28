@@ -23,17 +23,14 @@ public class EnemySpawner {
   /**
    * Maximum number of slow type enemies.
    */
-  private static final int ENEM_SLOW_MAX = 5;
+  private static final int ENEM_SLOW_MAX = 25;
   /**
    * Sets the different types of enemies to start off at 0.
    */
 
-  private static final int ENEM_STANDARD = 0;
-  private static final int ENEM_FAST = 1;
-  private static final int ENEM_SLOW = 2;
-
   private Random rngsus = new Random();
   private CollectionManager collectionManager;
+  private static  int curr_enem_count;
   private static int curr_enem_standard = 0;
   private static int curr_enem_fast = 0;
   private static int curr_enem_slow = 0;
@@ -42,20 +39,21 @@ public class EnemySpawner {
 
   public EnemySpawner(CollectionManager collectionManager, Window window) {
     this.collectionManager = collectionManager;
-    this.window = window; // set the window object
+    this.window = window;
   }
 
-  public void spawnEnemy(int spawnType) {
-    switch (spawnType) {
-      case ENEM_STANDARD:
+  public void spawnEnemy() {
+    int diceRoll = rngsus.nextInt(ENEM_TYPES) + 1;
+    switch (diceRoll) {
+      case 1:
         spawnStandardEnemy();
         break;
-//      case ENEM_FAST:
-//        spawnFastEnemy();
-//        break;
-//      case ENEM_SLOW:
-//        spawnSlowEnemy();
-//        break;
+      case 2:
+        spawnFastEnemy();
+        break;
+      case 3:
+        spawnSlowEnemy();
+        break;
       default:
         System.out.println("Invalid spawn type");
         break;
@@ -63,34 +61,33 @@ public class EnemySpawner {
   }
 
   public void spawnStandardEnemy() {
-    if (curr_enem_standard < ENEM_STANDARD_MAX) {
-      Enemy newEnemy = new EnemyStandard(window, collectionManager.getPlayer()); // use the window object
-      curr_enem_standard++;
+    if (curr_enem_count < ENEM_MAX) {
+      Enemy newEnemy = new EnemyStandard(window, collectionManager.getPlayer());
+      curr_enem_count++;
       collectionManager.getEnemies().add(newEnemy);
       collectionManager.getSprites().add(newEnemy);
     }
   }
 
-//  private void spawnFastEnemy() {
-//    if (curr_enem_fast < ENEM_FAST_MAX) {
-//      Enemy newEnemy = new EnemyFast(this, collectionManager.getPlayer());
-//      curr_enem_fast++;
-//      collectionManager.getEnemies().add(newEnemy);
-//      collectionManager.getSprites().add(newEnemy);
-//    }
-//  }
-//
-//  public void spawnSlowEnemy() {
-//    if (curr_enem_slow < ENEM_SLOW_MAX) {
-//      Enemy newEnemy = new EnemySlow(this, collectionManager.getPlayer());
-//      curr_enem_slow++;
-//      collectionManager.getEnemies().add(newEnemy);
-//      collectionManager.getSprites().add(newEnemy);
-//    }
-//  }
+  private void spawnFastEnemy() {
+    if (curr_enem_count < ENEM_MAX) {
+      Enemy newEnemy = new EnemyFast(window, collectionManager.getPlayer());
+      curr_enem_count++;
+      collectionManager.getEnemies().add(newEnemy);
+      collectionManager.getSprites().add(newEnemy);
+    }
+  }
 
-  public int getRandomSpawnType() {
-    return rngsus.nextInt(ENEM_TYPES + 1);
+  public void spawnSlowEnemy() {
+    if (curr_enem_count < ENEM_MAX) {
+      Enemy newEnemy = new EnemySlow(window, collectionManager.getPlayer());
+      curr_enem_count++;
+      collectionManager.getEnemies().add(newEnemy);
+      collectionManager.getSprites().add(newEnemy);
+    }
+  }
+
+  static public void decreaseEnemCount() {
+    curr_enem_count--;
   }
 }
-
