@@ -11,7 +11,6 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   protected int damage;
   protected PVector position;
   protected PVector direction;
-
   protected float size;
   protected int positionX;
   protected int positionY;

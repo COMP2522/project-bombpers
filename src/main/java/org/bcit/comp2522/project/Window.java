@@ -2,10 +2,7 @@ package org.bcit.comp2522.project;
 
 import java.util.ArrayList;
 import java.util.Random;
-//import org.bcit.comp2522.project.enemies.Enemy;
-//import org.bcit.comp2522.project.enemies.EnemyFast;
-//import org.bcit.comp2522.project.enemies.EnemySlow;
-//import org.bcit.comp2522.project.enemies.EnemyStandard;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import org.bcit.comp2522.project.enemies.Enemy;
 import org.bcit.comp2522.project.enemies.EnemyFast;
 import org.bcit.comp2522.project.enemies.EnemySlow;
@@ -25,17 +22,20 @@ public class Window extends PApplet {
   private boolean isUpPressed = false;
   private boolean isDownPressed = false;
   private static final int ENEM_TYPES = 3;
-  private static final int ENEM_MAX = 10;
-  private static final int ENEM_STANDARD_MAX = 5;
+  private static final int ENEM_MAX = 3;
+  private static final int ENEM_STANDARD_MAX = 10;
   private static final int ENEM_FAST_MAX = 10;
   private static final int ENEM_SLOW_MAX = 5;
   private static int curr_enem_standard = 0;
   private static int curr_enem_fast = 0;
   private static int curr_enem_slow = 0;
+  public PImage enemyStandardSprite;
+  public PImage enemySlowSprite;
+  public PImage enemyFastSprite;
   private static int myScore = 0;
   private static int high = 0;
-
   CollectionManager collectionManager;
+  private ConcurrentLinkedQueue<Projectile> projectiles = new ConcurrentLinkedQueue<>();
 
   private Menu menu, menu2, menu3, menu4;
   private Score score;
@@ -60,6 +60,8 @@ public class Window extends PApplet {
   public void setup() {
     this.init();
 
+    noStroke();
+
     // Create the background object
     background = new Background(this);
 
@@ -76,8 +78,10 @@ public class Window extends PApplet {
    */
   public void init() {
     collectionManager = new CollectionManager();
+    enemyStandardSprite = loadImage(EnemyStandard.ENEMY_SPRITE);
+    enemySlowSprite = loadImage(EnemySlow.ENEMY_SPRITE);
+    enemyFastSprite = loadImage(EnemyFast.ENEMY_SPRITE);
   }
-
   @Override
   public void keyPressed(KeyEvent event) {
     int keyCode = event.getKeyCode();
@@ -125,7 +129,19 @@ public class Window extends PApplet {
       collectionManager.getPlayer().setDirection(new PVector(0, 0));
     }
   }
+  @Override
+  public void mousePressed() {
+    if (state == 1 && mouseButton == LEFT) {
+      System.out.println("shot");
+      PVector mousePosition = new PVector(mouseX, mouseY);
+      PVector playerPosition = collectionManager.getPlayer().getPosition();
+      PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
 
+      Projectile projectile = new Projectile(this, playerPosition, direction);
+      projectiles.add(projectile);
+      collectionManager.getSprites().add(projectile);
+    }
+  }
 
   /**
    * Draws everything in the window.
@@ -171,40 +187,52 @@ public class Window extends PApplet {
         sprite.draw();
       }
 
+      projectiles.removeIf(projectile -> {
+        boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width
+                || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
+        if (toRemove) {
+          collectionManager.getSprites().remove(projectile);
+        }
+        return toRemove;
+      });
+
       ArrayList<Enemy> toRemove = new ArrayList<>();
+      ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
       for (Enemy enemy : collectionManager.getEnemies()) {
-        if (Enemy.collided(collectionManager.getPlayer(), enemy)) {
-          toRemove.add(enemy);
+        for (Projectile projectile : projectiles) {
+          projectile.collide(projectile, enemy);
+          if (projectile.isDead() && enemy.isDead()) {
+            toRemove.add(enemy);
+            projectilesToRemove.add(projectile);
+            if (enemy instanceof EnemyStandard) {
+              curr_enem_standard--;
+              score.setCurrentScore(++myScore);
+            }
+            if (enemy instanceof EnemyFast) {
+              curr_enem_fast--;
+              myScore += 2;
+              score.setCurrentScore(myScore);
+            }
+            if (enemy instanceof EnemySlow) {
+              curr_enem_slow--;
+              myScore += 3;
+              score.setCurrentScore(myScore);
+            }
+            score.displayScore(state);
+            score.setHighScore(myScore);
+            if (myScore >= high) {
+              high = score.getHighScore();
+            }
+          }
         }
       }
       for (Enemy enemy : toRemove) {
-        if (collectionManager.getPlayer().compareTo(enemy) > 0) {
-          if (enemy instanceof EnemyStandard) {
-            curr_enem_standard--;
-            score.setCurrentScore(++myScore);
-          }
-          if (enemy instanceof EnemyFast) {
-            curr_enem_fast--;
-            score.setCurrentScore(++myScore);
-          }
-          if (enemy instanceof EnemySlow) {
-            curr_enem_slow--;
-            myScore += 2;
-            score.setCurrentScore(myScore);
-          }
-          collectionManager.getEnemies().remove(enemy);
-          collectionManager.getSprites().remove(enemy);
-
-          score.displayScore(state);
-          score.setHighScore(myScore);
-          if (myScore >= high) {
-            high = score.getHighScore();
-          }
-
-        } else {
-          init();
-
-        }
+        collectionManager.getEnemies().remove(enemy);
+        collectionManager.getSprites().remove(enemy);
+      }
+      for (Projectile projectile : projectilesToRemove) {
+        projectiles.remove(projectile);
+        collectionManager.getSprites().remove(projectile);
       }
 
       // Spawns new enemies mid-game
