@@ -2,6 +2,7 @@ package org.bcit.comp2522.project;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -66,6 +67,8 @@ public class Window extends PApplet {
    */
   private static int high = 0;
   CollectionManager collectionManager;
+
+  private EnemySpawner enemySpawner;
   /**
    * Declares a score variable to store the score.
    */
@@ -111,6 +114,8 @@ public class Window extends PApplet {
     background = new Background(this);
     //Create the score object
     score = new Score(180, 30, myScore, this);
+    // Enemy Spawner
+    enemySpawner = new EnemySpawner(collectionManager, this);
   }
 
   /**
@@ -301,38 +306,7 @@ public class Window extends PApplet {
       }
 
       // Spawns new enemies mid-game
-      while (collectionManager.getEnemies().size() < ENEM_MAX) {
-
-        // Determine which enemy type to spawn
-        int spawnType = rngsus.nextInt(ENEM_TYPES + 1);
-
-        while ((spawnType == 0 && curr_enem_standard >= ENEM_STANDARD_MAX)
-            || (spawnType == 1 && curr_enem_fast >= ENEM_FAST_MAX)
-            || (spawnType == 2 && curr_enem_slow >= ENEM_SLOW_MAX)) {
-
-          spawnType = rngsus.nextInt(ENEM_TYPES + 1);
-
-        }
-        // Spawn the enemy depending on the spawn type
-        //Make this clearer by getting rid of magic numbers for spawn type
-        if (spawnType == 0) {
-          Enemy newEnemy = new EnemyStandard(this, collectionManager.getPlayer());
-          curr_enem_standard++;
-          collectionManager.getEnemies().add(newEnemy);
-          collectionManager.getSprites().add(newEnemy);
-        } else if (spawnType == 1) {
-          Enemy newEnemy = new EnemyFast(this, collectionManager.getPlayer());
-          curr_enem_fast++;
-          collectionManager.getEnemies().add(newEnemy);
-          collectionManager.getSprites().add(newEnemy);
-        } else if (spawnType == 2) {
-          Enemy newEnemy = new EnemySlow(this, collectionManager.getPlayer());
-          curr_enem_slow++;
-          collectionManager.getEnemies().add(newEnemy);
-          collectionManager.getSprites().add(newEnemy);
-        }
-
-      }
+      enemySpawner.spawnEnemy(0);
 
     } else if (stateOfGame == GameState.PAUSE) {
       // If the game is in the pause state, show the score and pause menu

@@ -1,4 +1,4 @@
-package org.bcit.comp2522.project.enemies;
+package org.bcit.comp2522.project;
 
 import org.bcit.comp2522.project.Sprite;
 import org.bcit.comp2522.project.Window;
