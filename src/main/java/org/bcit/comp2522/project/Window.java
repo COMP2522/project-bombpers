@@ -40,9 +40,6 @@ public class Window extends PApplet {
   private Menu menu, menu2, menu3, menu4;
   private Score score;
 
-  private Menu menu, menu2, menu3, menu4;
-  private Score score;
-
   private Background background;
   private int minSize = 15; // should be a local variable in the context it's currently used in.
 
