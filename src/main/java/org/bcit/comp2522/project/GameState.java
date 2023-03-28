@@ -1,6 +1,9 @@
 package org.bcit.comp2522.project;
 
-public enum gameState {
+/**
+ * Enum for game state.
+ */
+public enum GameState {
     startMenu,
     startGame,
     pause,

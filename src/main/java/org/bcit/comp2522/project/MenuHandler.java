@@ -1,33 +1,96 @@
 package org.bcit.comp2522.project;
 
-public class menuHandler {
-    private int button_left_Bound = 120;
-    private int button_right_Bound = 312;
-    private int button_top_Bound = 199;
-    private int button_bottom_Bound = 244;
-    private Menu menu, menu2, menu3, menu4;
-    Window window;
-    private gameState currentState;
-    public menuHandler(gameState state, Window window){
-        this.currentState  = state;
-        this.window = window;
-    }
+/**
+ * Class for menuHandler that handles the menus of the game.
+ */
+public class MenuHandler {
+  /**
+   * Left Bound for the button.
+   */
+  private final int buttonLeftBound = 120;
+  /** Right Bound for the button. */
+  private final int buttonRightBound = 312;
+  /** Top Bound for the button. */
+  private final int buttonTopBound = 199;
+  /** Bottom Bound for the button. */
+  private final int buttonBottomBound = 244;
+  /** The possible types of menus. */
+  public Menu startMenu;
+  public Menu pauseMenu;
+  public Menu endMenu;
+  /** The winodw the menu is displayed on. */
+  Window window;
+  /** The current state of the game. */
+  public GameState currentState;
 
-    public gameState createMenu(){
-        System.out.println("creating menu");
-        if (this.currentState == gameState.startMenu){
-            menu = new Menu(50, 145, "Welcome!", this.window);
-            //menu.displayMenu(this.currentState, 100);
-            if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
-                    && (this.window.mouseX >= button_left_Bound && this.window.mouseX < button_right_Bound)
-                    && (this.window.mouseY >= button_top_Bound && this.window.mouseY <= button_bottom_Bound)) {
-                this.window.background(0);
-                //for the if statement that has the game animations
-                this.window.mousePressed = false;
-                return gameState.startGame;
-                // score.setHighScore(0);
-            }
-        }
+  /**
+   * Constructor for menuHandler.
+   *
+   * @param state the current state of the game
+   * @param window the window the menu is displayed on
+   */
+  public MenuHandler(GameState state, Window window) {
+    this.currentState = state;
+    this.window = window;
+
+  }
+
+  /**
+   * Creates the menu.
+   *
+   * @param state the current state of the game
+   * @param score the current score of the game
+   * @return the current state of the game
+   */
+  public GameState createMenu(GameState state, Score score) {
+    //store the current state
+    this.currentState = state;
+    //if the current state is startMenu, create the startMenu
+    if (this.currentState == GameState.startMenu) {
+      startMenu = new Menu(50, 145, "Welcome!", this.window);
+      //display the startMenu
+      startMenu.displayMenu(this.currentState, 100);
+      //If the mouse is pressed and the mouse is within the bounds of the button,
+      // change the state to startGame to start the game
+      if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
+              && (this.window.mouseX >= buttonLeftBound && this.window.mouseX < buttonRightBound)
+              && (this.window.mouseY >= buttonTopBound
+              && this.window.mouseY <= buttonBottomBound)) {
+        this.window.mousePressed = false;
+        this.currentState = GameState.startGame;
         return currentState;
+      }
+      //return the start menu so that it can be continued to be displayed
+      return GameState.startMenu;
+    } else if (this.currentState == GameState.pause) {
+      // If the current state is pause, create the pauseMenu
+      pauseMenu = new Menu(80, 120, "Paused!", this.window);
+      // display the pauseMenu
+      pauseMenu.displayMenu(this.currentState, 100);
+      //display the score
+      score.displayScore(currentState);
+      //If the mouse is pressed and the mouse is within the bounds of the button,
+      // change the state to startGame to start the game
+      if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
+                && (this.window.mouseX >= 120 && this.window.mouseX < 312)
+                && (this.window.mouseY >= 199 && this.window.mouseY <= 244)) {
+        this.currentState = GameState.startGame;
+        return currentState;
+      }
+      //return the pause menu so that it can be continued to be displayed
+      return GameState.pause;
+    } else {
+      // If the current state is endGame, create the endMenu
+      endMenu = new Menu(30, 120, "Game Over!", this.window);
+      endMenu.displayMenu(state, 90);
+      score.displayScore(currentState);
+      if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
+              && (this.window.mouseX >= 120 && this.window.mouseX < 312)
+              && (this.window.mouseY >= 199 && this.window.mouseY <= 244)) {
+        this.currentState = GameState.startGame;
+        return currentState;
+      }
+      return GameState.endGame;
     }
+  }
 }
