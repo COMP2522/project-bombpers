@@ -272,6 +272,7 @@ public class Window extends PApplet {
           projectile.collide(projectile, enemy);
           if (projectile.isDead() && enemy.isDead()) {
             toRemove.add(enemy);
+            EnemySpawner.decreaseEnemCount();
             projectilesToRemove.add(projectile);
             if (enemy instanceof EnemyStandard) {
               curr_enem_standard--;
@@ -306,7 +307,8 @@ public class Window extends PApplet {
       }
 
       // Spawns new enemies mid-game
-      enemySpawner.spawnEnemy(0);
+
+      enemySpawner.spawnEnemy();
 
     } else if (stateOfGame == GameState.PAUSE) {
       // If the game is in the pause state, show the score and pause menu
