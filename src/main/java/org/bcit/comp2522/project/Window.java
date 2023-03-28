@@ -20,31 +20,84 @@ import processing.event.KeyEvent;
  */
 public class Window extends PApplet {
 
+  /**
+   * Variable to check if the left key is pressed. Set to false by default.
+   */
   private boolean isLeftPressed = false;
+  /**
+   * Variable to check if the right key is pressed.Set to false by default.
+   */
   private boolean isRightPressed = false;
+  /**
+   * Variable to check if the up key is pressed.Set to false by default.
+   */
   private boolean isUpPressed = false;
+  /**
+   * Variable to check if the down key is pressed.Set to false by default.
+   */
   private boolean isDownPressed = false;
+  /**
+   * Number of enemy types.
+   */
   private static final int ENEM_TYPES = 3;
+  /**
+   * Maximum number of enemies.
+   */
   private static final int ENEM_MAX = 10;
+  /**
+   * Maximum number of standard type enemies.
+   */
   private static final int ENEM_STANDARD_MAX = 5;
+  /**
+   * Maximum number of fast type enemies.
+   */
   private static final int ENEM_FAST_MAX = 10;
+  /**
+   * Maximum number of slow type enemies.
+   */
   private static final int ENEM_SLOW_MAX = 5;
+  /**
+   * Sets the different types of enemies to start off at 0.
+   */
   private static int curr_enem_standard = 0;
   private static int curr_enem_fast = 0;
   private static int curr_enem_slow = 0;
+  /**
+   * Sets the score to 0.
+   */
   private static int myScore = 0;
+  /**
+   * Sets the high score to 0.
+   */
   private static int high = 0;
-
+  /**
+   * Sets the player health to 5.
+   */
+  public int health = 5;
+  /**
+   * Declares a collection manager.
+   */
   CollectionManager collectionManager;
-
-  private Menu menu, menu2, menu3, menu4;
+  /**
+   * Declares a score variable to store the score.
+   */
   private Score score;
 
+  /**
+   * Declares a background to store the background.
+   */
   private Background background;
-  private int minSize = 15; // should be a local variable in the context it's currently used in.
-
-  private int maxSize = 20; /*this isn't used?*/
-  private int state = 0;
+  /**
+   * Declares a variable to hold the GameState to transition between states.
+   */
+  public GameState  stateOfGame =  GameState.startMenu;
+  /**
+   * Declares a menu handler to use to handel menus.
+   */
+  public MenuHandler menuhandler = new MenuHandler(stateOfGame, this);
+  /**
+   * Declares a random variable to use to generate random numbers.
+   */
   private Random rngsus = new Random();
 
   /**
@@ -58,29 +111,36 @@ public class Window extends PApplet {
    * Setup of the game.
    */
   public void setup() {
+    // Initialize the PLayer and collectionManager
     this.init();
-
     // Create the background object
     background = new Background(this);
-
-    // Create the Menu Object
-    menu = new Menu(50, 145, "Welcome!", this);
-    menu2 = new Menu(30, 120, "Game Over!", this);
-    menu3 = new Menu(80, 120, "Paused!", this);
-    menu4 = new Menu(50, 120, "Pick a Character!", this);
+    //Create the score object
     score = new Score(180, 30, myScore, this);
   }
 
   /**
-   * Initializes the  Sprites of the game.
+   * Initializes the  collectionManager and adds the created player to it.
    */
   public void init() {
     collectionManager = new CollectionManager();
+    collectionManager.player = new Player(this);
+    PImage characterSprite = loadImage("../img/idle_01.png");
+    collectionManager.getSprites().add(collectionManager.player);
   }
 
+
+  /**
+   * If a key is pressed,  the corresponding isPressed variable will be true to
+   * "tell" that key was pressed.
+   *
+   * @param event is the key that was pressed.
+   */
   @Override
   public void keyPressed(KeyEvent event) {
+    // Get the key code of the key that was pressed
     int keyCode = event.getKeyCode();
+    // Check if the key code is the same as any of the switch cases and do the corresponding action
     switch (keyCode) {
       case LEFT -> isLeftPressed = true;
       case RIGHT -> isRightPressed = true;
@@ -88,12 +148,21 @@ public class Window extends PApplet {
       case DOWN -> isDownPressed = true;
       default -> System.out.println(); // switch needed a default case, it does nothing.
     }
+    // Update the player's direction
     updatePlayerDirection();
   }
+  /**
+   * If a key is released,  the corresponding isPressed variable will be false to
+   * make sure it does not move when the key is not pressed.
+   *
+   * @param event is the key that was released.
+   */
 
   @Override
   public void keyReleased(KeyEvent event) {
+    // Get the key code of the key that was pressed
     int keyCode = event.getKeyCode();
+    // Check if the key code is the same as any of the switch cases and do the corresponding action
     switch (keyCode) {
       case LEFT -> isLeftPressed = false;
       case RIGHT -> isRightPressed = false;
@@ -101,12 +170,17 @@ public class Window extends PApplet {
       case DOWN -> isDownPressed = false;
       default -> System.out.println(); // switch needed a default case, it does nothing.
     }
+    // Update the player's direction
     updatePlayerDirection();
   }
 
+  /**
+   * Updates the player's direction based on the key pressed.
+   */
   private void updatePlayerDirection() {
     int directionX = 0;
     int directionY = 0;
+    // Check if the key is pressed and update the direction accordingly
     if (isLeftPressed) {
       directionX--;
     }
@@ -119,6 +193,7 @@ public class Window extends PApplet {
     if (isDownPressed) {
       directionY++;
     }
+    // If the direction is not 0,0, set the player's direction to the new direction
     if (directionX != 0 || directionY != 0) {
       collectionManager.getPlayer().setDirection(new PVector(directionX, directionY));
     } else {
@@ -126,59 +201,63 @@ public class Window extends PApplet {
     }
   }
 
-
   /**
    * Draws everything in the window.
    */
-
   public void draw() {
-    background.draw();
-    //Start Screen
-    if (state == 0) {
-      menu.displayMenu(state, 100);
-      if (mousePressed && (mouseButton == LEFT)
-          && (mouseX >= 120 && mouseX < 312) && (mouseY >= 199 && mouseY <= 244)) {
-        background(0);
-        //for the if statement that has the game animations
-        mousePressed = false;
-        state = 4;
-        score.setHighScore(0);
+    // If the game is in the start menu, pause menu, or end game menu, create the menu
+    if (stateOfGame == GameState.startMenu || stateOfGame == GameState.pause
+            || stateOfGame == GameState.endGame) {
+
+
+      if (stateOfGame == GameState.startMenu || stateOfGame == GameState.endGame) {
+        myScore = 0;
       }
-    } else if (state == 4) { //Pick a character
-      menu4.displayMenu(state, 60);
-      if (mousePressed
-          && (mouseButton == LEFT)
-          && ((mouseX >= 120
-          && mouseX < 312)
-          && (mouseY >= 199
-          && mouseY <= 244))) {
-        collectionManager.player = new Player(this);
-        collectionManager.getSprites().add(collectionManager.player);
-        background(0);
-        state = 1;
+
+      stateOfGame = menuhandler.createMenu(stateOfGame, score);
+      // Reset the player's position
+      PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
+      collectionManager.getPlayer().setPosition(originalPosition);
+
+    } else if (stateOfGame == GameState.startGame) {
+      // If the game is in the start game state, create the game
+      //Reset the score to 0
+      if (myScore == 0) {
+        myScore = 0;
       }
-    } else if (state == 1) { //Game starts
+      background.draw();
+      score.displayScore(stateOfGame);
+      // If key 'p' is pressed, pause the game
       if (keyPressed) {
         if (key == 'p' || key == 'P') {
           //state to pause
-          state = 3;
+          stateOfGame = GameState.pause;
         }
       }
-      score.displayScore(state);
-
+      // Create the sprites and draw as well as update them
       for (Sprite sprite : collectionManager.getSprites()) {
         sprite.update();
         sprite.draw();
       }
-
+      //Create an array list to hold the enemies that need to be removed
       ArrayList<Enemy> toRemove = new ArrayList<>();
+      // Check if the player has collided with any of the enemies and remove them if they have
+      //Also decrease the health of the player
       for (Enemy enemy : collectionManager.getEnemies()) {
         if (Enemy.collided(collectionManager.getPlayer(), enemy)) {
           toRemove.add(enemy);
+          health--;
+          if (health == 0) {
+            stateOfGame = GameState.endGame;
+            health = 5;
+          }
         }
       }
+      // Remove the enemies that have collided with the player
       for (Enemy enemy : toRemove) {
         if (collectionManager.getPlayer().compareTo(enemy) > 0) {
+          //Depending on the type of enemy, decrease the current number of that type of enemy
+          //and increase the score.
           if (enemy instanceof EnemyStandard) {
             curr_enem_standard--;
             score.setCurrentScore(++myScore);
@@ -192,24 +271,19 @@ public class Window extends PApplet {
             myScore += 2;
             score.setCurrentScore(myScore);
           }
+          // Remove the enemy from the array list to make them "disappear" (not drawn or updated)
           collectionManager.getEnemies().remove(enemy);
           collectionManager.getSprites().remove(enemy);
-
-          score.displayScore(state);
-          score.setHighScore(myScore);
+          //Set the high score to the current score
+          // if the current score is higher than the high score
           if (myScore >= high) {
+            score.setHighScore(myScore);
             high = score.getHighScore();
           }
-
-        } else {
-          init();
-
         }
       }
-
       // Spawns new enemies mid-game
       while (collectionManager.getEnemies().size() < ENEM_MAX) {
-
         // Determine which enemy type to spawn
         int spawnType = rngsus.nextInt(ENEM_TYPES + 1);
 
@@ -220,6 +294,8 @@ public class Window extends PApplet {
           spawnType = rngsus.nextInt(ENEM_TYPES + 1);
 
         }
+        // Spawn the enemy depending on the spawn type
+        //Make this clearer by getting rid of magic numbers for spawn type
         if (spawnType == 0) {
           Enemy newEnemy = new EnemyStandard(this, collectionManager.getPlayer());
           curr_enem_standard++;
@@ -239,38 +315,17 @@ public class Window extends PApplet {
 
       }
 
-    } else if (state == 3) { //Pause screen
+    } else if (stateOfGame == GameState.pause) {
+      // If the game is in the pause state, show the score and pause menu
       if (myScore >= score.getHighScore()) {
-        score.setHighScore(high);
+        score.setHighScore(myScore);
       }
-      menu3.displayMenu(state, 100);
-
-      score.displayScore(state);
-
-      if (mousePressed && (mouseButton == LEFT)
-          && (mouseX >= 120 && mouseX < 312)
-          && (mouseY >= 199 && mouseY <= 244)) {
-        background(0);
-        state = 1;
-      }
+      score.displayScore(stateOfGame);
     } else {
-
       if (myScore >= score.getHighScore()) {
-        score.setHighScore(high);
+        score.setHighScore(myScore);
       }
-      menu2.displayMenu(state, 90);
-      score.displayScore(state);
-
-      if (mousePressed && (mouseButton == LEFT)
-          && (mouseX >= 120 && mouseX < 312)
-          && (mouseY >= 199 && mouseY <= 244)) {
-        background(0);
-        // reset score to 0
-
-        myScore = 0;
-        //for the if statement that has the game animations
-        state = 1;
-      }
+      score.displayScore(stateOfGame);
     }
   }
 

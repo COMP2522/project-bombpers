@@ -1,37 +1,54 @@
 package org.bcit.comp2522.project;
 
+/**
+ * Class for Menu of the game.
+ */
 public class Menu extends UserInterface {
+  //  private message to be displayed
   private String message;
+  //  the window of the game that the menu is displayed on
   private final Window window;
 
+  /**
+   * Constructor for Menu.
+   *
+   * @param posX the x-position of the menu
+   * @param posY the y-position of the menu
+   * @param message the message to be displayed
+   * @param window the window of the game that the menu is displayed on
+   */
   public Menu(int posX, int posY, String message, Window window) {
     super(posX, posY);
     this.message = message;
     this.window = window;
   }
 
+
   @Override
   protected void drawUserInterface() {
     // Implement drawing of the menu elements here
   }
 
-  public void displayMenu(int state, int titleSize) {
+  /**
+   * Displays the menu.
+   *
+   * @param state the state of the game
+   * @param titleSize the size of the title
+   */
+  public void displayMenu(GameState state, int titleSize) {
     window.background(0);
     modifyMessage(titleSize);
     button();
 
     switch (state) {
-      case 0:
+      case startMenu:
         window.text("Start", 160, 245);
         break;
-      case 2:
+      case endGame:
         window.text("Restart", 140, 245);
         break;
-      case 3:
+      case pause:
         window.text("Continue", 120, 245);
-        break;
-      case 4:
-        window.text("Begin!", 140, 240);
         break;
     }
   }
