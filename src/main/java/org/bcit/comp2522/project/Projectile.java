@@ -1,6 +1,5 @@
 package org.bcit.comp2522.project;
 
-import org.bcit.comp2522.project.enemies.Enemy;
 import processing.core.PVector;
 
 public class Projectile extends Sprite {

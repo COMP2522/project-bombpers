@@ -2,7 +2,6 @@ package org.bcit.comp2522.project;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.bcit.comp2522.project.enemies.Enemy;
 
 
 /**
