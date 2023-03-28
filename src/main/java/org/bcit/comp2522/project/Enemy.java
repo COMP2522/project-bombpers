@@ -1,4 +1,4 @@
-package org.bcit.comp2522.project.enemies;
+package org.bcit.comp2522.project;
 
 import org.bcit.comp2522.project.Sprite;
 import org.bcit.comp2522.project.Window;
@@ -9,11 +9,13 @@ import processing.core.PImage;
 public abstract class Enemy extends Sprite {
   protected Sprite player;
   protected PImage enemySprite;
+  private boolean dead;
 
-  public Enemy(Window window, Sprite player) {
+  public Enemy(Window window, Sprite player, PImage sprite) {
     super(window);
     this.direction = new PVector(0, 0);
     this.player = player;
+    this.enemySprite = sprite;
   }
 
   /**
@@ -43,6 +45,13 @@ public abstract class Enemy extends Sprite {
     window.image(enemySprite, position.x, position.y, size, size);
   }
 
+  public boolean isDead() {
+    return dead;
+  }
+
+  public void setDead(boolean dead) {
+    this.dead = dead;
+  }
 
   /**
    * moves the enemy.

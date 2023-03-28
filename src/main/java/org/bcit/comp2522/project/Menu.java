@@ -41,15 +41,9 @@ public class Menu extends UserInterface {
     button();
 
     switch (state) {
-      case startMenu:
-        window.text("Start", 160, 245);
-        break;
-      case endGame:
-        window.text("Restart", 140, 245);
-        break;
-      case pause:
-        window.text("Continue", 120, 245);
-        break;
+      case STARTMENU -> window.text("Start", 160, 245);
+      case ENDGAME -> window.text("Restart", 140, 245);
+      case PAUSE -> window.text("Continue", 120, 245);
     }
   }
 
