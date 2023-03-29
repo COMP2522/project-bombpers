@@ -1,5 +1,6 @@
 package org.bcit.comp2522.project;
 
+import processing.core.PVector;
 import java.util.Random;
 
 public class EnemySpawner {
@@ -30,6 +31,7 @@ public class EnemySpawner {
   }
 
   public void spawnEnemy() {
+
     int diceRoll = rngsus.nextInt(ENEM_TYPES) + 1;
     switch (diceRoll) {
       case ENEM_STANDARD:
@@ -49,7 +51,19 @@ public class EnemySpawner {
 
   public void spawnStandardEnemy() {
     if (curr_enem_count < ENEM_MAX) {
-      Enemy newEnemy = new EnemyStandard(window, collectionManager.getPlayer());
+      int randomY = rngsus.nextInt(window.height);
+      PVector randomPos = new PVector(window.width, randomY);
+      Enemy newEnemy = new Enemy(
+          window,
+          collectionManager.getPlayer(),
+          window.enemyStandardSprite,
+          ENEM_STANDARD,
+          EnemyConfig.ENEMY_STANDARD_HEALTH,
+          EnemyConfig.ENEMY_STANDARD_DAMAGE,
+          EnemyConfig.ENEMY_STANDARD_SIZE,
+          EnemyConfig.ENEMY_STANDARD_SPEED,
+          randomPos
+      );
       curr_enem_count++;
       collectionManager.getEnemies().add(newEnemy);
       collectionManager.getSprites().add(newEnemy);
@@ -58,7 +72,19 @@ public class EnemySpawner {
 
   private void spawnFastEnemy() {
     if (curr_enem_count < ENEM_MAX) {
-      Enemy newEnemy = new EnemyFast(window, collectionManager.getPlayer());
+      int randomY = rngsus.nextInt(window.height);
+      PVector randomPos = new PVector(window.width, randomY);
+      Enemy newEnemy = new Enemy(
+          window,
+          collectionManager.getPlayer(),
+          window.enemyFastSprite,
+          ENEM_FAST,
+          EnemyConfig.ENEMY_FAST_HEALTH,
+          EnemyConfig.ENEMY_FAST_DAMAGE,
+          EnemyConfig.ENEMY_FAST_SIZE,
+          EnemyConfig.ENEMY_FAST_SPEED,
+          randomPos
+      );
       curr_enem_count++;
       collectionManager.getEnemies().add(newEnemy);
       collectionManager.getSprites().add(newEnemy);
@@ -67,7 +93,19 @@ public class EnemySpawner {
 
   public void spawnSlowEnemy() {
     if (curr_enem_count < ENEM_MAX) {
-      Enemy newEnemy = new EnemySlow(window, collectionManager.getPlayer());
+      int randomY = rngsus.nextInt(window.height);
+      PVector randomPos = new PVector(window.width, randomY);
+      Enemy newEnemy = new Enemy(
+          window,
+          collectionManager.getPlayer(),
+          window.enemySlowSprite,
+          ENEM_SLOW,
+          EnemyConfig.ENEMY_SLOW_HEALTH,
+          EnemyConfig.ENEMY_SLOW_DAMAGE,
+          EnemyConfig.ENEMY_SLOW_SIZE,
+          EnemyConfig.ENEMY_SLOW_SPEED,
+          randomPos
+      );
       curr_enem_count++;
       collectionManager.getEnemies().add(newEnemy);
       collectionManager.getSprites().add(newEnemy);
