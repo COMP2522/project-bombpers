@@ -1,15 +1,18 @@
 package org.bcit.comp2522.project;
 
+import static org.bcit.comp2522.project.EnemyConfig.*;
 import processing.core.PVector;
 import java.util.Random;
-import static org.bcit.comp2522.project.EnemyConfig.*;
 
 public class EnemySpawner {
+  private static final int tierThreshold = 50;
+  private static int spawnModifier = 0;
   /**
    * Maximum number of enemies.
    */
-  private static final int ENEM_MAX = 10;
-  private static  int curr_enem_count;
+  private static int ENEM_MAX = 10 + spawnModifier;
+  private static int curr_enem_count;
+
   private Random rngsus = new Random();
   private CollectionManager collectionManager;
   private Window window;
@@ -23,13 +26,13 @@ public class EnemySpawner {
 
     int diceRoll = rngsus.nextInt(ENEM_TYPES) + 1;
     switch (diceRoll) {
-      case ENEM_STANDARD:
+      case ENEM_STANDARD_TYPE:
         spawnStandardEnemy();
         break;
-      case ENEM_FAST:
+      case ENEM_FAST_TYPE:
         spawnFastEnemy();
         break;
-      case ENEM_SLOW:
+      case ENEM_SLOW_TYPE:
         spawnSlowEnemy();
         break;
       default:
@@ -46,7 +49,7 @@ public class EnemySpawner {
           window,
           collectionManager.getPlayer(),
           window.enemyStandardSprite,
-          ENEM_STANDARD,
+          ENEM_STANDARD_TYPE,
           ENEMY_STANDARD_HEALTH,
           ENEMY_STANDARD_DAMAGE,
           ENEMY_STANDARD_SIZE,
@@ -67,7 +70,7 @@ public class EnemySpawner {
           window,
           collectionManager.getPlayer(),
           window.enemyFastSprite,
-          ENEM_FAST,
+          ENEM_FAST_TYPE,
           ENEMY_FAST_HEALTH,
           ENEMY_FAST_DAMAGE,
           ENEMY_FAST_SIZE,
@@ -88,7 +91,7 @@ public class EnemySpawner {
           window,
           collectionManager.getPlayer(),
           window.enemySlowSprite,
-          ENEM_SLOW,
+          ENEM_SLOW_TYPE,
           ENEMY_SLOW_HEALTH,
           ENEMY_SLOW_DAMAGE,
           ENEMY_SLOW_SIZE,
@@ -103,5 +106,9 @@ public class EnemySpawner {
 
   static public void decreaseEnemCount() {
     curr_enem_count--;
+  }
+
+  static public void updateSpawnModifier() {
+    spawnModifier = KillCounter.getKills() / tierThreshold;
   }
 }
