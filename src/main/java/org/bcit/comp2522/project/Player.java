@@ -44,7 +44,7 @@ public class Player extends Sprite {
    *
    * @param window the window where the player is drawn
    */
-  Player(Window window) {
+  private Player(Window window) {
     super(window);
     this.health = PLAYER_HEALTH;
     this.damage = PLAYER_DAMAGE;
