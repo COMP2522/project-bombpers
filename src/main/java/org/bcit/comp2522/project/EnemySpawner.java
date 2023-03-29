@@ -1,26 +1,19 @@
 package org.bcit.comp2522.project;
 
+import static org.bcit.comp2522.project.EnemyConfig.*;
 import processing.core.PVector;
 import java.util.Random;
 
 public class EnemySpawner {
-
-  /**
-   * Number of enemy types.
-   */
-  private static final int ENEM_TYPES = 3;
-
-  /**
-   * int IDs for different enemy types
-   */
-  private static final int ENEM_STANDARD = 1;
-  private static final int ENEM_FAST = 2;
-  private static final int ENEM_SLOW = 3;
+  private static final int baseWaveCount = 10;
+  private static final int tierThreshold = 50;
+  private int spawnModifier = 0;
   /**
    * Maximum number of enemies.
    */
-  private static final int ENEM_MAX = 10;
-  private static  int curr_enem_count;
+  private int enem_max = 10 + spawnModifier;
+  private int curr_enem_count;
+
   private Random rngsus = new Random();
   private CollectionManager collectionManager;
   private Window window;
@@ -34,13 +27,13 @@ public class EnemySpawner {
 
     int diceRoll = rngsus.nextInt(ENEM_TYPES) + 1;
     switch (diceRoll) {
-      case ENEM_STANDARD:
+      case ENEM_STANDARD_TYPE:
         spawnStandardEnemy();
         break;
-      case ENEM_FAST:
+      case ENEM_FAST_TYPE:
         spawnFastEnemy();
         break;
-      case ENEM_SLOW:
+      case ENEM_SLOW_TYPE:
         spawnSlowEnemy();
         break;
       default:
@@ -50,69 +43,74 @@ public class EnemySpawner {
   }
 
   public void spawnStandardEnemy() {
-    if (curr_enem_count < ENEM_MAX) {
+    if (this.curr_enem_count < this.enem_max) {
       int randomY = rngsus.nextInt(window.height);
       PVector randomPos = new PVector(window.width, randomY);
       Enemy newEnemy = new Enemy(
           window,
           collectionManager.getPlayer(),
           window.enemyStandardSprite,
-          ENEM_STANDARD,
-          EnemyConfig.ENEMY_STANDARD_HEALTH,
-          EnemyConfig.ENEMY_STANDARD_DAMAGE,
-          EnemyConfig.ENEMY_STANDARD_SIZE,
-          EnemyConfig.ENEMY_STANDARD_SPEED,
+          ENEM_STANDARD_TYPE,
+          ENEMY_STANDARD_HEALTH,
+          ENEMY_STANDARD_DAMAGE,
+          ENEMY_STANDARD_SIZE,
+          ENEMY_STANDARD_SPEED,
           randomPos
       );
-      curr_enem_count++;
+      this.curr_enem_count++;
       collectionManager.getEnemies().add(newEnemy);
       collectionManager.getSprites().add(newEnemy);
     }
   }
 
   private void spawnFastEnemy() {
-    if (curr_enem_count < ENEM_MAX) {
+    if (this.curr_enem_count < this.enem_max) {
       int randomY = rngsus.nextInt(window.height);
       PVector randomPos = new PVector(window.width, randomY);
       Enemy newEnemy = new Enemy(
           window,
           collectionManager.getPlayer(),
           window.enemyFastSprite,
-          ENEM_FAST,
-          EnemyConfig.ENEMY_FAST_HEALTH,
-          EnemyConfig.ENEMY_FAST_DAMAGE,
-          EnemyConfig.ENEMY_FAST_SIZE,
-          EnemyConfig.ENEMY_FAST_SPEED,
+          ENEM_FAST_TYPE,
+          ENEMY_FAST_HEALTH,
+          ENEMY_FAST_DAMAGE,
+          ENEMY_FAST_SIZE,
+          ENEMY_FAST_SPEED,
           randomPos
       );
-      curr_enem_count++;
+      this.curr_enem_count++;
       collectionManager.getEnemies().add(newEnemy);
       collectionManager.getSprites().add(newEnemy);
     }
   }
 
   public void spawnSlowEnemy() {
-    if (curr_enem_count < ENEM_MAX) {
+    if (this.curr_enem_count < this.enem_max) {
       int randomY = rngsus.nextInt(window.height);
       PVector randomPos = new PVector(window.width, randomY);
       Enemy newEnemy = new Enemy(
           window,
           collectionManager.getPlayer(),
           window.enemySlowSprite,
-          ENEM_SLOW,
-          EnemyConfig.ENEMY_SLOW_HEALTH,
-          EnemyConfig.ENEMY_SLOW_DAMAGE,
-          EnemyConfig.ENEMY_SLOW_SIZE,
-          EnemyConfig.ENEMY_SLOW_SPEED,
+          ENEM_SLOW_TYPE,
+          ENEMY_SLOW_HEALTH,
+          ENEMY_SLOW_DAMAGE,
+          ENEMY_SLOW_SIZE,
+          ENEMY_SLOW_SPEED,
           randomPos
       );
-      curr_enem_count++;
+      this.curr_enem_count++;
       collectionManager.getEnemies().add(newEnemy);
       collectionManager.getSprites().add(newEnemy);
     }
   }
 
-  static public void decreaseEnemCount() {
-    curr_enem_count--;
+  public void decreaseEnemCount() {
+    this.curr_enem_count--;
+  }
+
+  public void updateSpawnModifier(KillCounter kc) {
+    this.spawnModifier = kc.getKills() / tierThreshold;
+    this.enem_max = baseWaveCount + spawnModifier;
   }
 }

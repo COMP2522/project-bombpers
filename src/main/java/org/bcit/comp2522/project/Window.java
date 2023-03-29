@@ -3,6 +3,7 @@ package org.bcit.comp2522.project;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -29,35 +30,6 @@ public class Window extends PApplet {
    * Variable to check if the down key is pressed.Set to false by default.
    */
   private boolean isDownPressed = false;
-  /**
-   * Number of enemy types.
-   */
-  private static final int ENEM_TYPES = 3;
-  /**
-   * Maximum number of enemies.
-   */
-  private static final int ENEM_MAX = 10;
-  /**
-   * Maximum number of standard type enemies.
-   */
-  private static final int ENEM_STANDARD_MAX = 5;
-  /**
-   * Maximum number of fast type enemies.
-   */
-  private static final int ENEM_FAST_MAX = 10;
-  /**
-   * Maximum number of slow type enemies.
-   */
-  private static final int ENEM_SLOW_MAX = 5;
-  /**
-   * Sets the different types of enemies to start off at 0.
-   */
-  private static int curr_enem_standard = 0;
-  private static int curr_enem_fast = 0;
-  private static int curr_enem_slow = 0;
-  /**
-   * Sets the score to 0.
-   */
   public PImage enemyStandardSprite;
   public PImage enemySlowSprite;
   public PImage enemyFastSprite;
@@ -68,7 +40,8 @@ public class Window extends PApplet {
   private static int high = 0;
   CollectionManager collectionManager;
 
-  private EnemySpawner enemySpawner;
+  public EnemySpawner enemySpawner;
+  public KillCounter killCounter;
   /**
    * Declares a score variable to store the score.
    */
@@ -84,7 +57,7 @@ public class Window extends PApplet {
   /**
    * Declares a variable to hold the GameState to transition between states.
    */
-  public GameState  stateOfGame =  GameState.STARTMENU;
+  public GameState stateOfGame = GameState.STARTMENU;
   /**
    * Declares a menu handler to use to handel menus.
    */
@@ -116,20 +89,23 @@ public class Window extends PApplet {
     score = new Score(180, 30, myScore, this);
     // Enemy Spawner
     enemySpawner = new EnemySpawner(collectionManager, this);
+    killCounter = new KillCounter(this);
   }
 
   /**
    * Initializes the  collectionManager and adds the created player to it.
    */
   public void init() {
-    collectionManager = new CollectionManager();
+    collectionManager = CollectionManager.getInstance();
     enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
     enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
     enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
-
-    collectionManager.player = new Player(this);
-    PImage characterSprite = loadImage("../img/idle_01.png");
+    collectionManager.player = Player.getPlayerInstance(this);
     collectionManager.getSprites().add(collectionManager.player);
+    new Thread(() -> {
+      SaveHandler s = new SaveHandler();
+      s.autoSave();
+    }).start();
   }
 
 
@@ -154,6 +130,7 @@ public class Window extends PApplet {
     // Update the player's direction
     updatePlayerDirection();
   }
+
   /**
    * If a key is released,  the corresponding isPressed variable will be false to
    * make sure it does not move when the key is not pressed.
@@ -203,6 +180,7 @@ public class Window extends PApplet {
       collectionManager.getPlayer().setDirection(new PVector(0, 0));
     }
   }
+
   @Override
   public void mousePressed() {
     if (stateOfGame == GameState.STARTGAME && mouseButton == LEFT) {
@@ -223,7 +201,7 @@ public class Window extends PApplet {
   public void draw() {
     // If the game is in the start menu, pause menu, or end game menu, create the menu
     if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
-            || stateOfGame == GameState.ENDGAME) {
+        || stateOfGame == GameState.ENDGAME) {
 
 
       if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.ENDGAME) {
@@ -258,7 +236,7 @@ public class Window extends PApplet {
 
       projectiles.removeIf(projectile -> {
         boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width
-                || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
+            || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
         if (toRemove) {
           collectionManager.getSprites().remove(projectile);
         }
@@ -272,7 +250,9 @@ public class Window extends PApplet {
           projectile.collide(projectile, enemy);
           if (projectile.isDead() && enemy.isDead()) {
             toRemove.add(enemy);
-            EnemySpawner.decreaseEnemCount();
+            killCounter.killPlus();
+            enemySpawner.decreaseEnemCount();
+            enemySpawner.updateSpawnModifier(killCounter);
             projectilesToRemove.add(projectile);
 //            if (enemy instanceof EnemyStandard) {
 //              curr_enem_standard--;
@@ -308,6 +288,9 @@ public class Window extends PApplet {
 
       // Spawns new enemies mid-game
       enemySpawner.spawnEnemy();
+
+      // Kill Counter for enemies
+      killCounter.draw(this);
 
     } else if (stateOfGame == GameState.PAUSE) {
       // If the game is in the pause state, show the score and pause menu

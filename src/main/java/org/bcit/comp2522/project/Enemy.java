@@ -1,9 +1,8 @@
 package org.bcit.comp2522.project;
 
-import org.bcit.comp2522.project.Sprite;
-import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
 import processing.core.PImage;
+
 
 
 public class Enemy extends Sprite {
@@ -22,7 +21,8 @@ public class Enemy extends Sprite {
       int damage,
       float size,
       float speed,
-      PVector pos) {
+      PVector pos
+  ) {
     super(window);
     this.direction = new PVector(0, 0);
     this.player = player;
