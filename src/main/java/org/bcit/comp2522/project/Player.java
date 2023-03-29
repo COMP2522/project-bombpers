@@ -3,8 +3,6 @@ package org.bcit.comp2522.project;
 import processing.core.PImage;
 import processing.core.PVector;
 
-import java.io.Serializable;
-
 /**
  * Player class - is a child of the Sprite class that represents the player.
  */
@@ -39,12 +37,14 @@ public class Player extends Sprite {
    */
   public static final String PLAYER_SPRITE = "../img/idle_0.png";
 
+  private static Player player;
+
   /**
    * Constructor for the Player class.
    *
    * @param window the window where the player is drawn
    */
-  public Player(Window window) {
+  Player(Window window) {
     super(window);
     this.health = PLAYER_HEALTH;
     this.damage = PLAYER_DAMAGE;
@@ -53,6 +53,13 @@ public class Player extends Sprite {
     this.size = PLAYER_SIZE;
     this.speed = PLAYER_SPEED;
     this.characterSprite = window.loadImage(PLAYER_SPRITE);
+  }
+
+  public static Player getPlayerInstance(Window window) {
+    if (player == null) {
+      player = new Player(window);
+    }
+    return player;
   }
 
 

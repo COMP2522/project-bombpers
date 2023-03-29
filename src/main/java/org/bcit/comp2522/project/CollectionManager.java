@@ -1,6 +1,5 @@
 package org.bcit.comp2522.project;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +11,9 @@ public class CollectionManager {
 
   private static CollectionManager c;
 
-  private transient List<Sprite> sprites;
+  private List<Sprite> sprites;
   //  private List<Projectile> projectiles;
-  private transient List<Enemy> enemies;
+  private List<Enemy> enemies;
   Sprite player;
 
 
