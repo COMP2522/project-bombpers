@@ -1,6 +1,5 @@
 package org.bcit.comp2522.project;
 
-import org.bcit.comp2522.project.enemies.Enemy;
 import processing.core.PVector;
 
 public class Projectile extends Sprite {
@@ -58,4 +57,15 @@ public class Projectile extends Sprite {
     public void compareTo() {
         // TODO: Implement this method
     }
+
+  @Override
+  public int getDamage() {
+    return damage;
+  }
+
+
+  public void setDamage(int damage) {
+    this.damage = damage;
+  }
 }
+
