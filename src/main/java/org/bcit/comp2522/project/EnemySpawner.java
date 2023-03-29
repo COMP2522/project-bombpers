@@ -5,13 +5,14 @@ import processing.core.PVector;
 import java.util.Random;
 
 public class EnemySpawner {
+  private static final int baseWaveCount = 10;
   private static final int tierThreshold = 50;
-  private static int spawnModifier = 0;
+  private int spawnModifier = 0;
   /**
    * Maximum number of enemies.
    */
-  private static int ENEM_MAX = 10 + spawnModifier;
-  private static int curr_enem_count;
+  private int enem_max = 10 + spawnModifier;
+  private int curr_enem_count;
 
   private Random rngsus = new Random();
   private CollectionManager collectionManager;
@@ -42,7 +43,7 @@ public class EnemySpawner {
   }
 
   public void spawnStandardEnemy() {
-    if (curr_enem_count < ENEM_MAX) {
+    if (this.curr_enem_count < this.enem_max) {
       int randomY = rngsus.nextInt(window.height);
       PVector randomPos = new PVector(window.width, randomY);
       Enemy newEnemy = new Enemy(
@@ -56,14 +57,14 @@ public class EnemySpawner {
           ENEMY_STANDARD_SPEED,
           randomPos
       );
-      curr_enem_count++;
+      this.curr_enem_count++;
       collectionManager.getEnemies().add(newEnemy);
       collectionManager.getSprites().add(newEnemy);
     }
   }
 
   private void spawnFastEnemy() {
-    if (curr_enem_count < ENEM_MAX) {
+    if (this.curr_enem_count < this.enem_max) {
       int randomY = rngsus.nextInt(window.height);
       PVector randomPos = new PVector(window.width, randomY);
       Enemy newEnemy = new Enemy(
@@ -77,14 +78,14 @@ public class EnemySpawner {
           ENEMY_FAST_SPEED,
           randomPos
       );
-      curr_enem_count++;
+      this.curr_enem_count++;
       collectionManager.getEnemies().add(newEnemy);
       collectionManager.getSprites().add(newEnemy);
     }
   }
 
   public void spawnSlowEnemy() {
-    if (curr_enem_count < ENEM_MAX) {
+    if (this.curr_enem_count < this.enem_max) {
       int randomY = rngsus.nextInt(window.height);
       PVector randomPos = new PVector(window.width, randomY);
       Enemy newEnemy = new Enemy(
@@ -98,17 +99,18 @@ public class EnemySpawner {
           ENEMY_SLOW_SPEED,
           randomPos
       );
-      curr_enem_count++;
+      this.curr_enem_count++;
       collectionManager.getEnemies().add(newEnemy);
       collectionManager.getSprites().add(newEnemy);
     }
   }
 
-  static public void decreaseEnemCount() {
-    curr_enem_count--;
+  public void decreaseEnemCount() {
+    this.curr_enem_count--;
   }
 
-  static public void updateSpawnModifier() {
-    spawnModifier = KillCounter.getKills() / tierThreshold;
+  public void updateSpawnModifier(KillCounter kc) {
+    this.spawnModifier = kc.getKills() / tierThreshold;
+    this.enem_max = baseWaveCount + spawnModifier;
   }
 }

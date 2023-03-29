@@ -27,6 +27,4 @@ public class EnemyConfig {
   public static final float ENEMY_SLOW_SIZE = 64f;
   public static final float ENEMY_SLOW_SPEED = 0.6f;
   public static final String ENEMY_SLOW_SPRITE = "../img/eslow_idle_0.png";
-
-
 }

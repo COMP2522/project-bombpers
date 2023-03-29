@@ -250,9 +250,10 @@ public class Window extends PApplet {
           projectile.collide(projectile, enemy);
           if (projectile.isDead() && enemy.isDead()) {
             toRemove.add(enemy);
-            EnemySpawner.decreaseEnemCount();
-            projectilesToRemove.add(projectile);
             killCounter.killPlus();
+            enemySpawner.decreaseEnemCount();
+            enemySpawner.updateSpawnModifier(killCounter);
+            projectilesToRemove.add(projectile);
 //            if (enemy instanceof EnemyStandard) {
 //              curr_enem_standard--;
 //              score.setCurrentScore(++myScore);
