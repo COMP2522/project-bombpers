@@ -2,36 +2,56 @@ package org.bcit.comp2522.project;
 
 import processing.core.PVector;
 
+import java.io.Serializable;
+
 
 /**
  * Sprite class - is the parent class of all classes that can move, collide, and be drawn.
  */
 public abstract class Sprite implements Collidable, Movable, Drawable {
-  /** The health of the Sprite. */
+  /**
+   * The health of the Sprite.
+   */
   protected int health;
-  /** The damage caused by the Sprite. */
+  /**
+   * The damage caused by the Sprite.
+   */
   protected int damage;
-  /** The position of the Sprite. */
+  /**
+   * The position of the Sprite.
+   */
   protected PVector position;
 
-  /** The direction of the Sprite. */
+  /**
+   * The direction of the Sprite.
+   */
   protected PVector direction;
 
-  /** The size of the Sprite. */
+  /**
+   * The size of the Sprite.
+   */
 
   protected float size;
-  /** The x-position of the Sprite. */
+  /**
+   * The x-position of the Sprite.
+   */
   protected int positionX;
 
-  /** The y-position of the Sprite. */
+  /**
+   * The y-position of the Sprite.
+   */
   protected int positionY;
 
-  /** The speed of the Sprite. */
+  /**
+   * The speed of the Sprite.
+   */
   protected float speed;
 
-  /** The window that the Sprite will be drawn on. */
+  /**
+   * The window that the Sprite will be drawn on.
+   */
 
-  protected Window window;
+  protected transient Window window;
 
   /**
    * Constructor for Sprite.
@@ -41,6 +61,7 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   public Sprite(Window window) {
     this.window = window;
   }
+
   /**
    * Gets the position vector of the Sprite.
    *
@@ -115,84 +136,84 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
 
   /**
    * sets the direction of the sprite.
-     */
+   */
   public void setDirection(PVector direction) {
     this.direction = direction;
   }
 
   /**
    * gets the health of the sprite.
-     */
+   */
   public int getHealth() {
     return health;
   }
 
   /**
    * sets the health of the sprite.
-     */
+   */
   public void setHealth(int health) {
     this.health = health;
   }
 
   /**
    * gets the damage caused by the sprite.
-     */
+   */
   public int getDamage() {
     return damage;
   }
 
   /**
    * sets the damage caused by the sprite.
-     */
+   */
   public void setDamage(int damage) {
     this.damage = damage;
   }
 
   /**
    * gets the size of the sprite.
-     */
+   */
   public float getSize() {
     return size;
   }
 
   /**
    * sets the size of the sprite.
-     */
+   */
   public void setSize(int size) {
     this.size = size;
   }
 
   /**
    * sets the position of the sprite.
-     */
+   */
   public void setPosition(PVector cord) {
     this.position = cord;
   }
 
   /**
    * gets the x-position of the sprite.
-     */
+   */
   public int getPositionX() {
     return positionX;
   }
 
   /**
    * sets the x-position of the sprite.
-     */
+   */
   public void setPositionX(int positionX) {
     this.positionX = positionX;
   }
 
   /**
    * gets the y-position of the sprite.
-     */
+   */
   public int getPositionY() {
     return positionY;
   }
 
   /**
    * sets the y-position of the sprite.
-     */
+   */
   public void setPositionY(int positionY) {
     this.positionY = positionY;
   }

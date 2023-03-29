@@ -1,9 +1,8 @@
 package org.bcit.comp2522.project;
 
-import org.bcit.comp2522.project.Sprite;
-import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
 import processing.core.PImage;
+
 
 
 public class Enemy extends Sprite {
