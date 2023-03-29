@@ -1,5 +1,4 @@
 package org.bcit.comp2522.project;
-import com.google.gson.Gson;
 
 public class SaveHandler {
   DatabaseHandler db;
