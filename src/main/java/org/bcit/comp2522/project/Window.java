@@ -226,7 +226,6 @@ public class Window extends PApplet {
   @Override
   public void mousePressed() {
     if (stateOfGame == GameState.STARTGAME && mouseButton == LEFT) {
-      System.out.println("shot");
       PVector mousePosition = new PVector(mouseX, mouseY);
       PVector playerPosition = collectionManager.getPlayer().getPosition();
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
@@ -298,6 +297,7 @@ public class Window extends PApplet {
           projectile.collide(projectile, enemy);
           if (projectile.isDead() && enemy.isDead()) {
             toRemove.add(enemy);
+            score.setCurrentScore(++myScore);
             EnemySpawner.decreaseEnemCount();
             projectilesToRemove.add(projectile);
 //            if (enemy instanceof EnemyStandard) {
