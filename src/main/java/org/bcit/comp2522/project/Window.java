@@ -66,6 +66,19 @@ public class Window extends PApplet {
    * Sets the high score to 0.
    */
   private static int high = 0;
+
+  /**
+   * Declares a projectile image to store the projectile image.
+   */
+  private static final String PROJECTILE_IMAGE = "../img/bullet.png";
+
+  private static final int CHAR_RESIZE_WIDTH = 2;
+  private static final float CHAR_RESIZE_HEIGHT = 1.5f;
+
+  /**
+   * Declares a collectionManager to store the sprites.
+   */
+  private PImage projectileImage;
   CollectionManager collectionManager;
 
   private EnemySpawner enemySpawner;
@@ -116,6 +129,7 @@ public class Window extends PApplet {
     score = new Score(180, 30, myScore, this);
     // Enemy Spawner
     enemySpawner = new EnemySpawner(collectionManager, this);
+    projectileImage = loadImage(PROJECTILE_IMAGE);
   }
 
   /**
@@ -128,7 +142,7 @@ public class Window extends PApplet {
     enemyFastSprite = loadImage(EnemyFast.ENEMY_SPRITE);
 
     collectionManager.player = new Player(this);
-    PImage characterSprite = loadImage("../img/idle_01.png");
+//    PImage characterSprite = loadImage("../img/idle_01.png");
     collectionManager.getSprites().add(collectionManager.player);
   }
 
@@ -211,7 +225,13 @@ public class Window extends PApplet {
       PVector playerPosition = collectionManager.getPlayer().getPosition();
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
 
-      Projectile projectile = new Projectile(this, playerPosition, direction);
+      PVector projectileStartPosition = new PVector(
+              playerPosition.x + collectionManager.getPlayer().getSize() / CHAR_RESIZE_WIDTH - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
+              playerPosition.y + collectionManager.getPlayer().getSize() / CHAR_RESIZE_HEIGHT - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
+      );
+
+
+      Projectile projectile = new Projectile(this, projectileStartPosition, direction, projectileImage);
       projectiles.add(projectile);
       collectionManager.getSprites().add(projectile);
     }
