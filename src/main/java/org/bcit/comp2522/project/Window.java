@@ -3,6 +3,7 @@ package org.bcit.comp2522.project;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -97,7 +98,7 @@ public class Window extends PApplet {
   /**
    * Declares a variable to hold the GameState to transition between states.
    */
-  public GameState  stateOfGame =  GameState.STARTMENU;
+  public GameState stateOfGame = GameState.STARTMENU;
   /**
    * Declares a menu handler to use to handel menus.
    */
@@ -136,14 +137,17 @@ public class Window extends PApplet {
    * Initializes the  collectionManager and adds the created player to it.
    */
   public void init() {
-    collectionManager = new CollectionManager();
-    enemyStandardSprite = loadImage(EnemyStandard.ENEMY_SPRITE);
-    enemySlowSprite = loadImage(EnemySlow.ENEMY_SPRITE);
-    enemyFastSprite = loadImage(EnemyFast.ENEMY_SPRITE);
-
+    collectionManager = CollectionManager.getInstance();
+    enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
+    enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
+    enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
     collectionManager.player = new Player(this);
 //    PImage characterSprite = loadImage("../img/idle_01.png");
     collectionManager.getSprites().add(collectionManager.player);
+    new Thread(() -> {
+      SaveHandler s = new SaveHandler();
+      s.autoSave();
+    }).start();
   }
 
 
@@ -168,6 +172,7 @@ public class Window extends PApplet {
     // Update the player's direction
     updatePlayerDirection();
   }
+
   /**
    * If a key is released,  the corresponding isPressed variable will be false to
    * make sure it does not move when the key is not pressed.
@@ -217,6 +222,7 @@ public class Window extends PApplet {
       collectionManager.getPlayer().setDirection(new PVector(0, 0));
     }
   }
+
   @Override
   public void mousePressed() {
     if (stateOfGame == GameState.STARTGAME && mouseButton == LEFT) {
@@ -243,7 +249,7 @@ public class Window extends PApplet {
   public void draw() {
     // If the game is in the start menu, pause menu, or end game menu, create the menu
     if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
-            || stateOfGame == GameState.ENDGAME) {
+        || stateOfGame == GameState.ENDGAME) {
 
 
       if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.ENDGAME) {
@@ -278,7 +284,7 @@ public class Window extends PApplet {
 
       projectiles.removeIf(projectile -> {
         boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width
-                || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
+            || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
         if (toRemove) {
           collectionManager.getSprites().remove(projectile);
         }
@@ -292,21 +298,22 @@ public class Window extends PApplet {
           projectile.collide(projectile, enemy);
           if (projectile.isDead() && enemy.isDead()) {
             toRemove.add(enemy);
+            EnemySpawner.decreaseEnemCount();
             projectilesToRemove.add(projectile);
-            if (enemy instanceof EnemyStandard) {
-              curr_enem_standard--;
-              score.setCurrentScore(++myScore);
-            }
-            if (enemy instanceof EnemyFast) {
-              curr_enem_fast--;
-              myScore += 2;
-              score.setCurrentScore(myScore);
-            }
-            if (enemy instanceof EnemySlow) {
-              curr_enem_slow--;
-              myScore += 3;
-              score.setCurrentScore(myScore);
-            }
+//            if (enemy instanceof EnemyStandard) {
+//              curr_enem_standard--;
+//              score.setCurrentScore(++myScore);
+//            }
+//            if (enemy instanceof EnemyFast) {
+//              curr_enem_fast--;
+//              myScore += 2;
+//              score.setCurrentScore(myScore);
+//            }
+//            if (enemy instanceof EnemySlow) {
+//              curr_enem_slow--;
+//              myScore += 3;
+//              score.setCurrentScore(myScore);
+//            }
             score.displayScore(stateOfGame);
             score.setHighScore(myScore);
             if (myScore >= high) {
@@ -326,7 +333,7 @@ public class Window extends PApplet {
       }
 
       // Spawns new enemies mid-game
-      enemySpawner.spawnEnemy(0);
+      enemySpawner.spawnEnemy();
 
     } else if (stateOfGame == GameState.PAUSE) {
       // If the game is in the pause state, show the score and pause menu

@@ -1,8 +1,9 @@
 package org.bcit.comp2522.project;
 
-//import org.bcit.comp2522.project.Enemy;
 import processing.core.PImage;
 import processing.core.PVector;
+
+import java.io.Serializable;
 
 /**
  * Player class - is a child of the Sprite class that represents the player.

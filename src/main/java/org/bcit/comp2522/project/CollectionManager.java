@@ -1,5 +1,6 @@
 package org.bcit.comp2522.project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,16 +9,19 @@ import java.util.List;
  * CollectionManager class - manages all collections of sprites.
  */
 public class CollectionManager {
-  private List<Sprite> sprites;
+
+  private static CollectionManager c;
+
+  private transient List<Sprite> sprites;
   //  private List<Projectile> projectiles;
-  private List<Enemy> enemies;
+  private transient List<Enemy> enemies;
   Sprite player;
 
 
   /**
    * Constructor for CollectionManager.
    */
-  public CollectionManager() {
+  private CollectionManager() {
     sprites = new ArrayList<>();
     //projectiles = new ArrayList<>(); Use concurrentLinkedQueue data structure
     enemies = new ArrayList<>();
@@ -38,4 +42,12 @@ public class CollectionManager {
   public Sprite getPlayer() {
     return player;
   }
+
+  public static CollectionManager getInstance(){
+    if(c == null){
+      c = new CollectionManager();
+    }
+    return c;
+  }
+
 }
