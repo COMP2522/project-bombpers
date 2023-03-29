@@ -9,6 +9,9 @@ import java.util.List;
  * CollectionManager class - manages all collections of sprites.
  */
 public class CollectionManager {
+
+  private static CollectionManager c;
+
   private List<Sprite> sprites;
   //  private List<Projectile> projectiles;
   private List<Enemy> enemies;
@@ -18,7 +21,7 @@ public class CollectionManager {
   /**
    * Constructor for CollectionManager.
    */
-  public CollectionManager() {
+  private CollectionManager() {
     sprites = new ArrayList<>();
     //projectiles = new ArrayList<>(); Use concurrentLinkedQueue data structure
     enemies = new ArrayList<>();
@@ -39,4 +42,12 @@ public class CollectionManager {
   public Sprite getPlayer() {
     return player;
   }
+
+  public static CollectionManager getInstance(){
+    if(c == null){
+      c = new CollectionManager();
+    }
+    return c;
+  }
+
 }

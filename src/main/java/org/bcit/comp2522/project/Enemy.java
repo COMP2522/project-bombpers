@@ -1,21 +1,37 @@
 package org.bcit.comp2522.project;
 
-import org.bcit.comp2522.project.Sprite;
-import org.bcit.comp2522.project.Window;
 import processing.core.PVector;
 import processing.core.PImage;
 
 
-public abstract class Enemy extends Sprite {
+
+public class Enemy extends Sprite {
   protected Sprite player;
   protected PImage enemySprite;
+  protected int enemyType;
   private boolean dead;
 
-  public Enemy(Window window, Sprite player, PImage sprite) {
+
+  public Enemy(
+      Window window,
+      Sprite player,
+      PImage sprite,
+      int enemyType,
+      int health,
+      int damage,
+      float size,
+      float speed,
+      PVector pos) {
     super(window);
     this.direction = new PVector(0, 0);
     this.player = player;
     this.enemySprite = sprite;
+    this.enemyType = enemyType;
+    this.health = health;
+    this.damage = damage;
+    this.size = size;
+    this.speed = speed;
+    this.position = pos;
   }
 
   /**
@@ -63,5 +79,9 @@ public abstract class Enemy extends Sprite {
     directionToPlayer.mult(speed);
     direction = directionToPlayer;
     position.add(direction);
+  }
+
+  public int getEnemyType() {
+    return this.enemyType;
   }
 }
