@@ -2,20 +2,9 @@ package org.bcit.comp2522.project;
 
 import processing.core.PVector;
 import java.util.Random;
+import static org.bcit.comp2522.project.EnemyConfig.*;
 
 public class EnemySpawner {
-
-  /**
-   * Number of enemy types.
-   */
-  private static final int ENEM_TYPES = 3;
-
-  /**
-   * int IDs for different enemy types
-   */
-  private static final int ENEM_STANDARD = 1;
-  private static final int ENEM_FAST = 2;
-  private static final int ENEM_SLOW = 3;
   /**
    * Maximum number of enemies.
    */
@@ -58,10 +47,10 @@ public class EnemySpawner {
           collectionManager.getPlayer(),
           window.enemyStandardSprite,
           ENEM_STANDARD,
-          EnemyConfig.ENEMY_STANDARD_HEALTH,
-          EnemyConfig.ENEMY_STANDARD_DAMAGE,
-          EnemyConfig.ENEMY_STANDARD_SIZE,
-          EnemyConfig.ENEMY_STANDARD_SPEED,
+          ENEMY_STANDARD_HEALTH,
+          ENEMY_STANDARD_DAMAGE,
+          ENEMY_STANDARD_SIZE,
+          ENEMY_STANDARD_SPEED,
           randomPos
       );
       curr_enem_count++;
@@ -79,10 +68,10 @@ public class EnemySpawner {
           collectionManager.getPlayer(),
           window.enemyFastSprite,
           ENEM_FAST,
-          EnemyConfig.ENEMY_FAST_HEALTH,
-          EnemyConfig.ENEMY_FAST_DAMAGE,
-          EnemyConfig.ENEMY_FAST_SIZE,
-          EnemyConfig.ENEMY_FAST_SPEED,
+          ENEMY_FAST_HEALTH,
+          ENEMY_FAST_DAMAGE,
+          ENEMY_FAST_SIZE,
+          ENEMY_FAST_SPEED,
           randomPos
       );
       curr_enem_count++;
@@ -100,10 +89,10 @@ public class EnemySpawner {
           collectionManager.getPlayer(),
           window.enemySlowSprite,
           ENEM_SLOW,
-          EnemyConfig.ENEMY_SLOW_HEALTH,
-          EnemyConfig.ENEMY_SLOW_DAMAGE,
-          EnemyConfig.ENEMY_SLOW_SIZE,
-          EnemyConfig.ENEMY_SLOW_SPEED,
+          ENEMY_SLOW_HEALTH,
+          ENEMY_SLOW_DAMAGE,
+          ENEMY_SLOW_SIZE,
+          ENEMY_SLOW_SPEED,
           randomPos
       );
       curr_enem_count++;
