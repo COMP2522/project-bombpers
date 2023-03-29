@@ -1,5 +1,8 @@
 package org.bcit.comp2522.project;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -11,10 +14,6 @@ import org.bson.Document;
 
 
 //This is for getting values from the DB, please don't delete it.
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import static com.mongodb.client.model.Filters.eq;
 
 public class DatabaseHandler {

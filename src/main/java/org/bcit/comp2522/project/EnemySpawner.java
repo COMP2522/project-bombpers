@@ -34,18 +34,10 @@ public class EnemySpawner {
 
     int diceRoll = rngsus.nextInt(ENEM_TYPES) + 1;
     switch (diceRoll) {
-      case ENEM_STANDARD:
-        spawnStandardEnemy();
-        break;
-      case ENEM_FAST:
-        spawnFastEnemy();
-        break;
-      case ENEM_SLOW:
-        spawnSlowEnemy();
-        break;
-      default:
-        System.out.println("Invalid spawn type");
-        break;
+      case ENEM_STANDARD -> spawnStandardEnemy();
+      case ENEM_FAST -> spawnFastEnemy();
+      case ENEM_SLOW -> spawnSlowEnemy();
+      default -> System.out.println("Invalid spawn type");
     }
   }
 
