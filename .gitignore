@@ -4,3 +4,4 @@ build.gradle/
 .idea/
 gradle/
 src/main/java/org/bcit/comp2522/project/DatabaseHandler.java
+token.txt
