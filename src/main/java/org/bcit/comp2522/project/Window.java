@@ -123,9 +123,9 @@ public class Window extends PApplet {
    */
   public void init() {
     collectionManager = new CollectionManager();
-    enemyStandardSprite = loadImage(EnemyStandard.ENEMY_SPRITE);
-    enemySlowSprite = loadImage(EnemySlow.ENEMY_SPRITE);
-    enemyFastSprite = loadImage(EnemyFast.ENEMY_SPRITE);
+    enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
+    enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
+    enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
 
     collectionManager.player = new Player(this);
     PImage characterSprite = loadImage("../img/idle_01.png");
@@ -223,7 +223,7 @@ public class Window extends PApplet {
   public void draw() {
     // If the game is in the start menu, pause menu, or end game menu, create the menu
     if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
-            || stateOfGame == GameState.ENDGAME) {
+        || stateOfGame == GameState.ENDGAME) {
 
 
       if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.ENDGAME) {
@@ -258,7 +258,7 @@ public class Window extends PApplet {
 
       projectiles.removeIf(projectile -> {
         boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width
-                || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
+            || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
         if (toRemove) {
           collectionManager.getSprites().remove(projectile);
         }
@@ -274,20 +274,20 @@ public class Window extends PApplet {
             toRemove.add(enemy);
             EnemySpawner.decreaseEnemCount();
             projectilesToRemove.add(projectile);
-            if (enemy instanceof EnemyStandard) {
-              curr_enem_standard--;
-              score.setCurrentScore(++myScore);
-            }
-            if (enemy instanceof EnemyFast) {
-              curr_enem_fast--;
-              myScore += 2;
-              score.setCurrentScore(myScore);
-            }
-            if (enemy instanceof EnemySlow) {
-              curr_enem_slow--;
-              myScore += 3;
-              score.setCurrentScore(myScore);
-            }
+//            if (enemy instanceof EnemyStandard) {
+//              curr_enem_standard--;
+//              score.setCurrentScore(++myScore);
+//            }
+//            if (enemy instanceof EnemyFast) {
+//              curr_enem_fast--;
+//              myScore += 2;
+//              score.setCurrentScore(myScore);
+//            }
+//            if (enemy instanceof EnemySlow) {
+//              curr_enem_slow--;
+//              myScore += 3;
+//              score.setCurrentScore(myScore);
+//            }
             score.displayScore(stateOfGame);
             score.setHighScore(myScore);
             if (myScore >= high) {
@@ -307,7 +307,6 @@ public class Window extends PApplet {
       }
 
       // Spawns new enemies mid-game
-
       enemySpawner.spawnEnemy();
 
     } else if (stateOfGame == GameState.PAUSE) {
