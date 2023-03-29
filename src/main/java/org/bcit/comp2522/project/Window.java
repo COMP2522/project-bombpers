@@ -204,7 +204,13 @@ public class Window extends PApplet {
       PVector playerPosition = collectionManager.getPlayer().getPosition();
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
 
-      Projectile projectile = new Projectile(this, playerPosition, direction, projectileImage);
+      PVector projectileStartPosition = new PVector(
+              playerPosition.x + collectionManager.getPlayer().getSize() / CHAR_RESIZE_WIDTH - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
+              playerPosition.y + collectionManager.getPlayer().getSize() / CHAR_RESIZE_HEIGHT - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
+      );
+
+      Projectile projectile = new Projectile(this, projectileStartPosition, direction, projectileImage);
+
       projectiles.add(projectile);
       collectionManager.getSprites().add(projectile);
     }
@@ -269,6 +275,7 @@ public class Window extends PApplet {
             enemySpawner.decreaseEnemCount();
             enemySpawner.updateSpawnModifier(killCounter);
             projectilesToRemove.add(projectile);
+            score.setCurrentScore(++myScore);
 //            if (enemy instanceof EnemyStandard) {
 //              curr_enem_standard--;
 //              score.setCurrentScore(++myScore);
