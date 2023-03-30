@@ -52,7 +52,6 @@ public class Window extends PApplet {
    */
   private PImage projectileImage;
   CollectionManager collectionManager;
-
   public EnemySpawner enemySpawner;
   public KillCounter killCounter;
   /**
@@ -115,7 +114,6 @@ public class Window extends PApplet {
     enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
     enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
     collectionManager.player = Player.getPlayerInstance(this);
-//    PImage characterSprite = loadImage("../img/idle_01.png");
     collectionManager.getSprites().add(collectionManager.player);
     new Thread(() -> {
       SaveHandler s = new SaveHandler();
@@ -199,7 +197,6 @@ public class Window extends PApplet {
   @Override
   public void mousePressed() {
     if (stateOfGame == GameState.STARTGAME && mouseButton == LEFT) {
-      System.out.println("shot");
       PVector mousePosition = new PVector(mouseX, mouseY);
       PVector playerPosition = collectionManager.getPlayer().getPosition();
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
@@ -276,20 +273,6 @@ public class Window extends PApplet {
             enemySpawner.updateSpawnModifier(killCounter);
             projectilesToRemove.add(projectile);
             score.setCurrentScore(++myScore);
-//            if (enemy instanceof EnemyStandard) {
-//              curr_enem_standard--;
-//              score.setCurrentScore(++myScore);
-//            }
-//            if (enemy instanceof EnemyFast) {
-//              curr_enem_fast--;
-//              myScore += 2;
-//              score.setCurrentScore(myScore);
-//            }
-//            if (enemy instanceof EnemySlow) {
-//              curr_enem_slow--;
-//              myScore += 3;
-//              score.setCurrentScore(myScore);
-//            }
             score.displayScore(stateOfGame);
             score.setHighScore(myScore);
             if (myScore >= high) {

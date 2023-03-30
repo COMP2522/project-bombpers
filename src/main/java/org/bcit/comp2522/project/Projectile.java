@@ -4,10 +4,11 @@ import processing.core.PVector;
 import processing.core.PImage;
 
 public class Projectile extends Sprite {
-    public static final float PROJECTILE_SIZE = 10;
+    public static final float PROJECTILE_SIZE = 15;
     public static final float PROJECTILE_SPEED = 5.0f;
     private boolean dead;
     private final PImage projectileImage;
+    private final int CUT_BOX_IN_HALF = 2;
 
     public Projectile(Window window, PVector position, PVector direction, PImage image) {
         super(window);
@@ -39,8 +40,11 @@ public class Projectile extends Sprite {
     @Override
     public void collide(Sprite one, Sprite two) {
         if (one instanceof Projectile projectile && two instanceof Enemy enemy) {
+            PVector projectileCenter = projectile.getCenterPosition();
+            PVector enemyCenter = enemy.getCenterPosition();
+            float minDistance = (projectile.getSize() / CUT_BOX_IN_HALF) + (enemy.getSize() / CUT_BOX_IN_HALF);
 
-            if (PVector.dist(projectile.getPosition(), enemy.getPosition()) < (projectile.getSize() / 2) + (enemy.getSize() / 2)) {
+            if (PVector.dist(projectileCenter, enemyCenter) < minDistance) {
                 projectile.setDead(true);
                 enemy.setDead(true);
             }
