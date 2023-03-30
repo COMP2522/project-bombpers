@@ -22,12 +22,10 @@ public class Score extends UserInterface {
    *
    * @param positionX the x-position of the score
    * @param positionY the y-position of the score
-   * @param score the current score of the game
    * @param window the window of the game that the score is displayed on
    */
-  public Score(int positionX, int positionY, int score, Window window) {
+  public Score(int positionX, int positionY, Window window) {
     super(positionX, positionY);
-    currentScore = score;
     this.window = window;
   }
 
@@ -102,7 +100,8 @@ public class Score extends UserInterface {
   private void displayMenuGameScore() {
     window.textSize(60);
     window.fill(255, 255, 0);
-    window.text("Current Score: " + getCurrentScore(), getPositionX() - 130, getPositionY() + 300);
-    window.text("High Score: " + getHighScore(), getPositionX() - 100, getPositionY() + 400);
+    //Set x and y in here make current x value larger
+    window.text("Current Score: " + getCurrentScore(), getPositionX()+100, getPositionY());
+    window.text("High Score: " + getHighScore(), getPositionX()+100, getPositionY() +50);
   }
 }

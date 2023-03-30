@@ -60,7 +60,7 @@ public class Window extends PApplet {
    */
   private ConcurrentLinkedQueue<Projectile> projectiles = new ConcurrentLinkedQueue<>();
 
-  private Score score;
+  public Score score;
 
   /**
    * Declares a background to store the background.
@@ -98,7 +98,7 @@ public class Window extends PApplet {
     // Create the background object
     background = new Background(this);
     //Create the score object
-    score = new Score(180, 30, myScore, this);
+    score = new Score(width/2, 30, this);
     // Enemy Spawner
     enemySpawner = new EnemySpawner(collectionManager, this);
     projectileImage = loadImage(PROJECTILE_IMAGE);
@@ -218,28 +218,23 @@ public class Window extends PApplet {
    */
   public void draw() {
     // If the game is in the start menu, pause menu, or end game menu, create the menu
-
     if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
         || stateOfGame == GameState.ENDGAME) {
-
-
       if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.ENDGAME) {
-
-        myScore = 0;
+        score.setCurrentScore(0);
+        PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
+        collectionManager.getPlayer().setPosition(originalPosition);
       }
-
-      stateOfGame = menuhandler.createMenu(stateOfGame, score);
+      stateOfGame = menuhandler.createMenu(stateOfGame);
       // Reset the player's position
-      PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
-      collectionManager.getPlayer().setPosition(originalPosition);
+
 
 
     } else if (stateOfGame == GameState.STARTGAME) {
-
       // If the game is in the start game state, create the game
       //Reset the score to 0
-      if (myScore == 0) {
-        myScore = 0;
+      if (score.getCurrentScore() == 0) {
+        score.setCurrentScore(0);
       }
       background.draw();
       score.displayScore(stateOfGame);
@@ -247,9 +242,7 @@ public class Window extends PApplet {
       if (keyPressed) {
         if (key == 'p' || key == 'P') {
           //state to pause
-
           stateOfGame = GameState.PAUSE;
-
         }
       }
       // Create the sprites and draw as well as update them
@@ -265,7 +258,6 @@ public class Window extends PApplet {
         }
         return toRemove;
       });
-
       ArrayList<Enemy> toRemove = new ArrayList<>();
       ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
       for (Enemy enemy : collectionManager.getEnemies()) {
@@ -278,20 +270,6 @@ public class Window extends PApplet {
             enemySpawner.updateSpawnModifier(killCounter);
             projectilesToRemove.add(projectile);
             score.setCurrentScore(++myScore);
-//            if (enemy instanceof EnemyStandard) {
-//              curr_enem_standard--;
-//              score.setCurrentScore(++myScore);
-//            }
-//            if (enemy instanceof EnemyFast) {
-//              curr_enem_fast--;
-//              myScore += 2;
-//              score.setCurrentScore(myScore);
-//            }
-//            if (enemy instanceof EnemySlow) {
-//              curr_enem_slow--;
-//              myScore += 3;
-//              score.setCurrentScore(myScore);
-//            }
             score.displayScore(stateOfGame);
             score.setHighScore(myScore);
             if (myScore >= high) {
@@ -302,21 +280,12 @@ public class Window extends PApplet {
       }
       // Remove the enemies that have collided with the player
       for (Enemy enemy : toRemove) {
-/*<<<<<<< HEAD
-          // if the current score is higher than the high score
-          if (myScore >= high) {
-            score.setHighScore(myScore);
-            high = score.getHighScore();
-          }
-        }
-=======*/
         collectionManager.getEnemies().remove(enemy);
         collectionManager.getSprites().remove(enemy);
       }
       for (Projectile projectile : projectilesToRemove) {
         projectiles.remove(projectile);
         collectionManager.getSprites().remove(projectile);
-/*>>>>>>> main*/
       }
       // Spawns new enemies mid-game
       enemySpawner.spawnEnemy();
@@ -329,12 +298,10 @@ public class Window extends PApplet {
       if (myScore >= score.getHighScore()) {
         score.setHighScore(myScore);
       }
-      score.displayScore(stateOfGame);
     } else {
       if (myScore >= score.getHighScore()) {
         score.setHighScore(myScore);
       }
-      score.displayScore(stateOfGame);
     }
   }
 
