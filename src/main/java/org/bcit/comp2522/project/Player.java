@@ -35,7 +35,7 @@ public class Player extends Sprite {
   /**
    * The location of the player image.
    */
-  public static final String PLAYER_SPRITE = "../img/idle_0.png";
+  public static final String PLAYER_SPRITE = "../img/player_00.png";
 
   private static Player player;
 
