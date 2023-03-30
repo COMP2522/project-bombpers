@@ -30,36 +30,6 @@ public class Window extends PApplet {
    * Variable to check if the down key is pressed.Set to false by default.
    */
   private boolean isDownPressed = false;
-  /**
-   * Number of enemy types.
-   */
-  private static final int ENEM_TYPES = 3;
-  /**
-   * Maximum number of enemies.
-   */
-  private static final int ENEM_MAX = 10;
-  /**
-   * Maximum number of standard type enemies.
-   */
-  private static final int ENEM_STANDARD_MAX = 5;
-  /**
-   * Maximum number of fast type enemies.
-   */
-  private static final int ENEM_FAST_MAX = 10;
-  /**
-   * Maximum number of slow type enemies.
-   */
-  private static final int ENEM_SLOW_MAX = 5;
-  /**
-   * Sets the different types of enemies to start off at 0.
-   */
-  private static int curr_enem_standard = 0;
-  private static int curr_enem_fast = 0;
-  private static int curr_enem_slow = 0;
-  /**
-   * Sets the score to 0.
-   */
-
   public PImage enemyStandardSprite;
   public PImage enemySlowSprite;
   public PImage enemyFastSprite;
@@ -69,16 +39,26 @@ public class Window extends PApplet {
    * Sets the high score to 0.
    */
   private static int high = 0;
+  /**
+   * Declares a projectile image to store the projectile image.
+   */
+  private static final String PROJECTILE_IMAGE = "../img/bullet.png";
 
+  private static final int CHAR_RESIZE_WIDTH = 2;
+  private static final float CHAR_RESIZE_HEIGHT = 1.5f;
+
+  /**
+   * Declares a collectionManager to store the sprites.
+   */
+  private PImage projectileImage;
   CollectionManager collectionManager;
 
-  private EnemySpawner enemySpawner;
+  public EnemySpawner enemySpawner;
+  public KillCounter killCounter;
   /**
    * Declares a score variable to store the score.
    */
   private ConcurrentLinkedQueue<Projectile> projectiles = new ConcurrentLinkedQueue<>();
-
-  private Menu menu, menu2, menu3, menu4;
 
   private Score score;
 
@@ -121,6 +101,8 @@ public class Window extends PApplet {
     score = new Score(180, 30, myScore, this);
     // Enemy Spawner
     enemySpawner = new EnemySpawner(collectionManager, this);
+    projectileImage = loadImage(PROJECTILE_IMAGE);
+    killCounter = new KillCounter(this);
   }
 
   /**
@@ -132,6 +114,7 @@ public class Window extends PApplet {
     enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
     enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
     collectionManager.player = Player.getPlayerInstance(this);
+//    PImage characterSprite = loadImage("../img/idle_01.png");
     collectionManager.getSprites().add(collectionManager.player);
     new Thread(() -> {
       SaveHandler s = new SaveHandler();
@@ -219,7 +202,12 @@ public class Window extends PApplet {
       PVector mousePosition = new PVector(mouseX, mouseY);
       PVector playerPosition = collectionManager.getPlayer().getPosition();
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
-      Projectile projectile = new Projectile(this, playerPosition, direction);
+      PVector projectileStartPosition = new PVector(
+              playerPosition.x + collectionManager.getPlayer().getSize() / CHAR_RESIZE_WIDTH - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
+              playerPosition.y + collectionManager.getPlayer().getSize() / CHAR_RESIZE_HEIGHT - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
+      );
+
+      Projectile projectile = new Projectile(this, projectileStartPosition, direction, projectileImage);
       projectiles.add(projectile);
       collectionManager.getSprites().add(projectile);
     }
@@ -285,8 +273,11 @@ public class Window extends PApplet {
           projectile.collide(projectile, enemy);
           if (projectile.isDead() && enemy.isDead()) {
             toRemove.add(enemy);
-            EnemySpawner.decreaseEnemCount();
+            killCounter.killPlus();
+            enemySpawner.decreaseEnemCount();
+            enemySpawner.updateSpawnModifier(killCounter);
             projectilesToRemove.add(projectile);
+            score.setCurrentScore(++myScore);
 //            if (enemy instanceof EnemyStandard) {
 //              curr_enem_standard--;
 //              score.setCurrentScore(++myScore);
@@ -329,6 +320,9 @@ public class Window extends PApplet {
       }
       // Spawns new enemies mid-game
       enemySpawner.spawnEnemy();
+
+      // Kill Counter for enemies
+      killCounter.draw(this);
 
     } else if (stateOfGame == GameState.PAUSE) {
       // If the game is in the pause state, show the score and pause menu

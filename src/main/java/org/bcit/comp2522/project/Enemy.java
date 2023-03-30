@@ -21,7 +21,8 @@ public class Enemy extends Sprite {
       int damage,
       float size,
       float speed,
-      PVector pos) {
+      PVector pos
+  ) {
     super(window);
     this.direction = new PVector(0, 0);
     this.player = player;
