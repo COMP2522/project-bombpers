@@ -14,25 +14,10 @@ import processing.event.KeyEvent;
  */
 public class Window extends PApplet {
 
-  /**
-   * Variable to check if the left key is pressed. Set to false by default.
-   */
-  private boolean isLeftPressed = false;
-  /**
-   * Variable to check if the right key is pressed.Set to false by default.
-   */
-  private boolean isRightPressed = false;
-  /**
-   * Variable to check if the up key is pressed.Set to false by default.
-   */
-  private boolean isUpPressed = false;
-  /**
-   * Variable to check if the down key is pressed.Set to false by default.
-   */
-  private boolean isDownPressed = false;
   public PImage enemyStandardSprite;
   public PImage enemySlowSprite;
   public PImage enemyFastSprite;
+  private InputHandler inputHandler;
   private static int myScore = 0;
   /**
    * Sets the high score to 0.
@@ -52,7 +37,6 @@ public class Window extends PApplet {
    */
   private PImage projectileImage;
   CollectionManager collectionManager;
-
   public EnemySpawner enemySpawner;
   public KillCounter killCounter;
   /**
@@ -75,10 +59,6 @@ public class Window extends PApplet {
    * Declares a menu handler to use to handel menus.
    */
   public MenuHandler menuhandler = new MenuHandler(stateOfGame, this);
-  /**
-   * Declares a random variable to use to generate random numbers.
-   */
-  private Random rngsus = new Random();
 
   /**
    * Creates a window of size 500 x 500 pixels.
@@ -91,8 +71,9 @@ public class Window extends PApplet {
    * Setup of the game.
    */
   public void setup() {
-    // Initialize the PLayer and collectionManager
+    // Initialize the Player and collectionManager
     this.init();
+    inputHandler = new InputHandler(collectionManager);
 
     noStroke();
 
@@ -114,9 +95,8 @@ public class Window extends PApplet {
     enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
     enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
     enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
-    collectionManager.player = Player.getPlayerInstance(this);
-//    PImage characterSprite = loadImage("../img/idle_01.png");
-    collectionManager.getSprites().add(collectionManager.player);
+    CollectionManager.player = Player.getPlayerInstance(this);
+    collectionManager.getSprites().add(CollectionManager.player);
     new Thread(() -> {
       SaveHandler s = new SaveHandler();
       s.autoSave();
@@ -132,15 +112,7 @@ public class Window extends PApplet {
    */
   @Override
   public void keyPressed(KeyEvent event) {
-    // Get the key code of the key that was pressed
-    int keyCode = event.getKeyCode();
-    // Check if the key code is the same as any of the switch cases and do the corresponding action
-    switch (keyCode) {
-      case LEFT -> isLeftPressed = true;
-      case RIGHT -> isRightPressed = true;
-      case UP -> isUpPressed = true;
-      case DOWN -> isDownPressed = true;
-    }
+    inputHandler.keyPressed(event);
     // Update the player's direction
     updatePlayerDirection();
   }
@@ -154,15 +126,7 @@ public class Window extends PApplet {
 
   @Override
   public void keyReleased(KeyEvent event) {
-    // Get the key code of the key that was pressed
-    int keyCode = event.getKeyCode();
-    // Check if the key code is the same as any of the switch cases and do the corresponding action
-    switch (keyCode) {
-      case LEFT -> isLeftPressed = false;
-      case RIGHT -> isRightPressed = false;
-      case UP -> isUpPressed = false;
-      case DOWN -> isDownPressed = false;
-    }
+    inputHandler.keyReleased(event);
     // Update the player's direction
     updatePlayerDirection();
   }
@@ -171,48 +135,13 @@ public class Window extends PApplet {
    * Updates the player's direction based on the key pressed.
    */
   private void updatePlayerDirection() {
-    Player player = (Player) collectionManager.getPlayer();
-    boolean isDirectionSet = false;
-
-    if (isLeftPressed && !isRightPressed) {
-      if (isUpPressed && !isDownPressed) {
-        player.setDirection(new PVector(-1, -1));
-        isDirectionSet = true;
-      } else if (isDownPressed && !isUpPressed) {
-        player.setDirection(new PVector(-1, 1));
-        isDirectionSet = true;
-      } else {
-        player.setDirection(new PVector(-1, 0));
-        isDirectionSet = true;
-      }
-    } else if (isRightPressed && !isLeftPressed) {
-      if (isUpPressed && !isDownPressed) {
-        player.setDirection(new PVector(1, -1));
-        isDirectionSet = true;
-      } else if (isDownPressed && !isUpPressed) {
-        player.setDirection(new PVector(1, 1));
-        isDirectionSet = true;
-      } else {
-        player.setDirection(new PVector(1, 0));
-        isDirectionSet = true;
-      }
-    } else if (isUpPressed && !isDownPressed) {
-      player.setDirection(new PVector(0, -1));
-      isDirectionSet = true;
-    } else if (isDownPressed && !isUpPressed) {
-      player.setDirection(new PVector(0, 1));
-      isDirectionSet = true;
-    }
-
-    if (!isDirectionSet) {
-      player.setDirection(new PVector(0, 0));
-    }
+    PVector newDirection = inputHandler.updatePlayerDirection();
+    collectionManager.getPlayer().setDirection(newDirection);
   }
 
   @Override
   public void mousePressed() {
     if (stateOfGame == GameState.STARTGAME && mouseButton == LEFT) {
-      System.out.println("shot");
       PVector mousePosition = new PVector(mouseX, mouseY);
       PVector playerPosition = collectionManager.getPlayer().getPosition();
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
@@ -289,20 +218,6 @@ public class Window extends PApplet {
             enemySpawner.updateSpawnModifier(killCounter);
             projectilesToRemove.add(projectile);
             score.setCurrentScore(++myScore);
-//            if (enemy instanceof EnemyStandard) {
-//              curr_enem_standard--;
-//              score.setCurrentScore(++myScore);
-//            }
-//            if (enemy instanceof EnemyFast) {
-//              curr_enem_fast--;
-//              myScore += 2;
-//              score.setCurrentScore(myScore);
-//            }
-//            if (enemy instanceof EnemySlow) {
-//              curr_enem_slow--;
-//              myScore += 3;
-//              score.setCurrentScore(myScore);
-//            }
             score.displayScore(stateOfGame);
             score.setHighScore(myScore);
             if (myScore >= high) {

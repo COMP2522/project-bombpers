@@ -10,8 +10,7 @@ public class SaveHandler {
   }
 
   private void save() {
-    String info = "Info to save";
-    db.save("Game", info);
+    db.save();
   }
 
   public void autoSave(){

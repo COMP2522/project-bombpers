@@ -41,8 +41,8 @@ public class DatabaseHandler {
     return instance;
   }
 
-  public void save(String key, String value) {
-    System.out.println("Saving " + key + " to the database.");
+  public void save() {
+    System.out.println("Saving game");
   }
 
   public void load() {

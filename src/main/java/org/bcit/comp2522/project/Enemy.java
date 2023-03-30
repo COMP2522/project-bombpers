@@ -8,7 +8,11 @@ public class Enemy extends Sprite {
   protected PImage enemySprite;
   protected int enemyType;
   private boolean dead;
-
+  private final float hitboxWidth;
+  private final float hitboxHeight;
+  public static final int ENEMY_STANDARD_HITBOX_WIDTH = 10;
+  public static final int ENEMY_STANDARD_HITBOX_HEIGHT = 25;
+  public final int CUT_HITBOX_IN_HALF = 2;
 
   public Enemy(
       Window window,
@@ -31,6 +35,8 @@ public class Enemy extends Sprite {
     this.size = size;
     this.speed = speed;
     this.position = pos;
+    this.hitboxWidth = ENEMY_STANDARD_HITBOX_WIDTH;
+    this.hitboxHeight = ENEMY_STANDARD_HITBOX_HEIGHT;
   }
 
   /**
@@ -42,6 +48,11 @@ public class Enemy extends Sprite {
   @Override
   public void collide(Sprite one, Sprite two) {
     //TODO: Implement this method
+  }
+
+  @Override
+  public PVector getCenterPosition() {
+    return new PVector(position.x + hitboxWidth / CUT_HITBOX_IN_HALF, position.y + hitboxHeight / CUT_HITBOX_IN_HALF);
   }
 
   /**
