@@ -58,14 +58,6 @@ public class Enemy extends Sprite {
   }
 
   /**
-   * compareTo method for EnemyBase.
-   */
-  @Override
-  public void compareTo() {
-    //TODO: Implement this method
-  }
-
-  /**
    * draws the enemy.
    */
   @Override

@@ -113,9 +113,8 @@ public class Window extends PApplet {
     enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
     enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
     enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
-    collectionManager.player = Player.getPlayerInstance(this);
-//    PImage characterSprite = loadImage("../img/idle_01.png");
-    collectionManager.getSprites().add(collectionManager.player);
+    CollectionManager.player = Player.getPlayerInstance(this);
+    collectionManager.getSprites().add(CollectionManager.player);
     new Thread(() -> {
       SaveHandler s = new SaveHandler();
       s.autoSave();
