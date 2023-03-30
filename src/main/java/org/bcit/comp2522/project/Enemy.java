@@ -34,14 +34,17 @@ public class Enemy extends Sprite {
   }
 
   /**
-   * Method for two Enemy Sprites colliding.
+   * Method for Enemy colliding with player.
    *
-   * @param one the first sprite
-   * @param two the second sprite
+   * @param player the first sprite
    */
   @Override
-  public void collide(Sprite one, Sprite two) {
-    //TODO: Implement this method
+  public void collide(Sprite player, Sprite enemy) {
+    if (PVector.dist(player.getPosition(),
+        this.getPosition()) < (player.getSize() / 2) + (player.getSize() / 2))
+    {
+      this.setDead(true);
+    }
   }
 
   /**
