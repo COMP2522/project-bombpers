@@ -52,7 +52,6 @@ public class Window extends PApplet {
    */
   private PImage projectileImage;
   CollectionManager collectionManager;
-
   public EnemySpawner enemySpawner;
   public KillCounter killCounter;
   /**
@@ -122,7 +121,6 @@ public class Window extends PApplet {
       s.autoSave();
     }).start();
   }
-
 
   /**
    * If a key is pressed,  the corresponding isPressed variable will be true to
@@ -199,7 +197,6 @@ public class Window extends PApplet {
   @Override
   public void mousePressed() {
     if (stateOfGame == GameState.STARTGAME && mouseButton == LEFT) {
-      System.out.println("shot");
       PVector mousePosition = new PVector(mouseX, mouseY);
       PVector playerPosition = collectionManager.getPlayer().getPosition();
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
@@ -276,20 +273,6 @@ public class Window extends PApplet {
             enemySpawner.updateSpawnModifier(killCounter);
             projectilesToRemove.add(projectile);
             score.setCurrentScore(++myScore);
-//            if (enemy instanceof EnemyStandard) {
-//              curr_enem_standard--;
-//              score.setCurrentScore(++myScore);
-//            }
-//            if (enemy instanceof EnemyFast) {
-//              curr_enem_fast--;
-//              myScore += 2;
-//              score.setCurrentScore(myScore);
-//            }
-//            if (enemy instanceof EnemySlow) {
-//              curr_enem_slow--;
-//              myScore += 3;
-//              score.setCurrentScore(myScore);
-//            }
             score.displayScore(stateOfGame);
             score.setHighScore(myScore);
             if (myScore >= high) {
