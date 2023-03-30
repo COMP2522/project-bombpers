@@ -4,11 +4,17 @@ import processing.core.PVector;
 import processing.core.PImage;
 
 
+
 public class Enemy extends Sprite {
   protected Sprite player;
   protected PImage enemySprite;
   protected int enemyType;
   private boolean dead;
+  private final float hitboxWidth = 0;
+  private final float hitboxHeight = 0;
+  public static final int ENEMY_STANDARD_HITBOX_WIDTH = 10;
+  public static final int ENEMY_STANDARD_HITBOX_HEIGHT = 25;
+  public final int CUT_HITBOX_IN_HALF = 2;
 
   public Enemy(
       Window window,
@@ -34,19 +40,23 @@ public class Enemy extends Sprite {
   }
 
   /**
-   * Method for Enemy colliding with player.
+   * Method for two Enemy Sprites colliding.
    *
-   * @param player the first sprite
+   * @param one the first sprite
+   * @param two the second sprite
    */
   @Override
-  public void collide(Sprite player, Sprite enemy) {
-    if (PVector.dist(player.getPosition(),
-        this.getPosition()) < (player.getSize() / 2) + (player.getSize() / 2))
-    {
-      this.setDead(true);
-    }
+  public void collide(Sprite one, Sprite two) {
+    //TODO: Implement this method
   }
 
+  @Override
+  public PVector getCenterPosition() {
+    return new PVector(
+        position.x + hitboxWidth / CUT_HITBOX_IN_HALF,
+        position.y + hitboxHeight / CUT_HITBOX_IN_HALF
+    );
+  }
   /**
    * draws the enemy.
    */

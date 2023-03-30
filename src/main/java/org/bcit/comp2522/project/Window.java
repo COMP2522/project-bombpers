@@ -38,8 +38,20 @@ public class Window extends PApplet {
    * Sets the high score to 0.
    */
   private static int high = 0;
-  CollectionManager collectionManager;
 
+  /**
+   * Declares a projectile image to store the projectile image.
+   */
+  private static final String PROJECTILE_IMAGE = "../img/bullet.png";
+
+  private static final int CHAR_RESIZE_WIDTH = 2;
+  private static final float CHAR_RESIZE_HEIGHT = 1.5f;
+
+  /**
+   * Declares a collectionManager to store the sprites.
+   */
+  private PImage projectileImage;
+  CollectionManager collectionManager;
   public EnemySpawner enemySpawner;
   public KillCounter killCounter;
   /**
@@ -89,6 +101,7 @@ public class Window extends PApplet {
     score = new Score(180, 30, myScore, this);
     // Enemy Spawner
     enemySpawner = new EnemySpawner(collectionManager, this);
+    projectileImage = loadImage(PROJECTILE_IMAGE);
     killCounter = new KillCounter(this);
   }
 
@@ -101,13 +114,13 @@ public class Window extends PApplet {
     enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
     enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
     collectionManager.player = Player.getPlayerInstance(this);
+//    PImage characterSprite = loadImage("../img/idle_01.png");
     collectionManager.getSprites().add(collectionManager.player);
     new Thread(() -> {
       SaveHandler s = new SaveHandler();
       s.autoSave();
     }).start();
   }
-
 
   /**
    * If a key is pressed,  the corresponding isPressed variable will be true to
@@ -184,12 +197,17 @@ public class Window extends PApplet {
   @Override
   public void mousePressed() {
     if (stateOfGame == GameState.STARTGAME && mouseButton == LEFT) {
-      System.out.println("shot");
       PVector mousePosition = new PVector(mouseX, mouseY);
       PVector playerPosition = collectionManager.getPlayer().getPosition();
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
 
-      Projectile projectile = new Projectile(this, playerPosition, direction);
+      PVector projectileStartPosition = new PVector(
+              playerPosition.x + collectionManager.getPlayer().getSize() / CHAR_RESIZE_WIDTH - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
+              playerPosition.y + collectionManager.getPlayer().getSize() / CHAR_RESIZE_HEIGHT - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
+      );
+
+      Projectile projectile = new Projectile(this, projectileStartPosition, direction, projectileImage);
+
       projectiles.add(projectile);
       collectionManager.getSprites().add(projectile);
     }
@@ -254,20 +272,7 @@ public class Window extends PApplet {
             enemySpawner.decreaseEnemCount();
             enemySpawner.updateSpawnModifier(killCounter);
             projectilesToRemove.add(projectile);
-//            if (enemy instanceof EnemyStandard) {
-//              curr_enem_standard--;
-//              score.setCurrentScore(++myScore);
-//            }
-//            if (enemy instanceof EnemyFast) {
-//              curr_enem_fast--;
-//              myScore += 2;
-//              score.setCurrentScore(myScore);
-//            }
-//            if (enemy instanceof EnemySlow) {
-//              curr_enem_slow--;
-//              myScore += 3;
-//              score.setCurrentScore(myScore);
-//            }
+            score.setCurrentScore(++myScore);
             score.displayScore(stateOfGame);
             score.setHighScore(myScore);
             if (myScore >= high) {
