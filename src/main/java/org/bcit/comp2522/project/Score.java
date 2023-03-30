@@ -19,6 +19,8 @@ public class Score extends UserInterface {
    */
   private final Window window;
 
+  private final int STARTING_SCORE = 0;
+
   /**
    * Constructor for Score.
    *
@@ -29,6 +31,7 @@ public class Score extends UserInterface {
   public Score(int positionX, int positionY, Window window) {
     super(positionX, positionY);
     this.window = window;
+    this.currentScore = STARTING_SCORE;
   }
 
   /**

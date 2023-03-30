@@ -34,11 +34,6 @@ public class Window extends PApplet {
   public PImage enemySlowSprite;
   public PImage enemyFastSprite;
 
-  private static int myScore = 0;
-  /**
-   * Sets the high score to 0.
-   */
-  private static int high = 0;
   /**
    * Declares a projectile image to store the projectile image.
    */
@@ -57,9 +52,9 @@ public class Window extends PApplet {
   /**
    * Declares a score variable to store the score.
    */
-  private ConcurrentLinkedQueue<Projectile> projectiles = new ConcurrentLinkedQueue<>();
-
   public Score score;
+
+
 
   /**
    * Declares a background to store the background.
@@ -204,7 +199,7 @@ public class Window extends PApplet {
       );
 
       Projectile projectile = new Projectile(this, projectileStartPosition, direction, projectileImage);
-      projectiles.add(projectile);
+      collectionManager.getProjectiles().add(projectile);
       collectionManager.getSprites().add(projectile);
     }
   }
@@ -243,7 +238,7 @@ public class Window extends PApplet {
         sprite.update();
         sprite.draw();
       }
-      projectiles.removeIf(projectile -> {
+      collectionManager.getProjectiles().removeIf(projectile -> {
         boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width
             || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
         if (toRemove) {
@@ -254,7 +249,7 @@ public class Window extends PApplet {
       ArrayList<Enemy> toRemove = new ArrayList<>();
       ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
       for (Enemy enemy : collectionManager.getEnemies()) {
-        for (Projectile projectile : projectiles) {
+        for (Projectile projectile : collectionManager.getProjectiles()) {
           projectile.collide(projectile, enemy);
           if (projectile.isDead() && enemy.isDead()) {
             toRemove.add(enemy);
@@ -276,7 +271,7 @@ public class Window extends PApplet {
         collectionManager.getSprites().remove(enemy);
       }
       for (Projectile projectile : projectilesToRemove) {
-        projectiles.remove(projectile);
+        collectionManager.getProjectiles().remove(projectile);
         collectionManager.getSprites().remove(projectile);
       }
       // Spawns new enemies mid-game
