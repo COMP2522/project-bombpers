@@ -1,7 +1,6 @@
 package org.bcit.comp2522.project;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import processing.core.PApplet;
@@ -73,7 +72,8 @@ public class Window extends PApplet {
   public void setup() {
     // Initialize the Player and collectionManager
     this.init();
-    inputHandler = new InputHandler(collectionManager);
+    // Initialize the input handler singleton
+    inputHandler = InputHandler.getInstance(collectionManager);
 
     noStroke();
 

@@ -10,6 +10,10 @@ import processing.core.PConstants;
 public class InputHandler {
 
   /**
+   * The instance of the InputHandler.
+   */
+  private static InputHandler instance;
+  /**
    * These booleans are used to check if the key is pressed or not.
    */
   private boolean isLeftPressed = false;
@@ -20,6 +24,18 @@ public class InputHandler {
    * The collection manager that will be used to access the collection of sprites.
    */
   private final CollectionManager collectionManager;
+
+  /**
+   * getInstance method - returns the instance of the InputHandler.
+   * @param collectionManager the collection manager that will be used to access the collection of sprites.
+   * @return the instance of the InputHandler.
+   */
+  public static InputHandler getInstance(CollectionManager collectionManager) {
+    if (instance == null) {
+      instance = new InputHandler(collectionManager);
+    }
+    return instance;
+  }
 
   /**
    * InputHandler constructor - creates a new InputHandler object.
