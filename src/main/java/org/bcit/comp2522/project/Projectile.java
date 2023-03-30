@@ -52,9 +52,4 @@ public class Projectile extends Sprite {
             collide(two, one);
         }
     }
-
-    @Override
-    public void compareTo() {
-        // TODO: Implement this method
-    }
 }
