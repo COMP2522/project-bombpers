@@ -3,8 +3,6 @@ package org.bcit.comp2522.project;
 import processing.core.PVector;
 import processing.core.PImage;
 
-
-
 public class Enemy extends Sprite {
   protected Sprite player;
   protected PImage enemySprite;
@@ -43,14 +41,6 @@ public class Enemy extends Sprite {
    */
   @Override
   public void collide(Sprite one, Sprite two) {
-    //TODO: Implement this method
-  }
-
-  /**
-   * compareTo method for EnemyBase.
-   */
-  @Override
-  public void compareTo() {
     //TODO: Implement this method
   }
 

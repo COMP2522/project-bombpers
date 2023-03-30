@@ -49,11 +49,6 @@ public class Projectile extends Sprite {
         }
     }
 
-    @Override
-    public void compareTo() {
-        // TODO: Implement this method
-    }
-
   @Override
   public int getDamage() {
     return damage;

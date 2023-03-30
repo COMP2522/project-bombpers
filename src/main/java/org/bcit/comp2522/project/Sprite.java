@@ -117,16 +117,6 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   }
   //DO we need this compare to function?
 
-  @Override
-  public int compareTo(Sprite enemy) {
-    if (Float.compare(this.size, enemy.getSize()) < 0) {
-      return -1;
-    } else if (Float.compare(this.size, enemy.getSize()) >= 0) {
-      return 1;
-    }
-    return 0;
-  }
-
   /**
    * gets the direction of the sprite.
    */

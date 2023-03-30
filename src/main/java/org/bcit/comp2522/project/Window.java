@@ -140,7 +140,6 @@ public class Window extends PApplet {
       case RIGHT -> isRightPressed = true;
       case UP -> isUpPressed = true;
       case DOWN -> isDownPressed = true;
-      default -> System.out.println(); // switch needed a default case, it does nothing.
     }
     // Update the player's direction
     updatePlayerDirection();
@@ -163,7 +162,6 @@ public class Window extends PApplet {
       case RIGHT -> isRightPressed = false;
       case UP -> isUpPressed = false;
       case DOWN -> isDownPressed = false;
-      default -> System.out.println(); // switch needed a default case, it does nothing.
     }
     // Update the player's direction
     updatePlayerDirection();
@@ -173,26 +171,41 @@ public class Window extends PApplet {
    * Updates the player's direction based on the key pressed.
    */
   private void updatePlayerDirection() {
-    int directionX = 0;
-    int directionY = 0;
-    // Check if the key is pressed and update the direction accordingly
-    if (isLeftPressed) {
-      directionX--;
+    Player player = (Player) collectionManager.getPlayer();
+    boolean isDirectionSet = false;
+
+    if (isLeftPressed && !isRightPressed) {
+      if (isUpPressed && !isDownPressed) {
+        player.setDirection(new PVector(-1, -1));
+        isDirectionSet = true;
+      } else if (isDownPressed && !isUpPressed) {
+        player.setDirection(new PVector(-1, 1));
+        isDirectionSet = true;
+      } else {
+        player.setDirection(new PVector(-1, 0));
+        isDirectionSet = true;
+      }
+    } else if (isRightPressed && !isLeftPressed) {
+      if (isUpPressed && !isDownPressed) {
+        player.setDirection(new PVector(1, -1));
+        isDirectionSet = true;
+      } else if (isDownPressed && !isUpPressed) {
+        player.setDirection(new PVector(1, 1));
+        isDirectionSet = true;
+      } else {
+        player.setDirection(new PVector(1, 0));
+        isDirectionSet = true;
+      }
+    } else if (isUpPressed && !isDownPressed) {
+      player.setDirection(new PVector(0, -1));
+      isDirectionSet = true;
+    } else if (isDownPressed && !isUpPressed) {
+      player.setDirection(new PVector(0, 1));
+      isDirectionSet = true;
     }
-    if (isRightPressed) {
-      directionX++;
-    }
-    if (isUpPressed) {
-      directionY--;
-    }
-    if (isDownPressed) {
-      directionY++;
-    }
-    // If the direction is not 0,0, set the player's direction to the new direction
-    if (directionX != 0 || directionY != 0) {
-      collectionManager.getPlayer().setDirection(new PVector(directionX, directionY));
-    } else {
-      collectionManager.getPlayer().setDirection(new PVector(0, 0));
+
+    if (!isDirectionSet) {
+      player.setDirection(new PVector(0, 0));
     }
   }
 
