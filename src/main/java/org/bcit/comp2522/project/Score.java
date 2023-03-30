@@ -1,5 +1,7 @@
 package org.bcit.comp2522.project;
 
+import static org.bcit.comp2522.project.EnemyConfig.*;
+
 /**
  * Class for Score of the game set, gets, and displays score.
  */
@@ -100,8 +102,20 @@ public class Score extends UserInterface {
   private void displayMenuGameScore() {
     window.textSize(60);
     window.fill(255, 255, 0);
+    int Xadjustment = 50;
+    int Yadjustment = 60;
     //Set x and y in here make current x value larger
-    window.text("Current Score: " + getCurrentScore(), getPositionX()+100, getPositionY());
-    window.text("High Score: " + getHighScore(), getPositionX()+100, getPositionY() +50);
+    window.text("Current Score: " + getCurrentScore(), getPositionX() + Xadjustment , getPositionY());
+    window.text("High Score: " + getHighScore(), getPositionX(), getPositionY()+ Yadjustment);
+  }
+
+  public void incrementScore(int score, Enemy enemy){
+    int typeOfEnemy = enemy.enemyType;
+    switch (typeOfEnemy){
+      case ENEM_STANDARD_TYPE -> score++;
+      case ENEM_FAST_TYPE -> score = score+2;
+      case ENEM_SLOW_TYPE -> score = score+3;
+    }
+    setCurrentScore(score);
   }
 }

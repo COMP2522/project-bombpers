@@ -218,14 +218,11 @@ public class Window extends PApplet {
         || stateOfGame == GameState.ENDGAME) {
       if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.ENDGAME) {
         score.setCurrentScore(0);
+        // Reset the player's position
         PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
         collectionManager.getPlayer().setPosition(originalPosition);
       }
-      stateOfGame = menuhandler.createMenu(stateOfGame);
-      // Reset the player's position
-
-
-
+      stateOfGame = menuhandler.createMenu(stateOfGame,score.getCurrentScore(),score.getHighScore());
     } else if (stateOfGame == GameState.STARTGAME) {
       // If the game is in the start game state, create the game
       //Reset the score to 0
@@ -265,11 +262,10 @@ public class Window extends PApplet {
             enemySpawner.decreaseEnemCount();
             enemySpawner.updateSpawnModifier(killCounter);
             projectilesToRemove.add(projectile);
-            score.setCurrentScore(++myScore);
+            score.incrementScore(score.getCurrentScore(), enemy);
             score.displayScore(stateOfGame);
-            score.setHighScore(myScore);
-            if (myScore >= high) {
-              high = score.getHighScore();
+            if (score.getCurrentScore() >= score.getHighScore()) {
+              score.setHighScore(score.getCurrentScore());
             }
           }
         }
@@ -289,15 +285,6 @@ public class Window extends PApplet {
       // Kill Counter for enemies
       killCounter.draw(this);
 
-    } else if (stateOfGame == GameState.PAUSE) {
-      // If the game is in the pause state, show the score and pause menu
-      if (myScore >= score.getHighScore()) {
-        score.setHighScore(myScore);
-      }
-    } else {
-      if (myScore >= score.getHighScore()) {
-        score.setHighScore(myScore);
-      }
     }
   }
 

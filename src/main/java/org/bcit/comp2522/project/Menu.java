@@ -43,7 +43,7 @@ public class Menu extends UserInterface {
     switch (state) {
       case STARTMENU -> window.text("Start", 160, 245);
       case ENDGAME -> window.text("Restart", 190, 245);
-      case PAUSE -> window.text("Continue", 120, 245);
+      case PAUSE -> window.text("Continue", 320, 252);
     }
   }
 
