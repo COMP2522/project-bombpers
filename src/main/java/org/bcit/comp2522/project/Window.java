@@ -52,6 +52,20 @@ public class Window extends PApplet {
    */
   private PImage projectileImage;
   CollectionManager collectionManager;
+
+  /**
+   * Declares a projectile image to store the projectile image.
+   */
+  private static final String PROJECTILE_IMAGE = "../img/bullet.png";
+
+  private static final int CHAR_RESIZE_WIDTH = 2;
+  private static final float CHAR_RESIZE_HEIGHT = 1.5f;
+
+  /**
+   * Declares a collectionManager to store the sprites.
+   */
+  private PImage projectileImage;
+  CollectionManager collectionManager;
   public EnemySpawner enemySpawner;
   public KillCounter killCounter;
   /**
@@ -114,6 +128,7 @@ public class Window extends PApplet {
     enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
     enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
     collectionManager.player = Player.getPlayerInstance(this);
+//    PImage characterSprite = loadImage("../img/idle_01.png");
     collectionManager.getSprites().add(collectionManager.player);
     new Thread(() -> {
       SaveHandler s = new SaveHandler();
