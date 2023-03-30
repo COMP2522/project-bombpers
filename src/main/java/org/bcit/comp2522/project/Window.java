@@ -52,7 +52,6 @@ public class Window extends PApplet {
    */
   private PImage projectileImage;
   CollectionManager collectionManager;
-
   public EnemySpawner enemySpawner;
   public KillCounter killCounter;
   /**
@@ -113,15 +112,13 @@ public class Window extends PApplet {
     enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
     enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
     enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
-    collectionManager.player = Player.getPlayerInstance(this);
-//    PImage characterSprite = loadImage("../img/idle_01.png");
-    collectionManager.getSprites().add(collectionManager.player);
+    CollectionManager.player = Player.getPlayerInstance(this);
+    collectionManager.getSprites().add(CollectionManager.player);
     new Thread(() -> {
       SaveHandler s = new SaveHandler();
       s.autoSave();
     }).start();
   }
-
 
   /**
    * If a key is pressed,  the corresponding isPressed variable will be true to
@@ -198,7 +195,6 @@ public class Window extends PApplet {
   @Override
   public void mousePressed() {
     if (stateOfGame == GameState.STARTGAME && mouseButton == LEFT) {
-      System.out.println("shot");
       PVector mousePosition = new PVector(mouseX, mouseY);
       PVector playerPosition = collectionManager.getPlayer().getPosition();
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();

@@ -2,6 +2,8 @@ package org.bcit.comp2522.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 
@@ -12,10 +14,10 @@ public class CollectionManager {
 
   private static CollectionManager c;
 
-  private List<Sprite> sprites;
-  //  private List<Projectile> projectiles;
-  private List<Enemy> enemies;
-  Sprite player;
+  private final List<Sprite> sprites;
+  private final Queue<Projectile> projectiles;
+  private final List<Enemy> enemies;
+  public static Sprite player;
 
 
   /**
@@ -23,7 +25,7 @@ public class CollectionManager {
    */
   private CollectionManager() {
     sprites = new ArrayList<>();
-    //projectiles = new ArrayList<>(); Use concurrentLinkedQueue data structure
+    projectiles = new ConcurrentLinkedQueue<>();
     enemies = new ArrayList<>();
   }
 
@@ -31,9 +33,9 @@ public class CollectionManager {
     return sprites;
   }
 
-  //  public List<Projectile> getProjectiles() {
-  //    return projectiles;
-  //  }
+    public Queue<Projectile> getProjectiles() {
+      return projectiles;
+    }
 
   public List<Enemy> getEnemies() {
     return enemies;

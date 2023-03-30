@@ -68,11 +68,6 @@ public class Player extends Sprite {
     //TODO: Implement this method
   }
 
-  @Override
-  public void compareTo() {
-
-  }
-
   /**
    * Draws the player by drawing the image of the player.
    */

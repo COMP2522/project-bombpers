@@ -1,5 +1,6 @@
 package org.bcit.comp2522.project;
 
+import processing.core.PImage;
 import processing.core.PVector;
 
 import java.io.Serializable;
@@ -50,8 +51,12 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   /**
    * The window that the Sprite will be drawn on.
    */
-
   protected transient Window window;
+
+  /**
+   * The image of the Sprite.
+   */
+  private PImage image;
 
   /**
    * Constructor for Sprite.
@@ -67,9 +72,22 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
    *
    * @return the health of the Sprite
    */
-
   public PVector getPosition() {
     return position.copy();
+  }
+
+  /**
+   * Sets the position vector of the Sprite.
+   *
+   */
+  public PVector getCenterPosition() {
+    if(image == null) {
+      return position;
+    }
+
+    float centerX = position.x + ((float) image.width / 2);
+    float centerY = position.y + ((float) image.height / 2);
+    return new PVector(centerX, centerY);
   }
 
   /**
@@ -114,17 +132,6 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
     window.pushStyle();
     window.ellipse(this.position.x, this.position.y, size, size);
     window.popStyle();
-  }
-  //DO we need this compare to function?
-
-  @Override
-  public int compareTo(Sprite enemy) {
-    if (Float.compare(this.size, enemy.getSize()) < 0) {
-      return -1;
-    } else if (Float.compare(this.size, enemy.getSize()) >= 0) {
-      return 1;
-    }
-    return 0;
   }
 
   /**
