@@ -14,25 +14,10 @@ import processing.event.KeyEvent;
  */
 public class Window extends PApplet {
 
-  /**
-   * Variable to check if the left key is pressed. Set to false by default.
-   */
-  private boolean isLeftPressed = false;
-  /**
-   * Variable to check if the right key is pressed.Set to false by default.
-   */
-  private boolean isRightPressed = false;
-  /**
-   * Variable to check if the up key is pressed.Set to false by default.
-   */
-  private boolean isUpPressed = false;
-  /**
-   * Variable to check if the down key is pressed.Set to false by default.
-   */
-  private boolean isDownPressed = false;
   public PImage enemyStandardSprite;
   public PImage enemySlowSprite;
   public PImage enemyFastSprite;
+  private InputHandler inputHandler;
   private static int myScore = 0;
   /**
    * Sets the high score to 0.
@@ -74,10 +59,6 @@ public class Window extends PApplet {
    * Declares a menu handler to use to handel menus.
    */
   public MenuHandler menuhandler = new MenuHandler(stateOfGame, this);
-  /**
-   * Declares a random variable to use to generate random numbers.
-   */
-  private Random rngsus = new Random();
 
   /**
    * Creates a window of size 500 x 500 pixels.
@@ -90,8 +71,9 @@ public class Window extends PApplet {
    * Setup of the game.
    */
   public void setup() {
-    // Initialize the PLayer and collectionManager
+    // Initialize the Player and collectionManager
     this.init();
+    inputHandler = new InputHandler(collectionManager);
 
     noStroke();
 
@@ -129,16 +111,7 @@ public class Window extends PApplet {
    */
   @Override
   public void keyPressed(KeyEvent event) {
-    // Get the key code of the key that was pressed
-    int keyCode = event.getKeyCode();
-    // Check if the key code is the same as any of the switch cases and do the corresponding action
-    switch (keyCode) {
-      case LEFT -> isLeftPressed = true;
-      case RIGHT -> isRightPressed = true;
-      case UP -> isUpPressed = true;
-      case DOWN -> isDownPressed = true;
-      default -> System.out.println(); // switch needed a default case, it does nothing.
-    }
+    inputHandler.keyPressed(event);
     // Update the player's direction
     updatePlayerDirection();
   }
@@ -152,16 +125,7 @@ public class Window extends PApplet {
 
   @Override
   public void keyReleased(KeyEvent event) {
-    // Get the key code of the key that was pressed
-    int keyCode = event.getKeyCode();
-    // Check if the key code is the same as any of the switch cases and do the corresponding action
-    switch (keyCode) {
-      case LEFT -> isLeftPressed = false;
-      case RIGHT -> isRightPressed = false;
-      case UP -> isUpPressed = false;
-      case DOWN -> isDownPressed = false;
-      default -> System.out.println(); // switch needed a default case, it does nothing.
-    }
+    inputHandler.keyReleased(event);
     // Update the player's direction
     updatePlayerDirection();
   }
@@ -170,27 +134,8 @@ public class Window extends PApplet {
    * Updates the player's direction based on the key pressed.
    */
   private void updatePlayerDirection() {
-    int directionX = 0;
-    int directionY = 0;
-    // Check if the key is pressed and update the direction accordingly
-    if (isLeftPressed) {
-      directionX--;
-    }
-    if (isRightPressed) {
-      directionX++;
-    }
-    if (isUpPressed) {
-      directionY--;
-    }
-    if (isDownPressed) {
-      directionY++;
-    }
-    // If the direction is not 0,0, set the player's direction to the new direction
-    if (directionX != 0 || directionY != 0) {
-      collectionManager.getPlayer().setDirection(new PVector(directionX, directionY));
-    } else {
-      collectionManager.getPlayer().setDirection(new PVector(0, 0));
-    }
+    PVector newDirection = inputHandler.updatePlayerDirection();
+    collectionManager.getPlayer().setDirection(newDirection);
   }
 
   @Override

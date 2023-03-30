@@ -82,20 +82,6 @@ public class Player extends Sprite {
    */
   @Override
   public void move() {
-    if (window.keyPressed) {
-      if (window.key == 'w' || window.key == 'W') {
-        position.y -= speed;
-      }
-      if (window.key == 'a' || window.key == 'A') {
-        position.x -= speed;
-      }
-      if (window.key == 's' || window.key == 'S') {
-        position.y += speed;
-      }
-      if (window.key == 'd' || window.key == 'D') {
-        position.x += speed;
-      }
-    }
   }
 
 }
