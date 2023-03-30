@@ -103,6 +103,7 @@ public class Window extends PApplet {
     }).start();
   }
 
+
   /**
    * If a key is pressed,  the corresponding isPressed variable will be true to
    * "tell" that key was pressed.

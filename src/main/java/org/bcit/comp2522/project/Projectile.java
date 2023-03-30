@@ -52,4 +52,15 @@ public class Projectile extends Sprite {
             collide(two, one);
         }
     }
+
+  @Override
+  public int getDamage() {
+    return damage;
+  }
+
+
+  public void setDamage(int damage) {
+    this.damage = damage;
+  }
 }
+
