@@ -1,7 +1,6 @@
 package org.bcit.comp2522.project;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import processing.core.PApplet;
