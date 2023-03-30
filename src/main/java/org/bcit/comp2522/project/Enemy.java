@@ -3,8 +3,6 @@ package org.bcit.comp2522.project;
 import processing.core.PVector;
 import processing.core.PImage;
 
-
-
 public class Enemy extends Sprite {
   protected Sprite player;
   protected PImage enemySprite;

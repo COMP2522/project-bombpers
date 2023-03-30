@@ -14,7 +14,7 @@ public class EnemySpawner {
   private int enem_max = 10 + spawnModifier;
   private int curr_enem_count;
 
-  private Random rngsus = new Random();
+  private Random randomNumber = new Random();
   private CollectionManager collectionManager;
   private Window window;
 
@@ -25,7 +25,7 @@ public class EnemySpawner {
 
   public void spawnEnemy() {
 
-    int diceRoll = rngsus.nextInt(ENEM_TYPES) + 1;
+    int diceRoll = randomNumber.nextInt(ENEM_TYPES) + 1;
     switch (diceRoll) {
       case ENEM_STANDARD_TYPE -> spawnStandardEnemy();
       case ENEM_FAST_TYPE -> spawnFastEnemy();
@@ -36,7 +36,7 @@ public class EnemySpawner {
 
   public void spawnStandardEnemy() {
     if (this.curr_enem_count < this.enem_max) {
-      int randomY = rngsus.nextInt(window.height);
+      int randomY = randomNumber.nextInt(window.height);
       PVector randomPos = new PVector(window.width, randomY);
       Enemy newEnemy = new Enemy(
           window,
@@ -57,7 +57,7 @@ public class EnemySpawner {
 
   private void spawnFastEnemy() {
     if (this.curr_enem_count < this.enem_max) {
-      int randomY = rngsus.nextInt(window.height);
+      int randomY = randomNumber.nextInt(window.height);
       PVector randomPos = new PVector(window.width, randomY);
       Enemy newEnemy = new Enemy(
           window,
@@ -78,7 +78,7 @@ public class EnemySpawner {
 
   public void spawnSlowEnemy() {
     if (this.curr_enem_count < this.enem_max) {
-      int randomY = rngsus.nextInt(window.height);
+      int randomY = randomNumber.nextInt(window.height);
       PVector randomPos = new PVector(window.width, randomY);
       Enemy newEnemy = new Enemy(
           window,
