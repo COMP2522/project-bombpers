@@ -74,12 +74,11 @@ public class MenuHandler {
       menuScore.setCurrentScore(currScore);
       menuScore.setHighScore(highScore);
       menuScore.displayScore(currentState);
-
       //If the mouse is pressed and the mouse is within the bounds of the button,
       // change the state to startGame to start the game
       if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
-                && (this.window.mouseX >= 120 && this.window.mouseX < 312)
-                && (this.window.mouseY >= 199 && this.window.mouseY <= 244)) {
+              && (this.window.mouseX >= 120 && this.window.mouseX < 312)
+              && (this.window.mouseY >= 199 && this.window.mouseY <= 244)) {
 
         this.currentState = GameState.STARTGAME;
         return currentState;
@@ -89,13 +88,19 @@ public class MenuHandler {
 
     } else {
       // If the current state is endGame, create the endMenu
-      endMenu = new Menu(30, 120, "Game Over!", this.window);
-      endMenu.displayMenu(state, 90);
+      endMenu = new Menu(470, 120, "Game Over !", this.window);
+      endMenu.displayMenu(state, 80);
+      menuScore.setCurrentScore(currScore);
+      menuScore.setHighScore(highScore);
       menuScore.displayScore(currentState);
+
       if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
               && (this.window.mouseX >= 120 && this.window.mouseX < 312)
               && (this.window.mouseY >= 199 && this.window.mouseY <= 244)) {
         this.currentState = GameState.STARTGAME;
+        this.window.init();
+
+        menuScore.setHighScore(menuScore.getHighScore());
         return currentState;
       }
       return GameState.ENDGAME;
