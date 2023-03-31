@@ -19,7 +19,7 @@ public class DangerLevel {
     pApp.fill(200, 0, 0);
     pApp.textAlign(PConstants.CENTER);
     pApp.textSize(24);
-    pApp.text("DANGER LEVEL: " + dangerLevel, pApp.width - 250, pApp.height - 20);
+    pApp.text("DANGER LEVEL: " + dangerLevel, (pApp.width / 2), (int) (pApp.height * 0.95));
   }
 
   public void increaseDangerLevel() {
