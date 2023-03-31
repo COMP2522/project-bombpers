@@ -1,8 +1,6 @@
 package org.bcit.comp2522.project;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -45,10 +43,10 @@ public class Window extends PApplet {
      * Declares a background to store the background.
      */
     private Background background;
+
     /**
      * Declares a variable to hold the GameState to transition between states.
      */
-
     public GameState stateOfGame = GameState.STARTMENU;
 
     /**
@@ -63,25 +61,25 @@ public class Window extends PApplet {
         size(500, 500);
     }
 
-  /**
-   * Setup of the game.
-   */
-  public void setup() {
-    // Initialize the Player and collectionManager
-    this.init();
-    inputHandler = new InputHandler(collectionManager, this);
+    /**
+     * Setup of the game.
+     */
+    public void setup() {
+        // Initialize the Player and collectionManager
+        this.init();
+        inputHandler = InputHandler.getInstance(collectionManager, this);
+        Player.setPlayerHitboxSize(0.1f);
+        noStroke();
 
-    noStroke();
-
-    // Create the background object
-    background = new Background(this);
-    //Create the score object
-    //score = new Score(180, 30, myScore, this);
-    // Enemy Spawner
-    enemySpawner = new EnemySpawner(collectionManager, this);
-    projectileImage = loadImage(PROJECTILE_IMAGE);
-    killCounter = new KillCounter(this);
-  }
+        // Create the background object
+        background = new Background(this);
+        //Create the score object
+        //score = new Score(180, 30, myScore, this);
+        // Enemy Spawner
+        enemySpawner = new EnemySpawner(collectionManager, this);
+        projectileImage = loadImage(PROJECTILE_IMAGE);
+        killCounter = new KillCounter(this);
+    }
 
     /**
      * Initializes the  collectionManager and adds the created player to it.
@@ -135,10 +133,10 @@ public class Window extends PApplet {
         collectionManager.getPlayer().setDirection(newDirection);
     }
 
-  @Override
-  public void mousePressed() {
-    inputHandler.mousePressed(collectionManager.getProjectiles(), projectileImage);
-  }
+    @Override
+    public void mousePressed() {
+        inputHandler.mousePressed(collectionManager.getProjectiles(), projectileImage);
+    }
 
     /**
      * Draws everything in the window.
@@ -180,6 +178,15 @@ public class Window extends PApplet {
             ArrayList<Enemy> toRemove = new ArrayList<>();
             ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
             for (Enemy enemy : collectionManager.getEnemies()) {
+                if (enemy.checkCollisionWithPlayer(CollectionManager.player)) {
+                    toRemove.add(enemy);
+                    CollectionManager.player.health -= enemy.getDamage();
+
+                    if (CollectionManager.player.health <= 0) {
+                        stateOfGame = GameState.ENDGAME;
+//            break;
+                    }
+                }
                 for (Projectile projectile : collectionManager.getProjectiles()) {
                     projectile.collide(projectile, enemy);
                     if (projectile.isDead() && enemy.isDead()) {

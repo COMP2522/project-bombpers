@@ -186,7 +186,7 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   /**
    * sets the size of the sprite.
    */
-  public void setSize(int size) {
+  public void setSize(float size) {
     this.size = size;
   }
 
