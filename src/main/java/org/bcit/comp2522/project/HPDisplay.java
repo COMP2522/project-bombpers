@@ -5,8 +5,8 @@ import processing.core.PConstants;
 import processing.core.PVector;
 
 public class HPDisplay {
-  private static final int X_POS = 70;
-  private static final int Y_POS = Window.WINDOW_HEIGHT - 50;
+  private static final int X_POS = (int) (Window.WINDOW_HEIGHT * 0.15);
+  private static final int Y_POS = (int) (Window.WINDOW_HEIGHT * 0.9);
   private PApplet pApp;
   private CollectionManager cm;
   private PVector position;
