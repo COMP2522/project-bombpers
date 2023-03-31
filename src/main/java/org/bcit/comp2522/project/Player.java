@@ -53,7 +53,6 @@ public class Player extends Sprite {
     this.damage = PLAYER_DAMAGE;
     this.position = new PVector((float) window.width / 2, (float) window.height / 2);
     this.direction = new PVector(0, 0);
-    this.size = PLAYER_SIZE;
     this.speed = PLAYER_SPEED;
     this.characterSprite = window.loadImage(PLAYER_SPRITE);
     this.imageSize = PLAYER_SIZE;
@@ -86,12 +85,6 @@ public class Player extends Sprite {
    */
   @Override
   public void move() {
-  }
-
-  public static void setPlayerImageSize(float sizeFactor) {
-    if (player != null) {
-      player.imageSize = sizeFactor;
-    }
   }
 
   public static void setPlayerHitboxSize(float sizeFactor) {

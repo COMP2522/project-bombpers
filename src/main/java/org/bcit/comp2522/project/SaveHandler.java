@@ -16,7 +16,7 @@ public class SaveHandler {
   public void autoSave(){
     for (; ; ) {
       try {
-        Thread.sleep(10000);
+        Thread.sleep(30000);
         this.save();
       } catch (InterruptedException e) {
         throw new RuntimeException(e);

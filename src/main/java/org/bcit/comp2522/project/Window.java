@@ -74,8 +74,7 @@ public class Window extends PApplet {
     this.init();
     // Initialize the input handler singleton
     inputHandler = InputHandler.getInstance(collectionManager);
-    Player.setPlayerHitboxSize(0.5f);
-    Player.setPlayerImageSize(65);
+    Player.setPlayerHitboxSize(0.1f);
 
     noStroke();
 
@@ -210,6 +209,15 @@ public class Window extends PApplet {
       ArrayList<Enemy> toRemove = new ArrayList<>();
       ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
       for (Enemy enemy : collectionManager.getEnemies()) {
+        if (enemy.checkCollisionWithPlayer(CollectionManager.player)){
+          toRemove.add(enemy);
+          CollectionManager.player.health -= enemy.getDamage();
+
+          if (CollectionManager.player.health <= 0) {
+            stateOfGame = GameState.ENDGAME;
+//            break;
+          }
+        }
         for (Projectile projectile : projectiles) {
           projectile.collide(projectile, enemy);
           if (projectile.isDead() && enemy.isDead()) {
