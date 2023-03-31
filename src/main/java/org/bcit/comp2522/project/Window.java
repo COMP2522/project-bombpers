@@ -65,20 +65,18 @@ public class Window extends PApplet {
    * Setup of the game.
    */
   public void setup() {
+    score = new Score(width / 2, 30, this);
     // Initialize the Player and collectionManager
     this.init();
     // Initialize the input handler singleton
     inputHandler = InputHandler.getInstance(collectionManager);
     Player.setPlayerHitboxSize(0.1f);
-
     noStroke();
 
     // Create the background object
     background = new Background(this);
-    //Create the score object
-//    score = new Score(width/2, 30, this);
     // Enemy Spawner
-    enemySpawner = new EnemySpawner(collectionManager, this);
+    //enemySpawner = new EnemySpawner(collectionManager, this);
     projectileImage = loadImage(PROJECTILE_IMAGE);
     killCounter = new KillCounter(this);
   }
@@ -88,6 +86,7 @@ public class Window extends PApplet {
    */
   public void init() {
     collectionManager = CollectionManager.getInstance();
+    enemySpawner = new EnemySpawner(collectionManager, this);
     enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
     enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
     enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
@@ -97,6 +96,12 @@ public class Window extends PApplet {
       SaveHandler s = new SaveHandler();
       s.autoSave();
     }).start();
+    score.resetScore();
+    // Reset the player's position
+    PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
+    collectionManager.getPlayer().setPosition(originalPosition);
+    collectionManager.getEnemies().clear();
+    collectionManager.getSprites().removeIf(sprite -> sprite instanceof Enemy);
   }
 
 
@@ -145,7 +150,6 @@ public class Window extends PApplet {
               playerPosition.x + collectionManager.getPlayer().getSize() / CHAR_RESIZE_WIDTH - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
               playerPosition.y + collectionManager.getPlayer().getSize() / CHAR_RESIZE_HEIGHT - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
       );
-
       Projectile projectile = new Projectile(this, projectileStartPosition, direction, projectileImage);
       collectionManager.getProjectiles().add(projectile);
       collectionManager.getSprites().add(projectile);
@@ -159,12 +163,6 @@ public class Window extends PApplet {
     // If the game is in the start menu, pause menu, or end game menu, create the menu
     if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
             || stateOfGame == GameState.ENDGAME) {
-      if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.ENDGAME) {
-        score = new Score(width / 2, 30, this);
-        // Reset the player's position
-        PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
-        collectionManager.getPlayer().setPosition(originalPosition);
-      }
       stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
     } else if (stateOfGame == GameState.STARTGAME) {
       background.draw();
@@ -198,7 +196,6 @@ public class Window extends PApplet {
 
           if (CollectionManager.player.health <= 0) {
             stateOfGame = GameState.ENDGAME;
-//            break;
           }
         }
         for (Projectile projectile : collectionManager.getProjectiles()) {
@@ -211,7 +208,7 @@ public class Window extends PApplet {
             projectilesToRemove.add(projectile);
             score.incrementScore(score.getCurrentScore(), enemy);
             score.displayScore(stateOfGame);
-            if (score.getCurrentScore() >= score.getHighScore()) {
+            if (score.getCurrentScore() > score.getHighScore()) {
               score.setHighScore(score.getCurrentScore());
             }
           }
