@@ -185,6 +185,10 @@ public class Window extends PApplet {
                     if (CollectionManager.player.health <= 0) {
                         stateOfGame = GameState.ENDGAME;
 //            break;
+                        for (Enemy enemyRemain : collectionManager.getEnemies()) {
+                            toRemove.add(enemyRemain);
+                            enemySpawner.countReset();
+                        }
                     }
                 }
                 for (Projectile projectile : collectionManager.getProjectiles()) {
