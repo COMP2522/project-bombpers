@@ -31,7 +31,6 @@ public class Score extends UserInterface {
   public Score(int positionX, int positionY, Window window) {
     super(positionX, positionY);
     this.window = window;
-    this.currentScore = STARTING_SCORE;
   }
 
   /**
@@ -85,9 +84,9 @@ public class Score extends UserInterface {
 
     if (state == GameState.STARTGAME) {
 
-        displayInGameScore();
+      displayInGameScore();
     } else {
-        displayMenuGameScore();
+      displayMenuGameScore();
     }
   }
 
@@ -120,5 +119,8 @@ public class Score extends UserInterface {
       case ENEM_SLOW_TYPE -> score = score+3;
     }
     setCurrentScore(score);
+  }
+  public void resetScore(){
+    setCurrentScore(STARTING_SCORE);
   }
 }
