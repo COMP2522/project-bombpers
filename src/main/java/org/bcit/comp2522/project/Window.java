@@ -17,7 +17,6 @@ public class Window extends PApplet {
     public PImage enemyFastSprite;
     private InputHandler inputHandler;
 
-
     /**
      * Declares a projectile image to store the projectile image.
      */
@@ -32,7 +31,8 @@ public class Window extends PApplet {
      * Declares a collectionManager to store the sprites.
      */
     private PImage projectileImage;
-    CollectionManager collectionManager;
+    public CollectionManager collectionManager;
+    public Player player;
     public HPDisplay hpDisplay;
     public EnemySpawner enemySpawner;
     public DangerLevel dangerLevel;
@@ -93,11 +93,11 @@ public class Window extends PApplet {
      */
     public void init() {
         collectionManager = CollectionManager.getInstance();
+        collectionManager.getSprites().add(collectionManager.getPlayerInstance(this));
         enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
         enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
         enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
-        CollectionManager.player = Player.getPlayerInstance(this);
-        collectionManager.getSprites().add(CollectionManager.player);
+
         new Thread(() -> {
             SaveHandler s = new SaveHandler();
             s.autoSave();
@@ -199,6 +199,7 @@ public class Window extends PApplet {
                         for (Enemy enemyRemain : collectionManager.getEnemies()) {
                             toRemove.add(enemyRemain);
                             enemySpawner.countReset();
+                            dangerLevel.resetDangerLevel();
                         }
                     }
                 }
@@ -233,7 +234,7 @@ public class Window extends PApplet {
             dangerLevel.draw();
 
             // Kill Counter for enemies
-            killCounter.draw(this);
+            //killCounter.draw(this);
 
         }
     }

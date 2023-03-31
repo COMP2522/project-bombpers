@@ -6,7 +6,6 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 
-
 /**
  * CollectionManager class - manages all collections of sprites.
  */
@@ -17,7 +16,7 @@ public class CollectionManager {
   private final List<Sprite> sprites;
   private final ConcurrentLinkedQueue<Projectile> projectiles;
   private final List<Enemy> enemies;
-  public static Sprite player;
+  private static Sprite player;
 
 
   /**
@@ -33,20 +32,30 @@ public class CollectionManager {
     return sprites;
   }
 
-    public ConcurrentLinkedQueue<Projectile> getProjectiles() {
-      return projectiles;
-    }
+  public ConcurrentLinkedQueue<Projectile> getProjectiles() {
+    return projectiles;
+  }
 
   public List<Enemy> getEnemies() {
     return enemies;
   }
 
-  public Sprite getPlayer() {
+  public Sprite getPlayerInstance(Window window) {
+    if (player == null) {
+      this.player = Player.getPlayerInstance(window);
+    }
     return player;
   }
 
-  public static CollectionManager getInstance(){
-    if(c == null){
+  public Sprite getPlayer() {
+    if (player == null) {
+      throw new NullPointerException("Player is null!");
+    }
+    return player;
+  }
+
+  public static CollectionManager getInstance() {
+    if (c == null) {
       c = new CollectionManager();
     }
     return c;

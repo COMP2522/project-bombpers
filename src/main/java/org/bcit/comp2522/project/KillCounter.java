@@ -31,4 +31,8 @@ public class KillCounter {
   public void killPlus() {
     numKills++;
   }
+
+  public void resetKills() {
+    numKills = 0;
+  }
 }
