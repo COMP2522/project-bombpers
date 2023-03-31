@@ -39,6 +39,9 @@ public class Player extends Sprite {
 
   private static Player player;
 
+  private float imageSize;
+
+
   /**
    * Constructor for the Player class.
    *
@@ -50,9 +53,9 @@ public class Player extends Sprite {
     this.damage = PLAYER_DAMAGE;
     this.position = new PVector((float) window.width / 2, (float) window.height / 2);
     this.direction = new PVector(0, 0);
-    this.size = PLAYER_SIZE;
     this.speed = PLAYER_SPEED;
     this.characterSprite = window.loadImage(PLAYER_SPRITE);
+    this.imageSize = PLAYER_SIZE;
   }
 
   public static Player getPlayerInstance(Window window) {
@@ -73,7 +76,7 @@ public class Player extends Sprite {
    */
   @Override
   public void draw() {
-    window.image(characterSprite, position.x, position.y, size * RESIZE, size * RESIZE);
+    window.image(characterSprite, position.x, position.y, imageSize * RESIZE, imageSize * RESIZE);
   }
 
   /**
@@ -84,4 +87,10 @@ public class Player extends Sprite {
   public void move() {
   }
 
+  public static void setPlayerHitboxSize(float sizeFactor) {
+    if (player != null) {
+      float newSize = player.getSize() * sizeFactor;
+      player.setSize(newSize);
+    }
+  }
 }

@@ -83,7 +83,19 @@ public class Enemy extends Sprite {
     position.add(direction);
   }
 
-  public int getEnemyType() {
-    return this.enemyType;
+  /**
+   * Checks if the enemy is colliding with the player.
+   * @param player the player
+   * @return true if the enemy is colliding with the player
+   */
+  public boolean checkCollisionWithPlayer(Sprite player) {
+    float dx = player.getCenterPosition().x - this.getCenterPosition().x;
+    float dy = player.getCenterPosition().y - this.getCenterPosition().y;
+    float distance = (float) Math.sqrt(dx * dx + dy * dy);
+
+    float minDistance = (player.getSize() + this.size) / 2;
+
+    return distance <= minDistance;
   }
+
 }
