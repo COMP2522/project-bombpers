@@ -73,7 +73,7 @@ public class Window extends PApplet {
   public void setup() {
     // Initialize the Player and collectionManager
     this.init();
-    inputHandler = new InputHandler(collectionManager);
+    inputHandler = new InputHandler(collectionManager, this);
 
     noStroke();
 
@@ -141,21 +141,7 @@ public class Window extends PApplet {
 
   @Override
   public void mousePressed() {
-    if (stateOfGame == GameState.STARTGAME && mouseButton == LEFT) {
-      PVector mousePosition = new PVector(mouseX, mouseY);
-      PVector playerPosition = collectionManager.getPlayer().getPosition();
-      PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
-
-      PVector projectileStartPosition = new PVector(
-              playerPosition.x + collectionManager.getPlayer().getSize() / CHAR_RESIZE_WIDTH - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
-              playerPosition.y + collectionManager.getPlayer().getSize() / CHAR_RESIZE_HEIGHT - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
-      );
-
-      Projectile projectile = new Projectile(this, projectileStartPosition, direction, projectileImage);
-
-      projectiles.add(projectile);
-      collectionManager.getSprites().add(projectile);
-    }
+    inputHandler.mousePressed(projectiles, projectileImage);
   }
 
   /**
