@@ -4,12 +4,8 @@ import processing.core.PImage;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 import processing.core.PConstants;
-import processing.event.MouseEvent;
-import processing.core.PApplet;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import static processing.core.PConstants.LEFT;
 
 /**
  * InputHandler class - handles the input from the user.
@@ -67,7 +63,7 @@ public class InputHandler {
 
     // Check if the key code is the same as any of the switch cases and do the corresponding action
     switch (keyCode) {
-      case LEFT -> isLeftPressed = true;
+      case PConstants.LEFT -> isLeftPressed = true;
       case PConstants.RIGHT -> isRightPressed = true;
       case PConstants.UP -> isUpPressed = true;
       case PConstants.DOWN -> isDownPressed = true;
@@ -85,7 +81,7 @@ public class InputHandler {
 
     // Check if the key code is the same as any of the switch cases and do the corresponding action
     switch (keyCode) {
-      case LEFT -> isLeftPressed = false;
+      case PConstants.LEFT -> isLeftPressed = false;
       case PConstants.RIGHT -> isRightPressed = false;
       case PConstants.UP -> isUpPressed = false;
       case PConstants.DOWN -> isDownPressed = false;
@@ -124,8 +120,8 @@ public class InputHandler {
 
     return new PVector(directionX, directionY);
   }
-  public void mousePressed(ConcurrentLinkedQueue projectiles, PImage image){
-    if(window.stateOfGame == GameState.STARTGAME && window.mouseButton == LEFT){
+  public void mousePressed(PImage image){
+    if(window.stateOfGame == GameState.STARTGAME && window.mouseButton == PConstants.LEFT){
       PVector mousePosition = new PVector(window.mouseX, window.mouseY);
       PVector playerPosition = collectionManager.getPlayer().getPosition();
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
@@ -137,7 +133,7 @@ public class InputHandler {
 
       Projectile projectile = new Projectile(window, projectileStartPosition, direction, image); //Pimage
 
-      projectiles.add(projectile);
+      collectionManager.getProjectiles().add(projectile);
       collectionManager.getSprites().add(projectile);
     }
   }

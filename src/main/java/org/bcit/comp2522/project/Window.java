@@ -135,7 +135,7 @@ public class Window extends PApplet {
 
     @Override
     public void mousePressed() {
-        inputHandler.mousePressed(collectionManager.getProjectiles(), projectileImage);
+        inputHandler.mousePressed(projectileImage);
     }
 
     /**
