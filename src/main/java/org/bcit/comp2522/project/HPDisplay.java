@@ -8,15 +8,15 @@ public class HPDisplay {
   private static final int X_POS = 70;
   private static final int Y_POS = Window.WINDOW_HEIGHT - 50;
   private PApplet pApp;
-  private Player player;
+  private CollectionManager cm;
   private PVector position;
   private int health;
 
   public HPDisplay(PApplet p, CollectionManager collectionManager) {
     this.pApp = p;
-    this.player = (Player) collectionManager.getPlayer();
+    this.cm = collectionManager;
     this.position = new PVector(X_POS, Y_POS);
-    this.health = player.getHealth();
+    this.health = cm.getPlayer().getHealth();
   }
 
   public void draw() {
@@ -27,11 +27,11 @@ public class HPDisplay {
   }
 
   public void update() {
-    this.health = player.getHealth();
+    this.health = cm.getPlayer().getHealth();
   }
 
   public void damage(int dmg) {
-    this.health = player.getHealth() - dmg;
+    this.health = cm.getPlayer().getHealth() - dmg;
     update();
   }
 }
