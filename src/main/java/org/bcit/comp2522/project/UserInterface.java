@@ -1,7 +1,7 @@
 package org.bcit.comp2522.project;
 
 /**
- * Abstract class for UserInterface.
+ * Abstract class for the User Interface.
  */
 
 public abstract class UserInterface {

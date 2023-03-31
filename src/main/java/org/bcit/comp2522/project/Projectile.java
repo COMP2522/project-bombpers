@@ -1,3 +1,4 @@
+
 package org.bcit.comp2522.project;
 
 import processing.core.PVector;
@@ -52,4 +53,15 @@ public class Projectile extends Sprite {
             collide(two, one);
         }
     }
+
+  @Override
+  public int getDamage() {
+    return damage;
+  }
+
+
+  public void setDamage(int damage) {
+    this.damage = damage;
+  }
 }
+

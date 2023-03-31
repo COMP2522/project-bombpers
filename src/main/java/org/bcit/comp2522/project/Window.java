@@ -1,7 +1,6 @@
 package org.bcit.comp2522.project;
 
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -17,11 +16,7 @@ public class Window extends PApplet {
   public PImage enemySlowSprite;
   public PImage enemyFastSprite;
   private InputHandler inputHandler;
-  private static int myScore = 0;
-  /**
-   * Sets the high score to 0.
-   */
-  private static int high = 0;
+
 
   /**
    * Declares a projectile image to store the projectile image.
@@ -41,19 +36,19 @@ public class Window extends PApplet {
   /**
    * Declares a score variable to store the score.
    */
-  private ConcurrentLinkedQueue<Projectile> projectiles = new ConcurrentLinkedQueue<>();
+  public Score score;
 
-  private Menu menu, menu2, menu3, menu4;
-  private Score score;
 
   /**
    * Declares a background to store the background.
    */
   private Background background;
+
   /**
    * Declares a variable to hold the GameState to transition between states.
    */
   public GameState stateOfGame = GameState.STARTMENU;
+
   /**
    * Declares a menu handler to use to handel menus.
    */
@@ -81,7 +76,7 @@ public class Window extends PApplet {
     // Create the background object
     background = new Background(this);
     //Create the score object
-    score = new Score(180, 30, myScore, this);
+//    score = new Score(width/2, 30, this);
     // Enemy Spawner
     enemySpawner = new EnemySpawner(collectionManager, this);
     projectileImage = loadImage(PROJECTILE_IMAGE);
@@ -103,6 +98,7 @@ public class Window extends PApplet {
       s.autoSave();
     }).start();
   }
+
 
   /**
    * If a key is pressed,  the corresponding isPressed variable will be true to
@@ -145,15 +141,13 @@ public class Window extends PApplet {
       PVector mousePosition = new PVector(mouseX, mouseY);
       PVector playerPosition = collectionManager.getPlayer().getPosition();
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
-
       PVector projectileStartPosition = new PVector(
               playerPosition.x + collectionManager.getPlayer().getSize() / CHAR_RESIZE_WIDTH - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
               playerPosition.y + collectionManager.getPlayer().getSize() / CHAR_RESIZE_HEIGHT - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
       );
 
       Projectile projectile = new Projectile(this, projectileStartPosition, direction, projectileImage);
-
-      projectiles.add(projectile);
+      collectionManager.getProjectiles().add(projectile);
       collectionManager.getSprites().add(projectile);
     }
   }
@@ -164,24 +158,15 @@ public class Window extends PApplet {
   public void draw() {
     // If the game is in the start menu, pause menu, or end game menu, create the menu
     if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
-        || stateOfGame == GameState.ENDGAME) {
-
-
+            || stateOfGame == GameState.ENDGAME) {
       if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.ENDGAME) {
-        myScore = 0;
+        score = new Score(width / 2, 30, this);
+        // Reset the player's position
+        PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
+        collectionManager.getPlayer().setPosition(originalPosition);
       }
-
-      stateOfGame = menuhandler.createMenu(stateOfGame, score);
-      // Reset the player's position
-      PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
-      collectionManager.getPlayer().setPosition(originalPosition);
-
+      stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
     } else if (stateOfGame == GameState.STARTGAME) {
-      // If the game is in the start game state, create the game
-      //Reset the score to 0
-      if (myScore == 0) {
-        myScore = 0;
-      }
       background.draw();
       score.displayScore(stateOfGame);
       // If key 'p' is pressed, pause the game
@@ -196,20 +181,18 @@ public class Window extends PApplet {
         sprite.update();
         sprite.draw();
       }
-
-      projectiles.removeIf(projectile -> {
+      collectionManager.getProjectiles().removeIf(projectile -> {
         boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width
-            || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
+                || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
         if (toRemove) {
           collectionManager.getSprites().remove(projectile);
         }
         return toRemove;
       });
-
       ArrayList<Enemy> toRemove = new ArrayList<>();
       ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
       for (Enemy enemy : collectionManager.getEnemies()) {
-        if (enemy.checkCollisionWithPlayer(CollectionManager.player)){
+        if (enemy.checkCollisionWithPlayer(CollectionManager.player)) {
           toRemove.add(enemy);
           CollectionManager.player.health -= enemy.getDamage();
 
@@ -218,7 +201,7 @@ public class Window extends PApplet {
 //            break;
           }
         }
-        for (Projectile projectile : projectiles) {
+        for (Projectile projectile : collectionManager.getProjectiles()) {
           projectile.collide(projectile, enemy);
           if (projectile.isDead() && enemy.isDead()) {
             toRemove.add(enemy);
@@ -226,42 +209,29 @@ public class Window extends PApplet {
             enemySpawner.decreaseEnemCount();
             enemySpawner.updateSpawnModifier(killCounter);
             projectilesToRemove.add(projectile);
-            score.setCurrentScore(++myScore);
+            score.incrementScore(score.getCurrentScore(), enemy);
             score.displayScore(stateOfGame);
-            score.setHighScore(myScore);
-            if (myScore >= high) {
-              high = score.getHighScore();
+            if (score.getCurrentScore() >= score.getHighScore()) {
+              score.setHighScore(score.getCurrentScore());
             }
           }
-
         }
       }
+      // Remove the enemies that have collided with the player
       for (Enemy enemy : toRemove) {
         collectionManager.getEnemies().remove(enemy);
         collectionManager.getSprites().remove(enemy);
       }
       for (Projectile projectile : projectilesToRemove) {
-        projectiles.remove(projectile);
+        collectionManager.getProjectiles().remove(projectile);
         collectionManager.getSprites().remove(projectile);
       }
-
       // Spawns new enemies mid-game
       enemySpawner.spawnEnemy();
 
       // Kill Counter for enemies
       killCounter.draw(this);
 
-    } else if (stateOfGame == GameState.PAUSE) {
-      // If the game is in the pause state, show the score and pause menu
-      if (myScore >= score.getHighScore()) {
-        score.setHighScore(myScore);
-      }
-      score.displayScore(stateOfGame);
-    } else {
-      if (myScore >= score.getHighScore()) {
-        score.setHighScore(myScore);
-      }
-      score.displayScore(stateOfGame);
     }
   }
 

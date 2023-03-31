@@ -1,5 +1,7 @@
 package org.bcit.comp2522.project;
 
+import static org.bcit.comp2522.project.EnemyConfig.*;
+
 /**
  * Class for Score of the game set, gets, and displays score.
  */
@@ -17,18 +19,19 @@ public class Score extends UserInterface {
    */
   private final Window window;
 
+  private final int STARTING_SCORE = 0;
+
   /**
    * Constructor for Score.
    *
    * @param positionX the x-position of the score
    * @param positionY the y-position of the score
-   * @param score the current score of the game
    * @param window the window of the game that the score is displayed on
    */
-  public Score(int positionX, int positionY, int score, Window window) {
+  public Score(int positionX, int positionY, Window window) {
     super(positionX, positionY);
-    currentScore = score;
     this.window = window;
+    this.currentScore = STARTING_SCORE;
   }
 
   /**
@@ -79,7 +82,9 @@ public class Score extends UserInterface {
    */
   public void displayScore(GameState state) {
     //Depending on the state of the game, call the appropriate method to display the score
+
     if (state == GameState.STARTGAME) {
+
         displayInGameScore();
     } else {
         displayMenuGameScore();
@@ -100,7 +105,20 @@ public class Score extends UserInterface {
   private void displayMenuGameScore() {
     window.textSize(60);
     window.fill(255, 255, 0);
-    window.text("Current Score: " + getCurrentScore(), getPositionX() - 130, getPositionY() + 300);
-    window.text("High Score: " + getHighScore(), getPositionX() - 100, getPositionY() + 400);
+    int Xadjustment = 50;
+    int Yadjustment = 60;
+    //Set x and y in here make current x value larger
+    window.text("Current Score: " + getCurrentScore(), getPositionX() + Xadjustment , getPositionY());
+    window.text("High Score: " + getHighScore(), getPositionX(), getPositionY()+ Yadjustment);
+  }
+
+  public void incrementScore(int score, Enemy enemy){
+    int typeOfEnemy = enemy.enemyType;
+    switch (typeOfEnemy){
+      case ENEM_STANDARD_TYPE -> score++;
+      case ENEM_FAST_TYPE -> score = score+2;
+      case ENEM_SLOW_TYPE -> score = score+3;
+    }
+    setCurrentScore(score);
   }
 }

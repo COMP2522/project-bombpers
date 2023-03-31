@@ -36,11 +36,11 @@ public class DatabaseHandler {
     }
     ConnectionString connectionString = new ConnectionString(content);
     MongoClientSettings settings = MongoClientSettings.builder()
-        .applyConnectionString(connectionString)
-        .serverApi(ServerApi.builder()
-            .version(ServerApiVersion.V1)
-            .build())
-        .build();
+            .applyConnectionString(connectionString)
+            .serverApi(ServerApi.builder()
+                    .version(ServerApiVersion.V1)
+                    .build())
+            .build();
     MongoClient mongoClient = MongoClients.create(settings);
     this.database = mongoClient.getDatabase("Bombpers");
   }
