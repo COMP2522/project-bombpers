@@ -102,7 +102,7 @@ public class EnemySpawner {
   }
 
   public void updateSpawnModifier(Score score) {
-    this.spawnModifier = score.getHighScore() / TIER_THRESHOLD;
+    this.spawnModifier = score.getCurrentScore() / TIER_THRESHOLD;
     this.enem_max = BASE_WAVE_COUNT + spawnModifier;
   }
 
