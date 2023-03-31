@@ -7,6 +7,7 @@ import java.util.Random;
 public class EnemySpawner {
   private static final int BASE_WAVE_COUNT = 10;
   private static final int TIER_THRESHOLD = 50;
+  private static final int NO_ENEMIES = 0;
   private int spawnModifier = 0;
   /**
    * Maximum number of enemies.
@@ -54,6 +55,7 @@ public class EnemySpawner {
       collectionManager.getSprites().add(newEnemy);
     }
   }
+
 
   private void spawnFastEnemy() {
     if (this.curr_enem_count < this.enem_max) {
@@ -107,7 +109,7 @@ public class EnemySpawner {
   }
 
   public void countReset() {
-    this.curr_enem_count = 0;
+    this.curr_enem_count = NO_ENEMIES;
   }
 
   public int getCount() {

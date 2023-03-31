@@ -25,12 +25,15 @@ public class Window extends PApplet {
 
     private static final int CHAR_RESIZE_WIDTH = 2;
     private static final float CHAR_RESIZE_HEIGHT = 1.5f;
+    public static final int WINDOW_WIDTH = 500;
+    public static final int WINDOW_HEIGHT = 500;
 
     /**
      * Declares a collectionManager to store the sprites.
      */
     private PImage projectileImage;
     CollectionManager collectionManager;
+    public HPDisplay hpDisplay;
     public EnemySpawner enemySpawner;
     public DangerLevel dangerLevel;
     public KillCounter killCounter;
@@ -59,7 +62,7 @@ public class Window extends PApplet {
      * Creates a window of size 500 x 500 pixels.
      */
     public void settings() {
-        size(500, 500);
+        size(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     /**
@@ -76,6 +79,8 @@ public class Window extends PApplet {
         background = new Background(this);
         //Create the score object
         //score = new Score(180, 30, myScore, this);
+        // HP Display
+        hpDisplay = new HPDisplay(this, collectionManager);
         // Enemy Spawner
         enemySpawner = new EnemySpawner(collectionManager, this);
         dangerLevel = new DangerLevel(this, enemySpawner);
@@ -157,6 +162,7 @@ public class Window extends PApplet {
         } else if (stateOfGame == GameState.STARTGAME) {
             background.draw();
             score.displayScore(stateOfGame);
+            hpDisplay.draw();
             // If key 'p' is pressed, pause the game
             if (keyPressed) {
                 if (key == 'p' || key == 'P') {
@@ -180,13 +186,20 @@ public class Window extends PApplet {
             ArrayList<Enemy> toRemove = new ArrayList<>();
             ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
             for (Enemy enemy : collectionManager.getEnemies()) {
-                if (enemy.checkCollisionWithPlayer(CollectionManager.player)) {
+                if (enemy.checkCollisionWithPlayer(collectionManager.getPlayer())) {
                     toRemove.add(enemy);
-                    CollectionManager.player.health -= enemy.getDamage();
+                    collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
+                    hpDisplay.damage(enemy.getDamage());
 
-                    if (CollectionManager.player.health <= 0) {
+                    if (collectionManager.getPlayer().getHealth() <= 0) {
                         stateOfGame = GameState.ENDGAME;
+                        collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
+                        hpDisplay.update();
 //            break;
+                        for (Enemy enemyRemain : collectionManager.getEnemies()) {
+                            toRemove.add(enemyRemain);
+                            enemySpawner.countReset();
+                        }
                     }
                 }
                 for (Projectile projectile : collectionManager.getProjectiles()) {
