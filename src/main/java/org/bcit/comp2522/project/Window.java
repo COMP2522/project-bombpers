@@ -194,6 +194,10 @@ public class Window extends PApplet {
                         collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
                         hpDisplay.update();
 //            break;
+                        for (Enemy enemyRemain : collectionManager.getEnemies()) {
+                            toRemove.add(enemyRemain);
+                            enemySpawner.countReset();
+                        }
                     }
                 }
                 for (Projectile projectile : collectionManager.getProjectiles()) {
