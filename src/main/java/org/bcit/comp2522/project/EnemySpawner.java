@@ -55,6 +55,7 @@ public class EnemySpawner {
     }
   }
 
+
   private void spawnFastEnemy() {
     if (this.curr_enem_count < this.enem_max) {
       int randomY = randomNumber.nextInt(window.height);

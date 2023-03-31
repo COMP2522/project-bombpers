@@ -23,7 +23,7 @@ public class EnemyConfig {
   // Slow Enemy
   public static final int ENEM_SLOW_TYPE = 3;
   public static final int ENEMY_SLOW_HEALTH = 6;
-  public static final int ENEMY_SLOW_DAMAGE = 4;
+  public static final int ENEMY_SLOW_DAMAGE = 2;
   public static final float ENEMY_SLOW_SIZE = 64f;
   public static final float ENEMY_SLOW_SPEED = 0.6f;
   public static final String ENEMY_SLOW_SPRITE = "../img/eslow_idle_0.png";
