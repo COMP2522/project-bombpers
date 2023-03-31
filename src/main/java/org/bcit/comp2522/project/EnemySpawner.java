@@ -5,13 +5,13 @@ import processing.core.PVector;
 import java.util.Random;
 
 public class EnemySpawner {
-  private static final int baseWaveCount = 10;
-  private static final int tierThreshold = 50;
+  private static final int BASE_WAVE_COUNT = 10;
+  private static final int TIER_THRESHOLD = 50;
   private int spawnModifier = 0;
   /**
    * Maximum number of enemies.
    */
-  private int enem_max = 10 + spawnModifier;
+  private int enem_max = BASE_WAVE_COUNT + spawnModifier;
   private int curr_enem_count;
 
   private Random randomNumber = new Random();
@@ -101,8 +101,20 @@ public class EnemySpawner {
     this.curr_enem_count--;
   }
 
-  public void updateSpawnModifier(KillCounter kc) {
-    this.spawnModifier = kc.getKills() / tierThreshold;
-    this.enem_max = baseWaveCount + spawnModifier;
+  public void updateSpawnModifier(Score score) {
+    this.spawnModifier = score.getHighScore() / TIER_THRESHOLD;
+    this.enem_max = BASE_WAVE_COUNT + spawnModifier;
+  }
+
+  public void countReset() {
+    this.curr_enem_count = 0;
+  }
+
+  public int getCount() {
+    return this.curr_enem_count;
+  }
+
+  public int getSpawnModifier() {
+    return spawnModifier;
   }
 }

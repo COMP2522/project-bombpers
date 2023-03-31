@@ -32,6 +32,7 @@ public class Window extends PApplet {
     private PImage projectileImage;
     CollectionManager collectionManager;
     public EnemySpawner enemySpawner;
+    public DangerLevel dangerLevel;
     public KillCounter killCounter;
     /**
      * Declares a score variable to store the score.
@@ -77,6 +78,7 @@ public class Window extends PApplet {
         //score = new Score(180, 30, myScore, this);
         // Enemy Spawner
         enemySpawner = new EnemySpawner(collectionManager, this);
+        dangerLevel = new DangerLevel(this, enemySpawner);
         projectileImage = loadImage(PROJECTILE_IMAGE);
         killCounter = new KillCounter(this);
     }
@@ -193,10 +195,11 @@ public class Window extends PApplet {
                         toRemove.add(enemy);
                         killCounter.killPlus();
                         enemySpawner.decreaseEnemCount();
-                        enemySpawner.updateSpawnModifier(killCounter);
+                        enemySpawner.updateSpawnModifier(score);
                         projectilesToRemove.add(projectile);
                         score.incrementScore(score.getCurrentScore(), enemy);
                         score.displayScore(stateOfGame);
+                        dangerLevel.update();
                         if (score.getCurrentScore() >= score.getHighScore()) {
                             score.setHighScore(score.getCurrentScore());
                         }
@@ -214,6 +217,7 @@ public class Window extends PApplet {
             }
             // Spawns new enemies mid-game
             enemySpawner.spawnEnemy();
+            dangerLevel.draw();
 
             // Kill Counter for enemies
             killCounter.draw(this);
