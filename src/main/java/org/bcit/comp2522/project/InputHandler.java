@@ -1,8 +1,11 @@
 package org.bcit.comp2522.project;
 
+import processing.core.PImage;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 import processing.core.PConstants;
+
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * InputHandler class - handles the input from the user.
@@ -20,6 +23,9 @@ public class InputHandler {
   private boolean isRightPressed = false;
   private boolean isUpPressed = false;
   private boolean isDownPressed = false;
+  private Window window;
+  private static final int CHAR_RESIZE_WIDTH = 2;
+  private static final float CHAR_RESIZE_HEIGHT = 1.5f;
   /**
    * The collection manager that will be used to access the collection of sprites.
    */
@@ -30,9 +36,9 @@ public class InputHandler {
    * @param collectionManager the collection manager that will be used to access the collection of sprites.
    * @return the instance of the InputHandler.
    */
-  public static InputHandler getInstance(CollectionManager collectionManager) {
+  public static InputHandler getInstance(CollectionManager collectionManager, Window window) {
     if (instance == null) {
-      instance = new InputHandler(collectionManager);
+      instance = new InputHandler(collectionManager, window);
     }
     return instance;
   }
@@ -41,8 +47,9 @@ public class InputHandler {
    * InputHandler constructor - creates a new InputHandler object.
    * @param collectionManager the collection manager that will be used to access the collection of sprites.
    */
-  public InputHandler(CollectionManager collectionManager) {
+  private InputHandler(CollectionManager collectionManager, Window window) {
     this.collectionManager = collectionManager;
+    this.window = window;
   }
 
 
@@ -112,5 +119,22 @@ public class InputHandler {
     }
 
     return new PVector(directionX, directionY);
+  }
+  public void mousePressed(PImage image){
+    if(window.stateOfGame == GameState.STARTGAME && window.mouseButton == PConstants.LEFT){
+      PVector mousePosition = new PVector(window.mouseX, window.mouseY);
+      PVector playerPosition = collectionManager.getPlayer().getPosition();
+      PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
+
+      PVector projectileStartPosition = new PVector(
+              playerPosition.x + collectionManager.getPlayer().getSize() / CHAR_RESIZE_WIDTH - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
+              playerPosition.y + collectionManager.getPlayer().getSize() / CHAR_RESIZE_HEIGHT - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
+      );
+
+      Projectile projectile = new Projectile(window, projectileStartPosition, direction, image); //Pimage
+
+      collectionManager.getProjectiles().add(projectile);
+      collectionManager.getSprites().add(projectile);
+    }
   }
 }
