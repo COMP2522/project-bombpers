@@ -74,6 +74,8 @@ public class Window extends PApplet {
     this.init();
     // Initialize the input handler singleton
     inputHandler = InputHandler.getInstance(collectionManager);
+    Player.setPlayerHitboxSize(0.5f);
+    Player.setPlayerImageSize(65);
 
     noStroke();
 
