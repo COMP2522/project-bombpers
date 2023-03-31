@@ -6,6 +6,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 
+
 /**
  * CollectionManager class - manages all collections of sprites.
  */
@@ -14,7 +15,7 @@ public class CollectionManager {
   private static CollectionManager c;
 
   private final List<Sprite> sprites;
-  private final Queue<Projectile> projectiles;
+  private final ConcurrentLinkedQueue<Projectile> projectiles;
   private final List<Enemy> enemies;
   public static Sprite player;
 
@@ -32,7 +33,7 @@ public class CollectionManager {
     return sprites;
   }
 
-    public Queue<Projectile> getProjectiles() {
+    public ConcurrentLinkedQueue<Projectile> getProjectiles() {
       return projectiles;
     }
 
