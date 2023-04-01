@@ -22,9 +22,6 @@ public class Window extends PApplet {
      * Declares a projectile image to store the projectile image.
      */
     private static final String PROJECTILE_IMAGE = "../img/bullet.png";
-
-    private static final int CHAR_RESIZE_WIDTH = 2;
-    private static final float CHAR_RESIZE_HEIGHT = 1.5f;
     public static final int WINDOW_WIDTH = 500;
     public static final int WINDOW_HEIGHT = 500;
 
@@ -193,7 +190,7 @@ public class Window extends PApplet {
 
                     if (collectionManager.getPlayer().getHealth() <= 0) {
                         stateOfGame = GameState.ENDGAME;
-                        collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
+                        collectionManager.getPlayer().setHealth(Player.getPlayerHealth());
                         hpDisplay.update();
 //            break;
                         for (Enemy enemyRemain : collectionManager.getEnemies()) {

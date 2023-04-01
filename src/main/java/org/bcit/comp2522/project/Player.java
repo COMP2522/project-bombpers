@@ -10,32 +10,32 @@ public class Player extends Sprite {
   /**
    * The image of the player.
    */
-  PImage characterSprite;
+  private PImage characterSprite;
   /**
    * The resize factor of the player so when enemies collide with the player,
    * the player hitbox is fits the image.
    */
-  public static final float RESIZE = 1.0f;
+  private static final float RESIZE = 1.0f;
   /**
    * The health of the player.
    */
-  public static final int PLAYER_HEALTH = 5;
+  private static final int PLAYER_HEALTH = 5;
   /**
    * The damage caused by the player.
    */
-  public static final int PLAYER_DAMAGE = 1;
+  private static final int PLAYER_DAMAGE = 1;
   /**
    * The size of the player.
    */
-  public static final float PLAYER_SIZE = 65;
+  private static final float PLAYER_SIZE = 65;
   /**
    * The speed of the player.
    */
-  public static final float PLAYER_SPEED = 1.5f;
+  private static final float PLAYER_SPEED = 1.5f;
   /**
    * The location of the player image.
    */
-  public static final String PLAYER_SPRITE = "../img/idle_0.png";
+  private static final String PLAYER_SPRITE = "../img/idle_0.png";
 
   private static Player player;
 
@@ -65,6 +65,9 @@ public class Player extends Sprite {
     return player;
   }
 
+  public static int getPlayerHealth() {
+    return PLAYER_HEALTH;
+  }
 
   @Override
   public void collide(Sprite one, Sprite two) {
