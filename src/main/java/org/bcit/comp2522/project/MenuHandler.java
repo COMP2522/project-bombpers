@@ -73,17 +73,7 @@ public class MenuHandler {
       //display the score
       menuScore.setCurrentScore(currScore);
       menuScore.setHighScore(highScore);
-      menuScore.displayScore(currentState);
-
-      //If the mouse is pressed and the mouse is within the bounds of the button,
-      // change the state to startGame to start the game
-      if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
-                && (this.window.mouseX >= 120 && this.window.mouseX < 312)
-                && (this.window.mouseY >= 199 && this.window.mouseY <= 244)) {
-
-        this.currentState = GameState.STARTGAME;
-        return currentState;
-      }
+      if (displayMenu()) return currentState;
       //return the pause menu so that it can be continued to be displayed
       return GameState.PAUSE;
 
@@ -91,14 +81,23 @@ public class MenuHandler {
       // If the current state is endGame, create the endMenu
       endMenu = new Menu(30, 120, "Game Over!", this.window);
       endMenu.displayMenu(state, 90);
-      menuScore.displayScore(currentState);
-      if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
-              && (this.window.mouseX >= 120 && this.window.mouseX < 312)
-              && (this.window.mouseY >= 199 && this.window.mouseY <= 244)) {
-        this.currentState = GameState.STARTGAME;
-        return currentState;
-      }
+      if (displayMenu()) return currentState;
       return GameState.ENDGAME;
     }
+  }
+
+  /**
+   * Displays the menu depending on the state.
+   * @return
+   */
+  private boolean displayMenu() {
+    menuScore.displayScore(currentState);
+    if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
+            && (this.window.mouseX >= 120 && this.window.mouseX < 312)
+            && (this.window.mouseY >= 199 && this.window.mouseY <= 244)) {
+      this.currentState = GameState.STARTGAME;
+      return true;
+    }
+    return false;
   }
 }
