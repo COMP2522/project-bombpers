@@ -157,7 +157,6 @@ public class Window extends PApplet {
             stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
         } else if (stateOfGame == GameState.STARTGAME) {
             background.draw();
-            score.displayScore(stateOfGame);
             hpDisplay.draw();
             // If key 'p' is pressed, pause the game
             if (keyPressed) {
@@ -227,7 +226,7 @@ public class Window extends PApplet {
 
             // Kill Counter for enemies
             killCounter.draw(this);
-
+            score.drawUserInterface(stateOfGame);
         }
     }
 

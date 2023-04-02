@@ -8,6 +8,9 @@ public class Menu extends UserInterface {
   private String message;
   //  the window of the game that the menu is displayed on
   private final Window window;
+  private final int TITLE_SIZE = 90;
+  private final int TEXT_SIZE = 50;
+  private final int BLACK = 0;
 
   /**
    * Constructor for Menu.
@@ -25,32 +28,31 @@ public class Menu extends UserInterface {
 
 
   @Override
-  protected void drawUserInterface() {
-    // Implement drawing of the menu elements here
+  protected void drawUserInterface(GameState stateOfGame) {
+    window.background(BLACK);
+    displayMenu(stateOfGame);
+
   }
 
   /**
    * Displays the menu.
    *
    * @param state the state of the game
-   * @param titleSize the size of the title
    */
-  public void displayMenu(GameState state, int titleSize) {
-    window.background(0);
-    modifyMessage(titleSize);
+  public void displayMenu(GameState state) {
+    createTitle();
     button();
-
     switch (state) {
-      case STARTMENU -> window.text("Start", 160, 245);
+      case STARTMENU -> window.text("Start", 166, 245);
       case ENDGAME -> window.text("Restart", 300, 255);
       case PAUSE -> window.text("Continue", 320, 252);
     }
   }
 
-  private void modifyMessage(int textSize) {
+  private void createTitle() {
     setMessage(message);
     String message = getMessage();
-    window.textSize(textSize);
+    window.textSize(TITLE_SIZE);
     window.fill(0, 408, 612);
     window.text(message, getPositionX(), getPositionY());
   }
@@ -58,7 +60,7 @@ public class Menu extends UserInterface {
   private void button() {
     window.fill(153);
     window.rect(120, 200, 200, 55);
-    window.textSize(50);
+    window.textSize(TEXT_SIZE);
     window.fill(200, 0, 0);
   }
 
