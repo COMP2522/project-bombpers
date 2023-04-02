@@ -207,7 +207,7 @@ public class Window extends PApplet {
                     if (projectile.isDead() && enemy.isDead()) {
                         toRemove.add(enemy);
                         killCounter.killPlus();
-                        enemySpawner.decreaseEnemCount();
+                        enemySpawner.decreaseEnemyCount();
                         enemySpawner.updateSpawnModifier(score);
                         projectilesToRemove.add(projectile);
                         score.incrementScore(score.getCurrentScore(), enemy);
@@ -229,7 +229,7 @@ public class Window extends PApplet {
                 collectionManager.getSprites().remove(projectile);
             }
             // Spawns new enemies mid-game
-            enemySpawner.spawnEnemy();
+            enemySpawner.spawnerActivate();
             dangerLevel.draw();
 
             // Kill Counter for enemies
