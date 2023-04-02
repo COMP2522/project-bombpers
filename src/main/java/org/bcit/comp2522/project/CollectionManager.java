@@ -12,20 +12,20 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class CollectionManager {
 
   private static CollectionManager c;
-
+  private static Sprite player;
   private final List<Sprite> sprites;
   private final ConcurrentLinkedQueue<Projectile> projectiles;
   private final List<Enemy> enemies;
-  private static Sprite player;
-
 
   /**
    * Constructor for CollectionManager.
    */
   private CollectionManager() {
-    sprites = new ArrayList<>();
-    projectiles = new ConcurrentLinkedQueue<>();
-    enemies = new ArrayList<>();
+    this.sprites = new ArrayList<>();
+    this.projectiles = new ConcurrentLinkedQueue<>();
+    this.enemies = new ArrayList<>();
+    this.player = getPlayerInstance(Window.getWindow());
+    getSprites().add(player);
   }
 
   public List<Sprite> getSprites() {

@@ -11,7 +11,7 @@ import processing.event.KeyEvent;
  * Window class - is the main class of the game.
  */
 public class Window extends PApplet {
-
+    private static Window currWindow;
     public PImage enemyStandardSprite;
     public PImage enemySlowSprite;
     public PImage enemyFastSprite;
@@ -31,8 +31,7 @@ public class Window extends PApplet {
      * Declares a collectionManager to store the sprites.
      */
     private PImage projectileImage;
-    public CollectionManager collectionManager;
-    public Player player;
+    private CollectionManager collectionManager;
     public HPDisplay hpDisplay;
     public EnemySpawner enemySpawner;
     public DangerLevel dangerLevel;
@@ -41,7 +40,6 @@ public class Window extends PApplet {
      * Declares a score variable to store the score.
      */
     public Score score;
-
 
     /**
      * Declares a background to store the background.
@@ -58,6 +56,10 @@ public class Window extends PApplet {
      */
     public MenuHandler menuhandler = new MenuHandler(stateOfGame, this);
 
+    public static Window getWindow() {
+        return currWindow;
+    }
+
     /**
      * Creates a window of size 500 x 500 pixels.
      */
@@ -69,6 +71,7 @@ public class Window extends PApplet {
      * Setup of the game.
      */
     public void setup() {
+        currWindow = this;
         // Initialize the Player and collectionManager
         this.init();
         inputHandler = InputHandler.getInstance(collectionManager, this);
@@ -93,7 +96,6 @@ public class Window extends PApplet {
      */
     public void init() {
         collectionManager = CollectionManager.getInstance();
-        collectionManager.getSprites().add(collectionManager.getPlayerInstance(this));
         enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
         enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
         enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
@@ -151,7 +153,7 @@ public class Window extends PApplet {
     public void draw() {
         // If the game is in the start menu, pause menu, or end game menu, create the menu
         if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
-                || stateOfGame == GameState.ENDGAME) {
+            || stateOfGame == GameState.ENDGAME) {
             if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.ENDGAME) {
                 score = new Score(width / 2, 30, this);
                 // Reset the player's position
@@ -177,7 +179,7 @@ public class Window extends PApplet {
             }
             collectionManager.getProjectiles().removeIf(projectile -> {
                 boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width
-                        || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
+                    || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
                 if (toRemove) {
                     collectionManager.getSprites().remove(projectile);
                 }
