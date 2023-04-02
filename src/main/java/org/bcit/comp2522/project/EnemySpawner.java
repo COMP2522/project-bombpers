@@ -1,7 +1,9 @@
 package org.bcit.comp2522.project;
 
 import static org.bcit.comp2522.project.EnemyConfig.*;
+
 import processing.core.PVector;
+
 import java.util.Random;
 
 public class EnemySpawner {
@@ -25,78 +27,83 @@ public class EnemySpawner {
   }
 
   public void spawnEnemy() {
-
-    int diceRoll = randomNumber.nextInt(ENEM_TYPES) + 1;
-    switch (diceRoll) {
-      case ENEM_STANDARD_TYPE -> spawnStandardEnemy();
-      case ENEM_FAST_TYPE -> spawnFastEnemy();
-      case ENEM_SLOW_TYPE -> spawnSlowEnemy();
-      default -> System.out.println("Invalid spawn type");
+    if (spawnAvailable()) {
+      int diceRoll = randomNumber.nextInt(ENEM_TYPES) + 1;
+      switch (diceRoll) {
+        case ENEM_STANDARD_TYPE -> spawnStandardEnemy();
+        case ENEM_FAST_TYPE -> spawnFastEnemy();
+        case ENEM_SLOW_TYPE -> spawnSlowEnemy();
+        default -> System.out.println("Invalid spawn type");
+      }
     }
   }
 
   public void spawnStandardEnemy() {
-    if (this.curr_enem_count < this.enem_max) {
-      int randomY = randomNumber.nextInt(window.height);
-      PVector randomPos = new PVector(window.width, randomY);
-      Enemy newEnemy = new Enemy(
-          window,
-          collectionManager.getPlayer(),
-          window.enemyStandardSprite,
-          ENEM_STANDARD_TYPE,
-          ENEMY_STANDARD_HEALTH,
-          ENEMY_STANDARD_DAMAGE,
-          ENEMY_STANDARD_SIZE,
-          ENEMY_STANDARD_SPEED,
-          randomPos
-      );
-      this.curr_enem_count++;
-      collectionManager.getEnemies().add(newEnemy);
-      collectionManager.getSprites().add(newEnemy);
-    }
+    int randomY = randomNumber.nextInt(window.height);
+    PVector randomPos = new PVector(window.width, randomY);
+    Enemy newEnemy = new Enemy(
+        window,
+        collectionManager.getPlayer(),
+        window.enemyStandardSprite,
+        ENEM_STANDARD_TYPE,
+        ENEMY_STANDARD_HEALTH,
+        ENEMY_STANDARD_DAMAGE,
+        ENEMY_STANDARD_SIZE,
+        ENEMY_STANDARD_SPEED,
+        randomPos
+    );
+    this.curr_enem_count++;
+    collectionManager.getEnemies().add(newEnemy);
+    collectionManager.getSprites().add(newEnemy);
+
   }
 
 
   private void spawnFastEnemy() {
-    if (this.curr_enem_count < this.enem_max) {
-      int randomY = randomNumber.nextInt(window.height);
-      PVector randomPos = new PVector(window.width, randomY);
-      Enemy newEnemy = new Enemy(
-          window,
-          collectionManager.getPlayer(),
-          window.enemyFastSprite,
-          ENEM_FAST_TYPE,
-          ENEMY_FAST_HEALTH,
-          ENEMY_FAST_DAMAGE,
-          ENEMY_FAST_SIZE,
-          ENEMY_FAST_SPEED,
-          randomPos
-      );
-      this.curr_enem_count++;
-      collectionManager.getEnemies().add(newEnemy);
-      collectionManager.getSprites().add(newEnemy);
-    }
+    int randomY = randomNumber.nextInt(window.height);
+    PVector randomPos = new PVector(window.width, randomY);
+    Enemy newEnemy = new Enemy(
+        window,
+        collectionManager.getPlayer(),
+        window.enemyFastSprite,
+        ENEM_FAST_TYPE,
+        ENEMY_FAST_HEALTH,
+        ENEMY_FAST_DAMAGE,
+        ENEMY_FAST_SIZE,
+        ENEMY_FAST_SPEED,
+        randomPos
+    );
+    this.curr_enem_count++;
+    collectionManager.getEnemies().add(newEnemy);
+    collectionManager.getSprites().add(newEnemy);
+
   }
 
   public void spawnSlowEnemy() {
-    if (this.curr_enem_count < this.enem_max) {
-      int randomY = randomNumber.nextInt(window.height);
-      PVector randomPos = new PVector(window.width, randomY);
-      Enemy newEnemy = new Enemy(
-          window,
-          collectionManager.getPlayer(),
-          window.enemySlowSprite,
-          ENEM_SLOW_TYPE,
-          ENEMY_SLOW_HEALTH,
-          ENEMY_SLOW_DAMAGE,
-          ENEMY_SLOW_SIZE,
-          ENEMY_SLOW_SPEED,
-          randomPos
-      );
-      this.curr_enem_count++;
-      collectionManager.getEnemies().add(newEnemy);
-      collectionManager.getSprites().add(newEnemy);
+    int randomY = randomNumber.nextInt(window.height);
+    PVector randomPos = new PVector(window.width, randomY);
+    Enemy newEnemy = new Enemy(
+        window,
+        collectionManager.getPlayer(),
+        window.enemySlowSprite,
+        ENEM_SLOW_TYPE,
+        ENEMY_SLOW_HEALTH,
+        ENEMY_SLOW_DAMAGE,
+        ENEMY_SLOW_SIZE,
+        ENEMY_SLOW_SPEED,
+        randomPos
+    );
+    this.curr_enem_count++;
+    collectionManager.getEnemies().add(newEnemy);
+    collectionManager.getSprites().add(newEnemy);
+
+  }
+
+  public boolean spawnAvailable() {
+    if (this.curr_enem_count > this.enem_max) {
+      return false;
     }
+    return true;
   }
 
   public void decreaseEnemCount() {
