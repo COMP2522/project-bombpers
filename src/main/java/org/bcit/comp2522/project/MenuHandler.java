@@ -63,6 +63,9 @@ public class MenuHandler {
             && (this.window.mouseY >= buttonTopBound
             && this.window.mouseY <= buttonBottomBound)) {
       this.window.mousePressed = false;
+        if (this.currentState == GameState.ENDGAME){
+          this.window.init();
+        }
       this.currentState = GameState.STARTGAME;
       return this.currentState;
     }
@@ -87,7 +90,7 @@ public class MenuHandler {
 
     } else {
       // If the current state is endGame, create the endMenu
-      endMenu = new Menu(470, 120, "Game Over !", this.window);
+      endMenu = new Menu(470, 120, "Game Over", this.window);
       endMenu.drawUserInterface(this.currentState);
       menuScore.setCurrentScore(currScore);
       menuScore.setHighScore(highScore);
