@@ -12,7 +12,7 @@ public class EnemySpawner {
   /**
    * Maximum number of enemies.
    */
-  private int enem_max = 10 + spawnModifier;
+  private int enem_max = BASE_WAVE_COUNT + spawnModifier;
   private int curr_enem_count;
 
   private Random randomNumber = new Random();
@@ -103,12 +103,20 @@ public class EnemySpawner {
     this.curr_enem_count--;
   }
 
-  public void updateSpawnModifier(KillCounter kc) {
-    this.spawnModifier = kc.getKills() / TIER_THRESHOLD;
+  public void updateSpawnModifier(Score score) {
+    this.spawnModifier = score.getCurrentScore() / TIER_THRESHOLD;
     this.enem_max = BASE_WAVE_COUNT + spawnModifier;
   }
 
   public void countReset() {
     this.curr_enem_count = NO_ENEMIES;
+  }
+
+  public int getCount() {
+    return this.curr_enem_count;
+  }
+
+  public int getSpawnModifier() {
+    return spawnModifier;
   }
 }

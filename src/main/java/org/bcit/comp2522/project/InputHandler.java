@@ -25,7 +25,9 @@ public class InputHandler {
   private boolean isDownPressed = false;
   private Window window;
   private static final int CHAR_RESIZE_WIDTH = 2;
-  private static final float CHAR_RESIZE_HEIGHT = 1.5f;
+  private static final int CHAR_X_POS_MOVE = 30;
+  private static final int CHAR_Y_POS_MOVE = 45;
+
   /**
    * The collection manager that will be used to access the collection of sprites.
    */
@@ -127,8 +129,8 @@ public class InputHandler {
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
 
       PVector projectileStartPosition = new PVector(
-              playerPosition.x + collectionManager.getPlayer().getSize() / CHAR_RESIZE_WIDTH - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
-              playerPosition.y + collectionManager.getPlayer().getSize() / CHAR_RESIZE_HEIGHT - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
+              playerPosition.x + CHAR_X_POS_MOVE - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
+              playerPosition.y + CHAR_Y_POS_MOVE - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
       );
 
       Projectile projectile = new Projectile(window, projectileStartPosition, direction, image); //Pimage

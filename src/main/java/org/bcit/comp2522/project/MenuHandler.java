@@ -35,6 +35,8 @@ public class MenuHandler {
   public MenuHandler(GameState state, Window window) {
     this.currentState = state;
     this.window = window;
+
+
   }
 
   /**
@@ -82,6 +84,7 @@ public class MenuHandler {
       menuScore.drawUserInterface(currentState);
       //return the pause menu so that it can be continued to be displayed
       return GameState.PAUSE;
+
     } else {
       // If the current state is endGame, create the endMenu
       endMenu = new Menu(470, 120, "Game Over !", this.window);
