@@ -25,7 +25,7 @@ public class CollectionManager {
     this.projectiles = new ConcurrentLinkedQueue<>();
     this.enemies = new ArrayList<>();
     this.player = getPlayerInstance(Window.getWindow());
-    getSprites().add(player);
+    this.getSprites().add(player);
   }
 
   public List<Sprite> getSprites() {
