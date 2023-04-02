@@ -204,17 +204,20 @@ public class Window extends PApplet {
                 }
                 for (Projectile projectile : collectionManager.getProjectiles()) {
                     projectile.collide(projectile, enemy);
-                    if (projectile.isDead() && enemy.isDead()) {
-                        toRemove.add(enemy);
-                        killCounter.killPlus();
-                        enemySpawner.decreaseEnemCount();
-                        enemySpawner.updateSpawnModifier(score);
+                    if (projectile.isDead()) {
                         projectilesToRemove.add(projectile);
-                        score.incrementScore(score.getCurrentScore(), enemy);
-                        score.displayScore(stateOfGame);
-                        dangerLevel.update();
-                        if (score.getCurrentScore() >= score.getHighScore()) {
-                            score.setHighScore(score.getCurrentScore());
+                        if (enemy.isDead()) {
+                            toRemove.add(enemy);
+                            killCounter.killPlus();
+                            enemySpawner.decreaseEnemCount();
+                            enemySpawner.updateSpawnModifier(score);
+
+                            score.incrementScore(score.getCurrentScore(), enemy);
+                            score.displayScore(stateOfGame);
+                            dangerLevel.update();
+                            if (score.getCurrentScore() >= score.getHighScore()) {
+                                score.setHighScore(score.getCurrentScore());
+                            }
                         }
                     }
                 }
