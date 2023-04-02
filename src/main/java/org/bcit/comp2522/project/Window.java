@@ -97,6 +97,9 @@ public class Window extends PApplet {
         CollectionManager.player = Player.getPlayerInstance(this);
         collectionManager.getSprites().add(CollectionManager.player);
         score.resetScore();
+        // Reset the player's position
+        PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
+        collectionManager.getPlayer().setPosition(originalPosition);
         new Thread(() -> {
             SaveHandler s = new SaveHandler();
             s.autoSave();
@@ -151,12 +154,6 @@ public class Window extends PApplet {
         // If the game is in the start menu, pause menu, or end game menu, create the menu
         if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
                 || stateOfGame == GameState.ENDGAME) {
-            if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.ENDGAME) {
-                score = new Score(width / 2, 30, this);
-                // Reset the player's position
-                PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
-                collectionManager.getPlayer().setPosition(originalPosition);
-            }
             stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
         } else if (stateOfGame == GameState.STARTGAME) {
             background.draw();
@@ -209,7 +206,7 @@ public class Window extends PApplet {
                         enemySpawner.updateSpawnModifier(killCounter);
                         projectilesToRemove.add(projectile);
                         score.incrementScore(score.getCurrentScore(), enemy);
-                        score.displayScore(stateOfGame);
+
                         if (score.getCurrentScore() >= score.getHighScore()) {
                             score.setHighScore(score.getCurrentScore());
                         }

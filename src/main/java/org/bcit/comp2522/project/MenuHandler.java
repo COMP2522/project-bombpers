@@ -34,8 +34,6 @@ public class MenuHandler {
   public MenuHandler(GameState state, Window window) {
     this.currentState = state;
     this.window = window;
-
-
   }
 
   /**
@@ -93,7 +91,6 @@ public class MenuHandler {
       menuScore.setCurrentScore(currScore);
       menuScore.setHighScore(highScore);
       menuScore.displayScore(currentState);
-
       if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
               && (this.window.mouseX >= 120 && this.window.mouseX < 312)
               && (this.window.mouseY >= 199 && this.window.mouseY <= 244)) {
