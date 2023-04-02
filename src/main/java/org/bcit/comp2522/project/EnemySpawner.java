@@ -86,9 +86,13 @@ public class EnemySpawner {
         speed,
         randomizePosition()
     );
+    addToCollection(newEnemy);
+    increaseEnemyCount();
+  }
+
+  public void addToCollection(Enemy newEnemy) {
     collectionManager.getEnemies().add(newEnemy);
     collectionManager.getSprites().add(newEnemy);
-    increaseEnemyCount();
   }
 
   public boolean spawnAvailable() {
