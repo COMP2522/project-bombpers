@@ -18,7 +18,16 @@ public class Menu extends UserInterface {
   private final int BUTTON_X_POSITION = 120;
   private final int BUTTON_Y_POSITION = 200;
   private final int BUTTON_WIDTH = 200;
-  private final int BUTTON_HEIGHT = 200;
+  private final int BUTTON_HEIGHT = 45;
+  private final int BUTTON_TEXT_RED_VALUE  = 200;
+  private final int BUTTON_TEXT_BLUE_VALUE  = 0;
+  private final int BUTTON_TEXT_GREEN_VALUE  = 0;
+  private final int START_X_OFFSET = 12;
+
+  private final int PAUSE_X_OFFSET = 70;
+  private final int END_X_OFFSET = 55;
+  private final int TEXT_RESIZE_FACTOR = 2;
+  private final int START_TEXT_X_POS_RESIZE_FACTOR = 3;
 
   /**
    * Constructor for Menu.
@@ -48,12 +57,20 @@ public class Menu extends UserInterface {
    * @param state the state of the game
    */
   public void displayMenu(GameState state) {
+    int START_BUTTON_TEXT_X_POSITION = this.window.width / START_TEXT_X_POS_RESIZE_FACTOR;
+    int START_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR - START_X_OFFSET;
+    int PAUSE_BUTTON_TEXT_X_POSITION = this.window.width / TEXT_RESIZE_FACTOR + PAUSE_X_OFFSET;
+    int PAUSE_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR;
+    int END_BUTTON_TEXT_X_POSITION = this.window.width / TEXT_RESIZE_FACTOR + END_X_OFFSET;
+    int END_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR;
+
+
     createTitle();
     button();
     switch (state) {
-      case STARTMENU -> window.text("Start", 166, 245);
-      case ENDGAME -> window.text("Restart", 300, 255);
-      case PAUSE -> window.text("Continue", 320, 252);
+      case STARTMENU -> window.text("Start", START_BUTTON_TEXT_X_POSITION, START_BUTTON_TEXT_Y_POSITION);
+      case ENDGAME -> window.text("Restart", END_BUTTON_TEXT_X_POSITION, END_BUTTON_TEXT_Y_POSITION);
+      case PAUSE -> window.text("Continue", PAUSE_BUTTON_TEXT_X_POSITION, PAUSE_BUTTON_TEXT_Y_POSITION);
     }
   }
 
@@ -69,7 +86,7 @@ public class Menu extends UserInterface {
     window.fill(BUTTON_BACKGROUND_COLOR_VALUE);
     window.rect(BUTTON_X_POSITION, BUTTON_Y_POSITION, BUTTON_WIDTH, BUTTON_HEIGHT);
     window.textSize(TEXT_SIZE);
-    window.fill(200, 0, 0);
+    window.fill(BUTTON_TEXT_RED_VALUE,BUTTON_TEXT_BLUE_VALUE,BUTTON_TEXT_GREEN_VALUE);
   }
 
 
