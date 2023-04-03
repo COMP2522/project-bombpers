@@ -11,23 +11,16 @@ import processing.event.KeyEvent;
  * Window class - is the main class of the game.
  */
 public class Window extends PApplet {
-
     public PImage enemyStandardSprite;
     public PImage enemySlowSprite;
     public PImage enemyFastSprite;
     private InputHandler inputHandler;
-
-
     /**
      * Declares a projectile image to store the projectile image.
      */
     private static final String PROJECTILE_IMAGE = "../img/bullet.png";
-
-    private static final int CHAR_RESIZE_WIDTH = 2;
-    private static final float CHAR_RESIZE_HEIGHT = 1.5f;
     public static final int WINDOW_WIDTH = 500;
     public static final int WINDOW_HEIGHT = 500;
-
     /**
      * Declares a collectionManager to store the sprites.
      */
@@ -36,7 +29,6 @@ public class Window extends PApplet {
     public HPDisplay hpDisplay;
     public EnemySpawner enemySpawner;
     public DangerLevel dangerLevel;
-    public KillCounter killCounter;
     /**
      * Declares a score variable to store the score.
      */
@@ -85,7 +77,6 @@ public class Window extends PApplet {
         enemySpawner = new EnemySpawner(collectionManager, this);
         dangerLevel = new DangerLevel(this, enemySpawner);
         projectileImage = loadImage(PROJECTILE_IMAGE);
-        killCounter = new KillCounter(this);
     }
 
     /**
@@ -103,7 +94,6 @@ public class Window extends PApplet {
             s.autoSave();
         }).start();
     }
-
 
     /**
      * If a key is pressed,  the corresponding isPressed variable will be true to
@@ -199,6 +189,7 @@ public class Window extends PApplet {
                         for (Enemy enemyRemain : collectionManager.getEnemies()) {
                             toRemove.add(enemyRemain);
                             enemySpawner.countReset();
+                            dangerLevel.resetDangerLevel();
                         }
                     }
                 }
@@ -208,7 +199,6 @@ public class Window extends PApplet {
                         projectilesToRemove.add(projectile);
                         if (enemy.isDead()) {
                             toRemove.add(enemy);
-                            killCounter.killPlus();
                             enemySpawner.decreaseEnemyCount();
                             enemySpawner.updateSpawnModifier(score);
 
@@ -234,10 +224,6 @@ public class Window extends PApplet {
             // Spawns new enemies mid-game
             enemySpawner.spawnerActivate();
             dangerLevel.draw();
-
-            // Kill Counter for enemies
-            killCounter.draw(this);
-
         }
     }
 

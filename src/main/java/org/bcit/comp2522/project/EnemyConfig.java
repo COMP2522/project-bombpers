@@ -6,25 +6,25 @@ public class EnemyConfig {
 
   // Standard Enemy
   public static final int ENEMY_STANDARD_TYPE = 1;
-  public static final int ENEMY_STANDARD_HEALTH = 1;
+  public static final int ENEMY_STANDARD_HEALTH = 2;
   public static final int ENEMY_STANDARD_DAMAGE = 1;
-  public static final float ENEMY_STANDARD_SIZE = 64f;
-  public static final float ENEMY_STANDARD_SPEED = 0.8f;
+  public static final float ENEMY_STANDARD_SIZE = 80f;
+  public static final float ENEMY_STANDARD_SPEED = 0.7f;
   public static final String ENEMY_STANDARD_SPRITE = "../img/es_idle_0.png";
 
   // Fast Enemy
   public static final int ENEMY_FAST_TYPE = 2;
   public static final int ENEMY_FAST_HEALTH = 1;
   public static final int ENEMY_FAST_DAMAGE = 1;
-  public static final float ENEMY_FAST_SIZE = 64f;
+  public static final float ENEMY_FAST_SIZE = 66f;
   public static final float ENEMY_FAST_SPEED = 1.0f;
   public static final String ENEMY_FAST_SPRITE = "../img/fly_0.png";
 
   // Slow Enemy
   public static final int ENEMY_SLOW_TYPE = 3;
-  public static final int ENEMY_SLOW_HEALTH = 6;
+  public static final int ENEMY_SLOW_HEALTH = 4;
   public static final int ENEMY_SLOW_DAMAGE = 2;
-  public static final float ENEMY_SLOW_SIZE = 64f;
-  public static final float ENEMY_SLOW_SPEED = 0.6f;
+  public static final float ENEMY_SLOW_SIZE = 111f;
+  public static final float ENEMY_SLOW_SPEED = 0.5f;
   public static final String ENEMY_SLOW_SPRITE = "../img/eslow_idle_0.png";
 }
