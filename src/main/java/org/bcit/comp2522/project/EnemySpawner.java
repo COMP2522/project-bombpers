@@ -20,8 +20,6 @@ public class EnemySpawner {
   private Random randomNumber = new Random();
   private CollectionManager collectionManager;
   private Window window;
-  private static int randomY;
-  private static PVector randomPos;
 
   public EnemySpawner(CollectionManager collectionManager, Window window) {
     this.collectionManager = collectionManager;
@@ -103,8 +101,8 @@ public class EnemySpawner {
   }
 
   public PVector randomizePosition() {
-    randomY = randomNumber.nextInt(Window.WINDOW_HEIGHT);
-    randomPos = new PVector(Window.WINDOW_WIDTH, randomY);
+    int randomY = randomNumber.nextInt(Window.WINDOW_HEIGHT);
+    PVector randomPos = new PVector(Window.WINDOW_WIDTH, randomY);
     return randomPos;
   }
 
