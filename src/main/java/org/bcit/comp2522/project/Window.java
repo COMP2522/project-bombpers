@@ -65,21 +65,19 @@ public class Window extends PApplet {
         size(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
-  /**
-   * Setup of the game.
-   */
-  public void setup() {
-    score = new Score(width / 2, 30, this);
-    // Initialize the Player and collectionManager
-    this.init();
-    // Initialize the input handler singleton
-    inputHandler = InputHandler.getInstance(collectionManager,this);
-    Player.setPlayerHitboxSize(0.1f);
-    noStroke();
+    /**
+     * Setup of the game.
+     */
+    public void setup() {
+        score = new Score(width / 2, 30, this);
+        // Initialize the Player and collectionManager
+        this.init();
+        inputHandler = InputHandler.getInstance(collectionManager, this);
+        Player.setPlayerHitboxSize(0.1f);
+        noStroke();
         // Create the background object
         background = new Background(this);
         //Create the score object
-        //score = new Score(180, 30, myScore, this);
         // HP Display
         hpDisplay = new HPDisplay(this, collectionManager);
         // Enemy Spawner
@@ -188,7 +186,6 @@ public class Window extends PApplet {
                     toRemove.add(enemy);
                     collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
                     hpDisplay.damage(enemy.getDamage());
-
                     if (collectionManager.getPlayer().getHealth() <= 0) {
                         stateOfGame = GameState.ENDGAME;
                         collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
@@ -201,16 +198,18 @@ public class Window extends PApplet {
                 }
                 for (Projectile projectile : collectionManager.getProjectiles()) {
                     projectile.collide(projectile, enemy);
-                    if (projectile.isDead() && enemy.isDead()) {
-                        toRemove.add(enemy);
-                        killCounter.killPlus();
-                        enemySpawner.decreaseEnemCount();
-                        enemySpawner.updateSpawnModifier(score);
+                    if (projectile.isDead()) {
                         projectilesToRemove.add(projectile);
-                        score.incrementScore(score.getCurrentScore(), enemy);
-                        dangerLevel.update();
-                        if (score.getCurrentScore() >= score.getHighScore()) {
-                            score.setHighScore(score.getCurrentScore());
+                        if (enemy.isDead()) {
+                            toRemove.add(enemy);
+                            killCounter.killPlus();
+                            enemySpawner.decreaseEnemyCount();
+                            enemySpawner.updateSpawnModifier(score);
+                            score.incrementScore(score.getCurrentScore(), enemy);
+                            dangerLevel.update();
+                            if (score.getCurrentScore() >= score.getHighScore()) {
+                                score.setHighScore(score.getCurrentScore());
+                            }
                         }
                     }
                 }
@@ -225,7 +224,7 @@ public class Window extends PApplet {
                 collectionManager.getSprites().remove(projectile);
             }
             // Spawns new enemies mid-game
-            enemySpawner.spawnEnemy();
+            enemySpawner.spawnerActivate();
             dangerLevel.draw();
 
             // Kill Counter for enemies

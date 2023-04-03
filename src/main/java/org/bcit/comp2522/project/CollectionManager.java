@@ -33,7 +33,7 @@ public class CollectionManager {
     return sprites;
   }
 
-    public ConcurrentLinkedQueue<Projectile> getProjectiles() {
+  public ConcurrentLinkedQueue<Projectile> getProjectiles() {
       return projectiles;
     }
 

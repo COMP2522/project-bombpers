@@ -11,6 +11,14 @@ public class Menu extends UserInterface {
   private final int TITLE_SIZE = 90;
   private final int TEXT_SIZE = 50;
   private final int BLACK = 0;
+  private final int TITLE_RED_VALUE = 0;
+  private final int TITLE_BLUE_VALUE = 408;
+  private final int TITLE_GREEN_VALUE = 612;
+  private final int BUTTON_BACKGROUND_COLOR_VALUE = 153;
+  private final int BUTTON_X_POSITION = 120;
+  private final int BUTTON_Y_POSITION = 200;
+  private final int BUTTON_WIDTH = 200;
+  private final int BUTTON_HEIGHT = 200;
 
   /**
    * Constructor for Menu.
@@ -53,13 +61,13 @@ public class Menu extends UserInterface {
     setMessage(message);
     String message = getMessage();
     window.textSize(TITLE_SIZE);
-    window.fill(0, 408, 612);
+    window.fill(TITLE_RED_VALUE, TITLE_BLUE_VALUE, TITLE_GREEN_VALUE);
     window.text(message, getPositionX(), getPositionY());
   }
 
   private void button() {
-    window.fill(153);
-    window.rect(120, 200, 200, 55);
+    window.fill(BUTTON_BACKGROUND_COLOR_VALUE);
+    window.rect(BUTTON_X_POSITION, BUTTON_Y_POSITION, BUTTON_WIDTH, BUTTON_HEIGHT);
     window.textSize(TEXT_SIZE);
     window.fill(200, 0, 0);
   }

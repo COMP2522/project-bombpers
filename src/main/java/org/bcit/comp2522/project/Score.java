@@ -87,8 +87,8 @@ public class Score extends UserInterface {
    * @param state the state of the game
    */
   public void displayScore(GameState state) {
-    window.fill(RED_COLOR_VALUE, GREEN_COLOR_VALUE, BLUE_COLOR_VALUE);
     //Depending on the state of the game, call the appropriate method to display the score
+    window.fill(RED_COLOR_VALUE, GREEN_COLOR_VALUE, BLUE_COLOR_VALUE);
     if (state == GameState.STARTGAME) {
       displayInGameScore();
     } else {
@@ -117,9 +117,9 @@ public class Score extends UserInterface {
   public void incrementScore(int score, Enemy enemy){
     int typeOfEnemy = enemy.enemyType;
     switch (typeOfEnemy){
-      case ENEM_STANDARD_TYPE -> score++;
-      case ENEM_FAST_TYPE -> score = score+ENEMY_FAST_VAUE;
-      case ENEM_SLOW_TYPE -> score = score+ENEMY_SLOW_VAUE;
+      case ENEMY_STANDARD_TYPE -> score++;
+      case ENEMY_FAST_TYPE -> score = score+ENEMY_FAST_VAUE;
+      case ENEMY_SLOW_TYPE -> score = score+ENEMY_SLOW_VAUE;
     }
     setCurrentScore(score);
   }
