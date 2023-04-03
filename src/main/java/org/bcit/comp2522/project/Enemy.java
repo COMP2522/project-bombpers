@@ -4,7 +4,7 @@ import processing.core.PVector;
 import processing.core.PImage;
 
 public class Enemy extends Sprite {
-  protected Sprite player;
+  //protected Sprite player;
   protected PImage enemySprite;
   protected int enemyType;
   private boolean dead;
@@ -16,7 +16,7 @@ public class Enemy extends Sprite {
 
   public Enemy(
       Window window,
-      Sprite player,
+      //Sprite player,
       PImage sprite,
       int enemyType,
       int health,
@@ -27,7 +27,7 @@ public class Enemy extends Sprite {
   ) {
     super(window);
     this.direction = new PVector(0, 0);
-    this.player = player;
+    //this.player = player;
     this.enemySprite = sprite;
     this.enemyType = enemyType;
     this.health = health;
@@ -76,7 +76,7 @@ public class Enemy extends Sprite {
    */
   @Override
   public void move() {
-    PVector directionToPlayer = PVector.sub(player.getPosition(), position);
+    PVector directionToPlayer = PVector.sub(CollectionManager.getInstance().getPlayer().getPosition(), position);
     directionToPlayer.normalize();
     directionToPlayer.mult(speed);
     direction = directionToPlayer;

@@ -115,9 +115,9 @@ public class Score extends UserInterface {
   public void incrementScore(int score, Enemy enemy){
     int typeOfEnemy = enemy.enemyType;
     switch (typeOfEnemy){
-      case ENEM_STANDARD_TYPE -> score++;
-      case ENEM_FAST_TYPE -> score = score+2;
-      case ENEM_SLOW_TYPE -> score = score+3;
+      case ENEMY_STANDARD_TYPE -> score++;
+      case ENEMY_FAST_TYPE -> score = score+2;
+      case ENEMY_SLOW_TYPE -> score = score+3;
     }
     setCurrentScore(score);
   }
