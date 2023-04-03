@@ -32,7 +32,6 @@ public class EnemySpawner {
       switch (diceRoll) {
         case ENEMY_STANDARD_TYPE ->
             spawnEnemy(
-                window,
                 window.enemyStandardSprite,
                 ENEMY_STANDARD_TYPE,
                 ENEMY_STANDARD_HEALTH,
@@ -42,7 +41,6 @@ public class EnemySpawner {
             );
         case ENEMY_FAST_TYPE ->
             spawnEnemy(
-                window,
                 window.enemyFastSprite,
                 ENEMY_FAST_TYPE,
                 ENEMY_FAST_HEALTH,
@@ -52,7 +50,6 @@ public class EnemySpawner {
             );
         case ENEMY_SLOW_TYPE ->
             spawnEnemy(
-                window,
                 window.enemySlowSprite,
                 ENEMY_SLOW_TYPE,
                 ENEMY_SLOW_HEALTH,
@@ -66,7 +63,6 @@ public class EnemySpawner {
   }
 
   public void spawnEnemy(
-      Window window,
       PImage sprite,
       int enemyType,
       int health,
