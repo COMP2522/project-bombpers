@@ -11,13 +11,10 @@ import processing.event.KeyEvent;
  * Window class - is the main class of the game.
  */
 public class Window extends PApplet {
-
     public PImage enemyStandardSprite;
     public PImage enemySlowSprite;
     public PImage enemyFastSprite;
     private InputHandler inputHandler;
-
-
     /**
      * Declares a projectile image to store the projectile image.
      */
@@ -34,7 +31,6 @@ public class Window extends PApplet {
     public HPDisplay hpDisplay;
     public EnemySpawner enemySpawner;
     public DangerLevel dangerLevel;
-    public KillCounter killCounter;
     /**
      * Declares a score variable to store the score.
      */
@@ -82,7 +78,6 @@ public class Window extends PApplet {
         enemySpawner = new EnemySpawner(collectionManager, this);
         dangerLevel = new DangerLevel(this, enemySpawner);
         projectileImage = loadImage(PROJECTILE_IMAGE);
-        killCounter = new KillCounter(this);
     }
 
     /**
@@ -104,7 +99,6 @@ public class Window extends PApplet {
             s.autoSave();
         }).start();
     }
-
 
     /**
      * If a key is pressed,  the corresponding isPressed variable will be true to
@@ -200,7 +194,6 @@ public class Window extends PApplet {
                         projectilesToRemove.add(projectile);
                         if (enemy.isDead()) {
                             toRemove.add(enemy);
-                            killCounter.killPlus();
                             enemySpawner.decreaseEnemyCount();
                             enemySpawner.updateSpawnModifier(score);
                             score.incrementScore(score.getCurrentScore(), enemy);
@@ -225,8 +218,7 @@ public class Window extends PApplet {
             enemySpawner.spawnerActivate();
             dangerLevel.draw();
 
-            // Kill Counter for enemies
-            killCounter.draw(this);
+
             score.drawUserInterface(stateOfGame);
         }
     }

@@ -36,7 +36,7 @@ public class MenuHandler {
   public GameState currentState;
 
   public Score menuScore;
-  private float scoreXPosition;
+  public float scoreXPosition;
 
   private final int SCORE_OFFSET_WHEN_TEN = 10;
   private final int SCORE_OFFSET_WHEN_HUNDRED = 100;
@@ -45,12 +45,13 @@ public class MenuHandler {
   private final float OFFSET_TEXT_RESIZE_FOR_GREATER_TEN = 1.07f;
   private final float OFFSET_TEXT_RESIZE_FOR_GREATER_THAN_HUNDRED = 1.01f;
 
-  private final int OFFSET_HEIGHT = 90;
+  private final int OFFSET_HEIGHT = 200;
+  private final int OFFSET_WIDTH = 260;
   private final int START_MENU_TITLE_X_POSITION = 30;
   private final int START_MENU_TITLE_Y_POSITION = 145;
-  private final int PAUSE_MENU_TITLE_X_POSITION = 420;
-  private final int PAUSE_MENU_TITLE_Y_POSITION = 125;
-  private final int END_MENU_TITLE_X_POSITION = 470;
+  private final int PAUSE_MENU_TITLE_X_POSITION = 250;
+  private final int PAUSE_MENU_TITLE_Y_POSITION = 100;
+  private final int END_MENU_TITLE_X_POSITION = 240;
   private final int END_MENU_TITLE_Y_POSITION = 120;
 
   /**
@@ -73,13 +74,7 @@ public class MenuHandler {
    * @return the current state of the game
    */
   public GameState createMenu(GameState state, int currScore, int highScore) {
-    if (currScore < SCORE_OFFSET_WHEN_TEN) {
-      scoreXPosition = this.window.width / OFFSET_TEXT_RESIZE_FOR_LESS_THAN_TEN;
-    } else if (currScore >= SCORE_OFFSET_WHEN_TEN && currScore < SCORE_OFFSET_WHEN_HUNDRED) {
-      scoreXPosition = this.window.width / OFFSET_TEXT_RESIZE_FOR_GREATER_TEN;
-    } else if (currScore >= SCORE_OFFSET_WHEN_HUNDRED && currScore < SCORE_OFFSET_WHEN_THOUSEAND) {
-      scoreXPosition = this.window.width / OFFSET_TEXT_RESIZE_FOR_GREATER_THAN_HUNDRED;
-    }
+    int scoreXPosition = this.window.height - OFFSET_WIDTH;
     int scoreYPosition = this.window.height - OFFSET_HEIGHT;
     //store the current state
     this.currentState = state;

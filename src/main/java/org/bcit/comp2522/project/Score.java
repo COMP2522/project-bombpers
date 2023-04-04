@@ -110,8 +110,8 @@ public class Score extends UserInterface {
 
     window.textSize(MENU_SCORE_TEXT_SIZE);
     //Set x and y in here make current x value larger
-    window.text("Current Score:" + getCurrentScore()+"\n", getPositionX() , getPositionY());
-    window.text( "High Score: " + getHighScore(), getPositionX(), getPositionY());
+    window.text("Current Score:" + getCurrentScore(), getPositionX() , getPositionY());
+    window.text( "\nHigh Score: " + getHighScore(), getPositionX(), getPositionY());
   }
 
   public void incrementScore(int score, Enemy enemy){
