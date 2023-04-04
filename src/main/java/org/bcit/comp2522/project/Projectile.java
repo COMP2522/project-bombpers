@@ -4,6 +4,8 @@ package org.bcit.comp2522.project;
 import processing.core.PVector;
 import processing.core.PImage;
 
+import static org.bcit.comp2522.project.ConstantManager.ZERO;
+
 public class Projectile extends Sprite {
   public static final float PROJECTILE_SIZE = 15;
   public static final float PROJECTILE_SPEED = 5.0f;
@@ -50,7 +52,7 @@ public class Projectile extends Sprite {
       if (PVector.dist(projectileCenter, enemyCenter) < minDistance) {
         projectile.setDead(true);
         enemy.setHealth(enemy.getHealth() - this.damage);
-        if (enemy.getHealth() <= 0) {
+        if (enemy.getHealth() <= ZERO) {
           enemy.setDead(true);
         }
       }

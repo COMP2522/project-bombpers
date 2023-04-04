@@ -3,6 +3,8 @@ package org.bcit.comp2522.project;
 import processing.core.PVector;
 import processing.core.PImage;
 
+import static org.bcit.comp2522.project.ConstantManager.*;
+
 public class Enemy extends Sprite {
   //protected Sprite player;
   protected PImage enemySprite;
@@ -10,10 +12,6 @@ public class Enemy extends Sprite {
   private boolean dead;
   private final float hitboxWidth;
   private final float hitboxHeight;
-  public static final int ENEMY_STANDARD_HITBOX_WIDTH = 10;
-  public static final int ENEMY_STANDARD_HITBOX_HEIGHT = 25;
-  public final int CUT_HITBOX_IN_HALF = 2;
-
   public Enemy(
       Window window,
       //Sprite player,
@@ -26,7 +24,7 @@ public class Enemy extends Sprite {
       PVector pos
   ) {
     super(window);
-    this.direction = new PVector(0, 0);
+    this.direction = new PVector(ZERO, ZERO);
     //this.player = player;
     this.enemySprite = sprite;
     this.enemyType = enemyType;
@@ -94,7 +92,7 @@ public class Enemy extends Sprite {
     float dy = player.getCenterPosition().y - this.getCenterPosition().y;
     float distance = (float) Math.sqrt(dx * dx + dy * dy);
 
-    float minDistance = (player.getSize() + this.size) / 2;
+    float minDistance = (player.getSize() + this.size) / TWO;
 
     return distance <= minDistance;
   }

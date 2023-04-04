@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import static org.bcit.comp2522.project.ConstantManager.ZERO;
+
 
 /**
  * CollectionManager class - manages all collections of sprites.
@@ -27,7 +29,7 @@ public class CollectionManager {
     sprites = new ArrayList<>();
     projectiles = new ConcurrentLinkedQueue<>();
     enemies = new ArrayList<>();
-    highScore = 0; //This highscore is only associated to CollectionManager, used for DB only.
+    highScore = ZERO; //This highscore is only associated to CollectionManager, used for DB only.
   }
 
   public List<Sprite> getSprites() {

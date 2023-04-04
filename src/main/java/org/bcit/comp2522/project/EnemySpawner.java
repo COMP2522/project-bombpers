@@ -1,5 +1,6 @@
 package org.bcit.comp2522.project;
 
+import static org.bcit.comp2522.project.ConstantManager.*;
 import static org.bcit.comp2522.project.EnemyConfig.*;
 
 import processing.core.PImage;
@@ -8,10 +9,7 @@ import processing.core.PVector;
 import java.util.Random;
 
 public class EnemySpawner {
-  private static final int BASE_WAVE_COUNT = 10;
-  private static final int TIER_THRESHOLD = 50;
-  private static final int NO_ENEMIES = 0;
-  private int spawnModifier = 0;
+  private int spawnModifier = ZERO;
   /**
    * Maximum number of enemies.
    */

@@ -3,6 +3,8 @@ package org.bcit.comp2522.project;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+import static org.bcit.comp2522.project.ConstantManager.ZERO;
+
 /**
  * Background class.
  */
@@ -45,7 +47,7 @@ public class Background implements Drawable {
   public Background(PApplet parent) {
     this.parent = parent;
     this.backgroundImage = loadBackgroundImage();
-    this.offset = 0;
+    this.offset = ZERO;
     this.speed = SPEED_OF_SCROLL;
   }
 

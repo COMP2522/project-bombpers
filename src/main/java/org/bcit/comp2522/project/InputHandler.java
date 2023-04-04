@@ -5,6 +5,8 @@ import processing.core.PVector;
 import processing.event.KeyEvent;
 import processing.core.PConstants;
 
+import static org.bcit.comp2522.project.ConstantManager.*;
+
 /**
  * InputHandler class - handles the input from the user.
  */
@@ -22,9 +24,6 @@ public class InputHandler {
   private boolean isUpPressed = false;
   private boolean isDownPressed = false;
   private final Window window;
-  private static final int CHAR_RESIZE_WIDTH = 2;
-  private static final int CHAR_X_POS_MOVE = 31;
-  private static final int CHAR_Y_POS_MOVE = 20;
 
   /**
    * The collection manager that will be used to access the collection of sprites.
@@ -99,8 +98,8 @@ public class InputHandler {
    * @return the new direction of the player.
    */
   public PVector updatePlayerDirection() {
-    int directionX = 0;
-    int directionY = 0;
+    int directionX = ZERO;
+    int directionY = ZERO;
 
     // Check if the key is pressed and update the direction accordingly
     if (isLeftPressed) {
@@ -120,7 +119,7 @@ public class InputHandler {
     if (directionX != 0 || directionY != 0) {
       collectionManager.getPlayer().setDirection(new PVector(directionX, directionY));
     } else {
-      collectionManager.getPlayer().setDirection(new PVector(0, 0));
+      collectionManager.getPlayer().setDirection(new PVector(ZERO, ZERO));
     }
 
     return new PVector(directionX, directionY);

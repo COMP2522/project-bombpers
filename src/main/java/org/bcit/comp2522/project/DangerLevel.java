@@ -3,9 +3,11 @@ package org.bcit.comp2522.project;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
+import static org.bcit.comp2522.project.ConstantManager.*;
+
 public class DangerLevel extends UserInterface {
-  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / 2f);
-  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * 0.95f);
+  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / TWOF);
+  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * POINTNINETYFIVE);
   private int dangerLevel;
   private final PApplet pApp;
   private final EnemySpawner eSpawner;
@@ -14,14 +16,14 @@ public class DangerLevel extends UserInterface {
     super(DEFAULT_X_POS, DEFAULT_Y_POS);
     this.pApp = p;
     this.eSpawner = spawner;
-    this.dangerLevel = eSpawner.getSpawnModifier() + 1;
+    this.dangerLevel = eSpawner.getSpawnModifier() + ONE;
   }
 
   @Override
   public void drawUserInterface(GameState state) {
-    pApp.fill(200, 0, 0);
+    pApp.fill(TWOHUNDRED, ZERO, ZERO);
     pApp.textAlign(PConstants.CENTER);
-    pApp.textSize(24);
+    pApp.textSize(TWENTYFOUR);
     pApp.text("DANGER LEVEL: " + dangerLevel, positionX, positionY);
   }
 

@@ -4,9 +4,11 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
 
+import static org.bcit.comp2522.project.ConstantManager.*;
+
 public class HPDisplay extends UserInterface {
-  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH * 0.15f);
-  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * 0.9f);
+  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH * POINTFIFTEEN);
+  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * POINTNINE);
   private CollectionManager collectionManager;
   private PApplet pApp;
   private int health;
@@ -26,8 +28,8 @@ public class HPDisplay extends UserInterface {
   @Override
   public void drawUserInterface() {
     pApp.textAlign(PConstants.RIGHT, PConstants.CENTER);
-    pApp.fill(220, 220, 220);
-    pApp.textSize(24);
+    pApp.fill(TWOTWENTY, TWOTWENTY, TWOTWENTY);
+    pApp.textSize(TWENTYFOUR);
     pApp.text("HP: " + health, positionX, positionY);
   }
 

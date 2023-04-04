@@ -3,6 +3,9 @@ package org.bcit.comp2522.project;
 import processing.core.PImage;
 import processing.core.PVector;
 
+import static org.bcit.comp2522.project.ConstantManager.TWO;
+import static org.bcit.comp2522.project.ConstantManager.ZERO;
+
 
 /**
  * Sprite class - is the parent class of all classes that can move, collide, and be drawn.
@@ -83,8 +86,8 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
       return position;
     }
 
-    float centerX = position.x + ((float) image.width / 2);
-    float centerY = position.y + ((float) image.height / 2);
+    float centerX = position.x + ((float) image.width / TWO);
+    float centerY = position.y + ((float) image.height / TWO);
     return new PVector(centerX, centerY);
   }
 
@@ -92,9 +95,9 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
    * Checks to see if a sprite has collided with a wall.
    */
   public void bounce() {
-    if (this.position.x <= 0
+    if (this.position.x <= ZERO
         || this.position.x >= window.width
-        || this.position.y <= 0
+        || this.position.y <= ZERO
         || this.position.y >= window.height) {
       this.direction.rotate(window.HALF_PI);
     }
