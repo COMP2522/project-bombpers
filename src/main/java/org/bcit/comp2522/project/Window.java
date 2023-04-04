@@ -26,31 +26,24 @@ public class Window extends PApplet {
      */
     private PImage projectileImage;
     CollectionManager collectionManager;
-    //public HPDisplay hpDisplay;
     public EnemySpawner enemySpawner;
-    //public DangerLevel dangerLevel;
     /**
      * Declares a score variable to store the score.
      */
     public Score score;
     public UIHandler uiHandler;
-
-
     /**
      * Declares a background to store the background.
      */
     private Background background;
-
     /**
      * Declares a variable to hold the GameState to transition between states.
      */
     public GameState stateOfGame = GameState.STARTMENU;
-
     /**
      * Declares a menu handler to use to handel menus.
      */
     public MenuHandler menuhandler = new MenuHandler(stateOfGame, this);
-
     /**
      * Creates a window of size 500 x 500 pixels.
      */
