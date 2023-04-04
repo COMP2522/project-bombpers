@@ -8,11 +8,11 @@ public abstract class UserInterface {
   /**
    * The x-position of the UserInterface.
    */
-  private int positionX;
+  protected int positionX;
   /**
    * The y-position of the UserInterface.
    */
-  private int positionY;
+  protected int positionY;
   /**
    * Constructor for UserInterface.
    *

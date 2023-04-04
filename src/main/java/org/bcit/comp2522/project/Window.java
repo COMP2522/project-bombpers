@@ -26,13 +26,14 @@ public class Window extends PApplet {
      */
     private PImage projectileImage;
     CollectionManager collectionManager;
-    public HPDisplay hpDisplay;
+    //public HPDisplay hpDisplay;
     public EnemySpawner enemySpawner;
-    public DangerLevel dangerLevel;
+    //public DangerLevel dangerLevel;
     /**
      * Declares a score variable to store the score.
      */
     public Score score;
+    public UIHandler uiHandler;
 
 
     /**
@@ -71,12 +72,10 @@ public class Window extends PApplet {
         background = new Background(this);
         //Create the score object
         //score = new Score(180, 30, myScore, this);
-        // HP Display
-        hpDisplay = new HPDisplay(this, collectionManager);
         // Enemy Spawner
         enemySpawner = new EnemySpawner(collectionManager, this);
-        dangerLevel = new DangerLevel(this, enemySpawner);
         projectileImage = loadImage(PROJECTILE_IMAGE);
+        uiHandler = new UIHandler(this, enemySpawner);
     }
 
     /**
@@ -152,7 +151,7 @@ public class Window extends PApplet {
         } else if (stateOfGame == GameState.STARTGAME) {
             background.draw();
             score.displayScore(stateOfGame);
-            hpDisplay.draw();
+            uiHandler.draw();
             // If key 'p' is pressed, pause the game
             if (keyPressed) {
                 if (key == 'p' || key == 'P') {
@@ -179,17 +178,17 @@ public class Window extends PApplet {
                 if (enemy.checkCollisionWithPlayer(collectionManager.getPlayer())) {
                     toRemove.add(enemy);
                     collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
-                    hpDisplay.damage(enemy.getDamage());
+                    uiHandler.getHPDisplay().damage(enemy.getDamage());
 
                     if (collectionManager.getPlayer().getHealth() <= 0) {
                         stateOfGame = GameState.ENDGAME;
                         collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
-                        hpDisplay.update();
+                        uiHandler.getHPDisplay().update();
 //            break;
                         for (Enemy enemyRemain : collectionManager.getEnemies()) {
                             toRemove.add(enemyRemain);
                             enemySpawner.countReset();
-                            dangerLevel.resetDangerLevel();
+                            uiHandler.getDangerLevel().resetDangerLevel();
                         }
                     }
                 }
@@ -204,7 +203,7 @@ public class Window extends PApplet {
 
                             score.incrementScore(score.getCurrentScore(), enemy);
                             score.displayScore(stateOfGame);
-                            dangerLevel.update();
+                            uiHandler.getDangerLevel().update();
                             if (score.getCurrentScore() >= score.getHighScore()) {
                                 score.setHighScore(score.getCurrentScore());
                             }
@@ -223,7 +222,6 @@ public class Window extends PApplet {
             }
             // Spawns new enemies mid-game
             enemySpawner.spawnerActivate();
-            dangerLevel.draw();
         }
     }
 
