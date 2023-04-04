@@ -14,7 +14,7 @@ public class SaveHandler {
   }
 
   public void autoSave(CollectionManager c, Score s) {
-    System.out.println("Game Started, it will be saved every minute");
+    System.out.println("Game Started, it will be saved every half minute");
     for (; ; ) {
       try {
         Thread.sleep(30000);
