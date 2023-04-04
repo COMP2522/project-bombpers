@@ -5,19 +5,21 @@ public class SaveHandler {
   CollectionManager c;
 
   public SaveHandler() {
-    this.db = DatabaseHandler.getInstance();
     this.c = CollectionManager.getInstance();
+    this.db = DatabaseHandler.getInstance(c);
   }
 
-  private void save() {
-    db.save();
+  private void save(Score s) {
+    db.save(s);
   }
 
-  public void autoSave(){
+  public void autoSave(CollectionManager c, Score s) {
+    System.out.println("Game Started, it will be saved every minute");
     for (; ; ) {
       try {
-        Thread.sleep(30000);
-        this.save();
+        Thread.sleep(10000);
+        this.save(s);
+        System.out.println("Game has been saved");
       } catch (InterruptedException e) {
         throw new RuntimeException(e);
       }

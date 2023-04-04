@@ -14,6 +14,7 @@ public class Score extends UserInterface {
    * The current score of the game.
    */
   private int currentScore;
+
   /**
    * The window of the game that the score is displayed on.
    */
@@ -26,7 +27,7 @@ public class Score extends UserInterface {
    *
    * @param positionX the x-position of the score
    * @param positionY the y-position of the score
-   * @param window the window of the game that the score is displayed on
+   * @param window    the window of the game that the score is displayed on
    */
   public Score(int positionX, int positionY, Window window) {
     super(positionX, positionY);
@@ -85,9 +86,9 @@ public class Score extends UserInterface {
 
     if (state == GameState.STARTGAME) {
 
-        displayInGameScore();
+      displayInGameScore();
     } else {
-        displayMenuGameScore();
+      displayMenuGameScore();
     }
   }
 
@@ -99,6 +100,7 @@ public class Score extends UserInterface {
     window.fill(255, 255, 0);
     window.text("Score: " + currentScore, getPositionX(), getPositionY());
   }
+
   /**
    * Displays the score of the game while the game is in a menu.
    */
@@ -108,16 +110,16 @@ public class Score extends UserInterface {
     int Xadjustment = 50;
     int Yadjustment = 60;
     //Set x and y in here make current x value larger
-    window.text("Current Score: " + getCurrentScore(), getPositionX() + Xadjustment , getPositionY());
-    window.text("High Score: " + getHighScore(), getPositionX(), getPositionY()+ Yadjustment);
+    window.text("Current Score: " + getCurrentScore(), getPositionX() + Xadjustment, getPositionY());
+    window.text("High Score: " + getHighScore(), getPositionX(), getPositionY() + Yadjustment);
   }
 
-  public void incrementScore(int score, Enemy enemy){
+  public void incrementScore(int score, Enemy enemy) {
     int typeOfEnemy = enemy.enemyType;
-    switch (typeOfEnemy){
+    switch (typeOfEnemy) {
       case ENEMY_STANDARD_TYPE -> score++;
-      case ENEMY_FAST_TYPE -> score = score+2;
-      case ENEMY_SLOW_TYPE -> score = score+3;
+      case ENEMY_FAST_TYPE -> score = score + 2;
+      case ENEMY_SLOW_TYPE -> score = score + 3;
     }
     setCurrentScore(score);
   }

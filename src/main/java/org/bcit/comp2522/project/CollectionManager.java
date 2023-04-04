@@ -2,9 +2,7 @@ package org.bcit.comp2522.project;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
 
 
 /**
@@ -18,6 +16,8 @@ public class CollectionManager {
   private final ConcurrentLinkedQueue<Projectile> projectiles;
   private final List<Enemy> enemies;
   public static Sprite player;
+  private int highScore;
+  private int currentScore;
 
 
   /**
@@ -27,6 +27,7 @@ public class CollectionManager {
     sprites = new ArrayList<>();
     projectiles = new ConcurrentLinkedQueue<>();
     enemies = new ArrayList<>();
+    highScore = 0; //This highscore is only associated to CollectionManager, used for DB only.
   }
 
   public List<Sprite> getSprites() {
@@ -34,8 +35,8 @@ public class CollectionManager {
   }
 
   public ConcurrentLinkedQueue<Projectile> getProjectiles() {
-      return projectiles;
-    }
+    return projectiles;
+  }
 
   public List<Enemy> getEnemies() {
     return enemies;
@@ -45,11 +46,30 @@ public class CollectionManager {
     return player;
   }
 
-  public static CollectionManager getInstance(){
-    if(c == null){
+  public static CollectionManager getInstance() {
+    if (c == null) {
       c = new CollectionManager();
     }
     return c;
   }
 
+  //For DB purposes
+  public void setCurrentScore(int currentScore) {
+    this.currentScore = currentScore;
+  }
+
+  //For DB purposes
+  public int getCurrentScore() {
+    return currentScore;
+  }
+
+  //For DB purposes
+  public void setHighScore(int highScore) {
+    this.highScore = highScore;
+  }
+
+  //For DB purposes
+  public int getHighScore() {
+    return highScore;
+  }
 }

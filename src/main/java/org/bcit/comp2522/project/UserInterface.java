@@ -13,6 +13,7 @@ public abstract class UserInterface {
    * The y-position of the UserInterface.
    */
   private int positionY;
+
   /**
    * Constructor for UserInterface.
    *
