@@ -26,15 +26,15 @@ public class DangerLevel extends UserInterface {
   }
 
   public void increaseDangerLevel() {
-    dangerLevel++;
+    this.dangerLevel++;
   }
 
   public void resetDangerLevel() {
-    dangerLevel = 1;
+    this.dangerLevel = 1;
   }
 
   public int getDangerLevel() {
-    return dangerLevel;
+    return this.dangerLevel;
   }
 
   public void update() {
@@ -42,7 +42,7 @@ public class DangerLevel extends UserInterface {
   }
 
   public int getPositionX() {
-    return positionX;
+    return this.positionX;
   }
 
   public void setPositionX(int positionX) {
@@ -50,7 +50,7 @@ public class DangerLevel extends UserInterface {
   }
 
   public int getPositionY() {
-    return positionY;
+    return this.positionY;
   }
 
   public void setPositionY(int positionY) {

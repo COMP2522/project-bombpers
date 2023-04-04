@@ -7,12 +7,14 @@ import processing.core.PVector;
 public class HPDisplay extends UserInterface {
   private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH * 0.15f);
   private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * 0.9f);
+  private CollectionManager collectionManager;
   private PApplet pApp;
   private int health;
 
   public HPDisplay(PApplet p) {
     super(DEFAULT_X_POS, DEFAULT_Y_POS);
     this.pApp = p;
+    collectionManager = CollectionManager.getInstance();
     update();
   }
 
@@ -25,11 +27,11 @@ public class HPDisplay extends UserInterface {
   }
 
   public void update() {
-    this.health = CollectionManager.getInstance().getPlayer().getHealth();
+    this.health = collectionManager.getPlayer().getHealth();
   }
 
   public void damage(int dmg) {
-    this.health = CollectionManager.getInstance().getPlayer().getHealth() - dmg;
+    this.health = collectionManager.getPlayer().getHealth() - dmg;
     update();
   }
 
