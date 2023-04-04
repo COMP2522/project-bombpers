@@ -5,8 +5,6 @@ import processing.core.PVector;
 import processing.event.KeyEvent;
 import processing.core.PConstants;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 /**
  * InputHandler class - handles the input from the user.
  */
@@ -23,7 +21,7 @@ public class InputHandler {
   private boolean isRightPressed = false;
   private boolean isUpPressed = false;
   private boolean isDownPressed = false;
-  private Window window;
+  private final Window window;
   private static final int CHAR_RESIZE_WIDTH = 2;
   private static final int CHAR_X_POS_MOVE = 30;
   private static final int CHAR_Y_POS_MOVE = 45;

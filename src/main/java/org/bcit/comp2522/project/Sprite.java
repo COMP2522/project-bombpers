@@ -3,9 +3,6 @@ package org.bcit.comp2522.project;
 import processing.core.PImage;
 import processing.core.PVector;
 
-import java.io.Serializable;
-
-
 /**
  * Sprite class - is the parent class of all classes that can move, collide, and be drawn.
  */

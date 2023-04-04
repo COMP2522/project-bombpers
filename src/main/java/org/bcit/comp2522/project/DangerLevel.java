@@ -6,8 +6,8 @@ import processing.core.PConstants;
 public class DangerLevel {
 
   private int dangerLevel;
-  private PApplet pApp;
-  private EnemySpawner eSpawner;
+  private final PApplet pApp;
+  private final EnemySpawner eSpawner;
 
   public DangerLevel(PApplet p, EnemySpawner spawner) {
     this.pApp = p;
@@ -19,7 +19,7 @@ public class DangerLevel {
     pApp.fill(200, 0, 0);
     pApp.textAlign(PConstants.CENTER);
     pApp.textSize(24);
-    pApp.text("DANGER LEVEL: " + dangerLevel, (pApp.width / 2), (int) (pApp.height * 0.95));
+    pApp.text("DANGER LEVEL: " + dangerLevel, (pApp.width / 2f), (int) (pApp.height * 0.95));
   }
 
   public void increaseDangerLevel() {

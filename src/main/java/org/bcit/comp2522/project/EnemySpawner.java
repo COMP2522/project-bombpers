@@ -17,9 +17,9 @@ public class EnemySpawner {
    */
   private int enemy_max = BASE_WAVE_COUNT + spawnModifier;
   private int curr_enemy_count;
-  private Random randomNumber = new Random();
-  private CollectionManager collectionManager;
-  private Window window;
+  private final Random randomNumber = new Random();
+  private final CollectionManager collectionManager;
+  private final Window window;
 
   public EnemySpawner(CollectionManager collectionManager, Window window) {
     this.collectionManager = collectionManager;
@@ -90,16 +90,12 @@ public class EnemySpawner {
   }
 
   public boolean spawnAvailable() {
-    if (this.curr_enemy_count > this.enemy_max) {
-      return false;
-    }
-    return true;
+    return this.curr_enemy_count <= this.enemy_max;
   }
 
   public PVector randomizePosition() {
     int randomY = randomNumber.nextInt(Window.WINDOW_HEIGHT);
-    PVector randomPos = new PVector(Window.WINDOW_WIDTH, randomY);
-    return randomPos;
+    return new PVector(Window.WINDOW_WIDTH, randomY);
   }
 
   public void increaseEnemyCount() {

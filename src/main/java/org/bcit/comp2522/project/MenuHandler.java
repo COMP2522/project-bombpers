@@ -4,16 +4,7 @@ package org.bcit.comp2522.project;
  * Class for menuHandler that handles the menus of the game.
  */
 public class MenuHandler {
-  /**
-   * Left Bound for the button.
-   */
-  private final int buttonLeftBound = 120;
-  /** Right Bound for the button. */
-  private final int buttonRightBound = 312;
-  /** Top Bound for the button. */
-  private final int buttonTopBound = 199;
-  /** Bottom Bound for the button. */
-  private final int buttonBottomBound = 244;
+
   /** The possible types of menus. */
   public Menu startMenu;
   public Menu pauseMenu;
@@ -34,8 +25,6 @@ public class MenuHandler {
   public MenuHandler(GameState state, Window window) {
     this.currentState = state;
     this.window = window;
-
-
   }
 
   /**
@@ -45,6 +34,10 @@ public class MenuHandler {
    * @return the current state of the game
    */
   public GameState createMenu(GameState state, int currScore, int highScore) {
+    final int buttonLeftBound = 120;
+    final int buttonRightBound = 312;
+    final int buttonTopBound = 199;
+    final int buttonBottomBound = 244;
     //store the current state
     this.currentState = state;
     this.menuScore = new Score(400,360,this.window);
@@ -88,7 +81,7 @@ public class MenuHandler {
 
   /**
    * Displays the menu depending on the state.
-   * @return
+   * @return a boolean depending on if the gameState is main game or not
    */
   private boolean displayMenu() {
     menuScore.displayScore(currentState);
