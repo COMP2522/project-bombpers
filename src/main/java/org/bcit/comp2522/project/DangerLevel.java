@@ -4,14 +4,14 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 
 public class DangerLevel extends UserInterface {
-  private static final int X_POS = (int) (Window.WINDOW_WIDTH / 2f);
-  private static final int Y_POS = (int) (Window.WINDOW_HEIGHT * 0.95f);
+  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / 2f);
+  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * 0.95f);
   private int dangerLevel;
   private PApplet pApp;
   private EnemySpawner eSpawner;
 
   public DangerLevel(PApplet p, EnemySpawner spawner) {
-    super(X_POS, Y_POS);
+    super(DEFAULT_X_POS, DEFAULT_Y_POS);
     this.pApp = p;
     this.eSpawner = spawner;
     this.dangerLevel = eSpawner.getSpawnModifier() + 1;

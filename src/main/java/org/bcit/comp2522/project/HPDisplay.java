@@ -5,13 +5,13 @@ import processing.core.PConstants;
 import processing.core.PVector;
 
 public class HPDisplay extends UserInterface {
-  private static final int X_POS = (int) (Window.WINDOW_WIDTH * 0.15f);
-  private static final int Y_POS = (int) (Window.WINDOW_HEIGHT * 0.9f);
+  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH * 0.15f);
+  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * 0.9f);
   private PApplet pApp;
   private int health;
 
   public HPDisplay(PApplet p) {
-    super(X_POS, Y_POS);
+    super(DEFAULT_X_POS, DEFAULT_Y_POS);
     this.pApp = p;
     update();
   }
