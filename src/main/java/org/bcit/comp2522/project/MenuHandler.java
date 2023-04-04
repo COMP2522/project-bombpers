@@ -46,12 +46,12 @@ public class MenuHandler {
   private final float OFFSET_TEXT_RESIZE_FOR_GREATER_THAN_HUNDRED = 1.01f;
 
   private final int OFFSET_HEIGHT = 200;
-  private final int OFFSET_WIDTH = 260;
+  private final int OFFSET_WIDTH = 50;
   private final int START_MENU_TITLE_X_POSITION = 30;
   private final int START_MENU_TITLE_Y_POSITION = 145;
-  private final int PAUSE_MENU_TITLE_X_POSITION = 250;
+  private final int PAUSE_MENU_TITLE_X_POSITION = 360;
   private final int PAUSE_MENU_TITLE_Y_POSITION = 100;
-  private final int END_MENU_TITLE_X_POSITION = 240;
+  private final int END_MENU_TITLE_X_POSITION = 400;
   private final int END_MENU_TITLE_Y_POSITION = 120;
 
   /**
@@ -72,7 +72,7 @@ public class MenuHandler {
    * @return the current state of the game
    */
   public GameState createMenu(GameState state, int currScore, int highScore) {
-    int scoreXPosition = this.window.height - OFFSET_WIDTH;
+    int scoreXPosition = this.window.width - OFFSET_WIDTH;
     int scoreYPosition = this.window.height - OFFSET_HEIGHT;
     //store the current state
     this.currentState = state;
