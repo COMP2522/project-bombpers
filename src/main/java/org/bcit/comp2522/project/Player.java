@@ -12,11 +12,6 @@ public class Player extends Sprite {
    */
   PImage characterSprite;
   /**
-   * The resize factor of the player so when enemies collide with the player,
-   * the player hitbox is fits the image.
-   */
-  public static final float RESIZE = 1.0f;
-  /**
    * The health of the player.
    */
   public static final int PLAYER_HEALTH = 5;
@@ -27,7 +22,7 @@ public class Player extends Sprite {
   /**
    * The size of the player.
    */
-  public static final float PLAYER_SIZE = 65;
+  public static final float PLAYER_SIZE = 30;
   /**
    * The speed of the player.
    */
@@ -35,7 +30,7 @@ public class Player extends Sprite {
   /**
    * The location of the player image.
    */
-  public static final String PLAYER_SPRITE = "../img/idle_0.png";
+  public static final String PLAYER_SPRITE = "../img/idle_0v2.png";
 
   private static Player player;
 
@@ -76,7 +71,7 @@ public class Player extends Sprite {
    */
   @Override
   public void draw() {
-    window.image(characterSprite, position.x, position.y, imageSize * RESIZE, imageSize * RESIZE);
+    window.image(characterSprite, position.x, position.y, imageSize, imageSize);
   }
 
   /**
@@ -85,12 +80,5 @@ public class Player extends Sprite {
    */
   @Override
   public void move() {
-  }
-
-  public static void setPlayerHitboxSize(float sizeFactor) {
-    if (player != null) {
-      float newSize = player.getSize() * sizeFactor;
-      player.setSize(newSize);
-    }
   }
 }

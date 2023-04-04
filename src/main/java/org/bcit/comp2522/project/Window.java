@@ -61,7 +61,6 @@ public class Window extends PApplet {
         // Initialize the Player and collectionManager
         this.init();
         inputHandler = InputHandler.getInstance(collectionManager, this);
-        Player.setPlayerHitboxSize(0.1f);
         noStroke();
         // Create the background object
         background = new Background(this);

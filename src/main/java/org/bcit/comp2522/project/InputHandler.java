@@ -23,8 +23,8 @@ public class InputHandler {
   private boolean isDownPressed = false;
   private Window window;
   private static final int CHAR_RESIZE_WIDTH = 2;
-  private static final int CHAR_X_POS_MOVE = 30;
-  private static final int CHAR_Y_POS_MOVE = 45;
+  private static final int CHAR_X_POS_MOVE = 31;
+  private static final int CHAR_Y_POS_MOVE = 20;
 
   /**
    * The collection manager that will be used to access the collection of sprites.
