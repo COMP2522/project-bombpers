@@ -18,11 +18,19 @@ public class DangerLevel extends UserInterface {
   }
 
   @Override
-  public void drawUserInterface() {
+  public void drawUserInterface(GameState state) {
     pApp.fill(200, 0, 0);
     pApp.textAlign(PConstants.CENTER);
     pApp.textSize(24);
     pApp.text("DANGER LEVEL: " + dangerLevel, positionX, positionY);
+  }
+
+  /**
+   * Band-aid
+   */
+  @Override
+  protected void drawUserInterface() {
+
   }
 
   public void increaseDangerLevel() {

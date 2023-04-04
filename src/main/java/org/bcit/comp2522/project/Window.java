@@ -55,12 +55,12 @@ public class Window extends PApplet {
      * Setup of the game.
      */
     public void setup() {
+        score = new Score(WINDOW_WIDTH / 2, 30, this);
         // Initialize the Player and collectionManager
         this.init();
         inputHandler = InputHandler.getInstance(collectionManager, this);
         Player.setPlayerHitboxSize(0.1f);
         noStroke();
-
         // Create the background object
         background = new Background(this);
         //Create the score object
@@ -81,6 +81,10 @@ public class Window extends PApplet {
         enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
         CollectionManager.player = Player.getPlayerInstance(this);
         collectionManager.getSprites().add(CollectionManager.player);
+        score.resetScore();
+        // Reset the player's position
+        PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
+        collectionManager.getPlayer().setPosition(originalPosition);
         new Thread(() -> {
             SaveHandler s = new SaveHandler();
             s.autoSave();
@@ -134,16 +138,9 @@ public class Window extends PApplet {
         // If the game is in the start menu, pause menu, or end game menu, create the menu
         if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
                 || stateOfGame == GameState.ENDGAME) {
-            if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.ENDGAME) {
-                score = new Score(width / 2, 30, this);
-                // Reset the player's position
-                PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
-                collectionManager.getPlayer().setPosition(originalPosition);
-            }
             stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
         } else if (stateOfGame == GameState.STARTGAME) {
             background.draw();
-            score.displayScore(stateOfGame);
             uiHandler.draw();
             // If key 'p' is pressed, pause the game
             if (keyPressed) {
@@ -177,7 +174,6 @@ public class Window extends PApplet {
                         stateOfGame = GameState.ENDGAME;
                         collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
                         uiHandler.getHPDisplay().update();
-//            break;
                         for (Enemy enemyRemain : collectionManager.getEnemies()) {
                             toRemove.add(enemyRemain);
                             enemySpawner.countReset();
@@ -193,7 +189,6 @@ public class Window extends PApplet {
                             toRemove.add(enemy);
                             enemySpawner.decreaseEnemyCount();
                             enemySpawner.updateSpawnModifier(score);
-
                             score.incrementScore(score.getCurrentScore(), enemy);
                             score.displayScore(stateOfGame);
                             uiHandler.getDangerLevel().update();
@@ -215,6 +210,7 @@ public class Window extends PApplet {
             }
             // Spawns new enemies mid-game
             enemySpawner.spawnerActivate();
+            score.drawUserInterface(stateOfGame);
         }
     }
 

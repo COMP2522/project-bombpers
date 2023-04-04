@@ -19,6 +19,11 @@ public class HPDisplay extends UserInterface {
   }
 
   @Override
+  protected void drawUserInterface(GameState stateOfGame) {
+
+  }
+
+  @Override
   public void drawUserInterface() {
     pApp.textAlign(PConstants.RIGHT, PConstants.CENTER);
     pApp.fill(220, 220, 220);
