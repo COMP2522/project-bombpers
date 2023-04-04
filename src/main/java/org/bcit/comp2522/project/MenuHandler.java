@@ -49,10 +49,10 @@ public class MenuHandler {
   private final int OFFSET_WIDTH = 50;
   private final int START_MENU_TITLE_X_POSITION = 30;
   private final int START_MENU_TITLE_Y_POSITION = 145;
-  private final int PAUSE_MENU_TITLE_X_POSITION = 360;
-  private final int PAUSE_MENU_TITLE_Y_POSITION = 100;
+  private final int PAUSE_MENU_TITLE_X_POSITION = (int) (Window.WINDOW_WIDTH / 2f);
+  private final int PAUSE_MENU_TITLE_Y_POSITION = (int) (Window.WINDOW_HEIGHT * 0.7f);
   private final int END_MENU_TITLE_X_POSITION = (int) (Window.WINDOW_WIDTH / 2f);
-  private final int END_MENU_TITLE_Y_POSITION = (int) (Window.WINDOW_WIDTH * 0.7f);
+  private final int END_MENU_TITLE_Y_POSITION = (int) (Window.WINDOW_HEIGHT * 0.7f);
 
   /**
    * Constructor for menuHandler.
