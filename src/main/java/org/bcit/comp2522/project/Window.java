@@ -19,39 +19,31 @@ public class Window extends PApplet {
      * Declares a projectile image to store the projectile image.
      */
     private static final String PROJECTILE_IMAGE = "../img/bullet.png";
-
     public static final int WINDOW_WIDTH = 500;
     public static final int WINDOW_HEIGHT = 500;
-
     /**
      * Declares a collectionManager to store the sprites.
      */
     private PImage projectileImage;
     CollectionManager collectionManager;
-    public HPDisplay hpDisplay;
     public EnemySpawner enemySpawner;
-    public DangerLevel dangerLevel;
     /**
      * Declares a score variable to store the score.
      */
     public Score score;
-
-
+    public UIHandler uiHandler;
     /**
      * Declares a background to store the background.
      */
     private Background background;
-
     /**
      * Declares a variable to hold the GameState to transition between states.
      */
     public GameState stateOfGame = GameState.STARTMENU;
-
     /**
      * Declares a menu handler to use to handel menus.
      */
     public MenuHandler menuhandler = new MenuHandler(stateOfGame, this);
-
     /**
      * Creates a window of size 500 x 500 pixels.
      */
@@ -63,7 +55,7 @@ public class Window extends PApplet {
      * Setup of the game.
      */
     public void setup() {
-        score = new Score(width / 2, 30, this);
+        score = new Score(WINDOW_WIDTH / 2, 30, this);
         // Initialize the Player and collectionManager
         this.init();
         inputHandler = InputHandler.getInstance(collectionManager, this);
@@ -72,12 +64,11 @@ public class Window extends PApplet {
         // Create the background object
         background = new Background(this);
         //Create the score object
-        // HP Display
-        hpDisplay = new HPDisplay(this, collectionManager);
+        //score = new Score(180, 30, myScore, this);
         // Enemy Spawner
         enemySpawner = new EnemySpawner(collectionManager, this);
-        dangerLevel = new DangerLevel(this, enemySpawner);
         projectileImage = loadImage(PROJECTILE_IMAGE);
+        uiHandler = new UIHandler(this, enemySpawner);
     }
 
     /**
@@ -150,7 +141,7 @@ public class Window extends PApplet {
             stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
         } else if (stateOfGame == GameState.STARTGAME) {
             background.draw();
-            hpDisplay.draw();
+            uiHandler.draw();
             // If key 'p' is pressed, pause the game
             if (keyPressed) {
                 if (key == 'p' || key == 'P') {
@@ -177,14 +168,16 @@ public class Window extends PApplet {
                 if (enemy.checkCollisionWithPlayer(collectionManager.getPlayer())) {
                     toRemove.add(enemy);
                     collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
-                    hpDisplay.damage(enemy.getDamage());
+                    uiHandler.getHPDisplay().damage(enemy.getDamage());
+
                     if (collectionManager.getPlayer().getHealth() <= 0) {
                         stateOfGame = GameState.ENDGAME;
                         collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
-                        hpDisplay.update();
+                        uiHandler.getHPDisplay().update();
                         for (Enemy enemyRemain : collectionManager.getEnemies()) {
                             toRemove.add(enemyRemain);
                             enemySpawner.countReset();
+                            uiHandler.getDangerLevel().resetDangerLevel();
                         }
                     }
                 }
@@ -197,7 +190,8 @@ public class Window extends PApplet {
                             enemySpawner.decreaseEnemyCount();
                             enemySpawner.updateSpawnModifier(score);
                             score.incrementScore(score.getCurrentScore(), enemy);
-                            dangerLevel.update();
+                            score.displayScore(stateOfGame);
+                            uiHandler.getDangerLevel().update();
                             if (score.getCurrentScore() >= score.getHighScore()) {
                                 score.setHighScore(score.getCurrentScore());
                             }
@@ -216,9 +210,6 @@ public class Window extends PApplet {
             }
             // Spawns new enemies mid-game
             enemySpawner.spawnerActivate();
-            dangerLevel.draw();
-
-
             score.drawUserInterface(stateOfGame);
         }
     }

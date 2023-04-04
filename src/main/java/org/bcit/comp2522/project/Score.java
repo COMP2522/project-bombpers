@@ -35,7 +35,7 @@ public class Score extends UserInterface {
    * @param positionY the y-position of the score
    * @param window the window of the game that the score is displayed on
    */
-  public Score(float positionX, int positionY, Window window) {
+  public Score(int positionX, int positionY, Window window) {
     super(positionX, positionY);
     this.window = window;
   }
@@ -79,6 +79,14 @@ public class Score extends UserInterface {
   @Override
   protected void drawUserInterface(GameState stateOfGame) {
    displayScore(stateOfGame);
+  }
+
+  /**
+   * Band-aid
+   */
+  @Override
+  protected void drawUserInterface() {
+
   }
 
   /**

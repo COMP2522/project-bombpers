@@ -8,11 +8,11 @@ public abstract class UserInterface {
   /**
    * The x-position of the UserInterface.
    */
-  private float positionX;
+  protected int positionX;
   /**
    * The y-position of the UserInterface.
    */
-  private int positionY;
+  protected int positionY;
   /**
    * Constructor for UserInterface.
    *
@@ -20,7 +20,7 @@ public abstract class UserInterface {
    * @param positionY the y-position of the UserInterface
    */
 
-  public UserInterface(float positionX, int positionY) {
+  public UserInterface(int positionX, int positionY) {
     this.positionX = positionX;
     this.positionY = positionY;
   }
@@ -31,11 +31,18 @@ public abstract class UserInterface {
   protected abstract void drawUserInterface(GameState stateOfGame);
 
   /**
+   * Overloaded to band-aid fix something.
+   */
+  protected abstract void drawUserInterface();
+
+
+
+  /**
    * Gets the x-position of the UserInterface.
    *
    * @return the x-position of the UserInterface
    */
-  public float getPositionX() {
+  public int getPositionX() {
     return positionX;
   }
 

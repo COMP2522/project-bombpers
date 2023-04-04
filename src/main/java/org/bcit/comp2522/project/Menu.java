@@ -56,6 +56,14 @@ public class Menu extends UserInterface {
   }
 
   /**
+   * Band-aid
+   */
+  @Override
+  protected void drawUserInterface() {
+
+  }
+
+  /**
    * Displays the menu.
    *
    * @param state the state of the game
