@@ -71,8 +71,10 @@ public class Menu extends UserInterface {
     int START_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR - START_Y_OFFSET;
     int PAUSE_BUTTON_TEXT_X_POSITION = this.window.width / TEXT_RESIZE_FACTOR + PAUSE_X_OFFSET ;
     int PAUSE_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR - PAUSE_Y_OFFSET ;
-    int END_BUTTON_TEXT_X_POSITION = this.window.width / TEXT_RESIZE_FACTOR + END_X_OFFSET;
-    int END_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR - END_Y_OFFSET;
+    //int END_BUTTON_TEXT_X_POSITION = this.window.width / TEXT_RESIZE_FACTOR + END_X_OFFSET;
+    //int END_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR - END_Y_OFFSET;
+    int END_BUTTON_TEXT_X_POSITION = (int) (Window.WINDOW_WIDTH * 0.44f);
+    int END_BUTTON_TEXT_Y_POSITION = (int) (Window.WINDOW_WIDTH * 0.46f);
     window.image(MainBG, 0, 0,window.width,window.height);
 
     createTitle();
@@ -80,7 +82,7 @@ public class Menu extends UserInterface {
 
     switch (state) {
       case STARTMENU -> window.text("Start", START_BUTTON_TEXT_X_POSITION, START_BUTTON_TEXT_Y_POSITION);
-      case ENDGAME -> window.text("Restart", 290, 205);
+      case ENDGAME -> window.text("Restart", END_BUTTON_TEXT_X_POSITION, END_BUTTON_TEXT_Y_POSITION);
       case PAUSE -> window.text("Continue", PAUSE_BUTTON_TEXT_X_POSITION, PAUSE_BUTTON_TEXT_Y_POSITION);
     }
   }
