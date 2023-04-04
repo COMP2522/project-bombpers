@@ -1,5 +1,7 @@
 package org.bcit.comp2522.project;
 
+import processing.core.PImage;
+
 /**
  * Class for Menu of the game.
  */
@@ -8,6 +10,7 @@ public class Menu extends UserInterface {
   private String message;
   //  the window of the game that the menu is displayed on
   private final Window window;
+  private final PImage MainBG;
 
   /**
    * Constructor for Menu.
@@ -21,6 +24,7 @@ public class Menu extends UserInterface {
     super(posX, posY);
     this.message = message;
     this.window = window;
+    this.MainBG = window.loadImage("../img/MainBackGround2.png");
   }
 
 
@@ -36,7 +40,7 @@ public class Menu extends UserInterface {
    * @param titleSize the size of the title
    */
   public void displayMenu(GameState state, int titleSize) {
-    window.background(0);
+    window.image(MainBG, 0, 0,window.width,window.height);
     modifyMessage(titleSize);
     button();
 

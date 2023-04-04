@@ -60,9 +60,9 @@ public class MenuHandler {
     this.menuScore = new Score(400, 360, this.window);
     //if the current state is startMenu, create the startMenu
     if (this.currentState == GameState.STARTMENU) {
-      startMenu = new Menu(50, 145, "Welcome!", this.window);
+      startMenu = new Menu(50, 145, "Wave Assault", this.window);
       //display the startMenu
-      startMenu.displayMenu(this.currentState, 100);
+      startMenu.displayMenu(this.currentState, 50);
       //If the mouse is pressed and the mouse is within the bounds of the button,
       // change the state to startGame to start the game
       if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)

@@ -11,36 +11,28 @@ import processing.event.KeyEvent;
  * Window class - is the main class of the game.
  */
 public class Window extends PApplet {
-
-  public PImage enemyStandardSprite;
-  public PImage enemySlowSprite;
-  public PImage enemyFastSprite;
-  private InputHandler inputHandler;
-
-
-  /**
-   * Declares a projectile image to store the projectile image.
-   */
-  private static final String PROJECTILE_IMAGE = "../img/bullet.png";
-
-  private static final int CHAR_RESIZE_WIDTH = 2;
-  private static final float CHAR_RESIZE_HEIGHT = 1.5f;
-  public static final int WINDOW_WIDTH = 500;
-  public static final int WINDOW_HEIGHT = 500;
-
-  /**
-   * Declares a collectionManager to store the sprites.
-   */
-  private PImage projectileImage;
-  CollectionManager collectionManager;
-  public HPDisplay hpDisplay;
-  public EnemySpawner enemySpawner;
-  public DangerLevel dangerLevel;
-  public KillCounter killCounter;
-  /**
-   * Declares a score variable to store the score.
-   */
-  public Score score;
+    public PImage enemyStandardSprite;
+    public PImage enemySlowSprite;
+    public PImage enemyFastSprite;
+    private InputHandler inputHandler;
+    /**
+     * Declares a projectile image to store the projectile image.
+     */
+    private static final String PROJECTILE_IMAGE = "../img/bullet.png";
+    public static final int WINDOW_WIDTH = 500;
+    public static final int WINDOW_HEIGHT = 500;
+    /**
+     * Declares a collectionManager to store the sprites.
+     */
+    private PImage projectileImage;
+    CollectionManager collectionManager;
+    public HPDisplay hpDisplay;
+    public EnemySpawner enemySpawner;
+    public DangerLevel dangerLevel;
+    /**
+     * Declares a score variable to store the score.
+     */
+    public Score score;
 
 
   /**
@@ -78,16 +70,17 @@ public class Window extends PApplet {
     Player.setPlayerHitboxSize(0.1f);
     noStroke();
 
-    // Create the background object
-    background = new Background(this);
-    // HP Display
-    hpDisplay = new HPDisplay(this, collectionManager);
-    // Enemy Spawner
-    enemySpawner = new EnemySpawner(collectionManager, this);
-    dangerLevel = new DangerLevel(this, enemySpawner);
-    projectileImage = loadImage(PROJECTILE_IMAGE);
-    killCounter = new KillCounter(this);
-  }
+        // Create the background object
+        background = new Background(this);
+        //Create the score object
+        //score = new Score(180, 30, myScore, this);
+        // HP Display
+        hpDisplay = new HPDisplay(this, collectionManager);
+        // Enemy Spawner
+        enemySpawner = new EnemySpawner(collectionManager, this);
+        dangerLevel = new DangerLevel(this, enemySpawner);
+        projectileImage = loadImage(PROJECTILE_IMAGE);
+    }
 
   /**
    * Initializes the  collectionManager and adds the created player to it.
@@ -195,56 +188,51 @@ public class Window extends PApplet {
           collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
           hpDisplay.damage(enemy.getDamage());
 
-          if (collectionManager.getPlayer().getHealth() <= 0) {
-            stateOfGame = GameState.ENDGAME;
-            collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
-            hpDisplay.update();
-            for (Enemy enemyRemain : collectionManager.getEnemies()) {
-              toRemove.add(enemyRemain);
-              enemySpawner.countReset();
+                    if (collectionManager.getPlayer().getHealth() <= 0) {
+                        stateOfGame = GameState.ENDGAME;
+                        collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
+                        hpDisplay.update();
+//            break;
+                        for (Enemy enemyRemain : collectionManager.getEnemies()) {
+                            toRemove.add(enemyRemain);
+                            enemySpawner.countReset();
+                            dangerLevel.resetDangerLevel();
+                        }
+                    }
+                }
+                for (Projectile projectile : collectionManager.getProjectiles()) {
+                    projectile.collide(projectile, enemy);
+                    if (projectile.isDead()) {
+                        projectilesToRemove.add(projectile);
+                        if (enemy.isDead()) {
+                            toRemove.add(enemy);
+                            enemySpawner.decreaseEnemyCount();
+                            enemySpawner.updateSpawnModifier(score);
+
+                            score.incrementScore(score.getCurrentScore(), enemy);
+                            score.displayScore(stateOfGame);
+                            dangerLevel.update();
+                            if (score.getCurrentScore() >= score.getHighScore()) {
+                                score.setHighScore(score.getCurrentScore());
+                            }
+                        }
+                    }
+                }
             }
-          }
-        }
-        for (Projectile projectile : collectionManager.getProjectiles()) {
-          projectile.collide(projectile, enemy);
-          if (projectile.isDead()) {
-            projectilesToRemove.add(projectile);
-            if (enemy.isDead()) {
-              toRemove.add(enemy);
-              killCounter.killPlus();
-              enemySpawner.decreaseEnemyCount();
-              enemySpawner.updateSpawnModifier(score);
-
-              score.incrementScore(score.getCurrentScore(), enemy);
-              collectionManager.setCurrentScore(score.getCurrentScore());
-              score.displayScore(stateOfGame);
-              dangerLevel.update();
-              if (score.getCurrentScore() >= score.getHighScore()) {
-                score.setHighScore(score.getCurrentScore());
-                collectionManager.setHighScore(score.getHighScore()); //For DB purposes
-              }
+            // Remove the enemies that have collided with the player
+            for (Enemy enemy : toRemove) {
+                collectionManager.getEnemies().remove(enemy);
+                collectionManager.getSprites().remove(enemy);
             }
-          }
+            for (Projectile projectile : projectilesToRemove) {
+                collectionManager.getProjectiles().remove(projectile);
+                collectionManager.getSprites().remove(projectile);
+            }
+            // Spawns new enemies mid-game
+            enemySpawner.spawnerActivate();
+            dangerLevel.draw();
         }
-      }
-      // Remove the enemies that have collided with the player
-      for (Enemy enemy : toRemove) {
-        collectionManager.getEnemies().remove(enemy);
-        collectionManager.getSprites().remove(enemy);
-      }
-      for (Projectile projectile : projectilesToRemove) {
-        collectionManager.getProjectiles().remove(projectile);
-        collectionManager.getSprites().remove(projectile);
-      }
-      // Spawns new enemies mid-game
-      enemySpawner.spawnerActivate();
-      dangerLevel.draw();
-
-      // Kill Counter for enemies
-      killCounter.draw(this);
-
     }
-  }
 
   /**
    * main method.
