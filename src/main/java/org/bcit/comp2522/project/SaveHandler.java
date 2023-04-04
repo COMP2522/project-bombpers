@@ -17,7 +17,7 @@ public class SaveHandler {
     System.out.println("Game Started, it will be saved every minute");
     for (; ; ) {
       try {
-        Thread.sleep(10000);
+        Thread.sleep(30000);
         this.save(s);
         System.out.println("Game has been saved");
       } catch (InterruptedException e) {
