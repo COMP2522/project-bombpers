@@ -33,7 +33,7 @@ public class Score extends UserInterface {
   /**
    * Constructor for Score.
    *
-   * @param window the window of the game that the score is displayed on
+   * @param window    the window of the game that the score is displayed on
    */
   public Score(Window window, GameState state) {
     super(DEFAULT_X_POS, DEFAULT_Y_POS);
@@ -119,9 +119,9 @@ public class Score extends UserInterface {
     window.text( "\nHigh Score: " + getHighScore(), getPositionX(), getPositionY());
   }
 
-  public void incrementScore(int score, Enemy enemy){
+  public void incrementScore(int score, Enemy enemy) {
     int typeOfEnemy = enemy.enemyType;
-    switch (typeOfEnemy){
+    switch (typeOfEnemy) {
       case ENEMY_STANDARD_TYPE -> score++;
       case ENEMY_FAST_TYPE -> score = score+ENEMY_FAST_VAUE;
       case ENEMY_SLOW_TYPE -> score = score+ENEMY_SLOW_VAUE;

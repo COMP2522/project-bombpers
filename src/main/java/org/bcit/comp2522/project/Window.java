@@ -31,6 +31,7 @@ public class Window extends PApplet {
      * Declares a score variable to store the score.
      */
     public UIHandler uiHandler;
+    public Score score;
     /**
      * Declares a background to store the background.
      */
@@ -50,6 +51,8 @@ public class Window extends PApplet {
         size(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
+    private DatabaseHandler db;
+
     /**
      * Setup of the game.
      */
@@ -58,13 +61,11 @@ public class Window extends PApplet {
         // Initialize the Player and collectionManager
         this.init();
         inputHandler = InputHandler.getInstance(collectionManager, this);
-        Player.setPlayerHitboxSize(0.1f);
         noStroke();
         // Create the background object
         background = new Background(this);
         //Create the score object
         //score = new Score(180, 30, myScore, this);
-
         projectileImage = loadImage(PROJECTILE_IMAGE);
 
     }
@@ -74,103 +75,106 @@ public class Window extends PApplet {
      */
     public void init() {
         collectionManager = CollectionManager.getInstance();
+        CollectionManager.player = Player.getPlayerInstance(this);
+        collectionManager.getSprites().add(CollectionManager.player);
+        enemySpawner = new EnemySpawner(collectionManager, this);
+        uiHandler = new UIHandler(this, this, stateOfGame, enemySpawner);
+        score = uiHandler.getScore();
+        this.db = DatabaseHandler.getInstance(collectionManager);
+        score.setHighScore(db.load());
+        collectionManager.setHighScore(db.load()); //This is used for DB purposes.
         enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
         enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
         enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
-        CollectionManager.player = Player.getPlayerInstance(this);
-        collectionManager.getSprites().add(CollectionManager.player);
         // Reset the player's position
         PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
         collectionManager.getPlayer().setPosition(originalPosition);
         new Thread(() -> {
             SaveHandler s = new SaveHandler();
-            s.autoSave();
+            s.autoSave(collectionManager, score);
         }).start();
-        // Enemy Spawner
-        enemySpawner = new EnemySpawner(collectionManager, this);
-        uiHandler = new UIHandler(this, this, stateOfGame, enemySpawner);
-        uiHandler.getScore().resetScore();
+        score.resetScore();
     }
 
-    /**
-     * If a key is pressed,  the corresponding isPressed variable will be true to
-     * "tell" that key was pressed.
-     *
-     * @param event is the key that was pressed.
-     */
-    @Override
-    public void keyPressed(KeyEvent event) {
-        inputHandler.keyPressed(event);
-        // Update the player's direction
-        updatePlayerDirection();
-    }
 
-    /**
-     * If a key is released,  the corresponding isPressed variable will be false to
-     * make sure it does not move when the key is not pressed.
-     *
-     * @param event is the key that was released.
-     */
+  /**
+   * If a key is pressed,  the corresponding isPressed variable will be true to
+   * "tell" that key was pressed.
+   *
+   * @param event is the key that was pressed.
+   */
+  @Override
+  public void keyPressed(KeyEvent event) {
+    inputHandler.keyPressed(event);
+    // Update the player's direction
+    updatePlayerDirection();
+  }
 
-    @Override
-    public void keyReleased(KeyEvent event) {
-        inputHandler.keyReleased(event);
-        // Update the player's direction
-        updatePlayerDirection();
-    }
+  /**
+   * If a key is released,  the corresponding isPressed variable will be false to
+   * make sure it does not move when the key is not pressed.
+   *
+   * @param event is the key that was released.
+   */
 
-    /**
-     * Updates the player's direction based on the key pressed.
-     */
-    private void updatePlayerDirection() {
-        PVector newDirection = inputHandler.updatePlayerDirection();
-        collectionManager.getPlayer().setDirection(newDirection);
-    }
+  @Override
+  public void keyReleased(KeyEvent event) {
+    inputHandler.keyReleased(event);
+    // Update the player's direction
+    updatePlayerDirection();
+  }
 
-    @Override
-    public void mousePressed() {
-        inputHandler.mousePressed(projectileImage);
-    }
+  /**
+   * Updates the player's direction based on the key pressed.
+   */
+  private void updatePlayerDirection() {
+    PVector newDirection = inputHandler.updatePlayerDirection();
+    collectionManager.getPlayer().setDirection(newDirection);
+  }
 
-    /**
-     * Draws everything in the window.
-     */
-    public void draw() {
-        // If the game is in the start menu, pause menu, or end game menu, create the menu
-        if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
-                || stateOfGame == GameState.ENDGAME) {
-            stateOfGame = menuhandler.createMenu(stateOfGame, uiHandler.getScore().getCurrentScore(), uiHandler.getScore().getHighScore());
-        } else if (stateOfGame == GameState.STARTGAME) {
-            background.draw();
-            uiHandler.getScore().updateGameState(stateOfGame);
-            uiHandler.draw();
-            // If key 'p' is pressed, pause the game
-            if (keyPressed) {
-                if (key == 'p' || key == 'P') {
-                    //state to pause
-                    stateOfGame = GameState.PAUSE;
-                }
-            }
-            // Create the sprites and draw as well as update them
-            for (Sprite sprite : collectionManager.getSprites()) {
-                sprite.update();
-                sprite.draw();
-            }
-            collectionManager.getProjectiles().removeIf(projectile -> {
-                boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width
-                        || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
-                if (toRemove) {
-                    collectionManager.getSprites().remove(projectile);
-                }
-                return toRemove;
-            });
-            ArrayList<Enemy> toRemove = new ArrayList<>();
-            ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
-            for (Enemy enemy : collectionManager.getEnemies()) {
-                if (enemy.checkCollisionWithPlayer(collectionManager.getPlayer())) {
-                    toRemove.add(enemy);
-                    collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
-                    uiHandler.getHPDisplay().damage(enemy.getDamage());
+  @Override
+  public void mousePressed() {
+    inputHandler.mousePressed(projectileImage);
+  }
+
+  /**
+   * Draws everything in the window.
+   */
+  public void draw() {
+    // If the game is in the start menu, pause menu, or end game menu, create the menu
+    if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE || stateOfGame == GameState.ENDGAME) {
+
+      stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
+    } else if (stateOfGame == GameState.STARTGAME) {
+      background.draw();
+      score.updateGameState(stateOfGame);
+      uiHandler.draw();
+      // If key 'p' is pressed, pause the game
+      if (keyPressed) {
+        if (key == 'p' || key == 'P') {
+          //state to pause
+          stateOfGame = GameState.PAUSE;
+        }
+      }
+      // Create the sprites and draw as well as update them
+      for (Sprite sprite : collectionManager.getSprites()) {
+        sprite.update();
+        sprite.draw();
+      }
+      collectionManager.getProjectiles().removeIf(projectile -> {
+        boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
+        if (toRemove) {
+          collectionManager.getSprites().remove(projectile);
+        }
+        return toRemove;
+      });
+      ArrayList<Enemy> toRemove = new ArrayList<>();
+      ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
+      for (Enemy enemy : collectionManager.getEnemies()) {
+        if (enemy.checkCollisionWithPlayer(collectionManager.getPlayer())) {
+          toRemove.add(enemy);
+          collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
+          uiHandler.getHPDisplay().damage(enemy.getDamage());
 
                     if (collectionManager.getPlayer().getHealth() <= 0) {
                         stateOfGame = GameState.ENDGAME;
@@ -190,12 +194,12 @@ public class Window extends PApplet {
                         if (enemy.isDead()) {
                             toRemove.add(enemy);
                             enemySpawner.decreaseEnemyCount();
-                            enemySpawner.updateSpawnModifier(uiHandler.getScore());
-                            uiHandler.getScore().incrementScore(uiHandler.getScore().getCurrentScore(), enemy);
-                            uiHandler.getScore().displayScore(stateOfGame);
+                            enemySpawner.updateSpawnModifier(score);
+                            score.incrementScore(score.getCurrentScore(), enemy);
+                            score.displayScore(stateOfGame);
                             uiHandler.getDangerLevel().update();
-                            if (uiHandler.getScore().getCurrentScore() >= uiHandler.getScore().getHighScore()) {
-                                uiHandler.getScore().setHighScore(uiHandler.getScore().getCurrentScore());
+                            if (score.getCurrentScore() >= score.getHighScore()) {
+                                score.setHighScore(score.getCurrentScore());
                             }
                         }
                     }
@@ -212,18 +216,18 @@ public class Window extends PApplet {
             }
             // Spawns new enemies mid-game
             enemySpawner.spawnerActivate();
-            uiHandler.getScore().drawUserInterface();
+            //score.drawUserInterface();
         }
     }
 
-    /**
-     * main method.
-     *
-     * @param args unused.
-     */
-    public static void main(String[] args) {
-        String[] appletArgs = new String[]{"eatBubbles"};
-        Window eatBubbles = new Window();
-        PApplet.runSketch(appletArgs, eatBubbles);
-    }
+  /**
+   * main method.
+   *
+   * @param args unused.
+   */
+  public static void main(String[] args) {
+    String[] appletArgs = new String[]{"eatBubbles"};
+    Window eatBubbles = new Window();
+    PApplet.runSketch(appletArgs, eatBubbles);
+  }
 }
