@@ -23,8 +23,6 @@ public class Window extends PApplet {
      */
     private static final String PROJECTILE_IMAGE = "../img/bullet.png";
 
-    private static final int CHAR_RESIZE_WIDTH = 2;
-    private static final float CHAR_RESIZE_HEIGHT = 1.5f;
     public static final int WINDOW_WIDTH = 500;
     public static final int WINDOW_HEIGHT = 500;
 

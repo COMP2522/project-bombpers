@@ -46,7 +46,7 @@ public class MenuHandler {
   private final float OFFSET_TEXT_RESIZE_FOR_GREATER_THAN_HUNDRED = 1.01f;
 
   private final int OFFSET_HEIGHT = 90;
-  private final int START_MENU_TITLE_X_POSITION = 50;
+  private final int START_MENU_TITLE_X_POSITION = 30;
   private final int START_MENU_TITLE_Y_POSITION = 145;
   private final int PAUSE_MENU_TITLE_X_POSITION = 420;
   private final int PAUSE_MENU_TITLE_Y_POSITION = 125;
@@ -98,7 +98,7 @@ public class MenuHandler {
     }
     //if the current state is startMenu, create the startMenu
     if (this.currentState == GameState.STARTMENU) {
-      startMenu = new Menu(START_MENU_TITLE_X_POSITION, START_MENU_TITLE_Y_POSITION, "Welcome!", this.window);
+      startMenu = new Menu(START_MENU_TITLE_X_POSITION, START_MENU_TITLE_Y_POSITION, "Assault Game", this.window);
       //display the startMenu
       startMenu.drawUserInterface(this.currentState);
       //return the start menu so that it can be continued to be displayed

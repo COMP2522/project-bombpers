@@ -10,12 +10,12 @@ public class Menu extends UserInterface {
   private String message;
   //  the window of the game that the menu is displayed on
   private final Window window;
-  private final int TITLE_SIZE = 90;
+  private final int TITLE_SIZE = 80;
   private final int TEXT_SIZE = 50;
   private final int BLACK = 0;
-  private final int TITLE_RED_VALUE = 0;
-  private final int TITLE_BLUE_VALUE = 408;
-  private final int TITLE_GREEN_VALUE = 612;
+  private final int TITLE_RED_VALUE = 255;
+  private final int TITLE_BLUE_VALUE = 140;
+  private final int TITLE_GREEN_VALUE = 0;
   private final int BUTTON_BACKGROUND_COLOR_VALUE = 153;
   private final int BUTTON_X_POSITION = 120;
   private final int BUTTON_Y_POSITION = 200;
