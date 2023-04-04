@@ -8,12 +8,11 @@ public abstract class UserInterface {
   /**
    * The x-position of the UserInterface.
    */
-  private int positionX;
+  protected int positionX;
   /**
    * The y-position of the UserInterface.
    */
-  private int positionY;
-
+  protected int positionY;
   /**
    * Constructor for UserInterface.
    *
@@ -29,7 +28,14 @@ public abstract class UserInterface {
   /**
    * Draws the UserInterface.
    */
+  protected abstract void drawUserInterface(GameState stateOfGame);
+
+  /**
+   * Overloaded to band-aid fix something.
+   */
   protected abstract void drawUserInterface();
+
+
 
   /**
    * Gets the x-position of the UserInterface.
