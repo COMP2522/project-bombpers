@@ -1,5 +1,7 @@
 package org.bcit.comp2522.project;
 
+import processing.core.PImage;
+
 /**
  * Class for Menu of the game.
  */
@@ -28,6 +30,7 @@ public class Menu extends UserInterface {
   private final int END_X_OFFSET = 55;
   private final int TEXT_RESIZE_FACTOR = 2;
   private final int START_TEXT_X_POS_RESIZE_FACTOR = 3;
+  private final PImage MainBG;
 
   /**
    * Constructor for Menu.
@@ -41,6 +44,7 @@ public class Menu extends UserInterface {
     super(posX, posY);
     this.message = message;
     this.window = window;
+    this.MainBG = window.loadImage("../img/MainBackGround2.png");
   }
 
 
@@ -63,10 +67,11 @@ public class Menu extends UserInterface {
     int PAUSE_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR;
     int END_BUTTON_TEXT_X_POSITION = this.window.width / TEXT_RESIZE_FACTOR + END_X_OFFSET;
     int END_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR;
-
+    window.image(MainBG, 0, 0,window.width,window.height);
 
     createTitle();
     button();
+
     switch (state) {
       case STARTMENU -> window.text("Start", START_BUTTON_TEXT_X_POSITION, START_BUTTON_TEXT_Y_POSITION);
       case ENDGAME -> window.text("Restart", END_BUTTON_TEXT_X_POSITION, END_BUTTON_TEXT_Y_POSITION);
