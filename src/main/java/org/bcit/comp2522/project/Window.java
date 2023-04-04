@@ -30,8 +30,8 @@ public class Window extends PApplet {
     /**
      * Declares a score variable to store the score.
      */
-    public Score score;
     public UIHandler uiHandler;
+    //public Score score;
     /**
      * Declares a background to store the background.
      */
@@ -57,7 +57,7 @@ public class Window extends PApplet {
      * Setup of the game.
      */
     public void setup() {
-        score = new Score(WINDOW_WIDTH / 2, 30, this);
+        //score = new Score(WINDOW_WIDTH / 2, 30, this);
         // Initialize the Player and collectionManager
         this.init();
         inputHandler = InputHandler.getInstance(collectionManager, this);
@@ -66,10 +66,8 @@ public class Window extends PApplet {
         background = new Background(this);
         //Create the score object
         //score = new Score(180, 30, myScore, this);
-        // Enemy Spawner
-        enemySpawner = new EnemySpawner(collectionManager, this);
         projectileImage = loadImage(PROJECTILE_IMAGE);
-        uiHandler = new UIHandler(this, enemySpawner);
+
     }
 
     /**
@@ -77,24 +75,25 @@ public class Window extends PApplet {
      */
     public void init() {
         collectionManager = CollectionManager.getInstance();
-        //Create the score object
-        score = new Score(180, 30, this);
+        CollectionManager.player = Player.getPlayerInstance(this);
+        collectionManager.getSprites().add(CollectionManager.player);
+        enemySpawner = new EnemySpawner(collectionManager, this);
+        uiHandler = new UIHandler(this, this, stateOfGame, enemySpawner);
+        //score = uiHandler.getScore();
         this.db = DatabaseHandler.getInstance(collectionManager);
-        score.setHighScore(db.load());
+        uiHandler.getScore().setHighScore(db.load());
         collectionManager.setHighScore(db.load()); //This is used for DB purposes.
         enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
         enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
         enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
-        CollectionManager.player = Player.getPlayerInstance(this);
-        collectionManager.getSprites().add(CollectionManager.player);
-        score.resetScore();
         // Reset the player's position
         PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
         collectionManager.getPlayer().setPosition(originalPosition);
         new Thread(() -> {
             SaveHandler s = new SaveHandler();
-            s.autoSave(collectionManager, score);
+            s.autoSave(collectionManager, uiHandler.getScore());
         }).start();
+        uiHandler.getScore().resetScore();
     }
 
 
@@ -145,10 +144,10 @@ public class Window extends PApplet {
     // If the game is in the start menu, pause menu, or end game menu, create the menu
     if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE || stateOfGame == GameState.ENDGAME) {
 
-      stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
+      stateOfGame = menuhandler.createMenu(stateOfGame, uiHandler.getScore().getCurrentScore(), uiHandler.getScore().getHighScore());
     } else if (stateOfGame == GameState.STARTGAME) {
       background.draw();
-      uiHandler.draw();
+      uiHandler.draw(stateOfGame);
       // If key 'p' is pressed, pause the game
       if (keyPressed) {
         if (key == 'p' || key == 'P') {
@@ -174,8 +173,7 @@ public class Window extends PApplet {
         if (enemy.checkCollisionWithPlayer(collectionManager.getPlayer())) {
           toRemove.add(enemy);
           collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
-          uiHandler.getHPDisplay().damage(enemy.getDamage());
-
+          uiHandler.getHPDisplay().takeDamage(enemy.getDamage());
                     if (collectionManager.getPlayer().getHealth() <= 0) {
                         stateOfGame = GameState.ENDGAME;
                         collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
@@ -194,12 +192,13 @@ public class Window extends PApplet {
                         if (enemy.isDead()) {
                             toRemove.add(enemy);
                             enemySpawner.decreaseEnemyCount();
-                            enemySpawner.updateSpawnModifier(score);
-                            score.incrementScore(score.getCurrentScore(), enemy);
-                            score.displayScore(stateOfGame);
+                            enemySpawner.updateSpawnModifier(uiHandler.getScore());
+                            uiHandler.getScore().incrementScore(uiHandler.getScore().getCurrentScore(), enemy);
+                            uiHandler.getScore().displayScore(stateOfGame);
                             uiHandler.getDangerLevel().update();
-                            if (score.getCurrentScore() >= score.getHighScore()) {
-                                score.setHighScore(score.getCurrentScore());
+                            if (uiHandler.getScore().getCurrentScore() >= uiHandler.getScore().getHighScore()) {
+                              uiHandler.getScore().setHighScore(uiHandler.getScore().getCurrentScore());
+                              collectionManager.setHighScore(uiHandler.getScore().getCurrentScore());
                             }
                         }
                     }
@@ -216,7 +215,6 @@ public class Window extends PApplet {
             }
             // Spawns new enemies mid-game
             enemySpawner.spawnerActivate();
-            score.drawUserInterface(stateOfGame);
         }
     }
 

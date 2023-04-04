@@ -19,11 +19,6 @@ public class HPDisplay extends UserInterface {
   }
 
   @Override
-  protected void drawUserInterface(GameState stateOfGame) {
-
-  }
-
-  @Override
   public void drawUserInterface() {
     pApp.textAlign(PConstants.RIGHT, PConstants.CENTER);
     pApp.fill(220, 220, 220);
@@ -35,7 +30,7 @@ public class HPDisplay extends UserInterface {
     this.health = collectionManager.getPlayer().getHealth();
   }
 
-  public void damage(int dmg) {
+  public void takeDamage(int dmg) {
     this.health = collectionManager.getPlayer().getHealth() - dmg;
     update();
   }

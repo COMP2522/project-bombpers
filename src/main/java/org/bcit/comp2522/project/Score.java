@@ -6,6 +6,8 @@ import static org.bcit.comp2522.project.EnemyConfig.*;
  * Class for Score of the game set, gets, and displays score.
  */
 public class Score extends UserInterface {
+  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / 2f);
+  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * 0.1f);
   /**
    * The high score of the game.
    */
@@ -14,31 +16,33 @@ public class Score extends UserInterface {
    * The current score of the game.
    */
   private int currentScore;
-
   /**
    * The window of the game that the score is displayed on.
    */
   private final Window window;
-
   private final int STARTING_SCORE = 0;
   private final int MENU_SCORE_TEXT_SIZE = 60;
   private final int GAME_SCORE_TEXT_SIZE = MENU_SCORE_TEXT_SIZE/2;
   private final int RED_COLOR_VALUE = 255;
   private final int GREEN_COLOR_VALUE = 255;
   private final int BLUE_COLOR_VALUE = 0;
-    private final int ENEMY_FAST_VAUE = 2;
+  private final int ENEMY_FAST_VAUE = 2;
   private final int ENEMY_SLOW_VAUE = 3;
+  private GameState currState;
 
   /**
    * Constructor for Score.
    *
-   * @param positionX the x-position of the score
-   * @param positionY the y-position of the score
    * @param window    the window of the game that the score is displayed on
    */
-  public Score(int positionX, int positionY, Window window) {
-    super(positionX, positionY);
+  public Score(Window window, GameState state) {
+    super(DEFAULT_X_POS, DEFAULT_Y_POS);
     this.window = window;
+    this.currState = state;
+  }
+
+  public void updateGameState(GameState state) {
+    this.currState = state;
   }
 
   /**
@@ -78,16 +82,8 @@ public class Score extends UserInterface {
   }
 
   @Override
-  protected void drawUserInterface(GameState stateOfGame) {
-   displayScore(stateOfGame);
-  }
-
-  /**
-   * Band-aid
-   */
-  @Override
   protected void drawUserInterface() {
-
+    displayScore(this.currState);
   }
 
   /**
@@ -112,7 +108,6 @@ public class Score extends UserInterface {
     window.textSize(GAME_SCORE_TEXT_SIZE);
     window.text("Score: " + currentScore, getPositionX(), getPositionY());
   }
-
   /**
    * Displays the score of the game while the game is in a menu.
    */
