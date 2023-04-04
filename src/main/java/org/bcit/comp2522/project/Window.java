@@ -158,11 +158,11 @@ public class Window extends PApplet {
         PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
         collectionManager.getPlayer().setPosition(originalPosition);
         stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
-    }
+    } //UIhandler
 
     private void drawPauseMenu() {
         stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
-    }
+    } // UIhandler
 
     private void drawGame() {
         background.draw();
@@ -180,7 +180,7 @@ public class Window extends PApplet {
         enemySpawner.spawnEnemy();
         dangerLevel.draw();
         killCounter.draw(this);
-    }
+    }//UIhandler or Keephere?
 
     private void updateSprites() {
         for (Sprite sprite : collectionManager.getSprites()) {
@@ -195,7 +195,7 @@ public class Window extends PApplet {
             }
             return toRemove;
         });
-    }
+    } // CollectionManager
     private void handleCollisions() {
         ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
         ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
@@ -203,7 +203,7 @@ public class Window extends PApplet {
         handlePlayerEnemyCollisions(enemiesToRemove);
         handleProjectileEnemyCollisions(enemiesToRemove, projectilesToRemove);
         removeCollidedObjects(enemiesToRemove, projectilesToRemove);
-    }
+    }//CollisionHandler
 
     private void handlePlayerEnemyCollisions(ArrayList<Enemy> enemiesToRemove) {
         for (Enemy enemy : collectionManager.getEnemies()) {
@@ -221,7 +221,7 @@ public class Window extends PApplet {
                 }
             }
         }
-    }
+    } //CollisionHandler
 
     private void handleProjectileEnemyCollisions(ArrayList<Enemy> enemiesToRemove, ArrayList<Projectile> projectilesToRemove) {
         for (Projectile projectile : collectionManager.getProjectiles()) {
@@ -236,7 +236,7 @@ public class Window extends PApplet {
                 }
             }
         }
-    }
+    } //CollisionHandler
 
     private void handleEnemyDeath(Enemy enemy) {
         killCounter.killPlus();
@@ -249,7 +249,7 @@ public class Window extends PApplet {
         if (score.getCurrentScore() >= score.getHighScore()) {
             score.setHighScore(score.getCurrentScore());
         }
-    }
+    } //CollisionHandler
 
     private void removeCollidedObjects(ArrayList<Enemy> enemiesToRemove, ArrayList<Projectile> projectilesToRemove) {
         for (Enemy enemy : enemiesToRemove) {
@@ -260,7 +260,7 @@ public class Window extends PApplet {
             collectionManager.getProjectiles().remove(projectile);
             collectionManager.getSprites().remove(projectile);
         }
-    }
+    } //CollisionHandler
 
     /**
      * main method.
