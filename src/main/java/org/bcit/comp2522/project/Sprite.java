@@ -3,8 +3,6 @@ package org.bcit.comp2522.project;
 import processing.core.PImage;
 import processing.core.PVector;
 
-import java.io.Serializable;
-
 
 /**
  * Sprite class - is the parent class of all classes that can move, collide, and be drawn.
@@ -88,18 +86,6 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
     float centerX = position.x + ((float) image.width / 2);
     float centerY = position.y + ((float) image.height / 2);
     return new PVector(centerX, centerY);
-  }
-
-  /**
-   * Checks to see if two sprites have collided.
-   *
-   * @param a the first sprite
-   * @param b the second sprite
-   * @return true if the sprites have collided, false otherwise
-   */
-  public static boolean collided(Sprite a, Sprite b) {
-    float distance = PVector.dist(a.getPosition(), b.getPosition());
-    return distance <= (a.getSize() + b.getSize()) / 1.9;
   }
 
   /**

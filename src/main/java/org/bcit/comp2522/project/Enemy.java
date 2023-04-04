@@ -85,6 +85,7 @@ public class Enemy extends Sprite {
 
   /**
    * Checks if the enemy is colliding with the player.
+   *
    * @param player the player
    * @return true if the enemy is colliding with the player
    */

@@ -27,7 +27,7 @@ public class MenuHandler {
   public Menu pauseMenu;
   public Menu endMenu;
   /**
-   * The winodw the menu is displayed on.
+   * The window the menu is displayed on.
    */
   Window window;
   /**
@@ -63,8 +63,6 @@ public class MenuHandler {
   public MenuHandler(GameState state, Window window) {
     this.currentState = state;
     this.window = window;
-
-
   }
 
   /**

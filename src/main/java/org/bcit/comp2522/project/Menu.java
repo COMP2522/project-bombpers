@@ -36,10 +36,10 @@ public class Menu extends UserInterface {
   /**
    * Constructor for Menu.
    *
-   * @param posX the x-position of the menu
-   * @param posY the y-position of the menu
+   * @param posX    the x-position of the menu
+   * @param posY    the y-position of the menu
    * @param message the message to be displayed
-   * @param window the window of the game that the menu is displayed on
+   * @param window  the window of the game that the menu is displayed on
    */
   public Menu(int posX, int posY, String message, Window window) {
     super(posX, posY);

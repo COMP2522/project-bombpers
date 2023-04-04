@@ -51,6 +51,8 @@ public class Window extends PApplet {
         size(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
+    private DatabaseHandler db;
+
     /**
      * Setup of the game.
      */
@@ -76,6 +78,11 @@ public class Window extends PApplet {
      */
     public void init() {
         collectionManager = CollectionManager.getInstance();
+        //Create the score object
+        score = new Score(180, 30, this);
+        this.db = DatabaseHandler.getInstance(collectionManager);
+        score.setHighScore(db.load());
+        collectionManager.setHighScore(db.load()); //This is used for DB purposes.
         enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
         enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
         enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
@@ -87,88 +94,88 @@ public class Window extends PApplet {
         collectionManager.getPlayer().setPosition(originalPosition);
         new Thread(() -> {
             SaveHandler s = new SaveHandler();
-            s.autoSave();
+            s.autoSave(collectionManager, score);
         }).start();
     }
 
-    /**
-     * If a key is pressed,  the corresponding isPressed variable will be true to
-     * "tell" that key was pressed.
-     *
-     * @param event is the key that was pressed.
-     */
-    @Override
-    public void keyPressed(KeyEvent event) {
-        inputHandler.keyPressed(event);
-        // Update the player's direction
-        updatePlayerDirection();
-    }
 
-    /**
-     * If a key is released,  the corresponding isPressed variable will be false to
-     * make sure it does not move when the key is not pressed.
-     *
-     * @param event is the key that was released.
-     */
+  /**
+   * If a key is pressed,  the corresponding isPressed variable will be true to
+   * "tell" that key was pressed.
+   *
+   * @param event is the key that was pressed.
+   */
+  @Override
+  public void keyPressed(KeyEvent event) {
+    inputHandler.keyPressed(event);
+    // Update the player's direction
+    updatePlayerDirection();
+  }
 
-    @Override
-    public void keyReleased(KeyEvent event) {
-        inputHandler.keyReleased(event);
-        // Update the player's direction
-        updatePlayerDirection();
-    }
+  /**
+   * If a key is released,  the corresponding isPressed variable will be false to
+   * make sure it does not move when the key is not pressed.
+   *
+   * @param event is the key that was released.
+   */
 
-    /**
-     * Updates the player's direction based on the key pressed.
-     */
-    private void updatePlayerDirection() {
-        PVector newDirection = inputHandler.updatePlayerDirection();
-        collectionManager.getPlayer().setDirection(newDirection);
-    }
+  @Override
+  public void keyReleased(KeyEvent event) {
+    inputHandler.keyReleased(event);
+    // Update the player's direction
+    updatePlayerDirection();
+  }
 
-    @Override
-    public void mousePressed() {
-        inputHandler.mousePressed(projectileImage);
-    }
+  /**
+   * Updates the player's direction based on the key pressed.
+   */
+  private void updatePlayerDirection() {
+    PVector newDirection = inputHandler.updatePlayerDirection();
+    collectionManager.getPlayer().setDirection(newDirection);
+  }
 
-    /**
-     * Draws everything in the window.
-     */
-    public void draw() {
-        // If the game is in the start menu, pause menu, or end game menu, create the menu
-        if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
-                || stateOfGame == GameState.ENDGAME) {
-            stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
-        } else if (stateOfGame == GameState.STARTGAME) {
-            background.draw();
-            uiHandler.draw();
-            // If key 'p' is pressed, pause the game
-            if (keyPressed) {
-                if (key == 'p' || key == 'P') {
-                    //state to pause
-                    stateOfGame = GameState.PAUSE;
-                }
-            }
-            // Create the sprites and draw as well as update them
-            for (Sprite sprite : collectionManager.getSprites()) {
-                sprite.update();
-                sprite.draw();
-            }
-            collectionManager.getProjectiles().removeIf(projectile -> {
-                boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width
-                        || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
-                if (toRemove) {
-                    collectionManager.getSprites().remove(projectile);
-                }
-                return toRemove;
-            });
-            ArrayList<Enemy> toRemove = new ArrayList<>();
-            ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
-            for (Enemy enemy : collectionManager.getEnemies()) {
-                if (enemy.checkCollisionWithPlayer(collectionManager.getPlayer())) {
-                    toRemove.add(enemy);
-                    collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
-                    uiHandler.getHPDisplay().damage(enemy.getDamage());
+  @Override
+  public void mousePressed() {
+    inputHandler.mousePressed(projectileImage);
+  }
+
+  /**
+   * Draws everything in the window.
+   */
+  public void draw() {
+    // If the game is in the start menu, pause menu, or end game menu, create the menu
+    if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE || stateOfGame == GameState.ENDGAME) {
+
+      stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
+    } else if (stateOfGame == GameState.STARTGAME) {
+      background.draw();
+      uiHandler.draw();
+      // If key 'p' is pressed, pause the game
+      if (keyPressed) {
+        if (key == 'p' || key == 'P') {
+          //state to pause
+          stateOfGame = GameState.PAUSE;
+        }
+      }
+      // Create the sprites and draw as well as update them
+      for (Sprite sprite : collectionManager.getSprites()) {
+        sprite.update();
+        sprite.draw();
+      }
+      collectionManager.getProjectiles().removeIf(projectile -> {
+        boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
+        if (toRemove) {
+          collectionManager.getSprites().remove(projectile);
+        }
+        return toRemove;
+      });
+      ArrayList<Enemy> toRemove = new ArrayList<>();
+      ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
+      for (Enemy enemy : collectionManager.getEnemies()) {
+        if (enemy.checkCollisionWithPlayer(collectionManager.getPlayer())) {
+          toRemove.add(enemy);
+          collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
+          uiHandler.getHPDisplay().damage(enemy.getDamage());
 
                     if (collectionManager.getPlayer().getHealth() <= 0) {
                         stateOfGame = GameState.ENDGAME;
@@ -214,14 +221,14 @@ public class Window extends PApplet {
         }
     }
 
-    /**
-     * main method.
-     *
-     * @param args unused.
-     */
-    public static void main(String[] args) {
-        String[] appletArgs = new String[]{"eatBubbles"};
-        Window eatBubbles = new Window();
-        PApplet.runSketch(appletArgs, eatBubbles);
-    }
+  /**
+   * main method.
+   *
+   * @param args unused.
+   */
+  public static void main(String[] args) {
+    String[] appletArgs = new String[]{"eatBubbles"};
+    Window eatBubbles = new Window();
+    PApplet.runSketch(appletArgs, eatBubbles);
+  }
 }

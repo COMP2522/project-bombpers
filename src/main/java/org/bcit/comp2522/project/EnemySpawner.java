@@ -30,33 +30,30 @@ public class EnemySpawner {
     if (spawnAvailable()) {
       int diceRoll = randomNumber.nextInt(ENEMY_TYPES) + 1;
       switch (diceRoll) {
-        case ENEMY_STANDARD_TYPE ->
-            spawnEnemy(
-                window.enemyStandardSprite,
-                ENEMY_STANDARD_TYPE,
-                ENEMY_STANDARD_HEALTH,
-                ENEMY_STANDARD_DAMAGE,
-                ENEMY_STANDARD_SIZE,
-                ENEMY_STANDARD_SPEED
-            );
-        case ENEMY_FAST_TYPE ->
-            spawnEnemy(
-                window.enemyFastSprite,
-                ENEMY_FAST_TYPE,
-                ENEMY_FAST_HEALTH,
-                ENEMY_FAST_DAMAGE,
-                ENEMY_FAST_SIZE,
-                ENEMY_FAST_SPEED
-            );
-        case ENEMY_SLOW_TYPE ->
-            spawnEnemy(
-                window.enemySlowSprite,
-                ENEMY_SLOW_TYPE,
-                ENEMY_SLOW_HEALTH,
-                ENEMY_SLOW_DAMAGE,
-                ENEMY_SLOW_SIZE,
-                ENEMY_SLOW_SPEED
-            );
+        case ENEMY_STANDARD_TYPE -> spawnEnemy(
+            window.enemyStandardSprite,
+            ENEMY_STANDARD_TYPE,
+            ENEMY_STANDARD_HEALTH,
+            ENEMY_STANDARD_DAMAGE,
+            ENEMY_STANDARD_SIZE,
+            ENEMY_STANDARD_SPEED
+        );
+        case ENEMY_FAST_TYPE -> spawnEnemy(
+            window.enemyFastSprite,
+            ENEMY_FAST_TYPE,
+            ENEMY_FAST_HEALTH,
+            ENEMY_FAST_DAMAGE,
+            ENEMY_FAST_SIZE,
+            ENEMY_FAST_SPEED
+        );
+        case ENEMY_SLOW_TYPE -> spawnEnemy(
+            window.enemySlowSprite,
+            ENEMY_SLOW_TYPE,
+            ENEMY_SLOW_HEALTH,
+            ENEMY_SLOW_DAMAGE,
+            ENEMY_SLOW_SIZE,
+            ENEMY_SLOW_SPEED
+        );
         default -> System.out.println("Invalid spawn type");
       }
     }

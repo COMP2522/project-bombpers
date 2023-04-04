@@ -14,6 +14,7 @@ public class Score extends UserInterface {
    * The current score of the game.
    */
   private int currentScore;
+
   /**
    * The window of the game that the score is displayed on.
    */
@@ -33,7 +34,7 @@ public class Score extends UserInterface {
    *
    * @param positionX the x-position of the score
    * @param positionY the y-position of the score
-   * @param window the window of the game that the score is displayed on
+   * @param window    the window of the game that the score is displayed on
    */
   public Score(int positionX, int positionY, Window window) {
     super(positionX, positionY);
@@ -111,6 +112,7 @@ public class Score extends UserInterface {
     window.textSize(GAME_SCORE_TEXT_SIZE);
     window.text("Score: " + currentScore, getPositionX(), getPositionY());
   }
+
   /**
    * Displays the score of the game while the game is in a menu.
    */
@@ -122,9 +124,9 @@ public class Score extends UserInterface {
     window.text( "\nHigh Score: " + getHighScore(), getPositionX(), getPositionY());
   }
 
-  public void incrementScore(int score, Enemy enemy){
+  public void incrementScore(int score, Enemy enemy) {
     int typeOfEnemy = enemy.enemyType;
-    switch (typeOfEnemy){
+    switch (typeOfEnemy) {
       case ENEMY_STANDARD_TYPE -> score++;
       case ENEMY_FAST_TYPE -> score = score+ENEMY_FAST_VAUE;
       case ENEMY_SLOW_TYPE -> score = score+ENEMY_SLOW_VAUE;
