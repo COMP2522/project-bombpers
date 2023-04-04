@@ -5,8 +5,6 @@ import processing.core.PVector;
 import processing.event.KeyEvent;
 import processing.core.PConstants;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 /**
  * InputHandler class - handles the input from the user.
  */
@@ -35,6 +33,7 @@ public class InputHandler {
 
   /**
    * getInstance method - returns the instance of the InputHandler.
+   *
    * @param collectionManager the collection manager that will be used to access the collection of sprites.
    * @return the instance of the InputHandler.
    */
@@ -47,6 +46,7 @@ public class InputHandler {
 
   /**
    * InputHandler constructor - creates a new InputHandler object.
+   *
    * @param collectionManager the collection manager that will be used to access the collection of sprites.
    */
   private InputHandler(CollectionManager collectionManager, Window window) {
@@ -57,6 +57,7 @@ public class InputHandler {
 
   /**
    * keyPressed method - is called when a key is pressed.
+   *
    * @param event the key event.
    */
   public void keyPressed(KeyEvent event) {
@@ -75,6 +76,7 @@ public class InputHandler {
 
   /**
    * keyReleased method - is called when a key is released.
+   *
    * @param event the key event.
    */
   public void keyReleased(KeyEvent event) {
@@ -93,6 +95,7 @@ public class InputHandler {
 
   /**
    * updatePlayerDirection method - updates the player's direction based on the key pressed.
+   *
    * @return the new direction of the player.
    */
   public PVector updatePlayerDirection() {
@@ -122,15 +125,16 @@ public class InputHandler {
 
     return new PVector(directionX, directionY);
   }
-  public void mousePressed(PImage image){
-    if(window.stateOfGame == GameState.STARTGAME && window.mouseButton == PConstants.LEFT){
+
+  public void mousePressed(PImage image) {
+    if (window.stateOfGame == GameState.STARTGAME && window.mouseButton == PConstants.LEFT) {
       PVector mousePosition = new PVector(window.mouseX, window.mouseY);
       PVector playerPosition = collectionManager.getPlayer().getPosition();
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
 
       PVector projectileStartPosition = new PVector(
-              playerPosition.x + CHAR_X_POS_MOVE - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
-              playerPosition.y + CHAR_Y_POS_MOVE - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
+          playerPosition.x + CHAR_X_POS_MOVE - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
+          playerPosition.y + CHAR_Y_POS_MOVE - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
       );
 
       Projectile projectile = new Projectile(window, projectileStartPosition, direction, image); //Pimage

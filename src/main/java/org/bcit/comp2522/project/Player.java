@@ -63,7 +63,7 @@ public class Player extends Sprite {
 
   @Override
   public void collide(Sprite one, Sprite two) {
-    //TODO: Implement this method
+
   }
 
   /**
