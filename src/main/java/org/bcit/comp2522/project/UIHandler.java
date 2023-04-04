@@ -16,13 +16,10 @@ public class UIHandler {
     this.score = new Score(window, state);
   }
 
-  public void draw() {
+  public void draw(GameState state) {
     hpDisplay.drawUserInterface();
     dangerLevel.drawUserInterface();
-    score.drawUserInterface();
-  }
-
-  public void drawScoreOnly() {
+    score.updateGameState(state);
     score.drawUserInterface();
   }
 

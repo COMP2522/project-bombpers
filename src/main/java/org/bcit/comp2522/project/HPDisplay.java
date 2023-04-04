@@ -30,7 +30,7 @@ public class HPDisplay extends UserInterface {
     this.health = collectionManager.getPlayer().getHealth();
   }
 
-  public void damage(int dmg) {
+  public void takeDamage(int dmg) {
     this.health = collectionManager.getPlayer().getHealth() - dmg;
     update();
   }

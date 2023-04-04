@@ -147,8 +147,7 @@ public class Window extends PApplet {
       stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
     } else if (stateOfGame == GameState.STARTGAME) {
       background.draw();
-      score.updateGameState(stateOfGame);
-      uiHandler.draw();
+      uiHandler.draw(stateOfGame);
       // If key 'p' is pressed, pause the game
       if (keyPressed) {
         if (key == 'p' || key == 'P') {
@@ -174,8 +173,7 @@ public class Window extends PApplet {
         if (enemy.checkCollisionWithPlayer(collectionManager.getPlayer())) {
           toRemove.add(enemy);
           collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
-          uiHandler.getHPDisplay().damage(enemy.getDamage());
-
+          uiHandler.getHPDisplay().takeDamage(enemy.getDamage());
                     if (collectionManager.getPlayer().getHealth() <= 0) {
                         stateOfGame = GameState.ENDGAME;
                         collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
@@ -216,7 +214,6 @@ public class Window extends PApplet {
             }
             // Spawns new enemies mid-game
             enemySpawner.spawnerActivate();
-            //score.drawUserInterface();
         }
     }
 
