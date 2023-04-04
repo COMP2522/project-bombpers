@@ -79,7 +79,7 @@ public class MenuHandler {
     //store the current state
     this.currentState = state;
     //Creates new score object to use in menus since score id displayed differently in menus
-    this.menuScore = new Score(scoreXPosition, scoreYPosition, this.window);
+    this.menuScore = new Score(this.window, this.currentState);
     if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
             && (this.window.mouseX >= buttonLeftBound && this.window.mouseX < buttonRightBound)
             && (this.window.mouseY >= buttonTopBound
@@ -95,28 +95,33 @@ public class MenuHandler {
     if (this.currentState == GameState.STARTMENU) {
       startMenu = new Menu(START_MENU_TITLE_X_POSITION, START_MENU_TITLE_Y_POSITION, "Assault Game", this.window);
       //display the startMenu
-      startMenu.drawUserInterface(this.currentState);
+      startMenu.updateGameState(this.currentState);
+      startMenu.drawUserInterface();
       //return the start menu so that it can be continued to be displayed
       return GameState.STARTMENU;
     } else if (this.currentState == GameState.PAUSE) {
       // If the current state is pause, create the pauseMenu
       pauseMenu = new Menu(PAUSE_MENU_TITLE_X_POSITION, PAUSE_MENU_TITLE_Y_POSITION, "Paused!", this.window);
       // display the pauseMenu
-      pauseMenu.drawUserInterface(this.currentState);
+      pauseMenu.updateGameState(this.currentState);
+      pauseMenu.drawUserInterface();
       //display the score
       menuScore.setCurrentScore(currScore);
       menuScore.setHighScore(highScore);
-      menuScore.drawUserInterface(currentState);
+      menuScore.updateGameState(this.currentState);
+      menuScore.drawUserInterface();
       //return the pause menu so that it can be continued to be displayed
       return GameState.PAUSE;
 
     } else {
       // If the current state is endGame, create the endMenu
       endMenu = new Menu(END_MENU_TITLE_X_POSITION, END_MENU_TITLE_Y_POSITION, "Game Over", this.window);
-      endMenu.drawUserInterface(this.currentState);
+      endMenu.updateGameState(this.currentState);
+      endMenu.drawUserInterface();
       menuScore.setCurrentScore(currScore);
       menuScore.setHighScore(highScore);
-      menuScore.drawUserInterface(this.currentState);
+      menuScore.updateGameState(this.currentState);
+      menuScore.drawUserInterface();
       return GameState.ENDGAME;
     }
   }

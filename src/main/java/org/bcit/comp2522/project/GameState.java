@@ -8,6 +8,4 @@ public enum GameState {
     STARTGAME,
     PAUSE,
     ENDGAME
-
-
 }

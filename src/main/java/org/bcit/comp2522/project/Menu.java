@@ -32,6 +32,7 @@ public class Menu extends UserInterface {
   private final int TEXT_RESIZE_FACTOR = 2;
   private final int START_TEXT_X_POS_RESIZE_FACTOR = 3;
   private final PImage MainBG;
+  private GameState currState;
 
   /**
    * Constructor for Menu.
@@ -48,11 +49,8 @@ public class Menu extends UserInterface {
     this.MainBG = window.loadImage("../img/MainBackGround2.png");
   }
 
-
-  @Override
-  protected void drawUserInterface(GameState stateOfGame) {
-    displayMenu(stateOfGame);
-
+  public void updateGameState(GameState state) {
+    this.currState = state;
   }
 
   /**
@@ -60,7 +58,7 @@ public class Menu extends UserInterface {
    */
   @Override
   protected void drawUserInterface() {
-
+    displayMenu(currState);
   }
 
   /**

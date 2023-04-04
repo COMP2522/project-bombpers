@@ -30,7 +30,6 @@ public class Window extends PApplet {
     /**
      * Declares a score variable to store the score.
      */
-    public Score score;
     public UIHandler uiHandler;
     /**
      * Declares a background to store the background.
@@ -55,7 +54,7 @@ public class Window extends PApplet {
      * Setup of the game.
      */
     public void setup() {
-        score = new Score(WINDOW_WIDTH / 2, 30, this);
+        //score = new Score(WINDOW_WIDTH / 2, 30, this);
         // Initialize the Player and collectionManager
         this.init();
         inputHandler = InputHandler.getInstance(collectionManager, this);
@@ -65,10 +64,9 @@ public class Window extends PApplet {
         background = new Background(this);
         //Create the score object
         //score = new Score(180, 30, myScore, this);
-        // Enemy Spawner
-        enemySpawner = new EnemySpawner(collectionManager, this);
+
         projectileImage = loadImage(PROJECTILE_IMAGE);
-        uiHandler = new UIHandler(this, enemySpawner);
+
     }
 
     /**
@@ -81,7 +79,6 @@ public class Window extends PApplet {
         enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
         CollectionManager.player = Player.getPlayerInstance(this);
         collectionManager.getSprites().add(CollectionManager.player);
-        score.resetScore();
         // Reset the player's position
         PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
         collectionManager.getPlayer().setPosition(originalPosition);
@@ -89,6 +86,10 @@ public class Window extends PApplet {
             SaveHandler s = new SaveHandler();
             s.autoSave();
         }).start();
+        // Enemy Spawner
+        enemySpawner = new EnemySpawner(collectionManager, this);
+        uiHandler = new UIHandler(this, this, stateOfGame, enemySpawner);
+        uiHandler.getScore().resetScore();
     }
 
     /**
@@ -138,9 +139,10 @@ public class Window extends PApplet {
         // If the game is in the start menu, pause menu, or end game menu, create the menu
         if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE
                 || stateOfGame == GameState.ENDGAME) {
-            stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
+            stateOfGame = menuhandler.createMenu(stateOfGame, uiHandler.getScore().getCurrentScore(), uiHandler.getScore().getHighScore());
         } else if (stateOfGame == GameState.STARTGAME) {
             background.draw();
+            uiHandler.getScore().updateGameState(stateOfGame);
             uiHandler.draw();
             // If key 'p' is pressed, pause the game
             if (keyPressed) {
@@ -188,12 +190,12 @@ public class Window extends PApplet {
                         if (enemy.isDead()) {
                             toRemove.add(enemy);
                             enemySpawner.decreaseEnemyCount();
-                            enemySpawner.updateSpawnModifier(score);
-                            score.incrementScore(score.getCurrentScore(), enemy);
-                            score.displayScore(stateOfGame);
+                            enemySpawner.updateSpawnModifier(uiHandler.getScore());
+                            uiHandler.getScore().incrementScore(uiHandler.getScore().getCurrentScore(), enemy);
+                            uiHandler.getScore().displayScore(stateOfGame);
                             uiHandler.getDangerLevel().update();
-                            if (score.getCurrentScore() >= score.getHighScore()) {
-                                score.setHighScore(score.getCurrentScore());
+                            if (uiHandler.getScore().getCurrentScore() >= uiHandler.getScore().getHighScore()) {
+                                uiHandler.getScore().setHighScore(uiHandler.getScore().getCurrentScore());
                             }
                         }
                     }
@@ -210,7 +212,7 @@ public class Window extends PApplet {
             }
             // Spawns new enemies mid-game
             enemySpawner.spawnerActivate();
-            score.drawUserInterface(stateOfGame);
+            uiHandler.getScore().drawUserInterface();
         }
     }
 
