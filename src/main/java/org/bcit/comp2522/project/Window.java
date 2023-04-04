@@ -31,7 +31,7 @@ public class Window extends PApplet {
      * Declares a score variable to store the score.
      */
     public UIHandler uiHandler;
-    public Score score;
+    //public Score score;
     /**
      * Declares a background to store the background.
      */
@@ -79,9 +79,9 @@ public class Window extends PApplet {
         collectionManager.getSprites().add(CollectionManager.player);
         enemySpawner = new EnemySpawner(collectionManager, this);
         uiHandler = new UIHandler(this, this, stateOfGame, enemySpawner);
-        score = uiHandler.getScore();
+        //score = uiHandler.getScore();
         this.db = DatabaseHandler.getInstance(collectionManager);
-        score.setHighScore(db.load());
+        uiHandler.getScore().setHighScore(db.load());
         collectionManager.setHighScore(db.load()); //This is used for DB purposes.
         enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
         enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
@@ -91,9 +91,9 @@ public class Window extends PApplet {
         collectionManager.getPlayer().setPosition(originalPosition);
         new Thread(() -> {
             SaveHandler s = new SaveHandler();
-            s.autoSave(collectionManager, score);
+            s.autoSave(collectionManager, uiHandler.getScore());
         }).start();
-        score.resetScore();
+        uiHandler.getScore().resetScore();
     }
 
 
@@ -144,7 +144,7 @@ public class Window extends PApplet {
     // If the game is in the start menu, pause menu, or end game menu, create the menu
     if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE || stateOfGame == GameState.ENDGAME) {
 
-      stateOfGame = menuhandler.createMenu(stateOfGame, score.getCurrentScore(), score.getHighScore());
+      stateOfGame = menuhandler.createMenu(stateOfGame, uiHandler.getScore().getCurrentScore(), uiHandler.getScore().getHighScore());
     } else if (stateOfGame == GameState.STARTGAME) {
       background.draw();
       uiHandler.draw(stateOfGame);
@@ -192,12 +192,13 @@ public class Window extends PApplet {
                         if (enemy.isDead()) {
                             toRemove.add(enemy);
                             enemySpawner.decreaseEnemyCount();
-                            enemySpawner.updateSpawnModifier(score);
-                            score.incrementScore(score.getCurrentScore(), enemy);
-                            score.displayScore(stateOfGame);
+                            enemySpawner.updateSpawnModifier(uiHandler.getScore());
+                            uiHandler.getScore().incrementScore(uiHandler.getScore().getCurrentScore(), enemy);
+                            uiHandler.getScore().displayScore(stateOfGame);
                             uiHandler.getDangerLevel().update();
-                            if (score.getCurrentScore() >= score.getHighScore()) {
-                                score.setHighScore(score.getCurrentScore());
+                            if (uiHandler.getScore().getCurrentScore() >= uiHandler.getScore().getHighScore()) {
+                              uiHandler.getScore().setHighScore(uiHandler.getScore().getCurrentScore());
+                              collectionManager.setHighScore(uiHandler.getScore().getCurrentScore());
                             }
                         }
                     }

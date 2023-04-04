@@ -18,6 +18,7 @@ public class SaveHandler {
     for (; ; ) {
       try {
         Thread.sleep(30000);
+        //Thread.sleep(5000);
         this.save(s);
         System.out.println("Game has been saved");
       } catch (InterruptedException e) {
