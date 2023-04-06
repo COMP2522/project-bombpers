@@ -46,13 +46,13 @@ public class MenuHandler {
   private final float OFFSET_TEXT_RESIZE_FOR_GREATER_THAN_HUNDRED = 1.01f;
 
   private final int OFFSET_HEIGHT = 200;
-  private final int OFFSET_WIDTH = 260;
+  private final int OFFSET_WIDTH = 50;
   private final int START_MENU_TITLE_X_POSITION = 30;
   private final int START_MENU_TITLE_Y_POSITION = 145;
-  private final int PAUSE_MENU_TITLE_X_POSITION = 250;
-  private final int PAUSE_MENU_TITLE_Y_POSITION = 100;
-  private final int END_MENU_TITLE_X_POSITION = 240;
-  private final int END_MENU_TITLE_Y_POSITION = 120;
+  private final int PAUSE_MENU_TITLE_X_POSITION = (int) (Window.WINDOW_WIDTH / 2f);
+  private final int PAUSE_MENU_TITLE_Y_POSITION = (int) (Window.WINDOW_HEIGHT * 0.7f);
+  private final int END_MENU_TITLE_X_POSITION = (int) (Window.WINDOW_WIDTH / 2f);
+  private final int END_MENU_TITLE_Y_POSITION = (int) (Window.WINDOW_HEIGHT * 0.7f);
 
   /**
    * Constructor for menuHandler.
@@ -72,12 +72,12 @@ public class MenuHandler {
    * @return the current state of the game
    */
   public GameState createMenu(GameState state, int currScore, int highScore) {
-    int scoreXPosition = this.window.height - OFFSET_WIDTH;
+    int scoreXPosition = this.window.width - OFFSET_WIDTH;
     int scoreYPosition = this.window.height - OFFSET_HEIGHT;
     //store the current state
     this.currentState = state;
     //Creates new score object to use in menus since score id displayed differently in menus
-    this.menuScore = new Score(scoreXPosition, scoreYPosition, this.window);
+    this.menuScore = new Score(this.window, this.currentState);
     if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
             && (this.window.mouseX >= buttonLeftBound && this.window.mouseX < buttonRightBound)
             && (this.window.mouseY >= buttonTopBound
@@ -93,28 +93,33 @@ public class MenuHandler {
     if (this.currentState == GameState.STARTMENU) {
       startMenu = new Menu(START_MENU_TITLE_X_POSITION, START_MENU_TITLE_Y_POSITION, "Assault Game", this.window);
       //display the startMenu
-      startMenu.drawUserInterface(this.currentState);
+      startMenu.updateGameState(this.currentState);
+      startMenu.drawUserInterface();
       //return the start menu so that it can be continued to be displayed
       return GameState.STARTMENU;
     } else if (this.currentState == GameState.PAUSE) {
       // If the current state is pause, create the pauseMenu
       pauseMenu = new Menu(PAUSE_MENU_TITLE_X_POSITION, PAUSE_MENU_TITLE_Y_POSITION, "Paused!", this.window);
       // display the pauseMenu
-      pauseMenu.drawUserInterface(this.currentState);
+      pauseMenu.updateGameState(this.currentState);
+      pauseMenu.drawUserInterface();
       //display the score
       menuScore.setCurrentScore(currScore);
       menuScore.setHighScore(highScore);
-      menuScore.drawUserInterface(currentState);
+      menuScore.updateGameState(this.currentState);
+      menuScore.drawUserInterface();
       //return the pause menu so that it can be continued to be displayed
       return GameState.PAUSE;
 
     } else {
       // If the current state is endGame, create the endMenu
       endMenu = new Menu(END_MENU_TITLE_X_POSITION, END_MENU_TITLE_Y_POSITION, "Game Over", this.window);
-      endMenu.drawUserInterface(this.currentState);
+      endMenu.updateGameState(this.currentState);
+      endMenu.drawUserInterface();
       menuScore.setCurrentScore(currScore);
       menuScore.setHighScore(highScore);
-      menuScore.drawUserInterface(this.currentState);
+      menuScore.updateGameState(this.currentState);
+      menuScore.drawUserInterface();
       return GameState.ENDGAME;
     }
   }
