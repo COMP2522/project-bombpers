@@ -1,12 +1,30 @@
 package org.bcit.comp2522.project;
 
-import static org.bcit.comp2522.project.ConstantManager.*;
-import static org.bcit.comp2522.project.EnemyConfig.*;
-
-import processing.core.PImage;
-import processing.core.PVector;
+//import static org.bcit.comp2522.project.ConstantManager.*;
+import static org.bcit.comp2522.project.ConstantManager.BASE_WAVE_COUNT;
+import static org.bcit.comp2522.project.ConstantManager.NO_ENEMIES;
+import static org.bcit.comp2522.project.ConstantManager.TIER_THRESHOLD;
+import static org.bcit.comp2522.project.ConstantManager.ZERO;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_FAST_DAMAGE;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_FAST_HEALTH;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_FAST_SIZE;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_FAST_SPEED;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_FAST_TYPE;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_SLOW_DAMAGE;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_SLOW_HEALTH;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_SLOW_SIZE;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_SLOW_SPEED;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_SLOW_TYPE;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_STANDARD_DAMAGE;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_STANDARD_HEALTH;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_STANDARD_SIZE;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_STANDARD_SPEED;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_STANDARD_TYPE;
+import static org.bcit.comp2522.project.EnemyConfig.ENEMY_TYPES;
 
 import java.util.Random;
+import processing.core.PImage;
+import processing.core.PVector;
 
 public class EnemySpawner {
   private int spawnModifier = ZERO;

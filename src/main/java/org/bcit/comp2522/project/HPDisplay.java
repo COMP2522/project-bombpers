@@ -1,10 +1,13 @@
 package org.bcit.comp2522.project;
 
+//import static org.bcit.comp2522.project.ConstantManager.*;
+import static org.bcit.comp2522.project.ConstantManager.POINTFIFTEEN;
+import static org.bcit.comp2522.project.ConstantManager.POINTNINE;
+import static org.bcit.comp2522.project.ConstantManager.TWENTYFOUR;
+import static org.bcit.comp2522.project.ConstantManager.TWOTWENTY;
+
 import processing.core.PApplet;
 import processing.core.PConstants;
-import processing.core.PVector;
-
-import static org.bcit.comp2522.project.ConstantManager.*;
 
 public class HPDisplay extends UserInterface {
   private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH * POINTFIFTEEN);

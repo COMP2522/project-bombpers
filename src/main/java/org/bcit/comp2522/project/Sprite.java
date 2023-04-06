@@ -1,11 +1,10 @@
 package org.bcit.comp2522.project;
 
-import processing.core.PImage;
-import processing.core.PVector;
-
 import static org.bcit.comp2522.project.ConstantManager.TWO;
 import static org.bcit.comp2522.project.ConstantManager.ZERO;
 
+import processing.core.PImage;
+import processing.core.PVector;
 
 /**
  * Sprite class - is the parent class of all classes that can move, collide, and be drawn.
@@ -82,7 +81,7 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
    *
    */
   public PVector getCenterPosition() {
-    if(image == null) {
+    if (image == null) {
       return position;
     }
 

@@ -1,10 +1,9 @@
-
 package org.bcit.comp2522.project;
 
-import processing.core.PVector;
-import processing.core.PImage;
-
 import static org.bcit.comp2522.project.ConstantManager.ZERO;
+
+import processing.core.PImage;
+import processing.core.PVector;
 
 public class Projectile extends Sprite {
   public static final float PROJECTILE_SIZE = 15;

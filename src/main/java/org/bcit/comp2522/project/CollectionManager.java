@@ -1,11 +1,10 @@
 package org.bcit.comp2522.project;
 
+import static org.bcit.comp2522.project.ConstantManager.ZERO;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import static org.bcit.comp2522.project.ConstantManager.ZERO;
-
 
 /**
  * CollectionManager class - manages all collections of sprites.
@@ -48,6 +47,11 @@ public class CollectionManager {
     return player;
   }
 
+  /**
+   * Makes the collection manager object singleton.
+   *
+   * @return the singleton object
+   */
   public static CollectionManager getInstance() {
     if (c == null) {
       c = new CollectionManager();

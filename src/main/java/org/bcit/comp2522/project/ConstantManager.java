@@ -12,6 +12,8 @@ public class ConstantManager {
     public static final float POINTNINETYFIVE = 0.95f;
     public static final float POINTNINE = 0.9f;
     public static final float POINTFIFTEEN = 0.15f;
+    public static final float POINTONE = 0.1f;
+    public static final float SPEED_OF_SCROLL = 0.5f;
     public static final int ENEMY_STANDARD_HITBOX_WIDTH = 10;
     public static final int ENEMY_STANDARD_HITBOX_HEIGHT = 25;
     public static final int CUT_HITBOX_IN_HALF = 2;

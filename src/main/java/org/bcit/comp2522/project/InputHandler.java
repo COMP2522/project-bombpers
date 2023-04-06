@@ -1,11 +1,15 @@
 package org.bcit.comp2522.project;
 
+//import static org.bcit.comp2522.project.ConstantManager.*;
+import static org.bcit.comp2522.project.ConstantManager.CHAR_RESIZE_WIDTH;
+import static org.bcit.comp2522.project.ConstantManager.CHAR_X_POS_MOVE;
+import static org.bcit.comp2522.project.ConstantManager.CHAR_Y_POS_MOVE;
+import static org.bcit.comp2522.project.ConstantManager.ZERO;
+
+import processing.core.PConstants;
 import processing.core.PImage;
 import processing.core.PVector;
 import processing.event.KeyEvent;
-import processing.core.PConstants;
-
-import static org.bcit.comp2522.project.ConstantManager.*;
 
 /**
  * InputHandler class - handles the input from the user.
@@ -33,7 +37,8 @@ public class InputHandler {
   /**
    * getInstance method - returns the instance of the InputHandler.
    *
-   * @param collectionManager the collection manager that will be used to access the collection of sprites.
+   * @param collectionManager the collection manager that will be used to access
+   *     the collection of sprites.
    * @return the instance of the InputHandler.
    */
   public static InputHandler getInstance(CollectionManager collectionManager, Window window) {
@@ -46,7 +51,8 @@ public class InputHandler {
   /**
    * InputHandler constructor - creates a new InputHandler object.
    *
-   * @param collectionManager the collection manager that will be used to access the collection of sprites.
+   * @param collectionManager the collection manager that will be used to access
+   *     the collection of sprites.
    */
   private InputHandler(CollectionManager collectionManager, Window window) {
     this.collectionManager = collectionManager;
@@ -116,7 +122,7 @@ public class InputHandler {
     }
 
     // If the direction is not 0,0, set the player's direction to the new direction
-    if (directionX != 0 || directionY != 0) {
+    if (directionX != ZERO || directionY != ZERO) {
       collectionManager.getPlayer().setDirection(new PVector(directionX, directionY));
     } else {
       collectionManager.getPlayer().setDirection(new PVector(ZERO, ZERO));
@@ -136,7 +142,8 @@ public class InputHandler {
           playerPosition.y + CHAR_Y_POS_MOVE - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
       );
 
-      Projectile projectile = new Projectile(window, projectileStartPosition, direction, image); //Pimage
+      Projectile projectile = new Projectile(
+              window, projectileStartPosition, direction, image); //Pimage
 
       collectionManager.getProjectiles().add(projectile);
       collectionManager.getSprites().add(projectile);

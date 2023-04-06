@@ -1,9 +1,13 @@
 package org.bcit.comp2522.project;
 
-import processing.core.PVector;
-import processing.core.PImage;
+import static org.bcit.comp2522.project.ConstantManager.CUT_HITBOX_IN_HALF;
+import static org.bcit.comp2522.project.ConstantManager.ENEMY_STANDARD_HITBOX_HEIGHT;
+import static org.bcit.comp2522.project.ConstantManager.ENEMY_STANDARD_HITBOX_WIDTH;
+import static org.bcit.comp2522.project.ConstantManager.TWO;
+import static org.bcit.comp2522.project.ConstantManager.ZERO;
 
-import static org.bcit.comp2522.project.ConstantManager.*;
+import processing.core.PImage;
+import processing.core.PVector;
 
 public class Enemy extends Sprite {
   //protected Sprite player;
@@ -12,6 +16,7 @@ public class Enemy extends Sprite {
   private boolean dead;
   private final float hitboxWidth;
   private final float hitboxHeight;
+
   public Enemy(
       Window window,
       //Sprite player,
@@ -50,7 +55,8 @@ public class Enemy extends Sprite {
 
   @Override
   public PVector getCenterPosition() {
-    return new PVector(position.x + hitboxWidth / CUT_HITBOX_IN_HALF, position.y + hitboxHeight / CUT_HITBOX_IN_HALF);
+    return new PVector(position.x + hitboxWidth / CUT_HITBOX_IN_HALF,
+            position.y + hitboxHeight / CUT_HITBOX_IN_HALF);
   }
 
   /**
@@ -74,7 +80,8 @@ public class Enemy extends Sprite {
    */
   @Override
   public void move() {
-    PVector directionToPlayer = PVector.sub(CollectionManager.getInstance().getPlayer().getPosition(), position);
+    PVector directionToPlayer = PVector.sub(CollectionManager.getInstance()
+            .getPlayer().getPosition(), position);
     directionToPlayer.normalize();
     directionToPlayer.mult(speed);
     direction = directionToPlayer;

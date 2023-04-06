@@ -1,27 +1,43 @@
 package org.bcit.comp2522.project;
 
+import static org.bcit.comp2522.project.ConstantManager.ONE;
+import static org.bcit.comp2522.project.ConstantManager.POINTNINETYFIVE;
+import static org.bcit.comp2522.project.ConstantManager.TWENTYFOUR;
+import static org.bcit.comp2522.project.ConstantManager.TWOF;
+import static org.bcit.comp2522.project.ConstantManager.TWOHUNDRED;
+import static org.bcit.comp2522.project.ConstantManager.ZERO;
+
 import processing.core.PApplet;
 import processing.core.PConstants;
 
+/**
+ * DangerLevel class that increases the enemy number on screen depending on score.
+ */
 public class DangerLevel extends UserInterface {
-  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / 2f);
-  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * 0.95f);
+  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / TWOF);
+  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * POINTNINETYFIVE);
   private int dangerLevel;
   private PApplet pApp;
   private EnemySpawner eSpawner;
 
+  /**
+   * Constructor for DangerLevel.
+   *
+   * @param p PApplet object
+   * @param spawner enemy spawner
+   */
   public DangerLevel(PApplet p, EnemySpawner spawner) {
     super(DEFAULT_X_POS, DEFAULT_Y_POS);
     this.pApp = p;
     this.eSpawner = spawner;
-    this.dangerLevel = eSpawner.getSpawnModifier() + 1;
+    this.dangerLevel = eSpawner.getSpawnModifier() + ONE;
   }
 
   @Override
   protected void drawUserInterface() {
-    pApp.fill(200, 0, 0);
+    pApp.fill(TWOHUNDRED, ZERO, ZERO);
     pApp.textAlign(PConstants.CENTER);
-    pApp.textSize(24);
+    pApp.textSize(TWENTYFOUR);
     pApp.text("DANGER LEVEL: " + dangerLevel, positionX, positionY);
   }
 
@@ -30,7 +46,7 @@ public class DangerLevel extends UserInterface {
   }
 
   public void resetDangerLevel() {
-    this.dangerLevel = 1;
+    this.dangerLevel = ONE;
   }
 
   public int getCurrDangerLevel() {
@@ -38,7 +54,7 @@ public class DangerLevel extends UserInterface {
   }
 
   public void update() {
-    this.dangerLevel = eSpawner.getSpawnModifier() + 1;
+    this.dangerLevel = eSpawner.getSpawnModifier() + ONE;
   }
 
   public int getPositionX() {
