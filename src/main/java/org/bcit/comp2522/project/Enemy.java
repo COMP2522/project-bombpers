@@ -1,11 +1,5 @@
 package org.bcit.comp2522.project;
 
-import static org.bcit.comp2522.project.ConstantManager.CUT_HITBOX_IN_HALF;
-import static org.bcit.comp2522.project.ConstantManager.ENEMY_STANDARD_HITBOX_HEIGHT;
-import static org.bcit.comp2522.project.ConstantManager.ENEMY_STANDARD_HITBOX_WIDTH;
-import static org.bcit.comp2522.project.ConstantManager.TWO;
-import static org.bcit.comp2522.project.ConstantManager.ZERO;
-
 import processing.core.PImage;
 import processing.core.PVector;
 
@@ -29,7 +23,7 @@ public class Enemy extends Sprite {
       PVector pos
   ) {
     super(window);
-    this.direction = new PVector(ZERO, ZERO);
+    this.direction = new PVector(ConstantManager.ZERO, ConstantManager.ZERO);
     //this.player = player;
     this.enemySprite = sprite;
     this.enemyType = enemyType;
@@ -38,8 +32,8 @@ public class Enemy extends Sprite {
     this.size = size;
     this.speed = speed;
     this.position = pos;
-    this.hitboxWidth = ENEMY_STANDARD_HITBOX_WIDTH;
-    this.hitboxHeight = ENEMY_STANDARD_HITBOX_HEIGHT;
+    this.hitboxWidth = ConstantManager.ENEMY_STANDARD_HITBOX_WIDTH;
+    this.hitboxHeight = ConstantManager.ENEMY_STANDARD_HITBOX_HEIGHT;
   }
 
   /**
@@ -55,8 +49,8 @@ public class Enemy extends Sprite {
 
   @Override
   public PVector getCenterPosition() {
-    return new PVector(position.x + hitboxWidth / CUT_HITBOX_IN_HALF,
-            position.y + hitboxHeight / CUT_HITBOX_IN_HALF);
+    return new PVector(position.x + hitboxWidth / ConstantManager.CUT_HITBOX_IN_HALF,
+            position.y + hitboxHeight / ConstantManager.CUT_HITBOX_IN_HALF);
   }
 
   /**
@@ -99,7 +93,7 @@ public class Enemy extends Sprite {
     float dy = player.getCenterPosition().y - this.getCenterPosition().y;
     float distance = (float) Math.sqrt(dx * dx + dy * dy);
 
-    float minDistance = (player.getSize() + this.size) / TWO;
+    float minDistance = (player.getSize() + this.size) / ConstantManager.TWO;
 
     return distance <= minDistance;
   }

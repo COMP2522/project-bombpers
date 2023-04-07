@@ -1,7 +1,5 @@
 package org.bcit.comp2522.project;
 
-import static org.bcit.comp2522.project.ConstantManager.ZERO;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -28,7 +26,8 @@ public class CollectionManager {
     sprites = new ArrayList<>();
     projectiles = new ConcurrentLinkedQueue<>();
     enemies = new ArrayList<>();
-    highScore = ZERO; //This highscore is only associated to CollectionManager, used for DB only.
+    //This highscore is only associated to CollectionManager, used for DB only.
+    highScore = ConstantManager.ZERO;
   }
 
   public List<Sprite> getSprites() {

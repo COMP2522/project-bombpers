@@ -1,17 +1,11 @@
 package org.bcit.comp2522.project;
 
-import static org.bcit.comp2522.project.ConstantManager.POINTONE;
-import static org.bcit.comp2522.project.ConstantManager.TWOF;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_FAST_TYPE;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_SLOW_TYPE;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_STANDARD_TYPE;
-
 /**
  * Class for Score of the game set, gets, and displays score.
  */
 public class Score extends UserInterface {
-  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / TWOF);
-  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * POINTONE);
+  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / ConstantManager.TWOF);
+  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * ConstantManager.POINTONE);
   /**
    * The high score of the game.
    */
@@ -126,9 +120,9 @@ public class Score extends UserInterface {
   public void incrementScore(int score, Enemy enemy) {
     int typeOfEnemy = enemy.enemyType;
     switch (typeOfEnemy) {
-      case ENEMY_STANDARD_TYPE -> score++;
-      case ENEMY_FAST_TYPE -> score = score + ENEMY_FAST_VAUE;
-      case ENEMY_SLOW_TYPE -> score = score + ENEMY_SLOW_VAUE;
+      case EnemyConfig.ENEMY_STANDARD_TYPE -> score++;
+      case EnemyConfig.ENEMY_FAST_TYPE -> score = score + ENEMY_FAST_VAUE;
+      case EnemyConfig.ENEMY_SLOW_TYPE -> score = score + ENEMY_SLOW_VAUE;
     }
     setCurrentScore(score);
   }

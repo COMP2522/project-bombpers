@@ -1,8 +1,5 @@
 package org.bcit.comp2522.project;
 
-import static org.bcit.comp2522.project.ConstantManager.SPEED_OF_SCROLL;
-import static org.bcit.comp2522.project.ConstantManager.ZERO;
-
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -39,8 +36,8 @@ public class Background implements Drawable {
   public Background(PApplet parent) {
     this.parent = parent;
     this.backgroundImage = loadBackgroundImage();
-    this.offset = ZERO;
-    this.speed = SPEED_OF_SCROLL;
+    this.offset = ConstantManager.ZERO;
+    this.speed = ConstantManager.SPEED_OF_SCROLL;
   }
 
   /**
@@ -58,12 +55,13 @@ public class Background implements Drawable {
   @Override
   public void draw() {
     float imageWidth = (float) (backgroundImage.width * parent.height) / backgroundImage.height;
-    parent.image(backgroundImage, offset, ZERO, imageWidth, parent.height);
-    parent.image(backgroundImage, offset + imageWidth, ZERO, imageWidth, parent.height);
+    parent.image(backgroundImage, offset, ConstantManager.ZERO, imageWidth, parent.height);
+    parent.image(backgroundImage, offset + imageWidth, ConstantManager.ZERO,
+            imageWidth, parent.height);
 
     offset -= speed;
     if (offset <= -imageWidth) {
-      offset = ZERO;
+      offset = ConstantManager.ZERO;
     }
   }
 }

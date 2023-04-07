@@ -1,17 +1,12 @@
 package org.bcit.comp2522.project;
 
-//import static org.bcit.comp2522.project.ConstantManager.*;
-import static org.bcit.comp2522.project.ConstantManager.POINTFIFTEEN;
-import static org.bcit.comp2522.project.ConstantManager.POINTNINE;
-import static org.bcit.comp2522.project.ConstantManager.TWENTYFOUR;
-import static org.bcit.comp2522.project.ConstantManager.TWOTWENTY;
-
 import processing.core.PApplet;
 import processing.core.PConstants;
 
 public class HPDisplay extends UserInterface {
-  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH * POINTFIFTEEN);
-  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * POINTNINE);
+  private static final int DEFAULT_X_POS =
+          (int) (Window.WINDOW_WIDTH * ConstantManager.POINTFIFTEEN);
+  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * ConstantManager.POINTNINE);
   private CollectionManager collectionManager;
   private PApplet pApp;
   private int health;
@@ -26,8 +21,8 @@ public class HPDisplay extends UserInterface {
   @Override
   public void drawUserInterface() {
     pApp.textAlign(PConstants.RIGHT, PConstants.CENTER);
-    pApp.fill(TWOTWENTY, TWOTWENTY, TWOTWENTY);
-    pApp.textSize(TWENTYFOUR);
+    pApp.fill(ConstantManager.TWOTWENTY, ConstantManager.TWOTWENTY, ConstantManager.TWOTWENTY);
+    pApp.textSize(ConstantManager.TWENTYFOUR);
     pApp.text("HP: " + health, positionX, positionY);
   }
 
@@ -38,21 +33,5 @@ public class HPDisplay extends UserInterface {
   public void takeDamage(int dmg) {
     this.health = collectionManager.getPlayer().getHealth() - dmg;
     update();
-  }
-
-  public int getPositionX() {
-    return positionX;
-  }
-
-  public void setPositionX(int positionX) {
-    this.positionX = positionX;
-  }
-
-  public int getPositionY() {
-    return positionY;
-  }
-
-  public void setPositionY(int positionY) {
-    this.positionY = positionY;
   }
 }

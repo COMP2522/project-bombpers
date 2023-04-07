@@ -1,11 +1,5 @@
 package org.bcit.comp2522.project;
 
-//import static org.bcit.comp2522.project.ConstantManager.*;
-import static org.bcit.comp2522.project.ConstantManager.CHAR_RESIZE_WIDTH;
-import static org.bcit.comp2522.project.ConstantManager.CHAR_X_POS_MOVE;
-import static org.bcit.comp2522.project.ConstantManager.CHAR_Y_POS_MOVE;
-import static org.bcit.comp2522.project.ConstantManager.ZERO;
-
 import processing.core.PConstants;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -104,8 +98,8 @@ public class InputHandler {
    * @return the new direction of the player.
    */
   public PVector updatePlayerDirection() {
-    int directionX = ZERO;
-    int directionY = ZERO;
+    int directionX = ConstantManager.ZERO;
+    int directionY = ConstantManager.ZERO;
 
     // Check if the key is pressed and update the direction accordingly
     if (isLeftPressed) {
@@ -122,10 +116,11 @@ public class InputHandler {
     }
 
     // If the direction is not 0,0, set the player's direction to the new direction
-    if (directionX != ZERO || directionY != ZERO) {
+    if (directionX != ConstantManager.ZERO || directionY != ConstantManager.ZERO) {
       collectionManager.getPlayer().setDirection(new PVector(directionX, directionY));
     } else {
-      collectionManager.getPlayer().setDirection(new PVector(ZERO, ZERO));
+      collectionManager.getPlayer()
+              .setDirection(new PVector(ConstantManager.ZERO, ConstantManager.ZERO));
     }
 
     return new PVector(directionX, directionY);
@@ -138,8 +133,10 @@ public class InputHandler {
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
 
       PVector projectileStartPosition = new PVector(
-          playerPosition.x + CHAR_X_POS_MOVE - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
-          playerPosition.y + CHAR_Y_POS_MOVE - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
+          playerPosition.x + ConstantManager.CHAR_X_POS_MOVE
+                  - Projectile.PROJECTILE_SIZE / ConstantManager.CHAR_RESIZE_WIDTH,
+          playerPosition.y + ConstantManager.CHAR_Y_POS_MOVE
+                  - Projectile.PROJECTILE_SIZE / ConstantManager.CHAR_RESIZE_WIDTH
       );
 
       Projectile projectile = new Projectile(

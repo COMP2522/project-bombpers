@@ -1,12 +1,5 @@
 package org.bcit.comp2522.project;
 
-import static org.bcit.comp2522.project.ConstantManager.ONE;
-import static org.bcit.comp2522.project.ConstantManager.POINTNINETYFIVE;
-import static org.bcit.comp2522.project.ConstantManager.TWENTYFOUR;
-import static org.bcit.comp2522.project.ConstantManager.TWOF;
-import static org.bcit.comp2522.project.ConstantManager.TWOHUNDRED;
-import static org.bcit.comp2522.project.ConstantManager.ZERO;
-
 import processing.core.PApplet;
 import processing.core.PConstants;
 
@@ -14,8 +7,9 @@ import processing.core.PConstants;
  * DangerLevel class that increases the enemy number on screen depending on score.
  */
 public class DangerLevel extends UserInterface {
-  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / TWOF);
-  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * POINTNINETYFIVE);
+  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / ConstantManager.TWOF);
+  private static final int DEFAULT_Y_POS =
+          (int) (Window.WINDOW_HEIGHT * ConstantManager.POINTNINETYFIVE);
   private int dangerLevel;
   private PApplet pApp;
   private EnemySpawner eSpawner;
@@ -30,14 +24,14 @@ public class DangerLevel extends UserInterface {
     super(DEFAULT_X_POS, DEFAULT_Y_POS);
     this.pApp = p;
     this.eSpawner = spawner;
-    this.dangerLevel = eSpawner.getSpawnModifier() + ONE;
+    this.dangerLevel = eSpawner.getSpawnModifier() + ConstantManager.ONE;
   }
 
   @Override
   protected void drawUserInterface() {
-    pApp.fill(TWOHUNDRED, ZERO, ZERO);
+    pApp.fill(ConstantManager.TWOHUNDRED, ConstantManager.ZERO, ConstantManager.ZERO);
     pApp.textAlign(PConstants.CENTER);
-    pApp.textSize(TWENTYFOUR);
+    pApp.textSize(ConstantManager.TWENTYFOUR);
     pApp.text("DANGER LEVEL: " + dangerLevel, positionX, positionY);
   }
 
@@ -46,7 +40,7 @@ public class DangerLevel extends UserInterface {
   }
 
   public void resetDangerLevel() {
-    this.dangerLevel = ONE;
+    this.dangerLevel = ConstantManager.ONE;
   }
 
   public int getCurrDangerLevel() {
@@ -54,22 +48,7 @@ public class DangerLevel extends UserInterface {
   }
 
   public void update() {
-    this.dangerLevel = eSpawner.getSpawnModifier() + ONE;
+    this.dangerLevel = eSpawner.getSpawnModifier() + ConstantManager.ONE;
   }
 
-  public int getPositionX() {
-    return this.positionX;
-  }
-
-  public void setPositionX(int positionX) {
-    this.positionX = positionX;
-  }
-
-  public int getPositionY() {
-    return this.positionY;
-  }
-
-  public void setPositionY(int positionY) {
-    this.positionY = positionY;
-  }
 }

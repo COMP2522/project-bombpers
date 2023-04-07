@@ -1,8 +1,5 @@
 package org.bcit.comp2522.project;
 
-import static org.bcit.comp2522.project.ConstantManager.TWO;
-import static org.bcit.comp2522.project.ConstantManager.ZERO;
-
 import processing.core.PImage;
 import processing.core.PVector;
 
@@ -85,8 +82,8 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
       return position;
     }
 
-    float centerX = position.x + ((float) image.width / TWO);
-    float centerY = position.y + ((float) image.height / TWO);
+    float centerX = position.x + ((float) image.width / ConstantManager.TWO);
+    float centerY = position.y + ((float) image.height / ConstantManager.TWO);
     return new PVector(centerX, centerY);
   }
 
@@ -94,9 +91,9 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
    * Checks to see if a sprite has collided with a wall.
    */
   public void bounce() {
-    if (this.position.x <= ZERO
+    if (this.position.x <= ConstantManager.ZERO
         || this.position.x >= window.width
-        || this.position.y <= ZERO
+        || this.position.y <= ConstantManager.ZERO
         || this.position.y >= window.height) {
       this.direction.rotate(window.HALF_PI);
     }

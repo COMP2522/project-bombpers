@@ -1,37 +1,15 @@
 package org.bcit.comp2522.project;
 
-//import static org.bcit.comp2522.project.ConstantManager.*;
-import static org.bcit.comp2522.project.ConstantManager.BASE_WAVE_COUNT;
-import static org.bcit.comp2522.project.ConstantManager.NO_ENEMIES;
-import static org.bcit.comp2522.project.ConstantManager.TIER_THRESHOLD;
-import static org.bcit.comp2522.project.ConstantManager.ZERO;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_FAST_DAMAGE;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_FAST_HEALTH;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_FAST_SIZE;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_FAST_SPEED;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_FAST_TYPE;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_SLOW_DAMAGE;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_SLOW_HEALTH;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_SLOW_SIZE;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_SLOW_SPEED;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_SLOW_TYPE;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_STANDARD_DAMAGE;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_STANDARD_HEALTH;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_STANDARD_SIZE;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_STANDARD_SPEED;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_STANDARD_TYPE;
-import static org.bcit.comp2522.project.EnemyConfig.ENEMY_TYPES;
-
 import java.util.Random;
 import processing.core.PImage;
 import processing.core.PVector;
 
 public class EnemySpawner {
-  private int spawnModifier = ZERO;
+  private int spawnModifier = ConstantManager.ZERO;
   /**
    * Maximum number of enemies.
    */
-  private int enemy_max = BASE_WAVE_COUNT + spawnModifier;
+  private int enemy_max = ConstantManager.BASE_WAVE_COUNT + spawnModifier;
   private int curr_enemy_count;
   private final Random randomNumber = new Random();
   private final CollectionManager collectionManager;
@@ -44,31 +22,31 @@ public class EnemySpawner {
 
   public void spawnerActivate() {
     if (spawnAvailable()) {
-      int diceRoll = randomNumber.nextInt(ENEMY_TYPES) + 1;
+      int diceRoll = randomNumber.nextInt(EnemyConfig.ENEMY_TYPES) + 1;
       switch (diceRoll) {
-        case ENEMY_STANDARD_TYPE -> spawnEnemy(
+        case EnemyConfig.ENEMY_STANDARD_TYPE -> spawnEnemy(
             window.enemyStandardSprite,
-            ENEMY_STANDARD_TYPE,
-            ENEMY_STANDARD_HEALTH,
-            ENEMY_STANDARD_DAMAGE,
-            ENEMY_STANDARD_SIZE,
-            ENEMY_STANDARD_SPEED
+            EnemyConfig.ENEMY_STANDARD_TYPE,
+            EnemyConfig.ENEMY_STANDARD_HEALTH,
+            EnemyConfig.ENEMY_STANDARD_DAMAGE,
+            EnemyConfig.ENEMY_STANDARD_SIZE,
+            EnemyConfig.ENEMY_STANDARD_SPEED
         );
-        case ENEMY_FAST_TYPE -> spawnEnemy(
+        case EnemyConfig.ENEMY_FAST_TYPE -> spawnEnemy(
             window.enemyFastSprite,
-            ENEMY_FAST_TYPE,
-            ENEMY_FAST_HEALTH,
-            ENEMY_FAST_DAMAGE,
-            ENEMY_FAST_SIZE,
-            ENEMY_FAST_SPEED
+            EnemyConfig.ENEMY_FAST_TYPE,
+            EnemyConfig.ENEMY_FAST_HEALTH,
+            EnemyConfig.ENEMY_FAST_DAMAGE,
+            EnemyConfig.ENEMY_FAST_SIZE,
+            EnemyConfig.ENEMY_FAST_SPEED
         );
-        case ENEMY_SLOW_TYPE -> spawnEnemy(
+        case EnemyConfig.ENEMY_SLOW_TYPE -> spawnEnemy(
             window.enemySlowSprite,
-            ENEMY_SLOW_TYPE,
-            ENEMY_SLOW_HEALTH,
-            ENEMY_SLOW_DAMAGE,
-            ENEMY_SLOW_SIZE,
-            ENEMY_SLOW_SPEED
+            EnemyConfig.ENEMY_SLOW_TYPE,
+            EnemyConfig.ENEMY_SLOW_HEALTH,
+            EnemyConfig.ENEMY_SLOW_DAMAGE,
+            EnemyConfig.ENEMY_SLOW_SIZE,
+            EnemyConfig.ENEMY_SLOW_SPEED
         );
         default -> System.out.println("Invalid spawn type");
       }
@@ -120,12 +98,12 @@ public class EnemySpawner {
   }
 
   public void updateSpawnModifier(Score score) {
-    this.spawnModifier = score.getCurrentScore() / TIER_THRESHOLD;
-    this.enemy_max = BASE_WAVE_COUNT + spawnModifier;
+    this.spawnModifier = score.getCurrentScore() / ConstantManager.TIER_THRESHOLD;
+    this.enemy_max = ConstantManager.BASE_WAVE_COUNT + spawnModifier;
   }
 
   public void countReset() {
-    this.curr_enemy_count = NO_ENEMIES;
+    this.curr_enemy_count = ConstantManager.NO_ENEMIES;
   }
 
   public int getCount() {
