@@ -1,7 +1,10 @@
 package org.bcit.comp2522.project;
 
 import static org.bcit.comp2522.project.EnemyConfig.*;
+
+import processing.core.PImage;
 import processing.core.PVector;
+
 import java.util.Random;
 
 public class EnemySpawner {
@@ -12,9 +15,8 @@ public class EnemySpawner {
   /**
    * Maximum number of enemies.
    */
-  private int enem_max = BASE_WAVE_COUNT + spawnModifier;
-  private int curr_enem_count;
-
+  private int enemy_max = BASE_WAVE_COUNT + spawnModifier;
+  private int curr_enemy_count;
   private Random randomNumber = new Random();
   private CollectionManager collectionManager;
   private Window window;
@@ -24,96 +26,98 @@ public class EnemySpawner {
     this.window = window;
   }
 
-  public void spawnEnemy() {
-
-    int diceRoll = randomNumber.nextInt(ENEM_TYPES) + 1;
-    switch (diceRoll) {
-      case ENEM_STANDARD_TYPE -> spawnStandardEnemy();
-      case ENEM_FAST_TYPE -> spawnFastEnemy();
-      case ENEM_SLOW_TYPE -> spawnSlowEnemy();
-      default -> System.out.println("Invalid spawn type");
+  public void spawnerActivate() {
+    if (spawnAvailable()) {
+      int diceRoll = randomNumber.nextInt(ENEMY_TYPES) + 1;
+      switch (diceRoll) {
+        case ENEMY_STANDARD_TYPE -> spawnEnemy(
+            window.enemyStandardSprite,
+            ENEMY_STANDARD_TYPE,
+            ENEMY_STANDARD_HEALTH,
+            ENEMY_STANDARD_DAMAGE,
+            ENEMY_STANDARD_SIZE,
+            ENEMY_STANDARD_SPEED
+        );
+        case ENEMY_FAST_TYPE -> spawnEnemy(
+            window.enemyFastSprite,
+            ENEMY_FAST_TYPE,
+            ENEMY_FAST_HEALTH,
+            ENEMY_FAST_DAMAGE,
+            ENEMY_FAST_SIZE,
+            ENEMY_FAST_SPEED
+        );
+        case ENEMY_SLOW_TYPE -> spawnEnemy(
+            window.enemySlowSprite,
+            ENEMY_SLOW_TYPE,
+            ENEMY_SLOW_HEALTH,
+            ENEMY_SLOW_DAMAGE,
+            ENEMY_SLOW_SIZE,
+            ENEMY_SLOW_SPEED
+        );
+        default -> System.out.println("Invalid spawn type");
+      }
     }
   }
 
-  public void spawnStandardEnemy() {
-    if (this.curr_enem_count < this.enem_max) {
-      int randomY = randomNumber.nextInt(window.height);
-      PVector randomPos = new PVector(window.width, randomY);
-      Enemy newEnemy = new Enemy(
-          window,
-          collectionManager.getPlayer(),
-          window.enemyStandardSprite,
-          ENEM_STANDARD_TYPE,
-          ENEMY_STANDARD_HEALTH,
-          ENEMY_STANDARD_DAMAGE,
-          ENEMY_STANDARD_SIZE,
-          ENEMY_STANDARD_SPEED,
-          randomPos
-      );
-      this.curr_enem_count++;
-      collectionManager.getEnemies().add(newEnemy);
-      collectionManager.getSprites().add(newEnemy);
-    }
+  public void spawnEnemy(
+      PImage sprite,
+      int enemyType,
+      int health,
+      int damage,
+      float size,
+      float speed
+  ) {
+    Enemy newEnemy = new Enemy(
+        window,
+        sprite,
+        enemyType,
+        health,
+        damage,
+        size,
+        speed,
+        randomizePosition()
+    );
+    addToCollection(newEnemy);
+    increaseEnemyCount();
   }
 
-
-  private void spawnFastEnemy() {
-    if (this.curr_enem_count < this.enem_max) {
-      int randomY = randomNumber.nextInt(window.height);
-      PVector randomPos = new PVector(window.width, randomY);
-      Enemy newEnemy = new Enemy(
-          window,
-          collectionManager.getPlayer(),
-          window.enemyFastSprite,
-          ENEM_FAST_TYPE,
-          ENEMY_FAST_HEALTH,
-          ENEMY_FAST_DAMAGE,
-          ENEMY_FAST_SIZE,
-          ENEMY_FAST_SPEED,
-          randomPos
-      );
-      this.curr_enem_count++;
-      collectionManager.getEnemies().add(newEnemy);
-      collectionManager.getSprites().add(newEnemy);
-    }
+  public void addToCollection(Enemy newEnemy) {
+    collectionManager.getEnemies().add(newEnemy);
+    collectionManager.getSprites().add(newEnemy);
   }
 
-  public void spawnSlowEnemy() {
-    if (this.curr_enem_count < this.enem_max) {
-      int randomY = randomNumber.nextInt(window.height);
-      PVector randomPos = new PVector(window.width, randomY);
-      Enemy newEnemy = new Enemy(
-          window,
-          collectionManager.getPlayer(),
-          window.enemySlowSprite,
-          ENEM_SLOW_TYPE,
-          ENEMY_SLOW_HEALTH,
-          ENEMY_SLOW_DAMAGE,
-          ENEMY_SLOW_SIZE,
-          ENEMY_SLOW_SPEED,
-          randomPos
-      );
-      this.curr_enem_count++;
-      collectionManager.getEnemies().add(newEnemy);
-      collectionManager.getSprites().add(newEnemy);
+  public boolean spawnAvailable() {
+    if (this.curr_enemy_count > this.enemy_max) {
+      return false;
     }
+    return true;
   }
 
-  public void decreaseEnemCount() {
-    this.curr_enem_count--;
+  public PVector randomizePosition() {
+    int randomY = randomNumber.nextInt(Window.WINDOW_HEIGHT);
+    PVector randomPos = new PVector(Window.WINDOW_WIDTH, randomY);
+    return randomPos;
+  }
+
+  public void increaseEnemyCount() {
+    this.curr_enemy_count++;
+  }
+
+  public void decreaseEnemyCount() {
+    this.curr_enemy_count--;
   }
 
   public void updateSpawnModifier(Score score) {
     this.spawnModifier = score.getCurrentScore() / TIER_THRESHOLD;
-    this.enem_max = BASE_WAVE_COUNT + spawnModifier;
+    this.enemy_max = BASE_WAVE_COUNT + spawnModifier;
   }
 
   public void countReset() {
-    this.curr_enem_count = NO_ENEMIES;
+    this.curr_enemy_count = NO_ENEMIES;
   }
 
   public int getCount() {
-    return this.curr_enem_count;
+    return this.curr_enemy_count;
   }
 
   public int getSpawnModifier() {
