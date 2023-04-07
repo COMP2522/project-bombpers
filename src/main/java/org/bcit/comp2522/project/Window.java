@@ -26,6 +26,7 @@ public class Window extends PApplet {
      */
     private PImage projectileImage;
     CollectionManager collectionManager;
+    CollisionHandler collisionHandler;
     public EnemySpawner enemySpawner;
     /**
      * Declares a score variable to store the score.
@@ -81,6 +82,7 @@ public class Window extends PApplet {
         uiHandler = new UIHandler(this, this, stateOfGame, enemySpawner);
         //score = uiHandler.getScore();
         this.db = DatabaseHandler.getInstance(collectionManager);
+        collisionHandler = new CollisionHandler(collectionManager, this, uiHandler);
         uiHandler.getScore().setHighScore(db.load());
         collectionManager.setHighScore(db.load()); //This is used for DB purposes.
         enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
@@ -106,6 +108,7 @@ public class Window extends PApplet {
   @Override
   public void keyPressed(KeyEvent event) {
     inputHandler.keyPressed(event);
+    inputHandler.pauseGameOnPKeyPressed(event);
     // Update the player's direction
     updatePlayerDirection();
   }
@@ -141,82 +144,67 @@ public class Window extends PApplet {
    * Draws everything in the window.
    */
   public void draw() {
-    // If the game is in the start menu, pause menu, or end game menu, create the menu
-    if (stateOfGame == GameState.STARTMENU || stateOfGame == GameState.PAUSE || stateOfGame == GameState.ENDGAME) {
-
-      stateOfGame = menuhandler.createMenu(stateOfGame, uiHandler.getScore().getCurrentScore(), uiHandler.getScore().getHighScore());
-    } else if (stateOfGame == GameState.STARTGAME) {
-      background.draw();
-      uiHandler.draw(stateOfGame);
-      // If key 'p' is pressed, pause the game
-      if (keyPressed) {
-        if (key == 'p' || key == 'P') {
-          //state to pause
-          stateOfGame = GameState.PAUSE;
-        }
-      }
-      // Create the sprites and draw as well as update them
-      for (Sprite sprite : collectionManager.getSprites()) {
-        sprite.update();
-        sprite.draw();
-      }
-      collectionManager.getProjectiles().removeIf(projectile -> {
-        boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
-        if (toRemove) {
-          collectionManager.getSprites().remove(projectile);
-        }
-        return toRemove;
-      });
-      ArrayList<Enemy> toRemove = new ArrayList<>();
-      ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
-      for (Enemy enemy : collectionManager.getEnemies()) {
-        if (enemy.checkCollisionWithPlayer(collectionManager.getPlayer())) {
-          toRemove.add(enemy);
-          collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
-          uiHandler.getHPDisplay().takeDamage(enemy.getDamage());
-                    if (collectionManager.getPlayer().getHealth() <= 0) {
-                        stateOfGame = GameState.ENDGAME;
-                        collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
-                        uiHandler.getHPDisplay().update();
-                        for (Enemy enemyRemain : collectionManager.getEnemies()) {
-                            toRemove.add(enemyRemain);
-                            enemySpawner.countReset();
-                            uiHandler.getDangerLevel().resetDangerLevel();
-                        }
-                    }
-                }
-                for (Projectile projectile : collectionManager.getProjectiles()) {
-                    projectile.collide(projectile, enemy);
-                    if (projectile.isDead()) {
-                        projectilesToRemove.add(projectile);
-                        if (enemy.isDead()) {
-                            toRemove.add(enemy);
-                            enemySpawner.decreaseEnemyCount();
-                            enemySpawner.updateSpawnModifier(uiHandler.getScore());
-                            uiHandler.getScore().incrementScore(uiHandler.getScore().getCurrentScore(), enemy);
-                            uiHandler.getScore().displayScore(stateOfGame);
-                            uiHandler.getDangerLevel().update();
-                            if (uiHandler.getScore().getCurrentScore() >= uiHandler.getScore().getHighScore()) {
-                              uiHandler.getScore().setHighScore(uiHandler.getScore().getCurrentScore());
-                              collectionManager.setHighScore(uiHandler.getScore().getCurrentScore());
-                            }
-                        }
-                    }
-                }
-            }
-            // Remove the enemies that have collided with the player
-            for (Enemy enemy : toRemove) {
-                collectionManager.getEnemies().remove(enemy);
-                collectionManager.getSprites().remove(enemy);
-            }
-            for (Projectile projectile : projectilesToRemove) {
-                collectionManager.getProjectiles().remove(projectile);
-                collectionManager.getSprites().remove(projectile);
-            }
-            // Spawns new enemies mid-game
-            enemySpawner.spawnerActivate();
-        }
+    switch (stateOfGame) {
+      case STARTMENU, PAUSE, ENDGAME ->
+              stateOfGame = menuhandler.createMenu(stateOfGame, uiHandler.getScore().getCurrentScore(),
+                                                                uiHandler.getScore().getHighScore());
+      case STARTGAME -> drawGame();
     }
+  }
+
+  public void drawGame() {
+    background.draw();
+    uiHandler.draw(stateOfGame);
+
+    drawAndUpdateSprites();
+
+    removeOffscreenProjectiles();
+    collisionHandler.handleCollisions();
+
+    enemySpawner.spawnerActivate();
+  }
+
+  public void drawAndUpdateSprites() {
+    for (Sprite sprite : collectionManager.getSprites()) {
+      sprite.update();
+      sprite.draw();
+    }
+  }
+
+  public void removeOffscreenProjectiles() {
+    collectionManager.getProjectiles().removeIf(projectile -> {
+      boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x > width || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
+      if (toRemove) {
+        collectionManager.getSprites().remove(projectile);
+      }
+      return toRemove;
+    });
+  }
+
+  public void handleGameOver(ArrayList<Enemy> enemiesToRemove) {
+    stateOfGame = GameState.ENDGAME;
+    collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
+    uiHandler.getHPDisplay().update();
+    enemiesToRemove.addAll(collectionManager.getEnemies());
+    enemySpawner.countReset();
+    uiHandler.getDangerLevel().resetDangerLevel();
+  }
+
+  public void updateGameParametersAfterEnemyDeath(Enemy enemy) {
+    enemySpawner.decreaseEnemyCount();
+    enemySpawner.updateSpawnModifier(uiHandler.getScore());
+    uiHandler.getScore().incrementScore(uiHandler.getScore().getCurrentScore(), enemy);
+    uiHandler.getScore().displayScore(stateOfGame);
+    uiHandler.getDangerLevel().update();
+    updateHighScoreIfNeeded();
+  }
+
+  private void updateHighScoreIfNeeded() {
+    if (uiHandler.getScore().getCurrentScore() >= uiHandler.getScore().getHighScore()) {
+      uiHandler.getScore().setHighScore(uiHandler.getScore().getCurrentScore());
+      collectionManager.setHighScore(uiHandler.getScore().getCurrentScore());
+    }
+  }
 
   /**
    * main method.
