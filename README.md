@@ -1,18 +1,28 @@
-# Project HELLO WORLD
+# Project Bompers
 
 ## Technical Project Requirements
 
 The minimum requirements for the project are outlined here to give you a starting point. Meeting the minimum requirements alone will not guarantee you a good mark. You are welcome to meet and exceed the minimum requirements if you have good, creative ideas and would like to discuss them with me.
 
 **Requirement 1**: The project must incorporate some visual interface using Processing.org libraries. All user interaction must be conducted via this interface.
+      
+      We use the Processing.org libraries in many ways to incorporate visual interfaces and user interaction some examples are the menus, score, gameplay, and sprites for the characters. 
 
 **Requirement 2**: The project must incorporate some kind of non-blocking concurrent/asynchronous processing that happens at regular intervals. For example, you might push or fetch data from in the background.
 
+  We have the stats in the game being sent to the database in a asyncronous process where these stats are updated every thirty seconds whie the game is running. This is useful for stats sucha s the player's health, highscore, and position.
+  
 **Requirement 3**: The project must incorporate some kind of non-trivial persistent data state that must be read, processed, and written at regular intervals. For example, you might save a game state in a JSON file. This may or may not be included with Requirement 2.
-
+  
+  We have incorporated a save state in our game that is read and processed at regular intervals of thirty seconds. Another example is the highscore that also  even when the user closes the window and restarts the previous high score still persists.
+  
 **Requirement 4**: The project must incorporate some kind of self-managing custom iterable data structure. For example, you might have a collection of enemies that are added and deleted based on statistics maintained by the data structure.
 
+We created a ConcurrentLinkedQueue which is an iterable data struture that holds our projectiles this iterates throug and removes the first projectile shot dince it uses a First In First Out approach. 
+
 **Requirement 5**: The project must be well-documented, complete, and run without errors on final submission.
+
+Our game is well documented as it includes javadocs explaining the code adn runs without error.
 
 ## Project Pitch (group, 1%)
 
