@@ -1,8 +1,11 @@
 package org.bcit.comp2522.project;
 
-import processing.core.PVector;
 import processing.core.PImage;
+import processing.core.PVector;
 
+/**
+ * Class for enemy objects.
+ */
 public class Enemy extends Sprite {
   //protected Sprite player;
   protected PImage enemySprite;
@@ -12,8 +15,20 @@ public class Enemy extends Sprite {
   private final float hitboxHeight;
   public static final int ENEMY_STANDARD_HITBOX_WIDTH = 10;
   public static final int ENEMY_STANDARD_HITBOX_HEIGHT = 25;
-  public final int CUT_HITBOX_IN_HALF = 2;
+  public static final int CUT_HITBOX_IN_HALF = 2;
 
+  /**
+   * Constructor for enemy objects.
+   *
+   * @param window Window that houses this enemy
+   * @param sprite Visual sprite of enemy
+   * @param enemyType Enemy type according to EnemyConfig
+   * @param health Amount of damage that can be taken before perishing
+   * @param damage Damage dealt to player on contact
+   * @param size Size of the enemy
+   * @param speed Movement speed of the enemy
+   * @param pos Initial position of enemy
+   */
   public Enemy(
       Window window,
       //Sprite player,
@@ -52,7 +67,10 @@ public class Enemy extends Sprite {
 
   @Override
   public PVector getCenterPosition() {
-    return new PVector(position.x + hitboxWidth / CUT_HITBOX_IN_HALF, position.y + hitboxHeight / CUT_HITBOX_IN_HALF);
+    return new PVector(
+        position.x + hitboxWidth / CUT_HITBOX_IN_HALF,
+        position.y + hitboxHeight / CUT_HITBOX_IN_HALF
+    );
   }
 
   /**
@@ -76,7 +94,12 @@ public class Enemy extends Sprite {
    */
   @Override
   public void move() {
-    PVector directionToPlayer = PVector.sub(CollectionManager.getInstance().getPlayer().getPosition(), position);
+    PVector directionToPlayer = PVector.sub(
+        CollectionManager
+            .getInstance()
+            .getPlayer()
+            .getPosition(),
+        position);
     directionToPlayer.normalize();
     directionToPlayer.mult(speed);
     direction = directionToPlayer;

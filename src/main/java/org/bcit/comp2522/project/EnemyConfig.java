@@ -1,5 +1,8 @@
 package org.bcit.comp2522.project;
 
+/**
+ * Configuration file for enemies and variations of enemies.
+ */
 public class EnemyConfig {
   // Number of Enemy Types
   public static final int ENEMY_TYPES = 3;
