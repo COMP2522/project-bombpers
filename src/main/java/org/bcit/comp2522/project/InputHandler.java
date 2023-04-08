@@ -4,8 +4,6 @@ import processing.core.PConstants;
 import processing.core.PImage;
 import processing.core.PVector;
 import processing.event.KeyEvent;
-import processing.core.PConstants;
-import processing.core.PApplet;
 
 /**
  * InputHandler class - handles the input from the user.
@@ -150,9 +148,9 @@ public class InputHandler {
   }
 
   public void pauseGameOnPKeyPressed(KeyEvent event) {
-      char key = event.getKey();
-      if (key == 'p' || key == 'P') {
-        window.stateOfGame = GameState.PAUSE;
-      }
+    char key = event.getKey();
+    if (key == 'p' || key == 'P') {
+      window.stateOfGame = GameState.PAUSE;
+    }
   }
 }

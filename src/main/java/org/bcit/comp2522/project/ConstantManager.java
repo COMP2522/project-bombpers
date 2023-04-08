@@ -4,7 +4,6 @@ public class ConstantManager {
   public static final int ZERO = 0;
   public static final int ONE = 1;
   public static final int TWO = 2;
-  public static final int TWOFIVEFIVE = 255;
   public static final int TWOHUNDRED = 200;
   public static final int TWOTWENTY = 220;
   public static final int TWENTYFOUR = 24;
@@ -15,7 +14,7 @@ public class ConstantManager {
   public static final float POINTONE = 0.1f;
   public static final float SPEED_OF_SCROLL = 0.5f;
   public static final int ENEMY_STANDARD_HITBOX_HEIGHT = 25;
-    public static final int ENEMY_STANDARD_HITBOX_WIDTH = 10;
+  public static final int ENEMY_STANDARD_HITBOX_WIDTH = 10;
   public static final int CUT_HITBOX_IN_HALF = 2;
   public static final int BASE_WAVE_COUNT = 10;
   public static final int TIER_THRESHOLD = 50;

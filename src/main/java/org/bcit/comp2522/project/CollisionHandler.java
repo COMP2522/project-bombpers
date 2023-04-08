@@ -23,7 +23,8 @@ public class CollisionHandler {
     CollectionManager.getInstance().removeCollidedEntities(enemiesToRemove, projectilesToRemove);
   }
 
-  public void checkProjectileEnemyCollisions(ArrayList<Enemy> enemiesToRemove, ArrayList<Projectile> projectilesToRemove) {
+  public void checkProjectileEnemyCollisions(ArrayList<Enemy> enemiesToRemove,
+      ArrayList<Projectile> projectilesToRemove) {
 
     for (Projectile projectile : collectionManager.getProjectiles()) {
       for (Enemy enemy : collectionManager.getEnemies()) {
@@ -35,7 +36,8 @@ public class CollisionHandler {
     }
   }
 
-  public void handleProjectileEnemyCollision(Projectile projectile, Enemy enemy, ArrayList<Projectile> projectilesToRemove, ArrayList<Enemy> enemiesToRemove) {
+  public void handleProjectileEnemyCollision(Projectile projectile, Enemy enemy,
+      ArrayList<Projectile> projectilesToRemove, ArrayList<Enemy> enemiesToRemove) {
     projectilesToRemove.add(projectile);
     if (enemy.isDead()) {
       enemiesToRemove.add(enemy);
@@ -53,7 +55,8 @@ public class CollisionHandler {
 
   public void handlePlayerEnemyCollision(Enemy enemy, ArrayList<Enemy> enemiesToRemove) {
     enemiesToRemove.add(enemy);
-    collectionManager.getPlayer().setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
+    collectionManager.getPlayer().setHealth(collectionManager.getPlayer()
+            .getHealth() - enemy.getDamage());
     uiHandler.getHPDisplay().takeDamage(enemy.getDamage());
     if (collectionManager.getPlayer().getHealth() <= 0) {
       window.handleGameOver(enemiesToRemove);

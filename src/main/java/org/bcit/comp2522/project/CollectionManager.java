@@ -78,7 +78,14 @@ public class CollectionManager {
     return highScore;
   }
 
-  public void removeCollidedEntities(ArrayList<Enemy> enemiesToRemove, ArrayList<Projectile> projectilesToRemove) {
+  /**
+   * Removes the enemies and projectiles that collided with each other.
+   *
+   * @param enemiesToRemove enemies that will be removed
+   * @param projectilesToRemove projectiles that will be removed
+   */
+  public void removeCollidedEntities(ArrayList<Enemy> enemiesToRemove,
+                                     ArrayList<Projectile> projectilesToRemove) {
     for (Enemy enemy : enemiesToRemove) {
       getEnemies().remove(enemy);
       getSprites().remove(enemy);
