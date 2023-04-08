@@ -77,4 +77,15 @@ public class CollectionManager {
   public int getHighScore() {
     return highScore;
   }
+
+  public void removeCollidedEntities(ArrayList<Enemy> enemiesToRemove, ArrayList<Projectile> projectilesToRemove) {
+    for (Enemy enemy : enemiesToRemove) {
+      getEnemies().remove(enemy);
+      getSprites().remove(enemy);
+    }
+    for (Projectile projectile : projectilesToRemove) {
+      getProjectiles().remove(projectile);
+      getSprites().remove(projectile);
+    }
+  }
 }
