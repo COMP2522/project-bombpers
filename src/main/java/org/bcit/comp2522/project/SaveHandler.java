@@ -2,11 +2,12 @@ package org.bcit.comp2522.project;
 
 public class SaveHandler {
   DatabaseHandler db;
+  UIHandler u;
   CollectionManager c;
 
   public SaveHandler() {
     this.c = CollectionManager.getInstance();
-    this.db = DatabaseHandler.getInstance(c);
+    this.db = DatabaseHandler.getInstance(u, c);
   }
 
   private void save(Score s) {
