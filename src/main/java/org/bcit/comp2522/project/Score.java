@@ -18,6 +18,7 @@ public class Score extends UserInterface {
    * The window of the game that the score is displayed on.
    */
   private final Window window;
+
   private final int STARTING_SCORE = 0;
   private final int MENU_SCORE_TEXT_SIZE = 60;
   private final int GAME_SCORE_TEXT_SIZE = MENU_SCORE_TEXT_SIZE / 2;
@@ -26,6 +27,7 @@ public class Score extends UserInterface {
   private final int BLUE_COLOR_VALUE = 0;
   private final int ENEMY_FAST_VAUE = 2;
   private final int ENEMY_SLOW_VAUE = 3;
+
   private GameState currState;
 
   /**

@@ -6,33 +6,63 @@ import processing.core.PImage;
  * Class for Menu of the game.
  */
 public class Menu extends UserInterface {
+
   //  private message to be displayed
   private String message;
+
   //  the window of the game that the menu is displayed on
   private final Window window;
-  private final int TITLE_SIZE = 80;
-  private final int TEXT_SIZE = 50;
-  private final int TITLE_RED_VALUE = 255;
-  private final int TITLE_BLUE_VALUE = 140;
-  private final int TITLE_GREEN_VALUE = 0;
-  private final int BUTTON_BACKGROUND_COLOR_VALUE = 153;
-  private final int BUTTON_X_POSITION = 120;
-  private final int BUTTON_Y_POSITION = 190;
-  private final int BUTTON_WIDTH = 200;
-  private final int BUTTON_HEIGHT = 45;
-  private final int BUTTON_TEXT_RED_VALUE  = 200;
-  private final int BUTTON_TEXT_BLUE_VALUE  = 0;
-  private final int BUTTON_TEXT_GREEN_VALUE  = 0;
-  private final int START_Y_OFFSET = 20;
 
-  private final int PAUSE_X_OFFSET = 65;
-  private final int PAUSE_Y_OFFSET = 41;
-  private final int END_Y_OFFSET = 57;
-  private final int END_X_OFFSET = 73;
-  private final int TEXT_RESIZE_FACTOR = 2;
-  private final int START_TEXT_X_POS_RESIZE_FACTOR = 3;
+  //Size of the title text
+  private static final int TITLE_SIZE = 80;
+
+  //Size of the button text
+  private static final int BUTTON_TEXT_SIZE = 50;
+
+  //Red value to be used for the color of the title
+  private static final int TITLE_RED_VALUE = 255;
+
+  //Blue value to be used for the color of the title
+  private static final int TITLE_BLUE_VALUE = 140;
+
+  //Green value to be used for the color of the title
+  private static final int TITLE_GREEN_VALUE = 0;
+
+  //Background color of the button
+  private static final int BUTTON_BACKGROUND_COLOR_VALUE = 153;
+
+  //X position of the button
+  private static final int BUTTON_X_POSITION = 120;
+
+  //Y position of the button
+  private static final int BUTTON_Y_POSITION = 190;
+
+  //width of the button
+  private static final int BUTTON_WIDTH = 200;
+
+  //height of the button
+  private static final int BUTTON_HEIGHT = 45;
+
+  // red value of the button text color
+  private static final int BUTTON_TEXT_RED_VALUE  = 200;
+
+  // blue value of the button text color
+  private static final int BUTTON_TEXT_BLUE_VALUE  = 0;
+
+  // green value of the button text color
+  private static final int BUTTON_TEXT_GREEN_VALUE  = 0;
+
+  //Offset the y value of the text so that it is centered inside the button
+  private static final int START_Y_OFFSET = 20;
+
+  //A resize variable to
+  private static final int TEXT_RESIZE_FACTOR = 2;
+  private static final int START_TEXT_X_POS_RESIZE_FACTOR = 3;
   private final PImage MainBG;
   private GameState currState;
+
+  private static final int IMAGE_X_POSITION = 0;
+  private static final int IMAGE_Y_POSITION = 0;
 
   /**
    * Constructor for Menu.
@@ -54,7 +84,7 @@ public class Menu extends UserInterface {
   }
 
   /**
-   * Band-aid
+   * Draws the user interface.
    */
   @Override
   protected void drawUserInterface() {
@@ -69,26 +99,28 @@ public class Menu extends UserInterface {
   public void displayMenu(GameState state) {
     int START_BUTTON_TEXT_X_POSITION = this.window.width / START_TEXT_X_POS_RESIZE_FACTOR;
     int START_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR - START_Y_OFFSET;
-    //int PAUSE_BUTTON_TEXT_X_POSITION = this.window.width / TEXT_RESIZE_FACTOR + PAUSE_X_OFFSET;
-    //int PAUSE_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR - PAUSE_Y_OFFSET;
-    //int END_BUTTON_TEXT_X_POSITION = this.window.width / TEXT_RESIZE_FACTOR + END_X_OFFSET;
-    //int END_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR - END_Y_OFFSET;
     int END_BUTTON_TEXT_X_POSITION = (int) (Window.WINDOW_WIDTH * 0.44f);
     int END_BUTTON_TEXT_Y_POSITION = (int) (Window.WINDOW_HEIGHT * 0.46f);
     int PAUSE_BUTTON_TEXT_X_POSITION = (int) (Window.WINDOW_WIDTH * 0.44f);
     int PAUSE_BUTTON_TEXT_Y_POSITION = (int) (Window.WINDOW_HEIGHT * 0.46f);
-    window.image(MainBG, 0, 0,window.width,window.height);
+    window.image(MainBG, IMAGE_X_POSITION, IMAGE_Y_POSITION, window.width, window.height);
 
     createTitle();
     button();
 
     switch (state) {
-      case STARTMENU -> window.text("Start", START_BUTTON_TEXT_X_POSITION, START_BUTTON_TEXT_Y_POSITION);
-      case ENDGAME -> window.text("Restart", END_BUTTON_TEXT_X_POSITION, END_BUTTON_TEXT_Y_POSITION);
-      case PAUSE -> window.text("Continue", PAUSE_BUTTON_TEXT_X_POSITION, PAUSE_BUTTON_TEXT_Y_POSITION);
+      case STARTMENU ->
+              window.text("Start", START_BUTTON_TEXT_X_POSITION, START_BUTTON_TEXT_Y_POSITION);
+      case ENDGAME ->
+              window.text("Restart", END_BUTTON_TEXT_X_POSITION, END_BUTTON_TEXT_Y_POSITION);
+      case PAUSE ->
+              window.text("Continue", PAUSE_BUTTON_TEXT_X_POSITION, PAUSE_BUTTON_TEXT_Y_POSITION);
     }
   }
 
+  /**
+   * Creates the title text.
+   */
   private void createTitle() {
     setMessage(message);
     String message = getMessage();
@@ -97,18 +129,30 @@ public class Menu extends UserInterface {
     window.text(message, getPositionX(), getPositionY());
   }
 
+  /**
+   * Creates the button that will be displayed on menus.
+   */
   private void button() {
     window.fill(BUTTON_BACKGROUND_COLOR_VALUE);
     window.rect(BUTTON_X_POSITION, BUTTON_Y_POSITION, BUTTON_WIDTH, BUTTON_HEIGHT);
-    window.textSize(TEXT_SIZE);
-    window.fill(BUTTON_TEXT_RED_VALUE,BUTTON_TEXT_BLUE_VALUE,BUTTON_TEXT_GREEN_VALUE);
+    window.textSize(BUTTON_TEXT_SIZE);
+    window.fill(BUTTON_TEXT_RED_VALUE, BUTTON_TEXT_BLUE_VALUE, BUTTON_TEXT_GREEN_VALUE);
   }
 
-
+  /**
+   * returns a string that is the message that will be displayed.
+   *
+   * @return message a string containing the text to be displayed
+   */
   public String getMessage() {
     return message;
   }
 
+  /**
+   * Sets the message variable to the desired text.
+   *
+   * @param message a string that contains the text that we want to display
+   */
   public void setMessage(String message) {
     this.message = message;
   }
