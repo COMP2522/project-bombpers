@@ -79,9 +79,9 @@ public class MenuHandler {
     //Creates new score object to use in menus since score id displayed differently in menus
     this.menuScore = new Score(this.window, this.currentState);
     if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
-            && (this.window.mouseX >= buttonLeftBound && this.window.mouseX < buttonRightBound)
-            && (this.window.mouseY >= buttonTopBound
-            && this.window.mouseY <= buttonBottomBound)) {
+        && (this.window.mouseX >= buttonLeftBound && this.window.mouseX < buttonRightBound)
+        && (this.window.mouseY >= buttonTopBound
+        && this.window.mouseY <= buttonBottomBound)) {
       this.window.mousePressed = false;
       if (this.currentState == GameState.ENDGAME) {
         this.window.init();
@@ -91,7 +91,8 @@ public class MenuHandler {
     }
     //if the current state is startMenu, create the startMenu
     if (this.currentState == GameState.STARTMENU) {
-      startMenu = new Menu(START_MENU_TITLE_X_POSITION, START_MENU_TITLE_Y_POSITION, "Assault Game", this.window);
+      startMenu = new Menu(START_MENU_TITLE_X_POSITION, START_MENU_TITLE_Y_POSITION, "Wave " +
+          "Assault", this.window);
       //display the startMenu
       startMenu.updateGameState(this.currentState);
       startMenu.drawUserInterface();
