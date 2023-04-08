@@ -29,28 +29,20 @@ public class Background implements Drawable {
   private final float speed;
 
   /**
-   * The speed of the background image.
-   */
-  private static final float SPEED_OF_SCROLL = 0.5f;
-
-  /**
-   * The starting point of the background image.
-   */
-  private static final float Y_POS_STARTING_POINT = 0;
-
-  /**
    * Constructor for the Background class.
+   *
    * @param parent the parent PApplet
    */
   public Background(PApplet parent) {
     this.parent = parent;
     this.backgroundImage = loadBackgroundImage();
-    this.offset = 0;
-    this.speed = SPEED_OF_SCROLL;
+    this.offset = ConstantManager.ZERO;
+    this.speed = ConstantManager.SPEED_OF_SCROLL;
   }
 
   /**
    * Loads the background image.
+   *
    * @return the background image
    */
   private PImage loadBackgroundImage() {
@@ -63,12 +55,13 @@ public class Background implements Drawable {
   @Override
   public void draw() {
     float imageWidth = (float) (backgroundImage.width * parent.height) / backgroundImage.height;
-    parent.image(backgroundImage, offset, Y_POS_STARTING_POINT, imageWidth, parent.height);
-    parent.image(backgroundImage, offset + imageWidth, Y_POS_STARTING_POINT, imageWidth, parent.height);
+    parent.image(backgroundImage, offset, ConstantManager.ZERO, imageWidth, parent.height);
+    parent.image(backgroundImage, offset + imageWidth, ConstantManager.ZERO,
+            imageWidth, parent.height);
 
     offset -= speed;
     if (offset <= -imageWidth) {
-      offset = Y_POS_STARTING_POINT;
+      offset = ConstantManager.ZERO;
     }
   }
 }

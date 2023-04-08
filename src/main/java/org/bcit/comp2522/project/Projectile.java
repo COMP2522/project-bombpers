@@ -1,15 +1,13 @@
-
 package org.bcit.comp2522.project;
 
-import processing.core.PVector;
 import processing.core.PImage;
+import processing.core.PVector;
 
 public class Projectile extends Sprite {
   public static final float PROJECTILE_SIZE = 15;
   public static final float PROJECTILE_SPEED = 5.0f;
   public static final int PROJECT_BASE_DAMAGE = 1;
   private final PImage projectileImage;
-  private final int CUT_BOX_IN_HALF = 2;
   private boolean dead;
 
   public Projectile(Window window, PVector position, PVector direction, PImage image) {
@@ -45,12 +43,13 @@ public class Projectile extends Sprite {
     if (one instanceof Projectile projectile && two instanceof Enemy enemy) {
       PVector projectileCenter = projectile.getCenterPosition();
       PVector enemyCenter = enemy.getCenterPosition();
-      float minDistance = (projectile.getSize() / CUT_BOX_IN_HALF) + (enemy.getSize() / CUT_BOX_IN_HALF);
+      float minDistance = (projectile.getSize() / ConstantManager.CUT_HITBOX_IN_HALF)
+              + (enemy.getSize() / ConstantManager.CUT_HITBOX_IN_HALF);
 
       if (PVector.dist(projectileCenter, enemyCenter) < minDistance) {
         projectile.setDead(true);
         enemy.setHealth(enemy.getHealth() - this.damage);
-        if (enemy.getHealth() <= 0) {
+        if (enemy.getHealth() <= ConstantManager.ZERO) {
           enemy.setDead(true);
         }
       }

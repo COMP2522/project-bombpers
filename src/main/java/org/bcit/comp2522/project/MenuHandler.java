@@ -125,4 +125,18 @@ public class MenuHandler {
     }
   }
 
+  /**
+   * Displays the menu depending on the state.
+   * @return
+   */
+  private boolean displayMenu() {
+    menuScore.displayScore(currentState);
+    if (this.window.mousePressed && (this.window.mouseButton == this.window.LEFT)
+            && (this.window.mouseX >= 120 && this.window.mouseX < 312)
+            && (this.window.mouseY >= 199 && this.window.mouseY <= 244)) {
+      this.currentState = GameState.STARTGAME;
+      return true;
+    }
+    return false;
+  }
 }

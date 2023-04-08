@@ -41,7 +41,7 @@ public class Enemy extends Sprite {
       PVector pos
   ) {
     super(window);
-    this.direction = new PVector(0, 0);
+    this.direction = new PVector(ConstantManager.ZERO, ConstantManager.ZERO);
     //this.player = player;
     this.enemySprite = sprite;
     this.enemyType = enemyType;
@@ -50,8 +50,8 @@ public class Enemy extends Sprite {
     this.size = size;
     this.speed = speed;
     this.position = pos;
-    this.hitboxWidth = ENEMY_STANDARD_HITBOX_WIDTH;
-    this.hitboxHeight = ENEMY_STANDARD_HITBOX_HEIGHT;
+    this.hitboxWidth = ConstantManager.ENEMY_STANDARD_HITBOX_WIDTH;
+    this.hitboxHeight = ConstantManager.ENEMY_STANDARD_HITBOX_HEIGHT;
   }
 
   /**
@@ -68,8 +68,8 @@ public class Enemy extends Sprite {
   @Override
   public PVector getCenterPosition() {
     return new PVector(
-        position.x + hitboxWidth / CUT_HITBOX_IN_HALF,
-        position.y + hitboxHeight / CUT_HITBOX_IN_HALF
+        position.x + hitboxWidth / ConstantManager.CUT_HITBOX_IN_HALF,
+        position.y + hitboxHeight / ConstantManager.CUT_HITBOX_IN_HALF
     );
   }
 
@@ -117,7 +117,7 @@ public class Enemy extends Sprite {
     float dy = player.getCenterPosition().y - this.getCenterPosition().y;
     float distance = (float) Math.sqrt(dx * dx + dy * dy);
 
-    float minDistance = (player.getSize() + this.size) / 2;
+    float minDistance = (player.getSize() + this.size) / ConstantManager.TWO;
 
     return distance <= minDistance;
   }

@@ -8,14 +8,11 @@ import processing.core.PVector;
  * Handles the spawning of enemies.
  */
 public class EnemySpawner {
-  private static final int BASE_WAVE_COUNT = 10;
-  private static final int TIER_THRESHOLD = 50;
-  private static final int NO_ENEMIES = 0;
-  private int spawnModifier = 0;
+  private int spawnModifier = ConstantManager.ZERO;
   /**
    * Maximum number of enemies.
    */
-  private int enemyMax = BASE_WAVE_COUNT + spawnModifier;
+  private int enemyMax = ConstantManager.BASE_WAVE_COUNT + spawnModifier;
   private int currEnemyCount;
   private Random randomNumber = new Random();
   private CollectionManager collectionManager;
@@ -105,10 +102,7 @@ public class EnemySpawner {
    * @return Whether enemies allowed to spawn.
    */
   public boolean spawnAvailable() {
-    if (this.currEnemyCount > this.enemyMax) {
-      return false;
-    }
-    return true;
+    return this.currEnemyCount <= this.enemyMax;
   }
 
   /**
@@ -118,8 +112,7 @@ public class EnemySpawner {
    */
   public PVector randomizePosition() {
     int randomY = randomNumber.nextInt(Window.WINDOW_HEIGHT);
-    PVector randomPos = new PVector(Window.WINDOW_WIDTH, randomY);
-    return randomPos;
+    return new PVector(Window.WINDOW_WIDTH, randomY);
   }
 
   public void increaseEnemyCount() {
@@ -131,12 +124,12 @@ public class EnemySpawner {
   }
 
   public void updateSpawnModifier(Score score) {
-    this.spawnModifier = score.getCurrentScore() / TIER_THRESHOLD;
-    this.enemyMax = BASE_WAVE_COUNT + spawnModifier;
+    this.spawnModifier = score.getCurrentScore() / ConstantManager.TIER_THRESHOLD;
+    this.enemyMax = ConstantManager.BASE_WAVE_COUNT + spawnModifier;
   }
 
   public void countReset() {
-    this.currEnemyCount = NO_ENEMIES;
+    this.currEnemyCount = ConstantManager.NO_ENEMIES;
   }
 
   public int getCount() {
