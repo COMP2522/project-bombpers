@@ -20,14 +20,14 @@ public class Score extends UserInterface {
    * The window of the game that the score is displayed on.
    */
   private final Window window;
-  private final int STARTING_SCORE = 0;
-  private final int MENU_SCORE_TEXT_SIZE = 60;
-  private final int GAME_SCORE_TEXT_SIZE = MENU_SCORE_TEXT_SIZE/2;
-  private final int RED_COLOR_VALUE = 255;
-  private final int GREEN_COLOR_VALUE = 255;
-  private final int BLUE_COLOR_VALUE = 0;
-  private final int ENEMY_FAST_VAUE = 2;
-  private final int ENEMY_SLOW_VAUE = 3;
+  private static final int STARTING_SCORE = 0;
+  private static final int MENU_SCORE_TEXT_SIZE = 60;
+  private static final int GAME_SCORE_TEXT_SIZE = MENU_SCORE_TEXT_SIZE/2;
+  private static final int RED_COLOR_VALUE = 255;
+  private static final int GREEN_COLOR_VALUE = 255;
+  private static final int BLUE_COLOR_VALUE = 0;
+  private static final int ENEMY_FAST_VALUE = 2;
+  private static final int ENEMY_SLOW_VALUE = 3;
   private GameState currState;
 
   /**
@@ -123,8 +123,8 @@ public class Score extends UserInterface {
     int typeOfEnemy = enemy.enemyType;
     switch (typeOfEnemy) {
       case ENEMY_STANDARD_TYPE -> score++;
-      case ENEMY_FAST_TYPE -> score = score+ENEMY_FAST_VAUE;
-      case ENEMY_SLOW_TYPE -> score = score+ENEMY_SLOW_VAUE;
+      case ENEMY_FAST_TYPE -> score = score+ENEMY_FAST_VALUE;
+      case ENEMY_SLOW_TYPE -> score = score+ENEMY_SLOW_VALUE;
     }
     setCurrentScore(score);
   }
