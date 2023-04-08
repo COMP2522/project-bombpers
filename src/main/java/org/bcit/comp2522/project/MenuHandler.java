@@ -74,6 +74,7 @@ public class MenuHandler {
       return this.currentState;
     }
 
+
     Menu menu;
     String title;
     int titleX, titleY;
@@ -108,6 +109,7 @@ public class MenuHandler {
     return this.currentState;
   }
 
+
   private void setupMenu(Menu menu) {
     menu.updateGameState(this.currentState);
     menu.drawUserInterface();
@@ -120,6 +122,4 @@ public class MenuHandler {
     this.menuScore.updateGameState(this.currentState);
     this.menuScore.drawUserInterface();
   }
-
-
 }

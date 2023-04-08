@@ -1,13 +1,11 @@
 package org.bcit.comp2522.project;
 
-import static org.bcit.comp2522.project.EnemyConfig.*;
-
 /**
  * Class for Score of the game set, gets, and displays score.
  */
 public class Score extends UserInterface {
-  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / 2f);
-  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * 0.1f);
+  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / ConstantManager.TWOF);
+  private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * ConstantManager.POINTONE);
   /**
    * The high score of the game.
    */
@@ -20,14 +18,16 @@ public class Score extends UserInterface {
    * The window of the game that the score is displayed on.
    */
   private final Window window;
-  private static final int STARTING_SCORE = 0;
-  private static final int MENU_SCORE_TEXT_SIZE = 60;
-  private static final int GAME_SCORE_TEXT_SIZE = MENU_SCORE_TEXT_SIZE/2;
-  private static final int RED_COLOR_VALUE = 255;
-  private static final int GREEN_COLOR_VALUE = 255;
-  private static final int BLUE_COLOR_VALUE = 0;
-  private static final int ENEMY_FAST_VALUE = 2;
-  private static final int ENEMY_SLOW_VALUE = 3;
+
+  private final int STARTING_SCORE = 0;
+  private final int MENU_SCORE_TEXT_SIZE = 60;
+  private final int GAME_SCORE_TEXT_SIZE = MENU_SCORE_TEXT_SIZE / 2;
+  private final int RED_COLOR_VALUE = 255;
+  private final int GREEN_COLOR_VALUE = 255;
+  private final int BLUE_COLOR_VALUE = 0;
+  private final int ENEMY_FAST_VAUE = 2;
+  private final int ENEMY_SLOW_VAUE = 3;
+
   private GameState currState;
 
   /**
@@ -111,24 +111,25 @@ public class Score extends UserInterface {
   /**
    * Displays the score of the game while the game is in a menu.
    */
-  private void displayMenuGameScore() {
 
+  private void displayMenuGameScore() {
     window.textSize(MENU_SCORE_TEXT_SIZE);
     //Set x and y in here make current x value larger
-    window.text("Current Score:" + getCurrentScore(), getPositionX() , getPositionY());
-    window.text( "\nHigh Score: " + getHighScore(), getPositionX(), getPositionY());
+    window.text("Current Score:" + getCurrentScore(), getPositionX(), getPositionY());
+    window.text("\nHigh Score: " + getHighScore(), getPositionX(), getPositionY());
   }
 
   public void incrementScore(int score, Enemy enemy) {
     int typeOfEnemy = enemy.enemyType;
     switch (typeOfEnemy) {
-      case ENEMY_STANDARD_TYPE -> score++;
-      case ENEMY_FAST_TYPE -> score = score+ENEMY_FAST_VALUE;
-      case ENEMY_SLOW_TYPE -> score = score+ENEMY_SLOW_VALUE;
+      case EnemyConfig.ENEMY_STANDARD_TYPE -> score++;
+      case EnemyConfig.ENEMY_FAST_TYPE -> score = score + ENEMY_FAST_VAUE;
+      case EnemyConfig.ENEMY_SLOW_TYPE -> score = score + ENEMY_SLOW_VAUE;
     }
     setCurrentScore(score);
   }
-  public void resetScore(){
+
+  public void resetScore() {
     setCurrentScore(STARTING_SCORE);
   }
 }

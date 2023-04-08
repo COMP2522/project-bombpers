@@ -1,10 +1,9 @@
 package org.bcit.comp2522.project;
 
+import processing.core.PConstants;
 import processing.core.PImage;
 import processing.core.PVector;
 import processing.event.KeyEvent;
-import processing.core.PConstants;
-import processing.core.PApplet;
 
 /**
  * InputHandler class - handles the input from the user.
@@ -22,10 +21,7 @@ public class InputHandler {
   private boolean isRightPressed = false;
   private boolean isUpPressed = false;
   private boolean isDownPressed = false;
-  private Window window;
-  private static final int CHAR_RESIZE_WIDTH = 2;
-  private static final int CHAR_X_POS_MOVE = 31;
-  private static final int CHAR_Y_POS_MOVE = 20;
+  private final Window window;
 
   /**
    * The collection manager that will be used to access the collection of sprites.
@@ -35,7 +31,8 @@ public class InputHandler {
   /**
    * getInstance method - returns the instance of the InputHandler.
    *
-   * @param collectionManager the collection manager that will be used to access the collection of sprites.
+   * @param collectionManager the collection manager that will be used to access
+   *     the collection of sprites.
    * @return the instance of the InputHandler.
    */
   public static InputHandler getInstance(CollectionManager collectionManager, Window window) {
@@ -48,7 +45,8 @@ public class InputHandler {
   /**
    * InputHandler constructor - creates a new InputHandler object.
    *
-   * @param collectionManager the collection manager that will be used to access the collection of sprites.
+   * @param collectionManager the collection manager that will be used to access
+   *     the collection of sprites.
    */
   private InputHandler(CollectionManager collectionManager, Window window) {
     this.collectionManager = collectionManager;
@@ -100,8 +98,8 @@ public class InputHandler {
    * @return the new direction of the player.
    */
   public PVector updatePlayerDirection() {
-    int directionX = 0;
-    int directionY = 0;
+    int directionX = ConstantManager.ZERO;
+    int directionY = ConstantManager.ZERO;
 
     // Check if the key is pressed and update the direction accordingly
     if (isLeftPressed) {
@@ -118,10 +116,11 @@ public class InputHandler {
     }
 
     // If the direction is not 0,0, set the player's direction to the new direction
-    if (directionX != 0 || directionY != 0) {
+    if (directionX != ConstantManager.ZERO || directionY != ConstantManager.ZERO) {
       collectionManager.getPlayer().setDirection(new PVector(directionX, directionY));
     } else {
-      collectionManager.getPlayer().setDirection(new PVector(0, 0));
+      collectionManager.getPlayer()
+              .setDirection(new PVector(ConstantManager.ZERO, ConstantManager.ZERO));
     }
 
     return new PVector(directionX, directionY);
@@ -134,11 +133,14 @@ public class InputHandler {
       PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
 
       PVector projectileStartPosition = new PVector(
-          playerPosition.x + CHAR_X_POS_MOVE - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH,
-          playerPosition.y + CHAR_Y_POS_MOVE - Projectile.PROJECTILE_SIZE / CHAR_RESIZE_WIDTH
+          playerPosition.x + ConstantManager.CHAR_X_POS_MOVE
+                  - Projectile.PROJECTILE_SIZE / ConstantManager.CHAR_RESIZE_WIDTH,
+          playerPosition.y + ConstantManager.CHAR_Y_POS_MOVE
+                  - Projectile.PROJECTILE_SIZE / ConstantManager.CHAR_RESIZE_WIDTH
       );
 
-      Projectile projectile = new Projectile(window, projectileStartPosition, direction, image); //Pimage
+      Projectile projectile = new Projectile(
+              window, projectileStartPosition, direction, image); //Pimage
 
       collectionManager.getProjectiles().add(projectile);
       collectionManager.getSprites().add(projectile);
@@ -146,9 +148,9 @@ public class InputHandler {
   }
 
   public void pauseGameOnPKeyPressed(KeyEvent event) {
-      char key = event.getKey();
-      if (key == 'p' || key == 'P') {
-        window.stateOfGame = GameState.PAUSE;
-      }
+    char key = event.getKey();
+    if (key == 'p' || key == 'P') {
+      window.stateOfGame = GameState.PAUSE;
+    }
   }
 }

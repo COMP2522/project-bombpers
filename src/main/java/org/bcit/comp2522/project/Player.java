@@ -34,7 +34,7 @@ public class Player extends Sprite {
 
   private static Player player;
 
-  private float imageSize;
+  private final float imageSize;
 
 
   /**
