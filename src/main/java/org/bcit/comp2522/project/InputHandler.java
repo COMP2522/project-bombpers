@@ -58,6 +58,7 @@ public class InputHandler {
    * keyPressed method - is called when a key is pressed.
    *
    * @param event the key event.
+   * @author ozany
    */
   public void keyPressed(KeyEvent event) {
     // Get the key code of the key that was pressed
@@ -77,6 +78,7 @@ public class InputHandler {
    * keyReleased method - is called when a key is released.
    *
    * @param event the key event.
+   * @author ozany
    */
   public void keyReleased(KeyEvent event) {
     // Get the key code of the key that was pressed
@@ -96,6 +98,7 @@ public class InputHandler {
    * updatePlayerDirection method - updates the player's direction based on the key pressed.
    *
    * @return the new direction of the player.
+   * @author ozany
    */
   public PVector updatePlayerDirection() {
     int directionX = ConstantManager.ZERO;
@@ -126,6 +129,12 @@ public class InputHandler {
     return new PVector(directionX, directionY);
   }
 
+  /**
+   * A method that shoots a bullet at the direction where the mouse is.
+   *
+   * @param image sprite image of the projectile
+   * @author ozany
+   */
   public void mousePressed(PImage image) {
     if (window.stateOfGame == GameState.STARTGAME && window.mouseButton == PConstants.LEFT) {
       PVector mousePosition = new PVector(window.mouseX, window.mouseY);

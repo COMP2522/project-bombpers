@@ -11,11 +11,8 @@ public class Enemy extends Sprite {
   protected PImage enemySprite;
   protected int enemyType;
   private boolean dead;
-  private final float hitboxWidth;
+  public final float hitboxWidth;
   private final float hitboxHeight;
-  public static final int ENEMY_STANDARD_HITBOX_WIDTH = 10;
-  public static final int ENEMY_STANDARD_HITBOX_HEIGHT = 25;
-  public static final int CUT_HITBOX_IN_HALF = 2;
 
   /**
    * Constructor for enemy objects.

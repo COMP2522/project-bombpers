@@ -36,8 +36,6 @@ public class MenuHandler {
   public GameState currentState;
 
   public Score menuScore;
-  private static final int START_MENU_TITLE_X_POSITION = 30;
-  private static final int START_MENU_TITLE_Y_POSITION = 145;
   private static final int PAUSE_MENU_TITLE_X_POSITION = (int) (Window.WINDOW_WIDTH / 2f);
   private static final int PAUSE_MENU_TITLE_Y_POSITION = (int) (Window.WINDOW_HEIGHT * 0.7f);
   private static final int END_MENU_TITLE_X_POSITION = (int) (Window.WINDOW_WIDTH / 2f);
@@ -82,8 +80,8 @@ public class MenuHandler {
     switch (this.currentState) {
       case STARTMENU -> {
         title = "Wave Assault";
-        titleX = START_MENU_TITLE_X_POSITION;
-        titleY = START_MENU_TITLE_Y_POSITION;
+        titleX = ConstantManager.START_MENU_TITLE_X_POSITION;
+        titleY = ConstantManager.START_MENU_TITLE_Y_POSITION;
         menu = new Menu(titleX, titleY, title, this.window);
         setupMenu(menu);
       }

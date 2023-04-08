@@ -14,9 +14,9 @@ public class EnemySpawner {
    */
   private int enemyMax = ConstantManager.BASE_WAVE_COUNT + spawnModifier;
   private int currEnemyCount;
-  private Random randomNumber = new Random();
-  private CollectionManager collectionManager;
-  private Window window;
+  private final Random randomNumber = new Random();
+  private final CollectionManager collectionManager;
+  private final Window window;
 
   public EnemySpawner(CollectionManager collectionManager, Window window) {
     this.collectionManager = collectionManager;

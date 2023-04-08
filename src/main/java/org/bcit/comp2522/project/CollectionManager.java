@@ -53,7 +53,8 @@ public class CollectionManager {
     return c;
   }
 
-  public void removeCollidedEntities(List<Enemy> enemiesToRemove,List<Projectile> projectilesToRemove) {
+  public void removeCollidedEntities(List<Enemy> enemiesToRemove,
+              List<Projectile> projectilesToRemove) {
     for (Enemy enemy : enemiesToRemove) {
       getEnemies().remove(enemy);
       getSprites().remove(enemy);

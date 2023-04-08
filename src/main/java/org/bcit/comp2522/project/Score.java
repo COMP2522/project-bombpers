@@ -4,7 +4,8 @@ package org.bcit.comp2522.project;
  * Class for Score of the game set, gets, and displays score.
  */
 public class Score extends UserInterface {
-  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / ConstantManager.TWOF);
+  private static final int DEFAULT_X_POS =
+          (int) (Window.WINDOW_WIDTH / ConstantManager.WINDOW_WIDTH_RESIZE);
   private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * ConstantManager.POINTONE);
   /**
    * The high score of the game.
@@ -19,14 +20,14 @@ public class Score extends UserInterface {
    */
   private final Window window;
 
-  private final int STARTING_SCORE = 0;
-  private final int MENU_SCORE_TEXT_SIZE = 60;
-  private final int GAME_SCORE_TEXT_SIZE = MENU_SCORE_TEXT_SIZE / 2;
-  private final int RED_COLOR_VALUE = 255;
-  private final int GREEN_COLOR_VALUE = 255;
-  private final int BLUE_COLOR_VALUE = 0;
-  private final int ENEMY_FAST_VAUE = 2;
-  private final int ENEMY_SLOW_VAUE = 3;
+  private final int startingScore = 0;
+  private final int menuScoreTextSize = 60;
+  private final int gameScoreTextSize = menuScoreTextSize / 2;
+  private final int redColorValue = 255;
+  private final int greenColorValue = 255;
+  private final int blueColorValue = 0;
+  private final int enemyFastValue = 2;
+  private final int enemySlowValue = 3;
 
   private GameState currState;
 
@@ -93,7 +94,7 @@ public class Score extends UserInterface {
    */
   public void displayScore(GameState state) {
     //Depending on the state of the game, call the appropriate method to display the score
-    window.fill(RED_COLOR_VALUE, GREEN_COLOR_VALUE, BLUE_COLOR_VALUE);
+    window.fill(redColorValue, greenColorValue, blueColorValue);
     if (state == GameState.STARTGAME) {
       displayInGameScore();
     } else {
@@ -105,7 +106,7 @@ public class Score extends UserInterface {
    * Displays the score of the game while the game is in progress.
    */
   private void displayInGameScore() {
-    window.textSize(GAME_SCORE_TEXT_SIZE);
+    window.textSize(gameScoreTextSize);
     window.text("Score: " + currentScore, getPositionX(), getPositionY());
   }
   /**
@@ -113,7 +114,7 @@ public class Score extends UserInterface {
    */
 
   private void displayMenuGameScore() {
-    window.textSize(MENU_SCORE_TEXT_SIZE);
+    window.textSize(menuScoreTextSize);
     //Set x and y in here make current x value larger
     window.text("Current Score:" + getCurrentScore(), getPositionX(), getPositionY());
     window.text("\nHigh Score: " + getHighScore(), getPositionX(), getPositionY());
@@ -123,13 +124,13 @@ public class Score extends UserInterface {
     int typeOfEnemy = enemy.enemyType;
     switch (typeOfEnemy) {
       case EnemyConfig.ENEMY_STANDARD_TYPE -> score++;
-      case EnemyConfig.ENEMY_FAST_TYPE -> score = score + ENEMY_FAST_VAUE;
-      case EnemyConfig.ENEMY_SLOW_TYPE -> score = score + ENEMY_SLOW_VAUE;
+      case EnemyConfig.ENEMY_FAST_TYPE -> score = score + enemyFastValue;
+      case EnemyConfig.ENEMY_SLOW_TYPE -> score = score + enemySlowValue;
     }
     setCurrentScore(score);
   }
 
   public void resetScore() {
-    setCurrentScore(STARTING_SCORE);
+    setCurrentScore(startingScore);
   }
 }
