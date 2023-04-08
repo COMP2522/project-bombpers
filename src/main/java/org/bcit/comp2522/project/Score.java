@@ -1,5 +1,7 @@
 package org.bcit.comp2522.project;
 
+import java.util.logging.Logger;
+
 /**
  * Class for Score of the game set, gets, and displays score.
  */
@@ -19,21 +21,14 @@ public class Score extends UserInterface {
    */
   private final Window window;
 
-  private final int STARTING_SCORE = 0;
-  private final int MENU_SCORE_TEXT_SIZE = 60;
-  private final int GAME_SCORE_TEXT_SIZE = MENU_SCORE_TEXT_SIZE / 2;
-  private final int RED_COLOR_VALUE = 255;
-  private final int GREEN_COLOR_VALUE = 255;
-  private final int BLUE_COLOR_VALUE = 0;
-  private final int ENEMY_FAST_VAUE = 2;
-  private final int ENEMY_SLOW_VAUE = 3;
+  private static final int MENU_SCORE_TEXT_SIZE = 60;
 
   private GameState currState;
 
   /**
    * Constructor for Score.
    *
-   * @param window    the window of the game that the score is displayed on
+   * @param window the window of the game that the score is displayed on
    */
   public Score(Window window, GameState state) {
     super(DEFAULT_X_POS, DEFAULT_Y_POS);
@@ -93,7 +88,10 @@ public class Score extends UserInterface {
    */
   public void displayScore(GameState state) {
     //Depending on the state of the game, call the appropriate method to display the score
-    window.fill(RED_COLOR_VALUE, GREEN_COLOR_VALUE, BLUE_COLOR_VALUE);
+    int redColorValue = 255;
+    int greenColorValue = 255;
+    int blueColorValue = 0;
+    window.fill(redColorValue, greenColorValue, blueColorValue);
     if (state == GameState.STARTGAME) {
       displayInGameScore();
     } else {
@@ -105,9 +103,11 @@ public class Score extends UserInterface {
    * Displays the score of the game while the game is in progress.
    */
   private void displayInGameScore() {
-    window.textSize(GAME_SCORE_TEXT_SIZE);
+    final int gameScoreTextSize = MENU_SCORE_TEXT_SIZE / 2;
+    window.textSize(gameScoreTextSize);
     window.text("Score: " + currentScore, getPositionX(), getPositionY());
   }
+
   /**
    * Displays the score of the game while the game is in a menu.
    */
@@ -119,17 +119,18 @@ public class Score extends UserInterface {
     window.text("\nHigh Score: " + getHighScore(), getPositionX(), getPositionY());
   }
 
-  public void incrementScore(int score, Enemy enemy) {
-    int typeOfEnemy = enemy.enemyType;
-    switch (typeOfEnemy) {
-      case EnemyConfig.ENEMY_STANDARD_TYPE -> score++;
-      case EnemyConfig.ENEMY_FAST_TYPE -> score = score + ENEMY_FAST_VAUE;
-      case EnemyConfig.ENEMY_SLOW_TYPE -> score = score + ENEMY_SLOW_VAUE;
+  public void incrementScore(int enemyType) {
+    switch (enemyType) {
+      case EnemyConfig.ENEMY_STANDARD_TYPE -> currentScore++;
+      case EnemyConfig.ENEMY_FAST_TYPE -> currentScore = currentScore + EnemyConfig.ENEMY_FAST_TYPE;
+      case EnemyConfig.ENEMY_SLOW_TYPE -> currentScore = currentScore + EnemyConfig.ENEMY_SLOW_TYPE;
+      default -> Logger.getLogger(Score.class.getName()).warning("Invalid enemy type");
     }
-    setCurrentScore(score);
+    setCurrentScore(currentScore);
   }
 
   public void resetScore() {
-    setCurrentScore(STARTING_SCORE);
+    int startingScore = 0;
+    setCurrentScore(startingScore);
   }
 }

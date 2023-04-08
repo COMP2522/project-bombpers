@@ -6,11 +6,11 @@ import processing.core.PVector;
 /**
  * Player class - is a child of the Sprite class that represents the player.
  */
-public class Player extends Sprite {
+public final class Player extends Sprite {
   /**
    * The image of the player.
    */
-  PImage characterSprite;
+  private final PImage characterSprite;
   /**
    * The health of the player.
    */
@@ -32,7 +32,7 @@ public class Player extends Sprite {
    */
   public static final String PLAYER_SPRITE = "../img/idle_0v2.png";
 
-  private static Player player;
+  private static Player playerOne;
 
   private final float imageSize;
 
@@ -54,10 +54,10 @@ public class Player extends Sprite {
   }
 
   public static Player getPlayerInstance(Window window) {
-    if (player == null) {
-      player = new Player(window);
+    if (playerOne == null) {
+      playerOne = new Player(window);
     }
-    return player;
+    return playerOne;
   }
 
 

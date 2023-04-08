@@ -2,6 +2,8 @@ package org.bcit.comp2522.project;
 
 import processing.core.PImage;
 
+import java.util.logging.Logger;
+
 /**
  * Class for Menu of the game.
  */
@@ -58,7 +60,7 @@ public class Menu extends UserInterface {
   //A resize variable to
   private static final int TEXT_RESIZE_FACTOR = 2;
   private static final int START_TEXT_X_POS_RESIZE_FACTOR = 3;
-  private final PImage MainBG;
+  private final PImage mainBG;
   private GameState currState;
 
   private static final int IMAGE_X_POSITION = 0;
@@ -76,7 +78,7 @@ public class Menu extends UserInterface {
     super(posX, posY);
     this.message = message;
     this.window = window;
-    this.MainBG = window.loadImage("../img/MainBackGround2.png");
+    this.mainBG = window.loadImage("../img/MainBackGround2.png");
   }
 
   public void updateGameState(GameState state) {
@@ -97,24 +99,25 @@ public class Menu extends UserInterface {
    * @param state the state of the game
    */
   public void displayMenu(GameState state) {
-    int START_BUTTON_TEXT_X_POSITION = this.window.width / START_TEXT_X_POS_RESIZE_FACTOR;
-    int START_BUTTON_TEXT_Y_POSITION = this.window.width / TEXT_RESIZE_FACTOR - START_Y_OFFSET;
-    int END_BUTTON_TEXT_X_POSITION = (int) (Window.WINDOW_WIDTH * 0.44f);
-    int END_BUTTON_TEXT_Y_POSITION = (int) (Window.WINDOW_HEIGHT * 0.46f);
-    int PAUSE_BUTTON_TEXT_X_POSITION = (int) (Window.WINDOW_WIDTH * 0.44f);
-    int PAUSE_BUTTON_TEXT_Y_POSITION = (int) (Window.WINDOW_HEIGHT * 0.46f);
-    window.image(MainBG, IMAGE_X_POSITION, IMAGE_Y_POSITION, window.width, window.height);
+    final int startButtonTextXPosition = this.window.width / START_TEXT_X_POS_RESIZE_FACTOR;
+    final int startButtonTextYPosition = this.window.width / TEXT_RESIZE_FACTOR - START_Y_OFFSET;
+    final int endButtonTextXPosition = (int) (Window.WINDOW_WIDTH * 0.44f);
+    final int endButtonTextYPosition = (int) (Window.WINDOW_HEIGHT * 0.46f);
+    final int pauseButtonTextXPosition = (int) (Window.WINDOW_WIDTH * 0.44f);
+    final int pauseButtonTextYPosition = (int) (Window.WINDOW_HEIGHT * 0.46f);
+    window.image(mainBG, IMAGE_X_POSITION, IMAGE_Y_POSITION, window.width, window.height);
 
     createTitle();
     button();
 
     switch (state) {
       case STARTMENU ->
-              window.text("Start", START_BUTTON_TEXT_X_POSITION, START_BUTTON_TEXT_Y_POSITION);
+              window.text("Start", startButtonTextXPosition, startButtonTextYPosition);
       case ENDGAME ->
-              window.text("Restart", END_BUTTON_TEXT_X_POSITION, END_BUTTON_TEXT_Y_POSITION);
+              window.text("Restart", endButtonTextXPosition, endButtonTextYPosition);
       case PAUSE ->
-              window.text("Continue", PAUSE_BUTTON_TEXT_X_POSITION, PAUSE_BUTTON_TEXT_Y_POSITION);
+              window.text("Continue", pauseButtonTextXPosition, pauseButtonTextYPosition);
+      default -> Logger.getLogger("Menu").warning("Invalid state");
     }
   }
 
@@ -123,7 +126,7 @@ public class Menu extends UserInterface {
    */
   private void createTitle() {
     setMessage(message);
-    String message = getMessage();
+    final String message = getMessage();
     window.textSize(TITLE_SIZE);
     window.fill(TITLE_RED_VALUE, TITLE_BLUE_VALUE, TITLE_GREEN_VALUE);
     window.text(message, getPositionX(), getPositionY());

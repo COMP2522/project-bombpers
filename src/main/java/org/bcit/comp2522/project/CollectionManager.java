@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * CollectionManager class - manages all collections of sprites.
  */
-public class CollectionManager {
+public final class CollectionManager {
 
   private static CollectionManager c;
 
@@ -53,12 +53,13 @@ public class CollectionManager {
     return c;
   }
 
-  public void removeCollidedEntities(List<Enemy> enemiesToRemove,List<Projectile> projectilesToRemove) {
-    for (Enemy enemy : enemiesToRemove) {
+  public void removeCollidedEntities(final List<Enemy> enemiesToRemove,final
+                                     List<Projectile> bulletsToRemove) {
+    for (final Enemy enemy : enemiesToRemove) {
       getEnemies().remove(enemy);
       getSprites().remove(enemy);
     }
-    for (Projectile projectile : projectilesToRemove) {
+    for (final Projectile projectile : bulletsToRemove) {
       getProjectiles().remove(projectile);
       getSprites().remove(projectile);
     }

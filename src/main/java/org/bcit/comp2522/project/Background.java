@@ -33,7 +33,7 @@ public class Background implements Drawable {
    *
    * @param parent the parent PApplet
    */
-  public Background(PApplet parent) {
+  public Background(final PApplet parent) {
     this.parent = parent;
     this.backgroundImage = loadBackgroundImage();
     this.offset = ConstantManager.ZERO;
@@ -54,7 +54,8 @@ public class Background implements Drawable {
    */
   @Override
   public void draw() {
-    float imageWidth = (float) (backgroundImage.width * parent.height) / backgroundImage.height;
+    final float imageWidth =
+        (float) (backgroundImage.width * parent.height) / backgroundImage.height;
     parent.image(backgroundImage, offset, ConstantManager.ZERO, imageWidth, parent.height);
     parent.image(backgroundImage, offset + imageWidth, ConstantManager.ZERO,
             imageWidth, parent.height);
