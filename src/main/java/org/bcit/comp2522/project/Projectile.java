@@ -41,10 +41,10 @@ public class Projectile extends Sprite {
   @Override
   public void collide(Sprite one, Sprite two) {
     if (one instanceof Projectile projectile && two instanceof Enemy enemy) {
-      PVector projectileCenter = projectile.getCenterPosition();
-      PVector enemyCenter = enemy.getCenterPosition();
-      float minDistance = (projectile.getSize() / ConstantManager.CUT_HITBOX_IN_HALF)
-              + (enemy.getSize() / ConstantManager.CUT_HITBOX_IN_HALF);
+      final PVector projectileCenter = projectile.getCenterPosition();
+      final PVector enemyCenter = enemy.getCenterPosition();
+      final float minDistance = projectile.getSize() / ConstantManager.CUT_HITBOX_IN_HALF
+          + enemy.getSize() / ConstantManager.CUT_HITBOX_IN_HALF;
 
       if (PVector.dist(projectileCenter, enemyCenter) < minDistance) {
         projectile.setDead(true);
@@ -63,9 +63,5 @@ public class Projectile extends Sprite {
     return damage;
   }
 
-
-  public void setDamage(int damage) {
-    this.damage = damage;
-  }
 }
 

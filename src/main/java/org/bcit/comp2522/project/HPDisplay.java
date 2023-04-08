@@ -5,17 +5,17 @@ import processing.core.PConstants;
 
 public class HPDisplay extends UserInterface {
   private static final int DEFAULT_X_POS =
-          (int) (Window.WINDOW_WIDTH * ConstantManager.POINTFIFTEEN);
+      (int) (Window.WINDOW_WIDTH * ConstantManager.POINTFIFTEEN);
   private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * ConstantManager.POINTNINE);
-  private CollectionManager collectionManager;
-  private PApplet pApp;
+  private final CollectionManager collectionManager;
+  private final PApplet pApp;
   private int health;
 
   public HPDisplay(PApplet p) {
     super(DEFAULT_X_POS, DEFAULT_Y_POS);
-    this.pApp = p;
     collectionManager = CollectionManager.getInstance();
-    update();
+    this.pApp = p;
+    //update();
   }
 
   @Override

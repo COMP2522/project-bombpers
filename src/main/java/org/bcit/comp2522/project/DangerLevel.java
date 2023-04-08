@@ -9,22 +9,22 @@ import processing.core.PConstants;
 public class DangerLevel extends UserInterface {
   private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / ConstantManager.TWOF);
   private static final int DEFAULT_Y_POS =
-          (int) (Window.WINDOW_HEIGHT * ConstantManager.POINTNINETYFIVE);
-  private int dangerLevel;
-  private PApplet pApp;
-  private EnemySpawner eSpawner;
+      (int) (Window.WINDOW_HEIGHT * ConstantManager.POINTNINETYFIVE);
+  private int level;
+  private final PApplet pApp;
+  private final EnemySpawner eSpawner;
 
   /**
    * Constructor for DangerLevel.
    *
-   * @param p PApplet object
+   * @param p       PApplet object
    * @param spawner enemy spawner
    */
-  public DangerLevel(PApplet p, EnemySpawner spawner) {
+  public DangerLevel(final PApplet p, final EnemySpawner spawner) {
     super(DEFAULT_X_POS, DEFAULT_Y_POS);
     this.pApp = p;
     this.eSpawner = spawner;
-    this.dangerLevel = eSpawner.getSpawnModifier() + ConstantManager.ONE;
+    this.level = eSpawner.getSpawnModifier() + ConstantManager.ONE;
   }
 
   @Override
@@ -32,23 +32,23 @@ public class DangerLevel extends UserInterface {
     pApp.fill(ConstantManager.TWOHUNDRED, ConstantManager.ZERO, ConstantManager.ZERO);
     pApp.textAlign(PConstants.CENTER);
     pApp.textSize(ConstantManager.TWENTYFOUR);
-    pApp.text("DANGER LEVEL: " + dangerLevel, positionX, positionY);
+    pApp.text("DANGER LEVEL: " + level, positionX, positionY);
   }
 
   public void increaseDangerLevel() {
-    this.dangerLevel++;
+    this.level++;
   }
 
   public void resetDangerLevel() {
-    this.dangerLevel = ConstantManager.ONE;
+    this.level = ConstantManager.ONE;
   }
 
   public int getCurrDangerLevel() {
-    return this.dangerLevel;
+    return this.level;
   }
 
   public void update() {
-    this.dangerLevel = eSpawner.getSpawnModifier() + ConstantManager.ONE;
+    this.level = eSpawner.getSpawnModifier() + ConstantManager.ONE;
   }
 
 }

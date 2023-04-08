@@ -1,29 +1,29 @@
 package org.bcit.comp2522.project;
 
-public class SaveHandler {
-  DatabaseHandler db;
-  UIHandler u;
-  CollectionManager c;
+import java.util.logging.Logger;
 
-  public SaveHandler() {
-    this.c = CollectionManager.getInstance();
+public class SaveHandler {
+  private final DatabaseHandler db;
+
+  public SaveHandler(UIHandler u) {
+    CollectionManager c = CollectionManager.getInstance();
     this.db = DatabaseHandler.getInstance(u, c);
   }
 
-  private void save(Score s) {
-    db.save(s);
+  private void save() {
+    db.save();
   }
 
-  public void autoSave(CollectionManager c, Score s) {
-    System.out.println("Game Started, it will be saved every half minute");
+  public void autoSave() {
+    //System.out.println("Game Started, it will be saved every half minute");
     for (; ; ) {
       try {
         Thread.sleep(30000);
         //Thread.sleep(5000);
-        this.save(s);
-        System.out.println("Game has been saved");
+        this.save();
+        //System.out.println("Game has been saved");
       } catch (InterruptedException e) {
-        throw new RuntimeException(e);
+        Logger.getLogger("org.mongodb.driver").severe(e.getMessage());
       }
     }
   }
