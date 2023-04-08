@@ -15,9 +15,6 @@ public class CollectionManager {
   private final ConcurrentLinkedQueue<Projectile> projectiles;
   private final List<Enemy> enemies;
   public static Sprite player;
-  private int highScore;
-  private int currentScore;
-
 
   /**
    * Constructor for CollectionManager.
@@ -26,8 +23,6 @@ public class CollectionManager {
     sprites = new ArrayList<>();
     projectiles = new ConcurrentLinkedQueue<>();
     enemies = new ArrayList<>();
-    //This highscore is only associated to CollectionManager, used for DB only.
-    highScore = ConstantManager.ZERO;
   }
 
   public List<Sprite> getSprites() {
@@ -58,34 +53,7 @@ public class CollectionManager {
     return c;
   }
 
-  //For DB purposes
-  public void setCurrentScore(int currentScore) {
-    this.currentScore = currentScore;
-  }
-
-  //For DB purposes
-  public int getCurrentScore() {
-    return currentScore;
-  }
-
-  //For DB purposes
-  public void setHighScore(int highScore) {
-    this.highScore = highScore;
-  }
-
-  //For DB purposes
-  public int getHighScore() {
-    return highScore;
-  }
-
-  /**
-   * Removes the enemies and projectiles that collided with each other.
-   *
-   * @param enemiesToRemove enemies that will be removed
-   * @param projectilesToRemove projectiles that will be removed
-   */
-  public void removeCollidedEntities(ArrayList<Enemy> enemiesToRemove,
-                                     ArrayList<Projectile> projectilesToRemove) {
+  public void removeCollidedEntities(List<Enemy> enemiesToRemove,List<Projectile> projectilesToRemove) {
     for (Enemy enemy : enemiesToRemove) {
       getEnemies().remove(enemy);
       getSprites().remove(enemy);
