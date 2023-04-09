@@ -6,7 +6,8 @@ import processing.core.PVector;
 /**
  * Player class - is a child of the Sprite class that represents the player.
  *
- * @author ozany
+ * @author Ozan Yurtisigi, Amarjot Sangha, Brett Reader, Sukhraj Sidhu
+ * @version 1.0
  */
 public final class Player extends Sprite {
   /**

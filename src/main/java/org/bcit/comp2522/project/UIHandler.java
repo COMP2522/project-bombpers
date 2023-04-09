@@ -5,13 +5,13 @@ import processing.core.PApplet;
 public class UIHandler {
 
   private PApplet papplet;
-  private HPDisplay hpDisplay;
+  private HpDisplay hpDisplay;
   private DangerLevel dangerLevel;
   private Score score;
 
   public UIHandler(PApplet papp, Window window, GameState state, EnemySpawner spawner) {
     this.papplet = papp;
-    this.hpDisplay = new HPDisplay(papp);
+    this.hpDisplay = new HpDisplay(papp);
     this.dangerLevel = new DangerLevel(papp, spawner);
     this.score = new Score(window, state);
   }
@@ -23,7 +23,7 @@ public class UIHandler {
     score.drawUserInterface();
   }
 
-  public HPDisplay getHPDisplay() {
+  public HpDisplay getHPDisplay() {
     return this.hpDisplay;
   }
 
@@ -43,11 +43,11 @@ public class UIHandler {
     this.papplet = papplet;
   }
 
-  public HPDisplay getHpDisplay() {
+  public HpDisplay getHpDisplay() {
     return hpDisplay;
   }
 
-  public void setHpDisplay(HPDisplay hpDisplay) {
+  public void setHpDisplay(HpDisplay hpDisplay) {
     this.hpDisplay = hpDisplay;
   }
 
