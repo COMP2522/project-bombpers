@@ -1,125 +1,132 @@
-# Project Bompers
+# Project Bompers - Final ReadMe
 
-## Technical Project Requirements
+## Steps on how to run program 
+- Click the start button to start the game
+![img.png](img/StartScreen.png)
+- If the game runs you should see enemies spawn and come towards you
+![img_1.png](img/GameInitialScreen.png)
+- Click the arrow keys to move around
+- Click the left button on your mouse to fire projectiles
+- Press ‘p’ to pause in game
+- Click the continue button to go back to the game
+![img_3.png](img/PauseScreen.png)
+- Click the restart button to restart a new round on the end menu
+![img_2.png](img/DeathScreen.png)
+
+
+## Roles and responsibilities: 
+A description of each team member's jobs in the group.
+- Brett
+  - Implemented the database. Store the state of the game inside the DB.
+  - Reading the state of a saved game from JSON to load the highscore.
+  - Supported teammates in the other parts of the project.
+  - Wrote the code for the base UML diagram.
+  - Managed code implementation/pushes to the repo.
+  - Refactoring
+  - PMD and Checkstyle
+- Sukh:
+  - Focus on the sprites that will be used in the game such as the
+    - player, enemies, background, etc.
+    - focus on the movement of the sprites.
+    - focus on the collision of the sprites.
+  - InputHandler
+  - Refactoring
+
+- Ben:
+  - Enemies
+  - Enemy types
+  - UI
+  - Danger Level
+  - HPdisplay
+  - Refactoring
+
+- Ozan:
+  - Player
+  - Projectiles
+  - worked on the different character types (was later refactored)
+  - Checkstyle
+  - Refactoring
+
+- Amarjot:
+  - Created the start,pause, and end menu
+  - Implemented the score and how to display it
+  - Refactoring
+
+## References / Citations
+- Processing org references for Papplet: https://processing.org/reference/
+
+## Technical Project Requirements and Project Pitch
 
 The minimum requirements for the project are outlined here to give you a starting point. Meeting the minimum requirements alone will not guarantee you a good mark. You are welcome to meet and exceed the minimum requirements if you have good, creative ideas and would like to discuss them with me.
 
 **Requirement 1**: The project must incorporate some visual interface using Processing.org libraries. All user interaction must be conducted via this interface.
-      
-      We use the Processing.org libraries in many ways to incorporate visual interfaces and user interaction some examples are the menus, score, gameplay, and sprites for the characters. 
+
+- Requirement 1 will be met by us using PApplet. We will be using it for sprites such as the player and enemies and will be also using it for the projectiles and background.
 
 **Requirement 2**: The project must incorporate some kind of non-blocking concurrent/asynchronous processing that happens at regular intervals. For example, you might push or fetch data from in the background.
 
-  We have the stats in the game being sent to the database in a asyncronous process where these stats are updated every thirty seconds whie the game is running. This is useful for stats sucha s the player's health, highscore, and position.
-  
+- Requirement 2 will be met by implementing a danger level, score, saving and anything else that we may think of during development. (save state/ some process that API call and gets back)
+
 **Requirement 3**: The project must incorporate some kind of non-trivial persistent data state that must be read, processed, and written at regular intervals. For example, you might save a game state in a JSON file. This may or may not be included with Requirement 2.
-  
-  We have incorporated a save state in our game that is read and processed at regular intervals of thirty seconds. Another example is the highscore that also  even when the user closes the window and restarts the previous high score still persists.
-  
+
+- Requirement 3 will be met by having a current score, and hp stat (description of where the enemies are, or can play the game from the same spot, file.io)
+
 **Requirement 4**: The project must incorporate some kind of self-managing custom iterable data structure. For example, you might have a collection of enemies that are added and deleted based on statistics maintained by the data structure.
 
-We created a ConcurrentLinkedQueue which is an iterable data struture that holds our projectiles this iterates throug and removes the first projectile shot dince it uses a First In First Out approach. 
+- Requirement 4 will be met by having enemies added/removed from arraylists when they spawn/die. (stats, self balancing list, data structures)
 
 **Requirement 5**: The project must be well-documented, complete, and run without errors on final submission.
 
-Our game is well documented as it includes javadocs explaining the code adn runs without error.
+- Requirement 5 will be met by having javadoc code where it’s possible, UML, CLASS diagrams.
 
-## Project Pitch (group, 1%)
+## Project Pitch
 
-The project pitch will be a short document that describes the kind of interactive application you would like to create with your group. The project pitch must include the following items:
+*One-liner*:
+- Wave defense survival game. Enemies will walk/fly at you from the edge, and you fire projectiles at them to defend yourself and try to live as long as possible.
 
-*One-liner*: One-sentence description of your project.
-*Outline*: 1-10 sentences that describe how your project will fulfill the project requirements.
+*Outline*: 1-10 sentences that describe how your project will fulfill the project requirements.(See above)
+- Wrote a sentence for each requirement above.
+
 *Communication policies*: A description of how your group will meet, communicate, and make decisions (as per Lab 03).
-*Roles and responsibilities*: A description of each team member's jobs in the group.
+
+Group Setting work:
+When you start your group work, you will be expected to decide the following and adhere to your decisions. I will provide an outline here as a minimum requirement, but you are expected to explicitly negotiate group norms and expectations on top of what I provide.
+
+1Q.) Every group member must be on a common chat application, and must check and respond to messages within a day during normal business hours.
+
+1A.) Common Chat we will be using is Discord.
+
+2Q.) Every group member must volunteer to take on project tasks and complete them by the associated deadlines. These tasks MUST be managed using GitHub issues. Each group member is responsible for creating and closing GitHub issues for tasks they have taken on.
+
+2A.) There are certain tasks that will arise such as enemies going towards the player, walls, backgrounds. Out of these tasks group members will volunteer and will have a google doc showing who is working on what and when it was finished.
+
+3Q.) The group must meet at least once during the week outside of class time to discuss the status of project tasks. All group members must be present during this meeting.
+
+We will be having weekly meetings at least once a week in the library where we study. Otherwise if circumstances change Discord will be used to notify everyone.
+
+4Q.) For official/important decision-making meetings, an ongoing minutes document must be maintained where attendance and group decisions are recorded.
+
+We will keep track of attendance using an excel managed by one designated group member. Our group decisions will be recorded on google Doc so that everyone has access and can talk about changes in our meetings.
+
+5Q.) Groups must decide on a way of formally negotiating disputes. Default will be consensus with 2/3rds majority vote unless another system is explicitly decided upon.
+
+We will solve disputes by using a voting system. This system will have the two people in disagreement excluded from the vote while the other three members vote on their opinion.  The majority from this vote is what will be agreed on and apply to all members.
+
+1.Q)Meeting time and format: when will you meet and how?
+
+Have a formal meeting a least once a week, typically a Monday after classes are done in the library. This will be to bring up what the group members have accomplished throughout the week and if they are struggling. If we cannot meet in person, discord will be used instead.
+
+2.Q)Communications expectations and format: what times of day are people available and by which medium?
+
+The communications will be held over discord, the availability will be 7 days a week and have a response within 24 hours if a question was asked by someone or a member needs something from another.
+
+3.Q)Roles and responsibilities: who will do what part of the group aspects of the project, including project management?
+
+Our plan is to help each other when needed so roles are TBD.
+
+4.Q)Abilities and expectations: how much effort do people want to put into the project and in what areas do they have expertise?
+
+Expectation currently is to get a working prototype and scale up from there. At the moment no one has an area of expertise, everyone will try their best at approaching the problem and ask for help if needed.
+
 *Milestones*: A rough outline of the major project milestones that you expect to complete and your own estimated timeline. This can and will change, so do your best to estimate and plan for the milestones to change.
-
-Draft was due today, final due next lab. Submission here, on GitHub. Make a `.md` file that outlines the above.
-
-## Initial UML Diagrams (group, 1%)
-
-The initial UML diagrams will outline the class structure that your group will follow for the first milestone of the project. It must include the following items all classes that will be created by the group and important descriptive interfaces from either the Java library or created by the group. I expect that this will change significantly throughout the project, so it does not have to be perfect but it should be a best effort attempt. This is because you will use this to communicate with your group members about what to make. Therefore, the diagram should be *sufficiently complex* to give you a term's worth of work.
-
-Draft due next Lab, final due two labs from now. Submission here, on GitHub. Suggestion is to use a tool like [draw.io](https://app.diagrams.net/) but you may use whatever tool is most useful for you.
-
-## Initial GitHub Issues (group, 1%)
-
-The initial GitHub issues will be the tasks that are assigned to each of your group members at the beginning of the project. Every team member should have at least five issues to start (20-30 total). You will have to decide within your group how granular you want to make these issues. 
-
-Issues will be tracked here, on GitHub.
-
-## Final Project Demo (group, 1%)
-
-The Final Project Demo will be a working version of your project that you will present to your lab section for review. The demo will be in lab, and will include a live demo of the working application, and a short code review. There are no slides required, but you should have practiced your demo to make sure it will run reasonably well. This will be during the last lab of class.
-
-No submission.
-
-## Final README.md (group, 1%)
-
-The Final README.md must give instructions on how to run your program, a list of contributions by each member, and any references/citations for code you may have used from elsewhere. 
-
-Submission is here, on GitHub, in the `README.md` file.
-
-## Final Product (group, 5%)
-
-The Final Product will be evaluated for overall code design and documentation and evaluated on the same design principles as individual contributions. If you are below the 1000 line minimum contribution, your mark will be scaled down for this portion.
-
-Submission is here, on GitHub.
-
-## Code Contributions (individual, 15%)
-
-You will be expected to take on a significant individual contribution to the group project (at least 1000 lines of non-trivial code). It may be in a number of forms, but here are some examples:
-
-**Architect**: you are in charge of the high-level code structuring and organizing.
-
-**Test maker**: you are in charge of test coverage that supports other group members.
-
-**UI/UX lead**: you design and implement the user interface.
-
-**Backend**: you design and implement the data structures.
-
-**…??**: Make up your own depending on your use case, i.e., collision system designer, animation architect, async code wrangler.
-
-Contributions must be for functional, working Java code and must be continuous throughout the term. You may not, for example, push all of your changes at the end of term. Code will be marked on following good design principles, i.e., SOLID, design patterns, etc. You are encouraged to work together and use pair programming for components, but you will be marked on your contribution to your own modules individually.
-
-## Documentation Contributions (individual, 5%)
-
-Your code must be well-documented with fully-formed method signatures, comments, and necessary README or Wiki pages. This is further broken down into the following.
-
-### Initial individual pitch (1%)
-A description of your individual feature that you plan to implement. 
-
-Due date TBD.
-
-### Initial individual UML Diagrams (1%)
-Any combination of sequence, communcation, or class diagrams that describe your feature's initial planned abilities. 
-
-Due date TBD.
-
-### Documentation contributions (3%)
-Your personal feature documentation, wherever it happens to show up in the final documentation.
-
-Due with final submission.
-
-## Issues and Pull Request Contributions (individual, 5%)
-You must track your own work in the form of creating and closing GitHub issues, creating and reviewing pull requests, responding to issues that have been assigned to you, and creating issues that you assign to others (all within reason).
-
-# Errata
-The project MUST be managed here, in this GitHub repo. Nothing that happens outside of this GitHub repo will be trackable by me, therefore, it will not be marked or considered for marking.
-
-You must use the following branching structures:
-- `main` branch must always be working, tested, debugged, human-readable code.
-- `<initals>_<issue #>_<optional description>` is the format for each ISSUE that you're working on. It should always be a branch off of `main`.
-- Every individual branch must regularly merge `main`, and it should be no more than a few days before your branch is either merged into `main` or deleted.
-
-You must use pull requests to manage your code integration:
-- make your branch from `main`, e.g., `git checkout -b pb_71_demo`
-- make your commits, e.g., `git add .` and `git commit -m "fixed issue 71 by reloading gradle for the 100th time"` and `git push origin pb_71_demo`.
-- merge `main` into your branch, and NOT the other way around. E.g., `git merge main`. YOU fix all the merge conflicts or problems that arise. Commit and push again.
-- go to GitHub.com and make a pull request
-- one other person (NOT YOU) needs to review the code and either approve or reject your changes with detailed line-by-line comments.
-- If needed, make the requested fixes and commit and push again.
-- the other person (NOT YOU) will merge your PR into `main`
-- the other person (NOT YOU) will delete your branch
-
-
+- Make a basic wave implementation where a player stands in the middle and enemies will charge the player. Due date Feb 7.
