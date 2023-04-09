@@ -8,6 +8,8 @@ import processing.event.KeyEvent;
 
 /**
  * InputHandler class - handles the input from the user.
+ *
+ * @author ozany
  */
 public final class InputHandler {
 
@@ -59,7 +61,6 @@ public final class InputHandler {
    * keyPressed method - is called when a key is pressed.
    *
    * @param event the key event.
-   * @author ozany
    */
   public void keyPressed(KeyEvent event) {
     // Get the key code of the key that was pressed
@@ -79,7 +80,6 @@ public final class InputHandler {
    * keyReleased method - is called when a key is released.
    *
    * @param event the key event.
-   * @author ozany
    */
   public void keyReleased(KeyEvent event) {
     // Get the key code of the key that was pressed
@@ -99,7 +99,6 @@ public final class InputHandler {
    * updatePlayerDirection method - updates the player's direction based on the key pressed.
    *
    * @return the new direction of the player.
-   * @author ozany
    */
   public PVector updatePlayerDirection() {
     int directionX = ConstantManager.ZERO;
@@ -129,7 +128,6 @@ public final class InputHandler {
    * A method that shoots a bullet at the direction where the mouse is.
    *
    * @param image sprite image of the projectile
-   * @author ozany
    */
   public void mousePressed(PImage image) {
     if (window.stateOfGame == GameState.STARTGAME && window.mouseButton == PConstants.LEFT) {

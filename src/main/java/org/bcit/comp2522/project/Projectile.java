@@ -23,7 +23,6 @@ public class Projectile extends Sprite {
    * @param position x and y of the projectile
    * @param direction where the projectile will go
    * @param image sprite of the projectile
-   * @author ozany
    */
   public Projectile(Window window, PVector position, PVector direction, PImage image) {
     super(window);

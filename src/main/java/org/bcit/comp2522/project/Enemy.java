@@ -11,7 +11,7 @@ public class Enemy extends Sprite {
   protected PImage enemySprite;
   protected int enemyType;
   private boolean dead;
-  public final float hitboxWidth;
+  private final float hitboxWidth;
   private final float hitboxHeight;
 
   /**

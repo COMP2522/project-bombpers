@@ -43,7 +43,6 @@ public final class Player extends Sprite {
    * Constructor for the Player class.
    *
    * @param window the window where the player is drawn
-   * @author ozany
    */
   private Player(Window window) {
     super(window);
@@ -61,7 +60,6 @@ public final class Player extends Sprite {
    *
    * @param window window where the player is in
    * @return the player
-   * @author ozany
    */
   public static Player getPlayerInstance(Window window) {
     if (playerOne == null) {
@@ -78,8 +76,6 @@ public final class Player extends Sprite {
 
   /**
    * Draws the player by drawing the image of the player.
-   *
-   * @author ozany
    */
   @Override
   public void draw() {
