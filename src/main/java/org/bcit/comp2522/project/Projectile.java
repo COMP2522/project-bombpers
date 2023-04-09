@@ -7,7 +7,8 @@ import processing.core.PVector;
  * Projectile class where we create projectiles that works with Player and Enemy
  * classes.
  *
- * @author ozany
+ * @author Ozan Yurtisigi, Sukhraj Sidhu, Brett Reader, Amarjot Singha, Benny Li
+ * @version 1.0
  */
 public class Projectile extends Sprite {
   public static final float PROJECTILE_SIZE = 15;
@@ -19,10 +20,10 @@ public class Projectile extends Sprite {
   /**
    * Constructor for our projectile.
    *
-   * @param window the window where the projectile is in
-   * @param position x and y of the projectile
+   * @param window    the window where the projectile is in
+   * @param position  x and y of the projectile
    * @param direction where the projectile will go
-   * @param image sprite of the projectile
+   * @param image     sprite of the projectile
    */
   public Projectile(Window window, PVector position, PVector direction, PImage image) {
     super(window);
@@ -70,11 +71,6 @@ public class Projectile extends Sprite {
     } else if (one instanceof Enemy && two instanceof Projectile) {
       collide(two, one);
     }
-  }
-
-  @Override
-  public int getDamage() {
-    return damage;
   }
 
 }

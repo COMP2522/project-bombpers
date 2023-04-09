@@ -5,16 +5,22 @@ import processing.core.PVector;
 
 /**
  * Sprite class - is the parent class of all classes that can move, collide, and be drawn.
+ *
+ * @author Brett Reader, Benny Li, Ozan Yurtisigi, Amarjot Singh, Sukhraj Sidhu
+ * @version 1.0
  */
 public abstract class Sprite implements Collidable, Movable, Drawable {
+
   /**
    * The health of the Sprite.
    */
   protected int health;
+
   /**
    * The damage caused by the Sprite.
    */
   protected int damage;
+
   /**
    * The position of the Sprite.
    */
@@ -30,15 +36,6 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
    */
 
   protected float size;
-  /**
-   * The x-position of the Sprite.
-   */
-  protected int positionX;
-
-  /**
-   * The y-position of the Sprite.
-   */
-  protected int positionY;
 
   /**
    * The speed of the Sprite.
@@ -48,7 +45,7 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   /**
    * The window that the Sprite will be drawn on.
    */
-  protected  Window window;
+  protected Window window;
 
   /**
    * The image of the Sprite.
@@ -75,7 +72,6 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
 
   /**
    * Sets the position vector of the Sprite.
-   *
    */
   public PVector getCenterPosition() {
     if (image == null) {
@@ -118,13 +114,6 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   }
 
   /**
-   * gets the direction of the sprite.
-   */
-  public PVector getDirection() {
-    return direction.copy();
-  }
-
-  /**
    * sets the direction of the sprite.
    */
   public void setDirection(PVector direction) {
@@ -153,25 +142,12 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   }
 
   /**
-   * sets the damage caused by the sprite.
-   */
-  public void setDamage(int damage) {
-    this.damage = damage;
-  }
-
-  /**
    * gets the size of the sprite.
    */
   public float getSize() {
     return size;
   }
 
-  /**
-   * sets the size of the sprite.
-   */
-  public void setSize(float size) {
-    this.size = size;
-  }
 
   /**
    * sets the position of the sprite.
@@ -180,31 +156,4 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
     this.position = cord;
   }
 
-  /**
-   * gets the x-position of the sprite.
-   */
-  public int getPositionX() {
-    return positionX;
-  }
-
-  /**
-   * sets the x-position of the sprite.
-   */
-  public void setPositionX(int positionX) {
-    this.positionX = positionX;
-  }
-
-  /**
-   * gets the y-position of the sprite.
-   */
-  public int getPositionY() {
-    return positionY;
-  }
-
-  /**
-   * sets the y-position of the sprite.
-   */
-  public void setPositionY(int positionY) {
-    this.positionY = positionY;
-  }
 }
