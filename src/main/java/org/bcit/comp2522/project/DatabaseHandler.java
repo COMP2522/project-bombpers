@@ -13,7 +13,7 @@ import org.bson.Document;
  * methods for saving and loading data related to our game, such as player and enemy information
  * and game scores.
  *
- * @author Brett Reader
+ * @author Brett Reader, Benny Li
  * @version 1.0
  */
 public final class DatabaseHandler {
