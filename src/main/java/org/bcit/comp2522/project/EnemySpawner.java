@@ -1,7 +1,6 @@
 package org.bcit.comp2522.project;
 
 import java.util.Random;
-
 import processing.core.PImage;
 import processing.core.PVector;
 

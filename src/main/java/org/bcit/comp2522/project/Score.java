@@ -6,7 +6,8 @@ import java.util.logging.Logger;
  * Class for Score of the game set, gets, and displays score.
  */
 public class Score extends UserInterface {
-  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / ConstantManager.TWOF);
+  private static final int DEFAULT_X_POS =
+          (int) (Window.WINDOW_WIDTH / ConstantManager.WINDOW_WIDTH_RESIZE);
   private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * ConstantManager.POINTONE);
   /**
    * The high score of the game.

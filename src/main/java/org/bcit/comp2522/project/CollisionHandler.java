@@ -10,7 +10,7 @@ public class CollisionHandler {
   private final UIHandler uiHandler;
 
   public CollisionHandler(final CollectionManager collectionManager, final Window window, final
-  UIHandler uiHandler) {
+      UIHandler uiHandler) {
     this.collectionManager = collectionManager;
     this.window = window;
     this.uiHandler = uiHandler;
@@ -26,7 +26,7 @@ public class CollisionHandler {
   }
 
   public void checkProjectileEnemyCollisions(final List<Enemy> enemiesToRemove, final
-  List<Projectile> projectilesToRemove) {
+      List<Projectile> projectilesToRemove) {
 
     for (final Projectile projectile : collectionManager.getProjectiles()) {
       for (final Enemy enemy : collectionManager.getEnemies()) {

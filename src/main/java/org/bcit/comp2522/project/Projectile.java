@@ -3,6 +3,12 @@ package org.bcit.comp2522.project;
 import processing.core.PImage;
 import processing.core.PVector;
 
+/**
+ * Projectile class where we create projectiles that works with Player and Enemy
+ * classes.
+ *
+ * @author ozany
+ */
 public class Projectile extends Sprite {
   public static final float PROJECTILE_SIZE = 15;
   public static final float PROJECTILE_SPEED = 5.0f;
@@ -10,6 +16,14 @@ public class Projectile extends Sprite {
   private final PImage projectileImage;
   private boolean dead;
 
+  /**
+   * Constructor for our projectile.
+   *
+   * @param window the window where the projectile is in
+   * @param position x and y of the projectile
+   * @param direction where the projectile will go
+   * @param image sprite of the projectile
+   */
   public Projectile(Window window, PVector position, PVector direction, PImage image) {
     super(window);
     this.position = position.copy();

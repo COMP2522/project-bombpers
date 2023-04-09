@@ -7,12 +7,13 @@ import processing.core.PConstants;
  * DangerLevel class that increases the enemy number on screen depending on score.
  */
 public class DangerLevel extends UserInterface {
-  private static final int DEFAULT_X_POS = (int) (Window.WINDOW_WIDTH / ConstantManager.TWOF);
+  private static final int DEFAULT_X_POS =
+          (int) (Window.WINDOW_WIDTH / ConstantManager.WINDOW_WIDTH_RESIZE);
   private static final int DEFAULT_Y_POS =
-      (int) (Window.WINDOW_HEIGHT * ConstantManager.POINTNINETYFIVE);
+      (int) (Window.WINDOW_HEIGHT * ConstantManager.WINDOW_HEIGHT_RESIZE);
   private int level;
-  private final PApplet pApp;
-  private final EnemySpawner eSpawner;
+  private final PApplet papp;
+  private final EnemySpawner espawner;
 
   /**
    * Constructor for DangerLevel.
@@ -22,17 +23,17 @@ public class DangerLevel extends UserInterface {
    */
   public DangerLevel(final PApplet p, final EnemySpawner spawner) {
     super(DEFAULT_X_POS, DEFAULT_Y_POS);
-    this.pApp = p;
-    this.eSpawner = spawner;
-    this.level = eSpawner.getSpawnModifier() + ConstantManager.ONE;
+    this.papp = p;
+    this.espawner = spawner;
+    this.level = espawner.getSpawnModifier() + ConstantManager.ONE;
   }
 
   @Override
   protected void drawUserInterface() {
-    pApp.fill(ConstantManager.TWOHUNDRED, ConstantManager.ZERO, ConstantManager.ZERO);
-    pApp.textAlign(PConstants.CENTER);
-    pApp.textSize(ConstantManager.TWENTYFOUR);
-    pApp.text("DANGER LEVEL: " + level, positionX, positionY);
+    papp.fill(ConstantManager.ENEMY_SPAWNER_UI, ConstantManager.ZERO, ConstantManager.ZERO);
+    papp.textAlign(PConstants.CENTER);
+    papp.textSize(ConstantManager.TEXT_SIZE);
+    papp.text("DANGER LEVEL: " + level, positionX, positionY);
   }
 
   public void increaseDangerLevel() {
@@ -48,7 +49,7 @@ public class DangerLevel extends UserInterface {
   }
 
   public void update() {
-    this.level = eSpawner.getSpawnModifier() + ConstantManager.ONE;
+    this.level = espawner.getSpawnModifier() + ConstantManager.ONE;
   }
 
 }

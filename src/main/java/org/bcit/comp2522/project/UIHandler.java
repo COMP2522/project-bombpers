@@ -4,15 +4,15 @@ import processing.core.PApplet;
 
 public class UIHandler {
 
-  private PApplet pApplet;
+  private PApplet papplet;
   private HPDisplay hpDisplay;
   private DangerLevel dangerLevel;
   private Score score;
 
-  public UIHandler(PApplet pApp, Window window, GameState state, EnemySpawner spawner) {
-    this.pApplet = pApp;
-    this.hpDisplay = new HPDisplay(pApp);
-    this.dangerLevel = new DangerLevel(pApp, spawner);
+  public UIHandler(PApplet papp, Window window, GameState state, EnemySpawner spawner) {
+    this.papplet = papp;
+    this.hpDisplay = new HPDisplay(papp);
+    this.dangerLevel = new DangerLevel(papp, spawner);
     this.score = new Score(window, state);
   }
 
@@ -36,11 +36,11 @@ public class UIHandler {
   }
 
   public PApplet getpApplet() {
-    return pApplet;
+    return papplet;
   }
 
-  public void setpApplet(PApplet pApplet) {
-    this.pApplet = pApplet;
+  public void setpApplet(PApplet papplet) {
+    this.papplet = papplet;
   }
 
   public HPDisplay getHpDisplay() {

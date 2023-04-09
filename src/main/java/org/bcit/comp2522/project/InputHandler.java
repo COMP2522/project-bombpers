@@ -1,14 +1,15 @@
 package org.bcit.comp2522.project;
 
+import java.util.logging.Logger;
 import processing.core.PConstants;
 import processing.core.PImage;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 
-import java.util.logging.Logger;
-
 /**
  * InputHandler class - handles the input from the user.
+ *
+ * @author ozany
  */
 public final class InputHandler {
 
@@ -123,6 +124,11 @@ public final class InputHandler {
     return new PVector(directionX, directionY);
   }
 
+  /**
+   * A method that shoots a bullet at the direction where the mouse is.
+   *
+   * @param image sprite image of the projectile
+   */
   public void mousePressed(PImage image) {
     if (window.stateOfGame == GameState.STARTGAME && window.mouseButton == PConstants.LEFT) {
       final PVector mousePosition = new PVector(window.mouseX, window.mouseY);
@@ -144,7 +150,7 @@ public final class InputHandler {
     }
   }
 
-  public void pauseGameOnPKeyPressed(KeyEvent event) {
+  public void pauseGameOnPauseKeyPressed(KeyEvent event) {
     final char key = event.getKey();
     if (key == 'p' || key == 'P') {
       window.stateOfGame = GameState.PAUSE;

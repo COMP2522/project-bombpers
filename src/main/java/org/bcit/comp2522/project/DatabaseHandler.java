@@ -2,13 +2,11 @@ package org.bcit.comp2522.project;
 
 import com.mongodb.*; // star format was used here to avoid like 20 imports.
 import com.mongodb.client.*; // star format was used here to avoid like 20 imports.
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.logging.Logger;
-
 import org.bson.Document;
 
 /**

@@ -2,7 +2,6 @@ package org.bcit.comp2522.project;
 
 import java.util.List;
 import java.util.logging.Logger;
-
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -107,7 +106,7 @@ public class Window extends PApplet {
   @Override
   public void keyPressed(KeyEvent event) {
     inputHandler.keyPressed(event);
-    inputHandler.pauseGameOnPKeyPressed(event);
+    inputHandler.pauseGameOnPauseKeyPressed(event);
     // Update the player's direction
     updatePlayerDirection();
   }
@@ -177,7 +176,10 @@ public class Window extends PApplet {
   public void removeOffscreenProjectiles() {
     collectionManager.getProjectiles().removeIf(projectile -> {
       final boolean toRemove =
-          projectile.getPosition().x < 0 || projectile.getPosition().x > width || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
+          projectile.getPosition().x < 0
+                  || projectile.getPosition().x > width
+                  || projectile.getPosition().y < 0
+                  || projectile.getPosition().y > height;
       if (toRemove) {
         collectionManager.getSprites().remove(projectile);
       }

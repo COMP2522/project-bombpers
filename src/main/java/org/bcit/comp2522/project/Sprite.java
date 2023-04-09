@@ -110,7 +110,7 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   }
 
 
-@Override
+  @Override
   public void draw() {
     window.pushStyle();
     window.ellipse(this.position.x, this.position.y, size, size);

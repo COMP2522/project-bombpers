@@ -5,6 +5,8 @@ import processing.core.PVector;
 
 /**
  * Player class - is a child of the Sprite class that represents the player.
+ *
+ * @author ozany
  */
 public final class Player extends Sprite {
   /**
@@ -53,6 +55,12 @@ public final class Player extends Sprite {
     this.imageSize = PLAYER_SIZE;
   }
 
+  /**
+   * Makes the player singleton.
+   *
+   * @param window window where the player is in
+   * @return the player
+   */
   public static Player getPlayerInstance(Window window) {
     if (playerOne == null) {
       playerOne = new Player(window);
