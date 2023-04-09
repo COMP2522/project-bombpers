@@ -2,6 +2,9 @@ package org.bcit.comp2522.project;
 
 /**
  * Class for menuHandler that handles the menus of the game.
+ *
+ * @author Amarjot Sangha, Brett Reader, Ozan Yurtisigi
+ * @version 1.0
  */
 public class MenuHandler {
   /**
