@@ -9,6 +9,9 @@ import processing.event.KeyEvent;
 
 /**
  * Window class - is the main class of the game.
+ *
+ * @author Brett Reader, Sukhraj Sidhu, Ozan Yurtisigi, Benny Li, Armarjot Singha
+ * @version 1.0
  */
 public class Window extends PApplet {
   public PImage enemyStandardSprite;
@@ -31,7 +34,7 @@ public class Window extends PApplet {
   /**
    * Declares a score variable to store the score.
    */
-  public UIHandler uiHandler;
+  public UiHandler uiHandler;
   //public Score score;
   /**
    * Declares a background to store the background.
@@ -78,8 +81,8 @@ public class Window extends PApplet {
     CollectionManager.player = Player.getPlayerInstance(this);
     collectionManager.getSprites().add(CollectionManager.player);
     enemySpawner = new EnemySpawner(collectionManager, this);
-    uiHandler = new UIHandler(this, this, stateOfGame, enemySpawner);
-    uiHandler.getHPDisplay().update();
+    uiHandler = new UiHandler(this, this, stateOfGame, enemySpawner);
+    uiHandler.getHpDisplay().update();
     final DatabaseHandler db = DatabaseHandler.getInstance(uiHandler, collectionManager);
     collisionHandler = new CollisionHandler(collectionManager, this, uiHandler);
     uiHandler.getScore().setHighScore(db.load());
@@ -154,6 +157,9 @@ public class Window extends PApplet {
     }
   }
 
+  /**
+   * draws the game.
+   */
   public void drawGame() {
     background.draw();
     uiHandler.draw(stateOfGame);
@@ -166,6 +172,9 @@ public class Window extends PApplet {
     enemySpawner.spawnerActivate();
   }
 
+  /**
+   * Draws and updates the sprites.
+   */
   public void drawAndUpdateSprites() {
     for (final Sprite sprite : collectionManager.getSprites()) {
       sprite.update();
@@ -173,13 +182,16 @@ public class Window extends PApplet {
     }
   }
 
+  /**
+   * Removes the projectiles that are offscreen.
+   */
   public void removeOffscreenProjectiles() {
     collectionManager.getProjectiles().removeIf(projectile -> {
       final boolean toRemove =
           projectile.getPosition().x < 0
-                  || projectile.getPosition().x > width
-                  || projectile.getPosition().y < 0
-                  || projectile.getPosition().y > height;
+              || projectile.getPosition().x > width
+              || projectile.getPosition().y < 0
+              || projectile.getPosition().y > height;
       if (toRemove) {
         collectionManager.getSprites().remove(projectile);
       }
@@ -187,15 +199,25 @@ public class Window extends PApplet {
     });
   }
 
+  /**
+   * Handles the game over.
+   *
+   * @param enemiesToRemove is the list of enemies to remove.
+   */
   public void handleGameOver(List<Enemy> enemiesToRemove) {
     stateOfGame = GameState.ENDGAME;
     collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
-    uiHandler.getHPDisplay().update();
+    uiHandler.getHpDisplay().update();
     enemiesToRemove.addAll(collectionManager.getEnemies());
     enemySpawner.countReset();
     uiHandler.getDangerLevel().resetDangerLevel();
   }
 
+  /**
+   * Updates the game parameters after an enemy dies.
+   *
+   * @param enemy is the enemy that died.
+   */
   public void updateGameParametersAfterEnemyDeath(Enemy enemy) {
     enemySpawner.decreaseEnemyCount();
     enemySpawner.updateSpawnModifier(uiHandler.getScore());

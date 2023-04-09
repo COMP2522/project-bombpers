@@ -4,10 +4,13 @@ import java.util.logging.Logger;
 
 /**
  * Class for Score of the game set, gets, and displays score.
+ *
+ * @author Brett Reader, Benny Li, Ozan Yurtisigi, Armarjot Singha
+ * @version 1.0
  */
 public class Score extends UserInterface {
   private static final int DEFAULT_X_POS =
-          (int) (Window.WINDOW_WIDTH / ConstantManager.WINDOW_WIDTH_RESIZE);
+      (int) (Window.WINDOW_WIDTH / ConstantManager.WINDOW_WIDTH_RESIZE);
   private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * ConstantManager.POINTONE);
   /**
    * The high score of the game.
@@ -120,6 +123,11 @@ public class Score extends UserInterface {
     window.text("\nHigh Score: " + getHighScore(), getPositionX(), getPositionY());
   }
 
+  /**
+   * Increments the score of the game based on the enemy killed.
+   *
+   * @param enemyType the type of enemy killed
+   */
   public void incrementScore(int enemyType) {
     switch (enemyType) {
       case EnemyConfig.ENEMY_STANDARD_TYPE -> currentScore++;

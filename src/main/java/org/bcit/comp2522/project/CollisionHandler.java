@@ -24,7 +24,7 @@ public class CollisionHandler {
   /**
    * The UIHandler object.
    */
-  private final UIHandler uiHandler;
+  private final UiHandler uiHandler;
 
   /**
    * Constructs a CollisionHandler object.
@@ -34,7 +34,7 @@ public class CollisionHandler {
    * @param uiHandler the UIHandler object
    */
   public CollisionHandler(final CollectionManager collectionManager, final Window window, final
-      UIHandler uiHandler) {
+  UiHandler uiHandler) {
     this.collectionManager = collectionManager;
     this.window = window;
     this.uiHandler = uiHandler;
@@ -112,7 +112,7 @@ public class CollisionHandler {
     enemiesToRemove.add(enemy);
     collectionManager.getPlayer().setHealth(collectionManager.getPlayer()
         .getHealth() - enemy.getDamage());
-    uiHandler.getHPDisplay().takeDamage(enemy.getDamage());
+    uiHandler.getHpDisplay().takeDamage(enemy.getDamage());
     if (collectionManager.getPlayer().getHealth() <= 0) {
       window.handleGameOver(enemiesToRemove);
     }

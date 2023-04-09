@@ -23,7 +23,7 @@ public final class DatabaseHandler {
 
   private String content;
 
-  private final UIHandler uiHandler;
+  private final UiHandler uiHandler;
 
   private final CollectionManager cm;
 
@@ -33,7 +33,7 @@ public final class DatabaseHandler {
    * @param uiHandler the uiHandler being passed to the constructor
    * @param cm        the collectionManager being passed to the constructor
    */
-  private DatabaseHandler(final UIHandler uiHandler, final CollectionManager cm) {
+  private DatabaseHandler(final UiHandler uiHandler, final CollectionManager cm) {
     try {
       content = new String(Files.readAllBytes(Paths.get("token.txt")));
     } catch (IOException e) {
@@ -60,7 +60,7 @@ public final class DatabaseHandler {
    * @param cm the collectionManager being passed to the method
    * @return the instance of the database handler.
    */
-  public static DatabaseHandler getInstance(final UIHandler u, final CollectionManager cm) {
+  public static DatabaseHandler getInstance(final UiHandler u, final CollectionManager cm) {
     if (instance == null) {
       instance = new DatabaseHandler(u, cm);
     }
@@ -101,7 +101,7 @@ public final class DatabaseHandler {
    * @param u the uiHandler containing the score object.
    * @return the score document.
    */
-  private Document createScoreDocument(final UIHandler u) {
+  private Document createScoreDocument(final UiHandler u) {
     final Document scoreDoc = new Document();
     scoreDoc.append("Highscore", u.getScore().getHighScore());
     scoreDoc.append("CurrentScore", u.getScore().getCurrentScore());
@@ -141,7 +141,7 @@ public final class DatabaseHandler {
    * @param c the collectionManager containing the game information.
    * @param u the uiHandler containing the game information.
    */
-  public void saveInfo(final CollectionManager c, final UIHandler u) {
+  public void saveInfo(final CollectionManager c, final UiHandler u) {
     final Document gameDoc = new Document();
     gameDoc.append("Score", createScoreDocument(u));
     gameDoc.append("Player", createPlayerDocument(c));

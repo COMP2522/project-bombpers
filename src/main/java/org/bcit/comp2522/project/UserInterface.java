@@ -2,9 +2,12 @@ package org.bcit.comp2522.project;
 
 /**
  * Abstract class for the User Interface.
+ *
+ * @author Brett Reader, Amarjot Singha, Benny Li
+ * @version 1.0
  */
-
 public abstract class UserInterface {
+
   /**
    * The x-position of the UserInterface.
    */
@@ -13,6 +16,7 @@ public abstract class UserInterface {
    * The y-position of the UserInterface.
    */
   protected int positionY;
+
   /**
    * Constructor for UserInterface.
    *
@@ -40,15 +44,6 @@ public abstract class UserInterface {
   }
 
   /**
-   * Sets the x-position of the UserInterface.
-   *
-   * @param positionX the x-position of the UserInterface
-   */
-  public void setPositionX(int positionX) {
-    this.positionX = positionX;
-  }
-
-  /**
    * Gets the y-position of the UserInterface.
    *
    * @return the y-position of the UserInterface
@@ -57,12 +52,4 @@ public abstract class UserInterface {
     return positionY;
   }
 
-  /**
-   * Sets the y-position of the UserInterface.
-   *
-   * @param positionY the y-position of the UserInterface
-   */
-  public void setPositionY(int positionY) {
-    this.positionY = positionY;
-  }
 }
