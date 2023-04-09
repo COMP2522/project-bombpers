@@ -5,6 +5,9 @@ import processing.core.PVector;
 
 /**
  * Class for enemy objects.
+ *
+ * @author Benny Li, Brett Reader, Sukhraj Sidhu, Ozan Yurtisigi
+ * @version 1.0
  */
 public class Enemy extends Sprite {
   //protected Sprite player;
