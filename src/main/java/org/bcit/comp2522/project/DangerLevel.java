@@ -5,25 +5,47 @@ import processing.core.PConstants;
 
 /**
  * DangerLevel class that increases the enemy number on screen depending on score.
+ *
+ * @author Ozan Yurtisigi, Benny Li, Brett Reader, Sukhraj Sidhu
  */
 public class DangerLevel extends UserInterface {
+
+  /**
+   * Default x position.
+   */
   private static final int DEFAULT_X_POS =
           (int) (Window.WINDOW_WIDTH / ConstantManager.WINDOW_WIDTH_RESIZE);
+
+  /**
+   * Default y position.
+   */
   private static final int DEFAULT_Y_POS =
-      (int) (Window.WINDOW_HEIGHT * ConstantManager.WINDOW_HEIGHT_RESIZE);
+          (int) (Window.WINDOW_HEIGHT * ConstantManager.WINDOW_HEIGHT_RESIZE);
+
+  /**
+   * Current level.
+   */
   private int level;
+
+  /**
+   * PApplet object.
+   */
   private final PApplet papp;
+
+  /**
+   * Enemy spawner.
+   */
   private final EnemySpawner espawner;
 
   /**
    * Constructor for DangerLevel.
    *
-   * @param p       PApplet object
+   * @param applet  PApplet object
    * @param spawner enemy spawner
    */
-  public DangerLevel(final PApplet p, final EnemySpawner spawner) {
+  public DangerLevel(final PApplet applet, final EnemySpawner spawner) {
     super(DEFAULT_X_POS, DEFAULT_Y_POS);
-    this.papp = p;
+    this.papp = applet;
     this.espawner = spawner;
     this.level = espawner.getSpawnModifier() + ConstantManager.ONE;
   }
@@ -36,18 +58,16 @@ public class DangerLevel extends UserInterface {
     papp.text("DANGER LEVEL: " + level, positionX, positionY);
   }
 
-  public void increaseDangerLevel() {
-    this.level++;
-  }
-
+  /**
+   * Resets the danger level.
+   */
   public void resetDangerLevel() {
     this.level = ConstantManager.ONE;
   }
 
-  public int getCurrDangerLevel() {
-    return this.level;
-  }
-
+  /**
+   * Updates the danger level.
+   */
   public void update() {
     this.level = espawner.getSpawnModifier() + ConstantManager.ONE;
   }

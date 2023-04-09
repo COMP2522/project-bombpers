@@ -4,7 +4,11 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 /**
- * Background class.
+ * Background class, which will be included in the Window class
+ * to provide a background.
+ *
+ * @author Sukhraj Sidhu, Amarjot Sangha, Brett Reader, Ozan Yurtisigi
+ * @version 1.0
  */
 public class Background implements Drawable {
 
@@ -55,7 +59,7 @@ public class Background implements Drawable {
   @Override
   public void draw() {
     final float imageWidth =
-        (float) (backgroundImage.width * parent.height) / backgroundImage.height;
+            (float) (backgroundImage.width * parent.height) / backgroundImage.height;
     parent.image(backgroundImage, offset, ConstantManager.ZERO, imageWidth, parent.height);
     parent.image(backgroundImage, offset + imageWidth, ConstantManager.ZERO,
             imageWidth, parent.height);
