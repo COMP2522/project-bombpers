@@ -1,7 +1,6 @@
 package org.bcit.comp2522.project;
 
-import com.mongodb.*; // star format was used here to avoid like 20 imports.
-import com.mongodb.client.*; // star format was used here to avoid like 20 imports.
+import com.mongodb.client.MongoDatabase;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -15,7 +14,7 @@ import org.bson.Document;
  * and game scores.
  *
  * @author Brett Reader
- * @version 2023-04-08
+ * @version 1.0
  */
 public final class DatabaseHandler {
   private final MongoDatabase database;
@@ -40,13 +39,14 @@ public final class DatabaseHandler {
     } catch (IOException e) {
       Logger.getLogger("org.mongodb.driver").severe(e.getMessage());
     }
-    final ConnectionString connectionString = new ConnectionString(content);
-    final MongoClientSettings settings = MongoClientSettings
+    final com.mongodb.ConnectionString connectionString = new com.mongodb.ConnectionString(content);
+    final com.mongodb.MongoClientSettings settings = com.mongodb.MongoClientSettings
         .builder()
         .applyConnectionString(connectionString)
-        .serverApi(ServerApi.builder().version(ServerApiVersion.V1).build())
+        .serverApi(com.mongodb.ServerApi.builder().version(com.mongodb.ServerApiVersion.V1).build())
         .build();
-    final MongoClient mongoClient = MongoClients.create(settings);
+    final com.mongodb.client.MongoClient mongoClient =
+        com.mongodb.client.MongoClients.create(settings);
     this.database = mongoClient.getDatabase("Bombpers");
     this.cm = cm;
     this.uiHandler = uiHandler;
@@ -78,10 +78,10 @@ public final class DatabaseHandler {
    * @return the highest score from the database
    */
   public int load() {
-    final MongoCollection<Document> collection = database.getCollection("Game");
+    final com.mongodb.client.MongoCollection<Document> collection = database.getCollection("Game");
 
     int highestScore = 0;
-    try (MongoCursor<Document> cursor = collection.find().iterator()) {
+    try (com.mongodb.client.MongoCursor<Document> cursor = collection.find().iterator()) {
       while (cursor.hasNext()) {
         final Document doc = cursor.next();
         final int highscore = doc.getEmbedded(Arrays.asList("Score", "Highscore"), Integer.class);
@@ -153,7 +153,7 @@ public final class DatabaseHandler {
     try {
       database.getCollection("Game").insertOne(gameDoc);
       //System.out.println("Data inserted successfully");
-    } catch (MongoException ex) {
+    } catch (com.mongodb.MongoException ex) {
       Logger.getLogger("org.mongodb.driver").severe(ex.getMessage());
     }
   }

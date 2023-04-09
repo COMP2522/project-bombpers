@@ -2,6 +2,9 @@ package org.bcit.comp2522.project;
 
 /**
  * Configuration file for enemies and variations of enemies.
+ *
+ * @author Benny Li, Sukhraj Sidhu
+ * @version 1.0
  */
 public class EnemyConfig {
   // Number of Enemy Types
