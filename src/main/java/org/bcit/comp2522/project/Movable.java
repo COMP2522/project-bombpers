@@ -7,5 +7,9 @@ package org.bcit.comp2522.project;
  * @version 1.0
  */
 public interface Movable {
+
+  /**
+   * Moves the object.
+   */
   void move();
 }

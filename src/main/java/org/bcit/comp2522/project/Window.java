@@ -14,41 +14,85 @@ import processing.event.KeyEvent;
  * @version 1.0
  */
 public class Window extends PApplet {
+
+  /**
+   * image for the standard enemy.
+   */
   public PImage enemyStandardSprite;
+
+  /**
+   * image for the slow enemy.
+   */
   public PImage enemySlowSprite;
+
+  /**
+   * image for the fast enemy.
+   */
   public PImage enemyFastSprite;
+
+  /**
+   * The input handler.
+   */
   private InputHandler inputHandler;
+
   /**
    * Declares a projectile image to store the projectile image.
    */
   private static final String PROJECTILE_IMAGE = "../img/bullet.png";
-  public static final int WINDOW_WIDTH = 500;
-  public static final int WINDOW_HEIGHT = 500;
+
   /**
-   * Declares a collectionManager to store the sprites.
+   * Constant for window width.
+   */
+  public static final int WINDOW_WIDTH = 500;
+
+  /**
+   * Constant for window height.
+   */
+  public static final int WINDOW_HEIGHT = 500;
+
+  /**
+   * projectile image.
    */
   private PImage projectileImage;
-  private CollectionManager collectionManager;
-  private CollisionHandler collisionHandler;
-  public EnemySpawner enemySpawner;
+
   /**
-   * Declares a score variable to store the score.
+   * Collection manager to store all the sprites.
+   */
+  private CollectionManager collectionManager;
+
+  /**
+   * Collision handler to handle collisions.
+   */
+  private CollisionHandler collisionHandler;
+
+  /**
+   * Enemy spawner to spawn enemies.
+   */
+  public EnemySpawner enemySpawner;
+
+  /**
+   * UI handler to handle UI.
    */
   public UiHandler uiHandler;
-  //public Score score;
+
   /**
-   * Declares a background to store the background.
+   * The background of the game.
    */
   private Background background;
+
   /**
    * Declares a variable to hold the GameState to transition between states.
    */
   public GameState stateOfGame = GameState.STARTMENU;
+
   /**
    * Declares a menu handler to use to handel menus.
    */
   public MenuHandler menuhandler = new MenuHandler(stateOfGame, this);
 
+  /**
+   * default constructor for window.
+   */
   public Window() {
     super();
   }
@@ -60,15 +104,15 @@ public class Window extends PApplet {
 
   @Override
   public void setup() {
-    //score = new Score(WINDOW_WIDTH / 2, 30, this);
     // Initialize the Player and collectionManager
     this.init();
     inputHandler = InputHandler.getInstance(collectionManager, this);
     noStroke();
+
     // Create the background object
     background = new Background(this);
+
     //Create the score object
-    //score = new Score(180, 30, myScore, this);
     projectileImage = loadImage(PROJECTILE_IMAGE);
 
   }
@@ -77,26 +121,77 @@ public class Window extends PApplet {
    * Initializes the  collectionManager and adds the created player to it.
    */
   public void init() {
+    setupCollectionManager();
+    setupEnemySpawner();
+    setupUiHandler();
+    setupDatabaseHandler();
+    initializeImages();
+    resetPlayerPosition();
+    startAutoSaveThread();
+    uiHandler.getScore().resetScore();
+  }
+
+  /**
+   * Helper for init. Sets up the collection manager.
+   */
+  private void setupCollectionManager() {
     collectionManager = CollectionManager.getInstance();
     CollectionManager.player = Player.getPlayerInstance(this);
     collectionManager.getSprites().add(CollectionManager.player);
+  }
+
+  /**
+   * Helper for init. Sets up the enemy spawner.
+   */
+  private void setupEnemySpawner() {
     enemySpawner = new EnemySpawner(collectionManager, this);
+  }
+
+  /**
+   * Helper for init. Sets up the UI handler.
+   */
+  private void setupUiHandler() {
     uiHandler = new UiHandler(this, this, stateOfGame, enemySpawner);
     uiHandler.getHpDisplay().update();
+  }
+
+  /**
+   * Helper for init. Sets up the database handler.
+   */
+  private void setupDatabaseHandler() {
     final DatabaseHandler db = DatabaseHandler.getInstance(uiHandler, collectionManager);
     collisionHandler = new CollisionHandler(collectionManager, this, uiHandler);
     uiHandler.getScore().setHighScore(db.load());
+  }
+
+  /**
+   * Helper for init. Initializes the images.
+   */
+  private void initializeImages() {
     enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
     enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
     enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
-    // Reset the player's position
-    final PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
+  }
+
+  /**
+   * Helper for init. Resets the player position.
+   */
+  private void resetPlayerPosition() {
+    final PVector originalPosition = new PVector(
+        (float) this.width / ConstantManager.TWO,
+        (float) this.height / ConstantManager.TWO
+    );
     collectionManager.getPlayer().setPosition(originalPosition);
+  }
+
+  /**
+   * Helper for init. Starts the auto save thread.
+   */
+  private void startAutoSaveThread() {
     new Thread(() -> {
       final SaveHandler s = new SaveHandler(uiHandler);
       s.autoSave();
     }).start();
-    uiHandler.getScore().resetScore();
   }
 
 
@@ -110,6 +205,7 @@ public class Window extends PApplet {
   public void keyPressed(KeyEvent event) {
     inputHandler.keyPressed(event);
     inputHandler.pauseGameOnPauseKeyPressed(event);
+
     // Update the player's direction
     updatePlayerDirection();
   }
@@ -120,10 +216,10 @@ public class Window extends PApplet {
    *
    * @param event is the key that was released.
    */
-
   @Override
   public void keyReleased(KeyEvent event) {
     inputHandler.keyReleased(event);
+
     // Update the player's direction
     updatePlayerDirection();
   }
@@ -152,8 +248,9 @@ public class Window extends PApplet {
           uiHandler.getScore().getHighScore()
       );
       case STARTGAME -> drawGame();
-      default ->
-          Logger.getLogger(Window.class.getName()).warning("Invalid state of game: " + stateOfGame);
+      default -> Logger
+                .getLogger(Window.class.getName())
+                .warning("Invalid state of game: " + stateOfGame);
     }
   }
 
@@ -163,12 +260,9 @@ public class Window extends PApplet {
   public void drawGame() {
     background.draw();
     uiHandler.draw(stateOfGame);
-
     drawAndUpdateSprites();
-
     removeOffscreenProjectiles();
     collisionHandler.handleCollisions();
-
     enemySpawner.spawnerActivate();
   }
 

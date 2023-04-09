@@ -10,33 +10,45 @@ import processing.core.PVector;
  * @version 1.0
  */
 public final class Player extends Sprite {
+
   /**
    * The image of the player.
    */
   private final PImage characterSprite;
+
   /**
    * The health of the player.
    */
   public static final int PLAYER_HEALTH = 5;
+
   /**
    * The damage caused by the player.
    */
   public static final int PLAYER_DAMAGE = 1;
+
   /**
    * The size of the player.
    */
   public static final float PLAYER_SIZE = 30;
+
   /**
    * The speed of the player.
    */
   public static final float PLAYER_SPEED = 1.5f;
+
   /**
    * The location of the player image.
    */
-  public static final String PLAYER_SPRITE = "../img/idle_0v2.png";
+  public static final String PLAYER_SPRITE = "../img/player.png";
 
+  /**
+   * The player instance.
+   */
   private static Player playerOne;
 
+  /**
+   * The size of the player image.
+   */
   private final float imageSize;
 
 
@@ -72,7 +84,7 @@ public final class Player extends Sprite {
 
   @Override
   public void collide(Sprite one, Sprite two) {
-
+    //This is intentionally left blank.
   }
 
   /**
@@ -89,5 +101,6 @@ public final class Player extends Sprite {
    */
   @Override
   public void move() {
+    //This is intentionally left blank.
   }
 }

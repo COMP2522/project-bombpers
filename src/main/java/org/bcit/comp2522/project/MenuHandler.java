@@ -7,19 +7,40 @@ package org.bcit.comp2522.project;
  * @version 1.0
  */
 public class MenuHandler {
+
   /**
    * The window the menu is displayed on.
    */
   private final Window window;
+
   /**
    * The current state of the game.
    */
   public GameState currentState;
 
+  /**
+   * The menu score.
+   */
   public Score menuScore;
+
+  /**
+   * The x position of the pause menu title.
+   */
   private static final int PAUSE_MENU_TITLE_X_POSITION = (int) (Window.WINDOW_WIDTH / 2f);
+
+  /**
+   * The y position of the pause menu title.
+   */
   private static final int PAUSE_MENU_TITLE_Y_POSITION = (int) (Window.WINDOW_HEIGHT * 0.7f);
+
+  /**
+   * The x position of the end menu title.
+   */
   private static final int END_MENU_TITLE_X_POSITION = (int) (Window.WINDOW_WIDTH / 2f);
+
+  /**
+   * The y position of the end menu title.
+   */
   private static final int END_MENU_TITLE_Y_POSITION = (int) (Window.WINDOW_HEIGHT * 0.7f);
 
   /**
@@ -46,8 +67,8 @@ public class MenuHandler {
     int buttonTopBound = 199;
     int buttonBottomBound = 244;
     if (this.window.mousePressed && this.window.mouseButton == this.window.LEFT
-            && this.window.mouseX >= buttonLeftBound && this.window.mouseX < buttonRightBound
-            && this.window.mouseY >= buttonTopBound && this.window.mouseY <= buttonBottomBound) {
+        && this.window.mouseX >= buttonLeftBound && this.window.mouseX < buttonRightBound
+        && this.window.mouseY >= buttonTopBound && this.window.mouseY <= buttonBottomBound) {
       this.window.mousePressed = false;
       if (this.currentState == GameState.ENDGAME) {
         this.window.init();
@@ -91,11 +112,22 @@ public class MenuHandler {
   }
 
 
+  /**
+   * Helper method to set up the menu.
+   *
+   * @param menu the menu
+   */
   private void setupMenu(Menu menu) {
     menu.updateGameState(this.currentState);
     menu.drawUserInterface();
   }
 
+  /**
+   * Helper method to set up the score.
+   *
+   * @param currentScore the current score
+   * @param highScore    the high score
+   */
   private void setupScore(int currentScore, int highScore) {
     this.menuScore = new Score(this.window, this.currentState);
     this.menuScore.setCurrentScore(currentScore);

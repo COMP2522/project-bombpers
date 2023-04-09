@@ -14,13 +14,13 @@ public class DangerLevel extends UserInterface {
    * Default x position.
    */
   private static final int DEFAULT_X_POS =
-          (int) (Window.WINDOW_WIDTH / ConstantManager.WINDOW_WIDTH_RESIZE);
+      (int) (Window.WINDOW_WIDTH / ConstantManager.WINDOW_WIDTH_RESIZE);
 
   /**
    * Default y position.
    */
   private static final int DEFAULT_Y_POS =
-          (int) (Window.WINDOW_HEIGHT * ConstantManager.WINDOW_HEIGHT_RESIZE);
+      (int) (Window.WINDOW_HEIGHT * ConstantManager.WINDOW_HEIGHT_RESIZE);
 
   /**
    * Current level.

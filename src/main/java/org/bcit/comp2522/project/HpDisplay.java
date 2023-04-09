@@ -10,11 +10,31 @@ import processing.core.PConstants;
  * @version 1.0
  */
 public class HpDisplay extends UserInterface {
+
+  /**
+   * Default x position of the HP text.
+   */
   private static final int DEFAULT_X_POS =
       (int) (Window.WINDOW_WIDTH * ConstantManager.HP_WIDTH);
+
+  /**
+   * Default y position of the HP text.
+   */
   private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * ConstantManager.HP_HEIGHT);
+
+  /**
+   * CollectionManager object.
+   */
   private final CollectionManager collectionManager;
+
+  /**
+   * PApplet object to draw the text.
+   */
   private final PApplet papp;
+
+  /**
+   * Health of the player.
+   */
   private int health;
 
   /**
@@ -37,10 +57,18 @@ public class HpDisplay extends UserInterface {
     papp.text("HP: " + health, positionX, positionY);
   }
 
+  /**
+   * Updates the HP text.
+   */
   public void update() {
     this.health = collectionManager.getPlayer().getHealth();
   }
 
+  /**
+   * reduces the Hp text value.
+   *
+   * @param dmg amount of damage to be taken
+   */
   public void takeDamage(int dmg) {
     this.health = collectionManager.getPlayer().getHealth() - dmg;
     update();

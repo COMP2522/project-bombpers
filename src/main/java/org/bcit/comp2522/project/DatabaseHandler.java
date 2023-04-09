@@ -9,22 +9,36 @@ import java.util.logging.Logger;
 import org.bson.Document;
 
 /**
- * A class that handles the connection and communication with a MongoDB database. The class has
- * methods for saving and loading data related to our game, such as player and enemy information
- * and game scores.
+ * A class that handles the connection and communication with a MongoDB database.
  *
  * @author Brett Reader, Benny Li
  * @version 1.0
  */
 public final class DatabaseHandler {
+
+  /**
+   * The database that the handler is connected to.
+   */
   private final MongoDatabase database;
 
+  /**
+   * The instance of the database handler.
+   */
   private static DatabaseHandler instance;
 
+  /**
+   * The token for the database.
+   */
   private String content;
 
+  /**
+   * The uiHandler being passed to the constructor.
+   */
   private final UiHandler uiHandler;
 
+  /**
+   * The collectionManager being passed to the constructor.
+   */
   private final CollectionManager cm;
 
   /**
@@ -46,15 +60,16 @@ public final class DatabaseHandler {
         .serverApi(com.mongodb.ServerApi.builder().version(com.mongodb.ServerApiVersion.V1).build())
         .build();
     final com.mongodb.client.MongoClient mongoClient =
-        com.mongodb.client.MongoClients.create(settings);
+          com.mongodb.client.MongoClients.create(settings);
+
     this.database = mongoClient.getDatabase("Bombpers");
     this.cm = cm;
     this.uiHandler = uiHandler;
   }
 
   /**
-   * Gets the instance of the DB handler from the database. It checks if the DB handler has been
-   * initialized and if it has not it will create a new instance of the DB handler.
+   * if the DB handler has been initialized and if it has not it will create a new
+   * instance of the DB handler.
    *
    * @param u  the uihandler being passed to the method
    * @param cm the collectionManager being passed to the method
@@ -67,8 +82,10 @@ public final class DatabaseHandler {
     return instance;
   }
 
+  /**
+   * Saves the game information to the database.
+   */
   public void save() {
-    //System.out.println("Saving game");
     this.saveInfo(cm, uiHandler);
   }
 
@@ -152,7 +169,6 @@ public final class DatabaseHandler {
     }
     try {
       database.getCollection("Game").insertOne(gameDoc);
-      //System.out.println("Data inserted successfully");
     } catch (com.mongodb.MongoException ex) {
       Logger.getLogger("org.mongodb.driver").severe(ex.getMessage());
     }

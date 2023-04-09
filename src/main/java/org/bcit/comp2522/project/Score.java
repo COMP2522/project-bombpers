@@ -9,13 +9,23 @@ import java.util.logging.Logger;
  * @version 1.0
  */
 public class Score extends UserInterface {
+
+  /**
+   * The default x-position of the score.
+   */
   private static final int DEFAULT_X_POS =
       (int) (Window.WINDOW_WIDTH / ConstantManager.WINDOW_WIDTH_RESIZE);
+
+  /**
+   * The default y-position of the score.
+   */
   private static final int DEFAULT_Y_POS = (int) (Window.WINDOW_HEIGHT * ConstantManager.POINTONE);
+
   /**
    * The high score of the game.
    */
   private int highScore;
+
   /**
    * The current score of the game.
    */
@@ -25,8 +35,14 @@ public class Score extends UserInterface {
    */
   private final Window window;
 
+  /**
+   * The text size of the score.
+   */
   private static final int MENU_SCORE_TEXT_SIZE = 60;
 
+  /**
+   * The current state of the game.
+   */
   private GameState currState;
 
   /**
@@ -40,6 +56,11 @@ public class Score extends UserInterface {
     this.currState = state;
   }
 
+  /**
+   * Updates the game state.
+   *
+   * @param state the state of the game
+   */
   public void updateGameState(GameState state) {
     this.currState = state;
   }
@@ -91,7 +112,6 @@ public class Score extends UserInterface {
    * @param state the state of the game
    */
   public void displayScore(GameState state) {
-    //Depending on the state of the game, call the appropriate method to display the score
     int redColorValue = 255;
     int greenColorValue = 255;
     int blueColorValue = 0;
@@ -115,7 +135,6 @@ public class Score extends UserInterface {
   /**
    * Displays the score of the game while the game is in a menu.
    */
-
   private void displayMenuGameScore() {
     window.textSize(MENU_SCORE_TEXT_SIZE);
     //Set x and y in here make current x value larger
@@ -138,6 +157,9 @@ public class Score extends UserInterface {
     setCurrentScore(currentScore);
   }
 
+  /**
+   * Resets the score of the game.
+   */
   public void resetScore() {
     int startingScore = 0;
     setCurrentScore(startingScore);

@@ -11,10 +11,30 @@ import processing.core.PVector;
  * @version 1.0
  */
 public class Projectile extends Sprite {
+
+  /**
+   * The size of the projectile.
+   */
   public static final float PROJECTILE_SIZE = 15;
+
+  /**
+   * The speed of the projectile.
+   */
   public static final float PROJECTILE_SPEED = 5.0f;
+
+  /**
+   * The projectile's base damage.
+   */
   public static final int PROJECT_BASE_DAMAGE = 1;
+
+  /**
+   * The image of the projectile.
+   */
   private final PImage projectileImage;
+
+  /**
+   * If the projectile is dead and should be removed.
+   */
   private boolean dead;
 
   /**
