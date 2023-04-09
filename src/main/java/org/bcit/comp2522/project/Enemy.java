@@ -82,7 +82,7 @@ public class Enemy extends Sprite {
     return dead;
   }
 
-  public void setDead(boolean dead) {
+  public void setDead(final boolean dead) {
     this.dead = dead;
   }
 
@@ -91,7 +91,7 @@ public class Enemy extends Sprite {
    */
   @Override
   public void move() {
-    PVector directionToPlayer = PVector.sub(
+    final PVector directionToPlayer = PVector.sub(
         CollectionManager
             .getInstance()
             .getPlayer()
@@ -110,11 +110,11 @@ public class Enemy extends Sprite {
    * @return true if the enemy is colliding with the player
    */
   public boolean checkCollisionWithPlayer(Sprite player) {
-    float dx = player.getCenterPosition().x - this.getCenterPosition().x;
-    float dy = player.getCenterPosition().y - this.getCenterPosition().y;
-    float distance = (float) Math.sqrt(dx * dx + dy * dy);
+    final float dx = player.getCenterPosition().x - this.getCenterPosition().x;
+    final float dy = player.getCenterPosition().y - this.getCenterPosition().y;
+    final float distance = (float) Math.sqrt(dx * dx + dy * dy);
 
-    float minDistance = (player.getSize() + this.size) / ConstantManager.TWO;
+    final float minDistance = (player.getSize() + this.size) / ConstantManager.TWO;
 
     return distance <= minDistance;
   }

@@ -28,7 +28,7 @@ public class EnemySpawner {
    */
   public void spawnerActivate() {
     if (spawnAvailable()) {
-      int diceRoll = randomNumber.nextInt(EnemyConfig.ENEMY_TYPES) + 1;
+      final int diceRoll = randomNumber.nextInt(EnemyConfig.ENEMY_TYPES) + 1;
       switch (diceRoll) {
         case EnemyConfig.ENEMY_STANDARD_TYPE -> spawnEnemy(
             window.enemyStandardSprite,
@@ -54,7 +54,7 @@ public class EnemySpawner {
             EnemyConfig.ENEMY_SLOW_SIZE,
             EnemyConfig.ENEMY_SLOW_SPEED
         );
-        default -> System.out.println("Invalid spawn type");
+        default -> throw new ClassCastException("Invalid enemy type");
       }
     }
   }
@@ -62,12 +62,12 @@ public class EnemySpawner {
   /**
    * Spawns an enemy.
    *
-   * @param sprite Visual sprite of the enemy
+   * @param sprite    Visual sprite of the enemy
    * @param enemyType Enemy type according to EnemyConfig
-   * @param health Amount of damage that can be taken before perishing
-   * @param damage Damage dealt to player on contact
-   * @param size Size of the enemy
-   * @param speed Movement speed of the enemy
+   * @param health    Amount of damage that can be taken before perishing
+   * @param damage    Damage dealt to player on contact
+   * @param size      Size of the enemy
+   * @param speed     Movement speed of the enemy
    */
   public void spawnEnemy(
       PImage sprite,
@@ -77,7 +77,7 @@ public class EnemySpawner {
       float size,
       float speed
   ) {
-    Enemy newEnemy = new Enemy(
+    final Enemy newEnemy = new Enemy(
         window,
         sprite,
         enemyType,
@@ -111,7 +111,7 @@ public class EnemySpawner {
    * @return Randomized spawn point
    */
   public PVector randomizePosition() {
-    int randomY = randomNumber.nextInt(Window.WINDOW_HEIGHT);
+    final int randomY = randomNumber.nextInt(Window.WINDOW_HEIGHT);
     return new PVector(Window.WINDOW_WIDTH, randomY);
   }
 

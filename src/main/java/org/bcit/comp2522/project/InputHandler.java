@@ -1,5 +1,6 @@
 package org.bcit.comp2522.project;
 
+import java.util.logging.Logger;
 import processing.core.PConstants;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -8,7 +9,7 @@ import processing.event.KeyEvent;
 /**
  * InputHandler class - handles the input from the user.
  */
-public class InputHandler {
+public final class InputHandler {
 
   /**
    * The instance of the InputHandler.
@@ -17,10 +18,10 @@ public class InputHandler {
   /**
    * These booleans are used to check if the key is pressed or not.
    */
-  private boolean isLeftPressed = false;
-  private boolean isRightPressed = false;
-  private boolean isUpPressed = false;
-  private boolean isDownPressed = false;
+  private boolean isLeftPressed;
+  private boolean isRightPressed;
+  private boolean isUpPressed;
+  private boolean isDownPressed;
   private final Window window;
 
   /**
@@ -32,7 +33,7 @@ public class InputHandler {
    * getInstance method - returns the instance of the InputHandler.
    *
    * @param collectionManager the collection manager that will be used to access
-   *     the collection of sprites.
+   *                          the collection of sprites.
    * @return the instance of the InputHandler.
    */
   public static InputHandler getInstance(CollectionManager collectionManager, Window window) {
@@ -46,7 +47,7 @@ public class InputHandler {
    * InputHandler constructor - creates a new InputHandler object.
    *
    * @param collectionManager the collection manager that will be used to access
-   *     the collection of sprites.
+   *                          the collection of sprites.
    */
   private InputHandler(CollectionManager collectionManager, Window window) {
     this.collectionManager = collectionManager;
@@ -62,7 +63,7 @@ public class InputHandler {
    */
   public void keyPressed(KeyEvent event) {
     // Get the key code of the key that was pressed
-    int keyCode = event.getKeyCode();
+    final int keyCode = event.getKeyCode();
 
     // Check if the key code is the same as any of the switch cases and do the corresponding action
     switch (keyCode) {
@@ -70,7 +71,7 @@ public class InputHandler {
       case PConstants.RIGHT -> isRightPressed = true;
       case PConstants.UP -> isUpPressed = true;
       case PConstants.DOWN -> isDownPressed = true;
-      default -> System.out.println(); // switch needed a default case, it does nothing.
+      default -> Logger.getLogger("InputHandler").info("Key pressed: " + keyCode);
     }
   }
 
@@ -82,7 +83,7 @@ public class InputHandler {
    */
   public void keyReleased(KeyEvent event) {
     // Get the key code of the key that was pressed
-    int keyCode = event.getKeyCode();
+    final int keyCode = event.getKeyCode();
 
     // Check if the key code is the same as any of the switch cases and do the corresponding action
     switch (keyCode) {
@@ -90,7 +91,7 @@ public class InputHandler {
       case PConstants.RIGHT -> isRightPressed = false;
       case PConstants.UP -> isUpPressed = false;
       case PConstants.DOWN -> isDownPressed = false;
-      default -> System.out.println(); // switch needed a default case, it does nothing.
+      default -> Logger.getLogger("InputHandler").info("Key released: " + keyCode);
     }
   }
 
@@ -119,12 +120,7 @@ public class InputHandler {
     }
 
     // If the direction is not 0,0, set the player's direction to the new direction
-    if (directionX != ConstantManager.ZERO || directionY != ConstantManager.ZERO) {
-      collectionManager.getPlayer().setDirection(new PVector(directionX, directionY));
-    } else {
-      collectionManager.getPlayer()
-              .setDirection(new PVector(ConstantManager.ZERO, ConstantManager.ZERO));
-    }
+    collectionManager.getPlayer().setDirection(new PVector(directionX, directionY));
 
     return new PVector(directionX, directionY);
   }
@@ -137,27 +133,27 @@ public class InputHandler {
    */
   public void mousePressed(PImage image) {
     if (window.stateOfGame == GameState.STARTGAME && window.mouseButton == PConstants.LEFT) {
-      PVector mousePosition = new PVector(window.mouseX, window.mouseY);
-      PVector playerPosition = collectionManager.getPlayer().getPosition();
-      PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
+      final PVector mousePosition = new PVector(window.mouseX, window.mouseY);
+      final PVector playerPosition = collectionManager.getPlayer().getPosition();
+      final PVector direction = PVector.sub(mousePosition, playerPosition).normalize();
 
-      PVector projectileStartPosition = new PVector(
+      final PVector bulletStartPosition = new PVector(
           playerPosition.x + ConstantManager.CHAR_X_POS_MOVE
-                  - Projectile.PROJECTILE_SIZE / ConstantManager.CHAR_RESIZE_WIDTH,
+              - Projectile.PROJECTILE_SIZE / ConstantManager.CHAR_RESIZE_WIDTH,
           playerPosition.y + ConstantManager.CHAR_Y_POS_MOVE
-                  - Projectile.PROJECTILE_SIZE / ConstantManager.CHAR_RESIZE_WIDTH
+              - Projectile.PROJECTILE_SIZE / ConstantManager.CHAR_RESIZE_WIDTH
       );
 
-      Projectile projectile = new Projectile(
-              window, projectileStartPosition, direction, image); //Pimage
+      final Projectile projectile = new Projectile(
+          window, bulletStartPosition, direction, image); //Pimage
 
       collectionManager.getProjectiles().add(projectile);
       collectionManager.getSprites().add(projectile);
     }
   }
 
-  public void pauseGameOnPKeyPressed(KeyEvent event) {
-    char key = event.getKey();
+  public void pauseGameOnPauseKeyPressed(KeyEvent event) {
+    final char key = event.getKey();
     if (key == 'p' || key == 'P') {
       window.stateOfGame = GameState.PAUSE;
     }

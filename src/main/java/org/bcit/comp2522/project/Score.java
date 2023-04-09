@@ -1,5 +1,7 @@
 package org.bcit.comp2522.project;
 
+import java.util.logging.Logger;
+
 /**
  * Class for Score of the game set, gets, and displays score.
  */
@@ -20,21 +22,14 @@ public class Score extends UserInterface {
    */
   private final Window window;
 
-  private final int startingScore = 0;
-  private final int menuScoreTextSize = 60;
-  private final int gameScoreTextSize = menuScoreTextSize / 2;
-  private final int redColorValue = 255;
-  private final int greenColorValue = 255;
-  private final int blueColorValue = 0;
-  private final int enemyFastValue = 2;
-  private final int enemySlowValue = 3;
+  private static final int MENU_SCORE_TEXT_SIZE = 60;
 
   private GameState currState;
 
   /**
    * Constructor for Score.
    *
-   * @param window    the window of the game that the score is displayed on
+   * @param window the window of the game that the score is displayed on
    */
   public Score(Window window, GameState state) {
     super(DEFAULT_X_POS, DEFAULT_Y_POS);
@@ -94,6 +89,9 @@ public class Score extends UserInterface {
    */
   public void displayScore(GameState state) {
     //Depending on the state of the game, call the appropriate method to display the score
+    int redColorValue = 255;
+    int greenColorValue = 255;
+    int blueColorValue = 0;
     window.fill(redColorValue, greenColorValue, blueColorValue);
     if (state == GameState.STARTGAME) {
       displayInGameScore();
@@ -106,31 +104,34 @@ public class Score extends UserInterface {
    * Displays the score of the game while the game is in progress.
    */
   private void displayInGameScore() {
+    final int gameScoreTextSize = MENU_SCORE_TEXT_SIZE / 2;
     window.textSize(gameScoreTextSize);
     window.text("Score: " + currentScore, getPositionX(), getPositionY());
   }
+
   /**
    * Displays the score of the game while the game is in a menu.
    */
 
   private void displayMenuGameScore() {
-    window.textSize(menuScoreTextSize);
+    window.textSize(MENU_SCORE_TEXT_SIZE);
     //Set x and y in here make current x value larger
     window.text("Current Score:" + getCurrentScore(), getPositionX(), getPositionY());
     window.text("\nHigh Score: " + getHighScore(), getPositionX(), getPositionY());
   }
 
-  public void incrementScore(int score, Enemy enemy) {
-    int typeOfEnemy = enemy.enemyType;
-    switch (typeOfEnemy) {
-      case EnemyConfig.ENEMY_STANDARD_TYPE -> score++;
-      case EnemyConfig.ENEMY_FAST_TYPE -> score = score + enemyFastValue;
-      case EnemyConfig.ENEMY_SLOW_TYPE -> score = score + enemySlowValue;
+  public void incrementScore(int enemyType) {
+    switch (enemyType) {
+      case EnemyConfig.ENEMY_STANDARD_TYPE -> currentScore++;
+      case EnemyConfig.ENEMY_FAST_TYPE -> currentScore = currentScore + EnemyConfig.ENEMY_FAST_TYPE;
+      case EnemyConfig.ENEMY_SLOW_TYPE -> currentScore = currentScore + EnemyConfig.ENEMY_SLOW_TYPE;
+      default -> Logger.getLogger(Score.class.getName()).warning("Invalid enemy type");
     }
-    setCurrentScore(score);
+    setCurrentScore(currentScore);
   }
 
   public void resetScore() {
+    int startingScore = 0;
     setCurrentScore(startingScore);
   }
 }

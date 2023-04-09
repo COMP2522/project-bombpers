@@ -10,22 +10,22 @@ public class DangerLevel extends UserInterface {
   private static final int DEFAULT_X_POS =
           (int) (Window.WINDOW_WIDTH / ConstantManager.WINDOW_WIDTH_RESIZE);
   private static final int DEFAULT_Y_POS =
-          (int) (Window.WINDOW_HEIGHT * ConstantManager.WINDOW_HEIGHT_RESIZE);
-  private int dangerLevel;
+      (int) (Window.WINDOW_HEIGHT * ConstantManager.WINDOW_HEIGHT_RESIZE);
+  private int level;
   private final PApplet papp;
   private final EnemySpawner espawner;
 
   /**
    * Constructor for DangerLevel.
    *
-   * @param p PApplet object
+   * @param p       PApplet object
    * @param spawner enemy spawner
    */
-  public DangerLevel(PApplet p, EnemySpawner spawner) {
+  public DangerLevel(final PApplet p, final EnemySpawner spawner) {
     super(DEFAULT_X_POS, DEFAULT_Y_POS);
     this.papp = p;
     this.espawner = spawner;
-    this.dangerLevel = espawner.getSpawnModifier() + ConstantManager.ONE;
+    this.level = espawner.getSpawnModifier() + ConstantManager.ONE;
   }
 
   @Override
@@ -33,23 +33,23 @@ public class DangerLevel extends UserInterface {
     papp.fill(ConstantManager.ENEMY_SPAWNER_UI, ConstantManager.ZERO, ConstantManager.ZERO);
     papp.textAlign(PConstants.CENTER);
     papp.textSize(ConstantManager.TEXT_SIZE);
-    papp.text("DANGER LEVEL: " + dangerLevel, positionX, positionY);
+    papp.text("DANGER LEVEL: " + level, positionX, positionY);
   }
 
   public void increaseDangerLevel() {
-    this.dangerLevel++;
+    this.level++;
   }
 
   public void resetDangerLevel() {
-    this.dangerLevel = ConstantManager.ONE;
+    this.level = ConstantManager.ONE;
   }
 
   public int getCurrDangerLevel() {
-    return this.dangerLevel;
+    return this.level;
   }
 
   public void update() {
-    this.dangerLevel = espawner.getSpawnModifier() + ConstantManager.ONE;
+    this.level = espawner.getSpawnModifier() + ConstantManager.ONE;
   }
 
 }

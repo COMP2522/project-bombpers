@@ -5,31 +5,9 @@ package org.bcit.comp2522.project;
  */
 public class MenuHandler {
   /**
-   * Left Bound for the button.
-   */
-  private final int buttonLeftBound = 120;
-  /**
-   * Right Bound for the button.
-   */
-  private final int buttonRightBound = 312;
-  /**
-   * Top Bound for the button.
-   */
-  private final int buttonTopBound = 199;
-  /**
-   * Bottom Bound for the button.
-   */
-  private final int buttonBottomBound = 244;
-  /**
-   * The possible types of menus.
-   */
-  public Menu startMenu;
-  public Menu pauseMenu;
-  public Menu endMenu;
-  /**
    * The window the menu is displayed on.
    */
-  Window window;
+  private final Window window;
   /**
    * The current state of the game.
    */
@@ -60,7 +38,10 @@ public class MenuHandler {
    */
   public GameState createMenu(GameState state, int currScore, int highScore) {
     this.currentState = state;
-
+    int buttonLeftBound = 120;
+    int buttonRightBound = 312;
+    int buttonTopBound = 199;
+    int buttonBottomBound = 244;
     if (this.window.mousePressed && this.window.mouseButton == this.window.LEFT
             && this.window.mouseX >= buttonLeftBound && this.window.mouseX < buttonRightBound
             && this.window.mouseY >= buttonTopBound && this.window.mouseY <= buttonBottomBound) {
@@ -72,11 +53,10 @@ public class MenuHandler {
       return this.currentState;
     }
 
-
     Menu menu;
     String title;
-    int titleX, titleY;
-
+    int titleX;
+    int titleY;
     switch (this.currentState) {
       case STARTMENU -> {
         title = "Wave Assault";

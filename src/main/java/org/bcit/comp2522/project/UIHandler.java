@@ -34,4 +34,28 @@ public class UIHandler {
   public Score getScore() {
     return this.score;
   }
+
+  public PApplet getpApplet() {
+    return papplet;
+  }
+
+  public void setpApplet(PApplet papplet) {
+    this.papplet = papplet;
+  }
+
+  public HPDisplay getHpDisplay() {
+    return hpDisplay;
+  }
+
+  public void setHpDisplay(HPDisplay hpDisplay) {
+    this.hpDisplay = hpDisplay;
+  }
+
+  public void setDangerLevel(DangerLevel dangerLevel) {
+    this.dangerLevel = dangerLevel;
+  }
+
+  public void setScore(Score score) {
+    this.score = score;
+  }
 }

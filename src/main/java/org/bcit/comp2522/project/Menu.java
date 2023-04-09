@@ -1,5 +1,6 @@
 package org.bcit.comp2522.project;
 
+import java.util.logging.Logger;
 import processing.core.PImage;
 
 /**
@@ -7,9 +8,12 @@ import processing.core.PImage;
  */
 public class Menu extends UserInterface {
 
+  //  private message to be displayed
   private String message;
+
+  //  the window of the game that the menu is displayed on
   private final Window window;
-  private final PImage mainBg;
+  private final PImage mainBackground;
   private GameState currState;
 
   /**
@@ -24,7 +28,7 @@ public class Menu extends UserInterface {
     super(posX, posY);
     this.message = message;
     this.window = window;
-    this.mainBg = window.loadImage("../img/MainBackGround2.png");
+    this.mainBackground = window.loadImage("../img/MainBackGround2.png");
   }
 
   public void updateGameState(GameState state) {
@@ -45,28 +49,25 @@ public class Menu extends UserInterface {
    * @param state the state of the game
    */
   public void displayMenu(GameState state) {
-    int startButtonTextXposition =
-            this.window.width / ConstantManager.START_TEXT_X_POS_RESIZE_FACTOR;
-    int startButtonTextYposition =
-            this.window.width / ConstantManager.TEXT_RESIZE_FACTOR - ConstantManager.START_Y_OFFSET;
-    int endButtonTextXposition = (int) (Window.WINDOW_WIDTH * ConstantManager.MENU_WIDTH_RESIZE);
-    int endButtonTextYposition = (int) (Window.WINDOW_HEIGHT * ConstantManager.MENU_HEIGHT_RESIZE);
-    int pauseButtonTextXposition = (int) (Window.WINDOW_WIDTH * ConstantManager.MENU_WIDTH_RESIZE);
-    int pauseButtonTextYposition =
-            (int) (Window.WINDOW_HEIGHT * ConstantManager.MENU_HEIGHT_RESIZE);
-    window.image(mainBg, ConstantManager.IMAGE_X_POSITION,
-            ConstantManager.IMAGE_Y_POSITION, window.width, window.height);
+    final int startButtonTextXPosition = this.window.width / ConstantManager.START_TEXT_X_POS_RESIZE_FACTOR;
+    final int startButtonTextYPosition = this.window.width / ConstantManager.TEXT_RESIZE_FACTOR - ConstantManager.START_Y_OFFSET;
+    final int endButtonTextXPosition = (int) (Window.WINDOW_WIDTH * ConstantManager.MENU_WIDTH_RESIZE);
+    final int endButtonTextYPosition = (int) (Window.WINDOW_HEIGHT * ConstantManager.MENU_HEIGHT_RESIZE);
+    final int pauseButtonTextXPosition = (int) (Window.WINDOW_WIDTH * ConstantManager.MENU_WIDTH_RESIZE);
+    final int pauseButtonTextYPosition = (int) (Window.WINDOW_HEIGHT * ConstantManager.MENU_HEIGHT_RESIZE);
+    window.image(mainBackground, ConstantManager.IMAGE_X_POSITION, ConstantManager.IMAGE_Y_POSITION, window.width, window.height);
 
     createTitle();
     button();
 
     switch (state) {
       case STARTMENU ->
-              window.text("Start", startButtonTextXposition, startButtonTextYposition);
+              window.text("Start", startButtonTextXPosition, startButtonTextYPosition);
       case ENDGAME ->
-              window.text("Restart", endButtonTextXposition, endButtonTextYposition);
+              window.text("Restart", endButtonTextXPosition, endButtonTextYPosition);
       case PAUSE ->
-              window.text("Continue", pauseButtonTextXposition, pauseButtonTextYposition);
+              window.text("Continue", pauseButtonTextXPosition, pauseButtonTextYPosition);
+      default -> Logger.getLogger("Menu").warning("Invalid state");
     }
   }
 
@@ -75,10 +76,9 @@ public class Menu extends UserInterface {
    */
   private void createTitle() {
     setMessage(message);
-    String message = getMessage();
+    final String message = getMessage();
     window.textSize(ConstantManager.TITLE_SIZE);
-    window.fill(ConstantManager.TITLE_RED_VALUE,
-        ConstantManager.TITLE_BLUE_VALUE, ConstantManager.TITLE_GREEN_VALUE);
+    window.fill(ConstantManager.TITLE_RED_VALUE, ConstantManager.TITLE_BLUE_VALUE, ConstantManager.TITLE_GREEN_VALUE);
     window.text(message, getPositionX(), getPositionY());
   }
 
@@ -87,11 +87,9 @@ public class Menu extends UserInterface {
    */
   private void button() {
     window.fill(ConstantManager.BUTTON_BACKGROUND_COLOR_VALUE);
-    window.rect(ConstantManager.BUTTON_X_POSITION, ConstantManager.BUTTON_Y_POSITION,
-            ConstantManager.BUTTON_WIDTH, ConstantManager.BUTTON_HEIGHT);
+    window.rect(ConstantManager.BUTTON_X_POSITION, ConstantManager.BUTTON_Y_POSITION, ConstantManager.BUTTON_WIDTH, ConstantManager.BUTTON_HEIGHT);
     window.textSize(ConstantManager.BUTTON_TEXT_SIZE);
-    window.fill(ConstantManager.BUTTON_TEXT_RED_VALUE, ConstantManager.BUTTON_TEXT_BLUE_VALUE,
-            ConstantManager.BUTTON_TEXT_GREEN_VALUE);
+    window.fill(ConstantManager.BUTTON_TEXT_RED_VALUE, ConstantManager.BUTTON_TEXT_BLUE_VALUE, ConstantManager.BUTTON_TEXT_GREEN_VALUE);
   }
 
   /**

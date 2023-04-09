@@ -48,7 +48,7 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   /**
    * The window that the Sprite will be drawn on.
    */
-  protected transient Window window;
+  protected  Window window;
 
   /**
    * The image of the Sprite.
@@ -82,8 +82,8 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
       return position;
     }
 
-    float centerX = position.x + ((float) image.width / ConstantManager.TWO);
-    float centerY = position.y + ((float) image.height / ConstantManager.TWO);
+    final float centerX = position.x + ((float) image.width / ConstantManager.TWO);
+    final float centerY = position.y + ((float) image.height / ConstantManager.TWO);
     return new PVector(centerX, centerY);
   }
 
@@ -110,9 +110,7 @@ public abstract class Sprite implements Collidable, Movable, Drawable {
   }
 
 
-  /**
-   * Draws the Sprite.
-   */
+  @Override
   public void draw() {
     window.pushStyle();
     window.ellipse(this.position.x, this.position.y, size, size);

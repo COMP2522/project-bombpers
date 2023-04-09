@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.logging.Logger;
 import org.bson.Document;
 
 /**
@@ -16,16 +17,16 @@ import org.bson.Document;
  * @author Brett Reader
  * @version 2023-04-08
  */
-public class DatabaseHandler {
-  MongoDatabase database;
+public final class DatabaseHandler {
+  private final MongoDatabase database;
 
   private static DatabaseHandler instance;
 
-  String content;
+  private String content;
 
-  UIHandler uiHandler;
+  private final UIHandler uiHandler;
 
-  CollectionManager cm;
+  private final CollectionManager cm;
 
   /**
    * Singleton constructor for the DatabaseHandler.
@@ -33,19 +34,19 @@ public class DatabaseHandler {
    * @param uiHandler the uiHandler being passed to the constructor
    * @param cm        the collectionManager being passed to the constructor
    */
-  private DatabaseHandler(UIHandler uiHandler, CollectionManager cm) {
+  private DatabaseHandler(final UIHandler uiHandler, final CollectionManager cm) {
     try {
       content = new String(Files.readAllBytes(Paths.get("token.txt")));
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      Logger.getLogger("org.mongodb.driver").severe(e.getMessage());
     }
-    ConnectionString connectionString = new ConnectionString(content);
-    MongoClientSettings settings = MongoClientSettings
+    final ConnectionString connectionString = new ConnectionString(content);
+    final MongoClientSettings settings = MongoClientSettings
         .builder()
         .applyConnectionString(connectionString)
         .serverApi(ServerApi.builder().version(ServerApiVersion.V1).build())
         .build();
-    MongoClient mongoClient = MongoClients.create(settings);
+    final MongoClient mongoClient = MongoClients.create(settings);
     this.database = mongoClient.getDatabase("Bombpers");
     this.cm = cm;
     this.uiHandler = uiHandler;
@@ -59,16 +60,16 @@ public class DatabaseHandler {
    * @param cm the collectionManager being passed to the method
    * @return the instance of the database handler.
    */
-  public static DatabaseHandler getInstance(UIHandler u, CollectionManager cm) {
+  public static DatabaseHandler getInstance(final UIHandler u, final CollectionManager cm) {
     if (instance == null) {
       instance = new DatabaseHandler(u, cm);
     }
     return instance;
   }
 
-  public void save(Score s) {
-    System.out.println("Saving game");
-    this.getInfo(cm, uiHandler);
+  public void save() {
+    //System.out.println("Saving game");
+    this.saveInfo(cm, uiHandler);
   }
 
   /**
@@ -77,13 +78,13 @@ public class DatabaseHandler {
    * @return the highest score from the database
    */
   public int load() {
-    MongoCollection<Document> collection = database.getCollection("Game");
+    final MongoCollection<Document> collection = database.getCollection("Game");
 
     int highestScore = 0;
     try (MongoCursor<Document> cursor = collection.find().iterator()) {
       while (cursor.hasNext()) {
-        Document doc = cursor.next();
-        int highscore = doc.getEmbedded(Arrays.asList("Score", "Highscore"), Integer.class);
+        final Document doc = cursor.next();
+        final int highscore = doc.getEmbedded(Arrays.asList("Score", "Highscore"), Integer.class);
         if (highscore > highestScore) {
           highestScore = highscore;
         }
@@ -100,8 +101,8 @@ public class DatabaseHandler {
    * @param u the uiHandler containing the score object.
    * @return the score document.
    */
-  private Document createScoreDocument(UIHandler u) {
-    Document scoreDoc = new Document();
+  private Document createScoreDocument(final UIHandler u) {
+    final Document scoreDoc = new Document();
     scoreDoc.append("Highscore", u.getScore().getHighScore());
     scoreDoc.append("CurrentScore", u.getScore().getCurrentScore());
     return scoreDoc;
@@ -113,8 +114,8 @@ public class DatabaseHandler {
    * @param c the collectionManager containing the player object.
    * @return the player document.
    */
-  private Document createPlayerDocument(CollectionManager c) {
-    Document playerDoc = new Document();
+  private Document createPlayerDocument(final CollectionManager c) {
+    final Document playerDoc = new Document();
     playerDoc.append("health", c.getPlayer().getHealth());
     playerDoc.append("damage", c.getPlayer().getDamage());
     return playerDoc;
@@ -127,8 +128,8 @@ public class DatabaseHandler {
    * @param n the number of the enemy. This is for printing purposes.
    * @return the enemy document.
    */
-  private Document createEnemyDocument(Enemy e, int n) {
-    Document enemyDoc = new Document();
+  private Document createEnemyDocument(final Enemy e, final int n) {
+    final Document enemyDoc = new Document();
     enemyDoc.append("health", e.getHealth());
     enemyDoc.append("damage", e.getDamage());
     return new Document("Enemy_" + n, enemyDoc);
@@ -140,20 +141,20 @@ public class DatabaseHandler {
    * @param c the collectionManager containing the game information.
    * @param u the uiHandler containing the game information.
    */
-  public void getInfo(CollectionManager c, UIHandler u) {
-    Document gameDoc = new Document();
+  public void saveInfo(final CollectionManager c, final UIHandler u) {
+    final Document gameDoc = new Document();
     gameDoc.append("Score", createScoreDocument(u));
     gameDoc.append("Player", createPlayerDocument(c));
     int n = 0;
-    for (Enemy e : c.getEnemies()) {
+    for (final Enemy e : c.getEnemies()) {
       gameDoc.append("Enemy_" + n, createEnemyDocument(e, n));
       n++;
     }
     try {
       database.getCollection("Game").insertOne(gameDoc);
-      System.out.println("Data inserted successfully");
+      //System.out.println("Data inserted successfully");
     } catch (MongoException ex) {
-      System.out.println("Error inserting data into database: " + ex.getMessage());
+      Logger.getLogger("org.mongodb.driver").severe(ex.getMessage());
     }
   }
 

@@ -1,6 +1,7 @@
 package org.bcit.comp2522.project;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -24,8 +25,8 @@ public class Window extends PApplet {
    * Declares a collectionManager to store the sprites.
    */
   private PImage projectileImage;
-  CollectionManager collectionManager;
-  CollisionHandler collisionHandler;
+  private CollectionManager collectionManager;
+  private CollisionHandler collisionHandler;
   public EnemySpawner enemySpawner;
   /**
    * Declares a score variable to store the score.
@@ -45,18 +46,16 @@ public class Window extends PApplet {
    */
   public MenuHandler menuhandler = new MenuHandler(stateOfGame, this);
 
-  /**
-   * Creates a window of size 500 x 500 pixels.
-   */
+  public Window() {
+    super();
+  }
+
+  @Override
   public void settings() {
     size(WINDOW_WIDTH, WINDOW_HEIGHT);
   }
 
-  private DatabaseHandler db;
-
-  /**
-   * Setup of the game.
-   */
+  @Override
   public void setup() {
     //score = new Score(WINDOW_WIDTH / 2, 30, this);
     // Initialize the Player and collectionManager
@@ -80,19 +79,19 @@ public class Window extends PApplet {
     collectionManager.getSprites().add(CollectionManager.player);
     enemySpawner = new EnemySpawner(collectionManager, this);
     uiHandler = new UIHandler(this, this, stateOfGame, enemySpawner);
-    this.db = DatabaseHandler.getInstance(uiHandler, collectionManager);
+    uiHandler.getHPDisplay().update();
+    final DatabaseHandler db = DatabaseHandler.getInstance(uiHandler, collectionManager);
     collisionHandler = new CollisionHandler(collectionManager, this, uiHandler);
     uiHandler.getScore().setHighScore(db.load());
-    //collectionManager.setHighScore(db.load()); //This is used for DB purposes.
     enemyStandardSprite = loadImage(EnemyConfig.ENEMY_STANDARD_SPRITE);
     enemySlowSprite = loadImage(EnemyConfig.ENEMY_SLOW_SPRITE);
     enemyFastSprite = loadImage(EnemyConfig.ENEMY_FAST_SPRITE);
     // Reset the player's position
-    PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
+    final PVector originalPosition = new PVector((float) this.width / 2, (float) this.height / 2);
     collectionManager.getPlayer().setPosition(originalPosition);
     new Thread(() -> {
-      SaveHandler s = new SaveHandler();
-      s.autoSave(collectionManager, uiHandler.getScore());
+      final SaveHandler s = new SaveHandler(uiHandler);
+      s.autoSave();
     }).start();
     uiHandler.getScore().resetScore();
   }
@@ -107,7 +106,7 @@ public class Window extends PApplet {
   @Override
   public void keyPressed(KeyEvent event) {
     inputHandler.keyPressed(event);
-    inputHandler.pauseGameOnPKeyPressed(event);
+    inputHandler.pauseGameOnPauseKeyPressed(event);
     // Update the player's direction
     updatePlayerDirection();
   }
@@ -130,7 +129,7 @@ public class Window extends PApplet {
    * Updates the player's direction based on the key pressed.
    */
   private void updatePlayerDirection() {
-    PVector newDirection = inputHandler.updatePlayerDirection();
+    final PVector newDirection = inputHandler.updatePlayerDirection();
     collectionManager.getPlayer().setDirection(newDirection);
   }
 
@@ -139,15 +138,19 @@ public class Window extends PApplet {
     inputHandler.mousePressed(projectileImage);
   }
 
-  /**
-   * Draws everything in the window.
-   */
+  @Override
   public void draw() {
     switch (stateOfGame) {
-      case STARTMENU, PAUSE, ENDGAME ->
-          stateOfGame = menuhandler.createMenu(stateOfGame, uiHandler.getScore().getCurrentScore(),
-              uiHandler.getScore().getHighScore());
+      case STARTMENU,
+          PAUSE,
+          ENDGAME -> stateOfGame = menuhandler.createMenu(
+          stateOfGame,
+          uiHandler.getScore().getCurrentScore(),
+          uiHandler.getScore().getHighScore()
+      );
       case STARTGAME -> drawGame();
+      default ->
+          Logger.getLogger(Window.class.getName()).warning("Invalid state of game: " + stateOfGame);
     }
   }
 
@@ -164,7 +167,7 @@ public class Window extends PApplet {
   }
 
   public void drawAndUpdateSprites() {
-    for (Sprite sprite : collectionManager.getSprites()) {
+    for (final Sprite sprite : collectionManager.getSprites()) {
       sprite.update();
       sprite.draw();
     }
@@ -172,8 +175,11 @@ public class Window extends PApplet {
 
   public void removeOffscreenProjectiles() {
     collectionManager.getProjectiles().removeIf(projectile -> {
-      boolean toRemove = projectile.getPosition().x < 0 || projectile.getPosition().x
-              > width || projectile.getPosition().y < 0 || projectile.getPosition().y > height;
+      final boolean toRemove =
+          projectile.getPosition().x < 0
+                  || projectile.getPosition().x > width
+                  || projectile.getPosition().y < 0
+                  || projectile.getPosition().y > height;
       if (toRemove) {
         collectionManager.getSprites().remove(projectile);
       }
@@ -181,7 +187,7 @@ public class Window extends PApplet {
     });
   }
 
-  public void handleGameOver(ArrayList<Enemy> enemiesToRemove) {
+  public void handleGameOver(List<Enemy> enemiesToRemove) {
     stateOfGame = GameState.ENDGAME;
     collectionManager.getPlayer().setHealth(Player.PLAYER_HEALTH);
     uiHandler.getHPDisplay().update();
@@ -193,7 +199,7 @@ public class Window extends PApplet {
   public void updateGameParametersAfterEnemyDeath(Enemy enemy) {
     enemySpawner.decreaseEnemyCount();
     enemySpawner.updateSpawnModifier(uiHandler.getScore());
-    uiHandler.getScore().incrementScore(uiHandler.getScore().getCurrentScore(), enemy);
+    uiHandler.getScore().incrementScore(enemy.enemyType);
     uiHandler.getScore().displayScore(stateOfGame);
     uiHandler.getDangerLevel().update();
     updateHighScoreIfNeeded();
@@ -211,7 +217,7 @@ public class Window extends PApplet {
    * @param args unused.
    */
   public static void main(String[] args) {
-    String[] appletArgs = new String[]{"eatBubbles"};
+    final String[] appletArgs = new String[]{"eatBubbles"};
     Window eatBubbles = new Window();
     PApplet.runSketch(appletArgs, eatBubbles);
   }
