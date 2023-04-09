@@ -30,11 +30,14 @@ public class CollisionHandler {
    * Constructs a CollisionHandler object.
    *
    * @param collectionManager the CollectionManager object
-   * @param window the Window object
-   * @param uiHandler the UIHandler object
+   * @param window            the Window object
+   * @param uiHandler         the UIHandler object
    */
-  public CollisionHandler(final CollectionManager collectionManager, final Window window, final
-  UiHandler uiHandler) {
+  public CollisionHandler(
+      final CollectionManager collectionManager,
+      final Window window,
+      final UiHandler uiHandler
+  ) {
     this.collectionManager = collectionManager;
     this.window = window;
     this.uiHandler = uiHandler;
@@ -56,10 +59,12 @@ public class CollisionHandler {
    * Checks for collisions between projectiles and enemies.
    *
    * @param enemiesToRemove the list of enemies to remove
-   * @param projectiles the list of projectiles to remove
+   * @param projectiles     the list of projectiles to remove
    */
-  public void checkProjectileEnemyCollisions(final List<Enemy> enemiesToRemove, final
-      List<Projectile> projectiles) {
+  public void checkProjectileEnemyCollisions(
+      final List<Enemy> enemiesToRemove,
+      final List<Projectile> projectiles
+  ) {
 
     for (final Projectile projectile : collectionManager.getProjectiles()) {
       for (final Enemy enemy : collectionManager.getEnemies()) {
@@ -74,14 +79,17 @@ public class CollisionHandler {
   /**
    * Handles collisions between projectiles and enemies.
    *
-   * @param projectile the projectile
-   * @param enemy the enemy
+   * @param projectile      the projectile
+   * @param enemy           the enemy
    * @param bulletsToRemove the list of projectiles to remove
    * @param enemiesToRemove the list of enemies to remove
    */
-  public void handleProjectileEnemyCollision(final Projectile projectile, final Enemy enemy,
-                                             final List<Projectile> bulletsToRemove, final
-                                             List<Enemy> enemiesToRemove) {
+  public void handleProjectileEnemyCollision(
+      final Projectile projectile,
+      final Enemy enemy,
+      final List<Projectile> bulletsToRemove,
+      final List<Enemy> enemiesToRemove
+  ) {
     bulletsToRemove.add(projectile);
     if (enemy.isDead()) {
       enemiesToRemove.add(enemy);
@@ -105,17 +113,17 @@ public class CollisionHandler {
   /**
    * Handles collisions between the player and enemies.
    *
-   * @param enemy the enemy
+   * @param enemy           the enemy
    * @param enemiesToRemove the list of enemies to remove
    */
   public void handlePlayerEnemyCollision(final Enemy enemy, final List<Enemy> enemiesToRemove) {
     enemiesToRemove.add(enemy);
-    collectionManager.getPlayer().setHealth(collectionManager.getPlayer()
-        .getHealth() - enemy.getDamage());
+    collectionManager
+        .getPlayer()
+        .setHealth(collectionManager.getPlayer().getHealth() - enemy.getDamage());
     uiHandler.getHpDisplay().takeDamage(enemy.getDamage());
     if (collectionManager.getPlayer().getHealth() <= 0) {
       window.handleGameOver(enemiesToRemove);
     }
   }
-
 }

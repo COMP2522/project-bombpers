@@ -18,13 +18,30 @@ public final class InputHandler {
    * The instance of the InputHandler.
    */
   private static InputHandler instance;
+
   /**
-   * These booleans are used to check if the key is pressed or not.
+   * if left arrow key is pressed.
    */
   private boolean isLeftPressed;
+
+  /**
+   * if right arrow key is pressed.
+   */
   private boolean isRightPressed;
+
+  /**
+   * if up arrow key is pressed.
+   */
   private boolean isUpPressed;
+
+  /**
+   * if down arrow key is pressed.
+   */
   private boolean isDownPressed;
+
+  /**
+   * The window that will be used to access the mouse position.
+   */
   private final Window window;
 
   /**
@@ -64,10 +81,10 @@ public final class InputHandler {
    * @param event the key event.
    */
   public void keyPressed(KeyEvent event) {
-    // Get the key code of the key that was pressed
+
     final int keyCode = event.getKeyCode();
 
-    // Check if the key code is the same as any of the switch cases and do the corresponding action
+
     switch (keyCode) {
       case PConstants.LEFT -> isLeftPressed = true;
       case PConstants.RIGHT -> isRightPressed = true;
@@ -83,10 +100,7 @@ public final class InputHandler {
    * @param event the key event.
    */
   public void keyReleased(KeyEvent event) {
-    // Get the key code of the key that was pressed
     final int keyCode = event.getKeyCode();
-
-    // Check if the key code is the same as any of the switch cases and do the corresponding action
     switch (keyCode) {
       case PConstants.LEFT -> isLeftPressed = false;
       case PConstants.RIGHT -> isRightPressed = false;
@@ -97,7 +111,7 @@ public final class InputHandler {
   }
 
   /**
-   * updatePlayerDirection method - updates the player's direction based on the key pressed.
+   * updates the player's direction based on the key pressed.
    *
    * @return the new direction of the player.
    */

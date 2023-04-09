@@ -50,7 +50,7 @@ public class Background implements Drawable {
    * @return the background image
    */
   private PImage loadBackgroundImage() {
-    return parent.loadImage("../img/grass_bgv4.png");
+    return parent.loadImage("../img/background.png");
   }
 
   /**
@@ -59,10 +59,23 @@ public class Background implements Drawable {
   @Override
   public void draw() {
     final float imageWidth =
-            (float) (backgroundImage.width * parent.height) / backgroundImage.height;
-    parent.image(backgroundImage, offset, ConstantManager.ZERO, imageWidth, parent.height);
-    parent.image(backgroundImage, offset + imageWidth, ConstantManager.ZERO,
-            imageWidth, parent.height);
+        (float) (backgroundImage.width * parent.height) / backgroundImage.height;
+
+    parent.image(
+        backgroundImage,
+        offset,
+        ConstantManager.ZERO,
+        imageWidth,
+        parent.height
+    );
+
+    parent.image(
+        backgroundImage,
+        offset + imageWidth,
+        ConstantManager.ZERO,
+        imageWidth,
+        parent.height
+    );
 
     offset -= speed;
     if (offset <= -imageWidth) {

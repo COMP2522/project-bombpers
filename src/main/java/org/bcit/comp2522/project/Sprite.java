@@ -4,7 +4,7 @@ import processing.core.PImage;
 import processing.core.PVector;
 
 /**
- * Sprite class - is the parent class of all classes that can move, collide, and be drawn.
+ * Sprite class - is the parent class of all the sprites in the game.
  *
  * @author Brett Reader, Benny Li, Ozan Yurtisigi, Amarjot Singh, Sukhraj Sidhu
  * @version 1.0
