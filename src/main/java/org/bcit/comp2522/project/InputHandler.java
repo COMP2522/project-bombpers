@@ -9,7 +9,8 @@ import processing.event.KeyEvent;
 /**
  * InputHandler class - handles the input from the user.
  *
- * @author ozany
+ * @author Ozan Yurtisigi, Sukhraj Sidhu, Brett Reader
+ * @version 1.0
  */
 public final class InputHandler {
 
@@ -150,6 +151,11 @@ public final class InputHandler {
     }
   }
 
+  /**
+   * A method that reads the key input, if it is 'P', it pauses the game.
+   *
+   * @param event key input that is being read
+   */
   public void pauseGameOnPauseKeyPressed(KeyEvent event) {
     final char key = event.getKey();
     if (key == 'p' || key == 'P') {

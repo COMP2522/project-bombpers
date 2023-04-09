@@ -6,6 +6,9 @@ import processing.core.PVector;
 
 /**
  * Handles the spawning of enemies.
+ *
+ * @author Benny Li, Ozan Yurtisigi, Brett Reader
+ * @version 1.0
  */
 public class EnemySpawner {
   private int spawnModifier = ConstantManager.ZERO;
@@ -130,10 +133,6 @@ public class EnemySpawner {
 
   public void countReset() {
     this.currEnemyCount = ConstantManager.NO_ENEMIES;
-  }
-
-  public int getCount() {
-    return this.currEnemyCount;
   }
 
   public int getSpawnModifier() {
