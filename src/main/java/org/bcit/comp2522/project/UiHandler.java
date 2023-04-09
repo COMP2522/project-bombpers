@@ -9,8 +9,20 @@ import processing.core.PApplet;
  * @version 1.0
  */
 public class UiHandler {
+
+  /**
+   * The HpDisplay object.
+   */
   private final HpDisplay hpDisplay;
+
+  /**
+   * The DangerLevel object.
+   */
   private final DangerLevel dangerLevel;
+
+  /**
+   * The Score object.
+   */
   private final Score score;
 
   /**

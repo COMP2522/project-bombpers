@@ -10,28 +10,46 @@ import processing.core.PVector;
  * @version 1.0
  */
 public class Enemy extends Sprite {
-  //protected Sprite player;
+
+  /**
+   * Image of the enemy.
+   */
   protected PImage enemySprite;
+
+  /**
+   * Enemy type according to EnemyConfig.
+   */
   protected int enemyType;
+
+  /**
+   * If the enemy is dead.
+   */
   private boolean dead;
+
+  /**
+   * The enemy hitbox width.
+   */
   private final float hitboxWidth;
+
+  /**
+   * The enemy hitbox height.
+   */
   private final float hitboxHeight;
 
   /**
    * Constructor for enemy objects.
    *
-   * @param window Window that houses this enemy
-   * @param sprite Visual sprite of enemy
+   * @param window    Window that houses this enemy
+   * @param sprite    Visual sprite of enemy
    * @param enemyType Enemy type according to EnemyConfig
-   * @param health Amount of damage that can be taken before perishing
-   * @param damage Damage dealt to player on contact
-   * @param size Size of the enemy
-   * @param speed Movement speed of the enemy
-   * @param pos Initial position of enemy
+   * @param health    Amount of damage that can be taken before perishing
+   * @param damage    Damage dealt to player on contact
+   * @param size      Size of the enemy
+   * @param speed     Movement speed of the enemy
+   * @param pos       Initial position of enemy
    */
   public Enemy(
       Window window,
-      //Sprite player,
       PImage sprite,
       int enemyType,
       int health,
@@ -42,7 +60,6 @@ public class Enemy extends Sprite {
   ) {
     super(window);
     this.direction = new PVector(ConstantManager.ZERO, ConstantManager.ZERO);
-    //this.player = player;
     this.enemySprite = sprite;
     this.enemyType = enemyType;
     this.health = health;
@@ -62,7 +79,7 @@ public class Enemy extends Sprite {
    */
   @Override
   public void collide(Sprite one, Sprite two) {
-    //TODO: Implement this method
+    //This is intentionally left blank
   }
 
   @Override

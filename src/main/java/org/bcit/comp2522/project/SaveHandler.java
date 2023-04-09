@@ -9,8 +9,17 @@ import java.util.logging.Logger;
  * @version 1.0
  */
 public class SaveHandler {
+
+  /**
+   * DatabaseHandler object to handle the saving of the game.
+   */
   private final DatabaseHandler db;
 
+  /**
+   * Constructor for the SaveHandler class.
+   *
+   * @param u UiHandler object to handle the user interface
+   */
   public SaveHandler(UiHandler u) {
     CollectionManager c = CollectionManager.getInstance();
     this.db = DatabaseHandler.getInstance(u, c);
@@ -24,17 +33,13 @@ public class SaveHandler {
    * Auto saves the game every 30 seconds.
    */
   public void autoSave() {
-    //System.out.println("Game Started, it will be saved every half minute");
     for (; ; ) {
       try {
         Thread.sleep(30000);
-        //Thread.sleep(5000);
         this.save();
-        //System.out.println("Game has been saved");
       } catch (InterruptedException e) {
         Logger.getLogger("org.mongodb.driver").severe(e.getMessage());
       }
     }
   }
-
 }

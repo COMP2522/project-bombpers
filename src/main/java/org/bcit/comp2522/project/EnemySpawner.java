@@ -11,16 +11,43 @@ import processing.core.PVector;
  * @version 1.0
  */
 public class EnemySpawner {
+
+  /**
+   * The modifier for the number of enemies that spawn.
+   */
   private int spawnModifier = ConstantManager.ZERO;
+
   /**
    * Maximum number of enemies.
    */
   private int enemyMax = ConstantManager.BASE_WAVE_COUNT + spawnModifier;
+
+  /**
+   * Current number of enemies.
+   */
   private int currEnemyCount;
+
+  /**
+   * Random number generator.
+   */
   private final Random randomNumber = new Random();
+
+  /**
+   * Collection manager.
+   */
   private final CollectionManager collectionManager;
+
+  /**
+   * Window.
+   */
   private final Window window;
 
+  /**
+   * Constructor for EnemySpawner.
+   *
+   * @param collectionManager collection manager
+   * @param window            window
+   */
   public EnemySpawner(CollectionManager collectionManager, Window window) {
     this.collectionManager = collectionManager;
     this.window = window;
@@ -94,13 +121,18 @@ public class EnemySpawner {
     increaseEnemyCount();
   }
 
+  /**
+   * Adds enemy to enemy collection.
+   *
+   * @param newEnemy Enemy to be added
+   */
   public void addToCollection(Enemy newEnemy) {
     collectionManager.getEnemies().add(newEnemy);
     collectionManager.getSprites().add(newEnemy);
   }
 
   /**
-   * Check to see enemies are currrently allowed to spawn.
+   * Check to see enemies are currently allowed to spawn.
    *
    * @return Whether enemies allowed to spawn.
    */
@@ -118,19 +150,33 @@ public class EnemySpawner {
     return new PVector(Window.WINDOW_WIDTH, randomY);
   }
 
+  /**
+   * Increases the current enemy count.
+   */
   public void increaseEnemyCount() {
     this.currEnemyCount++;
   }
 
+  /**
+   * Decreases the current enemy count.
+   */
   public void decreaseEnemyCount() {
     this.currEnemyCount--;
   }
 
+  /**
+   * Updates the spawn modifier.
+   *
+   * @param score score
+   */
   public void updateSpawnModifier(Score score) {
     this.spawnModifier = score.getCurrentScore() / ConstantManager.TIER_THRESHOLD;
     this.enemyMax = ConstantManager.BASE_WAVE_COUNT + spawnModifier;
   }
 
+  /**
+   * Resets the current enemy count.
+   */
   public void countReset() {
     this.currEnemyCount = ConstantManager.NO_ENEMIES;
   }

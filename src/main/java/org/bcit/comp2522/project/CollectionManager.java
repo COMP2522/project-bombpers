@@ -101,8 +101,10 @@ public final class CollectionManager {
    * @param enemiesToRemove list of enemies to remove
    * @param bulletsToRemove list of bullets to remove
    */
-  public void removeCollidedEntities(final List<Enemy> enemiesToRemove, final
-      List<Projectile> bulletsToRemove) {
+  public void removeCollidedEntities(
+      final List<Enemy> enemiesToRemove,
+      final List<Projectile> bulletsToRemove
+  ) {
     for (final Enemy enemy : enemiesToRemove) {
       getEnemies().remove(enemy);
       getSprites().remove(enemy);
